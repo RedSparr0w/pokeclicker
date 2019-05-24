@@ -51,7 +51,7 @@ const dests = {
 };
 
 gulp.task('cname', () => {
-    const str = "www.pokeclicker.com";
+    const str = "pokeclicker.redsparr0w.com";
     return file('CNAME', str, {src: true})
         .pipe(gulp.dest('docs/'));
 });
@@ -101,16 +101,6 @@ gulp.task('full-changelog', () => {
         .pipe(gulp.dest(htmlDest));
 });
 
-gulp.task('html', () => {
-    const htmlDest = './build';
-
-    return gulp.src(srcs.html)
-        .pipe(changed(dests.base))
-        .pipe(minifyHtml())
-        .pipe(gulp.dest(htmlDest))
-        .pipe(browserSync.reload({stream: true}));
-});
-
 gulp.task('scripts', () => {
     let tsProject = typescript.createProject('tsconfig.json');
     return tsProject.src()
@@ -143,7 +133,7 @@ gulp.task('website', done => {
 
 gulp.task('default', done => {
     runSequence('clean', 'build', 'browserSync', () => {
-        gulp.watch(srcs.html, ['import', 'html']);
+        gulp.watch(srcs.html, ['import']);
         gulp.watch(srcs.assets, ['assets']);
         gulp.watch(srcs.scripts, ['scripts']);
         gulp.watch(srcs.styles, ['styles']);
