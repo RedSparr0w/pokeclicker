@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Pokéclicker</title>
-    <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <script type="text/html" id="pokemonListTemplate">
         <tr data-bind='ifnot: $data.breeding()'>
             <td>
@@ -106,11 +106,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 offset-sm-3">
-                    <img style="width:100%" src="../assets/images/pokeclickerlogo.png">
+                    <img style="width:100%" src="assets/images/pokeclickerlogo.png">
                 </div>
             </div>
         </div>
-        <img src="../assets/images/pokeball/Pokeball.png" class="loader-pokeball"/>
+        <img src="assets/images/pokeball/Pokeball.png" class="loader-pokeball"/>
 
     </div>
 
@@ -355,7 +355,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                         <button class="btn btn-secondary smallButton list-group-item-action"
                                                 data-bind="click: function() {ItemHandler.pokemonSelected(name)}, css:{ 'pokemon-selected': ItemHandler.pokemonSelected() === name}">
                                             <img class="smallImage"
-                                                 data-bind="attr:{ src: '/assets/images/pokemon/' + id +'.png' }"
+                                                 data-bind="attr:{ src: 'assets/images/pokemon/' + id +'.png' }"
                                                  src=""/>
                                             <span data-bind="text: name" style="margin-left: 20px">Name</span>
                                         </button>
@@ -423,7 +423,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                  data-bind="foreach: KeyItemHandler.keyItemList">
                                 <div class="col-sm-2">
                                     <img class="clickable key-item" src=""
-                                         data-bind="attr:{ src: '/assets/images/keyitems/' + $data.name() + '.png'},
+                                         data-bind="attr:{ src: 'assets/images/keyitems/' + $data.name() + '.png'},
                                   css: {'oak-item-locked': !player.hasKeyItem($data.name())
 
                                         },
@@ -562,10 +562,10 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                 </div>
                                 <div data-bind="if: Battle.catching">
                                     <img class="pokeball-animated"
-                                         data-bind="attr:{ src: '/assets/images/pokeball/' + GameConstants.Pokeball[Battle.pokeball()] + '.png' }"
+                                         data-bind="attr:{ src: 'assets/images/pokeball/' + GameConstants.Pokeball[Battle.pokeball()] + '.png' }"
                                          src=""/>
                                     <br>
-                                    Catch Chance: 
+                                    Catch Chance:
                                     <span data-bind="text: Battle.catchRateActual()">Catch Rate</span>%
                                 </div>
                             </div>
@@ -631,10 +631,10 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                     </div>
                                     <div data-bind="if: DungeonBattle.catching">
                                         <img class="pokeball-animated"
-                                             data-bind="attr:{ src: '/assets/images/pokeball/' + GameConstants.Pokeball[DungeonBattle.pokeball()] + '.png' }"
+                                             data-bind="attr:{ src: 'assets/images/pokeball/' + GameConstants.Pokeball[DungeonBattle.pokeball()] + '.png' }"
                                              src=""/>
                                         <br>
-                                        Catch Chance: 
+                                        Catch Chance:
                                         <span data-bind="text: DungeonBattle.catchRateActual()">Catch Rate</span>%
                                     </div>
                                 </div>
@@ -753,7 +753,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
    <div class="col-7 no-gutters">
        <h2 class="pageItemTitle" data-bind="text: player.town().name()">Town Name</h2>
        <img class="townImage no-select" src=""
-            data-bind="attr:{ src: '/assets/images/towns/' + player.town().name() + '.png' }"/>
+            data-bind="attr:{ src: 'assets/images/towns/' + player.town().name() + '.png' }"/>
    </div>
    <div class="col no-gutters"></div>
 
@@ -765,12 +765,12 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
            data-bind="foreach: player.town().dungeon().allPokemonNames">
            <li class="list-inline-item" data-bind="if: player.alreadyCaughtPokemon($data)">
                <img class="dungeon-pokemon-preview" src=""
-                    data-bind="attr:{ src: '/assets/images/pokemon/' + pokemonMap[$data].id + '.png' }"/>
+                    data-bind="attr:{ src: 'assets/images/pokemon/' + pokemonMap[$data].id + '.png' }"/>
            </li>
            <li class="list-inline-item"
                data-bind="ifnot: player.alreadyCaughtPokemon($data)">
                <img class="dungeon-pokemon-preview dungeon-pokemon-locked" src=""
-                    data-bind="attr:{ src: '/assets/images/pokemon/' + pokemonMap[$data].id + '.png' }"/>
+                    data-bind="attr:{ src: 'assets/images/pokemon/' + pokemonMap[$data].id + '.png' }"/>
            </li>
        </ul>
    </div>
@@ -802,7 +802,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                     <span data-bind="text: GymBattle.enemyPokemon().name">Pokemon name</span><br>
                     <div class="clickable">
                         <img id="gymEnemy" src=""
-                             data-bind="click: function() {GymBattle.clickAttack()}, attr:{ src: '/assets/images/pokemon/' + GymBattle.enemyPokemon().id + '.png' }"/>
+                             data-bind="click: function() {GymBattle.clickAttack()}, attr:{ src: 'assets/images/pokemon/' + GymBattle.enemyPokemon().id + '.png' }"/>
                     </div>
                 </div>
                 <div class="col-sm-3" style="display: grid;">
@@ -816,7 +816,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                     </div>
                     <div>
                         <img height="56px" id="gymLeader" src=""
-                             data-bind="attr:{ src: '/assets/images/gymLeaders/' + GymBattle.gym.leaderName + '.png'}">
+                             data-bind="attr:{ src: 'assets/images/gymLeaders/' + GymBattle.gym.leaderName + '.png'}">
                     </div>
 
                 </div>
@@ -857,11 +857,11 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
        <div
                data-bind="click: function() {ShopHandler.setSelected($index())}, attr: {class: ShopHandler.calculateCss($index())}">
            <img src="" height="36px"
-                data-bind="attr:{ src: '/assets/images/items/' + name() + '.png' }">
+                data-bind="attr:{ src: 'assets/images/items/' + name() + '.png' }">
            <p data-bind="text: GameConstants.humanifyString(name())">Item Name</p>
            <p>
                <img src="" class="currencyImage"
-                    data-bind="attr:{ src: '/assets/images/currency/' + GameConstants.Currency[currency]+ '.png' }">
+                    data-bind="attr:{ src: 'assets/images/currency/' + GameConstants.Currency[currency]+ '.png' }">
                <span data-bind="text: totalPrice">Price</span>
            </p>
        </div>
@@ -2109,7 +2109,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
             data-bind="foreach: Object.keys(ItemList).filter(i=>ItemList[i].constructor.name == 'BattleItem')">
             <div class="battle-item-small">
                 <img src="" class="clickable"
-                data-bind="attr:{ src: '/assets/images/items/' + $data + '.png'},
+                data-bind="attr:{ src: 'assets/images/items/' + $data + '.png'},
                             css: {
                                 'battle-item-none': !(+player.itemList[$data]())
                             },
@@ -2128,7 +2128,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
     </div>
 </div>
 
-            <div class="page-item" id="oakItemsContainer" 
+            <div class="page-item" id="oakItemsContainer"
             data-bind="visible: player.starter != GameConstants.Starter.None" style="background-color: white;">
                 <div class="card">
                     <div>
@@ -2146,7 +2146,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                     <div>
                         <div>
                             <img class="clickable" src=""
-                                 data-bind="attr:{ src: '/assets/images/oakitems/' + $data.name() + '.png'},
+                                 data-bind="attr:{ src: 'assets/images/oakitems/' + $data.name() + '.png'},
                                   css: {'oak-item-small-selected': OakItemRunner.isActive($data.name()),
                                         'oak-item-small': !OakItemRunner.isActive($data.name()),
                                         'oak-item-locked': !OakItemRunner.isUnlocked($data.name())
@@ -2297,12 +2297,12 @@ style="background-color: white; min-height: 100px">
             <div class="col-sm-6 eggSlot">
                 <div data-bind="if: $index() === player.eggSlots()">
                     <p style="margin:2px;">Egg slot</p>
-                    <p style="margin:2px;"><img src="../assets/images/currency/questPoint.png"> <span data-bind='text: player.nextEggSlotCost()'></span></p>
+                    <p style="margin:2px;"><img src="assets/images/currency/questPoint.png"> <span data-bind='text: player.nextEggSlotCost()'></span></p>
                     <button class='btn btn-primary' onclick='player.buyEggSlot()'
                             data-bind='css: {disabled: player.questPoints <= player.nextEggSlotCost()}'>Buy</button>
                 </div>
                 <div data-bind="if: $index() > player.eggSlots()" style="margin-top: 30px;">
-                    <img src="../assets/images/breeding/lock.png">
+                    <img src="assets/images/breeding/lock.png">
                 </div>
                 <div data-bind="if: $data !== null">
                     <img data-bind='attr: {src: BreedingHelper.getEggImage($data)}'/>
@@ -2339,7 +2339,7 @@ aria-labelledby="receiveBadgeModalLabel" aria-hidden="true">
        <div class="modal-header">
            <div style="width: 100%;">
                <img src=""
-                    data-bind="attr:{ src: '/assets/images/gymLeaders/' + GymRunner.gymObservable().leaderName + '.png'}">
+                    data-bind="attr:{ src: 'assets/images/gymLeaders/' + GymRunner.gymObservable().leaderName + '.png'}">
                <h5 class="modal-title" id="receiveBadgeModalLabel"
                    data-bind="text: GymRunner.gymObservable().leaderName">Modal title</h5>
 
@@ -2348,7 +2348,7 @@ aria-labelledby="receiveBadgeModalLabel" aria-hidden="true">
        <div class="modal-body">
            <p data-bind="text: GymRunner.gymObservable().defeatMessage"></p>
            <img src="" width="56px"
-                data-bind="attr:{ src: '/assets/images/badges/' + GymRunner.gymObservable().leaderName + '.png'}">
+                data-bind="attr:{ src: 'assets/images/badges/' + GymRunner.gymObservable().leaderName + '.png'}">
 
        </div>
        <div data-bind="if: !(GymRunner.gymObservable() instanceof Champion)">
@@ -2565,7 +2565,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
        <div class="modal-header">
            <div style="width: 100%;">
                <img src=""
-                    data-bind="attr:{ src: '/assets/images/oak.png'}">
+                    data-bind="attr:{ src: 'assets/images/oak.png'}">
                <h5 class="modal-title" id="hallOfFameModalLabel">Professor Oak</h5>
 
            </div>
@@ -2664,7 +2664,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                        <button class="btn btn-secondary smallButton list-group-item-action"
                                data-bind="click: function() {BreedingHelper.gainPokemonEgg($data)}">
                            <img class="smallImage"
-                                data-bind="attr:{ src: '/assets/images/' + (player.caughtShinyList().includes(name) ? 'shiny' : '') + 'pokemon/' + id +'.png' }"
+                                data-bind="attr:{ src: 'assets/images/' + (player.caughtShinyList().includes(name) ? 'shiny' : '') + 'pokemon/' + id +'.png' }"
                                 src=""/>
                            <span data-bind="text: name" style="margin-left: 20px">Name</span><span style="float:right" data-bind="if: player.caughtShinyList().includes(name)">&nbsp;✨</span>
                        </button>
@@ -3107,7 +3107,7 @@ aria-labelledby="saveModalLabel">
                             <li class="list-group-item list-group-item-action seed-list-item"
                                 data-bind="click: function() {FarmRunner.curBerry = BerryList[GameConstants.BerryType[$index()]]}">
                                 <img src="" width="24px"
-                                     data-bind="attr:{ src: '/assets/images/items/' + GameConstants.BerryType[$index()] + '.png'}">
+                                     data-bind="attr:{ src: 'assets/images/items/' + GameConstants.BerryType[$index()] + '.png'}">
                                 <span data-bind="text: GameConstants.BerryType[$index()]"></span>
                                 <span class="seedAmount" data-bind="text: player.berryList[$index()]()"></span>
                             </li>

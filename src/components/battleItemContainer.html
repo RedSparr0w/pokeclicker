@@ -4,7 +4,7 @@
             data-bind="foreach: Object.keys(ItemList).filter(i=>ItemList[i].constructor.name == 'BattleItem')">
             <div class="battle-item-small">
                 <img src="" class="clickable"
-                data-bind="attr:{ src: '/assets/images/items/' + $data + '.png'},
+                data-bind="attr:{ src: 'assets/images/items/' + $data + '.png'},
                             css: {
                                 'battle-item-none': !(+player.itemList[$data]())
                             },

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Pokéclicker</title>
-    <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
     <script type="text/html" id="pokemonListTemplate">
         <tr data-bind='ifnot: $data.breeding()'>
             <td>
@@ -211,10 +211,10 @@
                                 </div>
                                 <div data-bind="if: Battle.catching">
                                     <img class="pokeball-animated"
-                                         data-bind="attr:{ src: '/assets/images/pokeball/' + GameConstants.Pokeball[Battle.pokeball()] + '.png' }"
+                                         data-bind="attr:{ src: 'assets/images/pokeball/' + GameConstants.Pokeball[Battle.pokeball()] + '.png' }"
                                          src=""/>
                                     <br>
-                                    Catch Chance: 
+                                    Catch Chance:
                                     <span data-bind="text: Battle.catchRateActual()">Catch Rate</span>%
                                 </div>
                             </div>
@@ -280,10 +280,10 @@
                                     </div>
                                     <div data-bind="if: DungeonBattle.catching">
                                         <img class="pokeball-animated"
-                                             data-bind="attr:{ src: '/assets/images/pokeball/' + GameConstants.Pokeball[DungeonBattle.pokeball()] + '.png' }"
+                                             data-bind="attr:{ src: 'assets/images/pokeball/' + GameConstants.Pokeball[DungeonBattle.pokeball()] + '.png' }"
                                              src=""/>
                                         <br>
-                                        Catch Chance: 
+                                        Catch Chance:
                                         <span data-bind="text: DungeonBattle.catchRateActual()">Catch Rate</span>%
                                     </div>
                                 </div>
@@ -520,7 +520,7 @@
             <!-- Battle Item container-->
             @import "battleItemContainer.html"
 
-            <div class="page-item" id="oakItemsContainer" 
+            <div class="page-item" id="oakItemsContainer"
             data-bind="visible: player.starter != GameConstants.Starter.None" style="background-color: white;">
                 <div class="card">
                     <div>
@@ -538,7 +538,7 @@
                     <div>
                         <div>
                             <img class="clickable" src=""
-                                 data-bind="attr:{ src: '/assets/images/oakitems/' + $data.name() + '.png'},
+                                 data-bind="attr:{ src: 'assets/images/oakitems/' + $data.name() + '.png'},
                                   css: {'oak-item-small-selected': OakItemRunner.isActive($data.name()),
                                         'oak-item-small': !OakItemRunner.isActive($data.name()),
                                         'oak-item-locked': !OakItemRunner.isUnlocked($data.name())

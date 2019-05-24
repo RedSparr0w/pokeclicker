@@ -66,7 +66,7 @@
                                         <button class="btn btn-secondary smallButton list-group-item-action"
                                                 data-bind="click: function() {ItemHandler.pokemonSelected(name)}, css:{ 'pokemon-selected': ItemHandler.pokemonSelected() === name}">
                                             <img class="smallImage"
-                                                 data-bind="attr:{ src: '/assets/images/pokemon/' + id +'.png' }"
+                                                 data-bind="attr:{ src: 'assets/images/pokemon/' + id +'.png' }"
                                                  src=""/>
                                             <span data-bind="text: name" style="margin-left: 20px">Name</span>
                                         </button>
@@ -134,7 +134,7 @@
                                  data-bind="foreach: KeyItemHandler.keyItemList">
                                 <div class="col-sm-2">
                                     <img class="clickable key-item" src=""
-                                         data-bind="attr:{ src: '/assets/images/keyitems/' + $data.name() + '.png'},
+                                         data-bind="attr:{ src: 'assets/images/keyitems/' + $data.name() + '.png'},
                                   css: {'oak-item-locked': !player.hasKeyItem($data.name())
 
                                         },
