@@ -36,6 +36,7 @@ class Player {
     private _oakItemsEquipped: string[];
     private _eggList: Array<KnockoutObservable<Egg | void>>;
     private _eggSlots: KnockoutObservable<number>;
+    private _effectEngine: { [name: string]: number };
 
     constructor(savedPlayer?) {
         let saved: boolean = (savedPlayer != null);
@@ -83,6 +84,7 @@ class Player {
             return ko.observable(savedPlayer._oakItemExp ? (savedPlayer._oakItemExp[index] || 0) : 0)
         });
         this._oakItemsEquipped = savedPlayer._oakItemsEquipped || [];
+        this._effectEngine = savedPlayer._effectEngine || {};
         this._routeKillsNeeded = ko.observable(savedPlayer._routeKillsNeeded || 10);
         this._gymBadges = ko.observableArray<GameConstants.Badge>(savedPlayer._gymBadges);
         this._keyItems = ko.observableArray<string>(savedPlayer._keyItems);
@@ -319,7 +321,11 @@ class Player {
 
     public calculateClickAttack(): number {
         let oakItemBonus = OakItemRunner.isActive("Poison Barb") ? (1 + OakItemRunner.calculateBonus("Poison Barb") / 100) : 1;
-        return Math.floor(Math.pow(this.caughtPokemonList.length + 1, 1.4) * oakItemBonus);
+        let clickAttack = Math.floor(Math.pow(this.caughtPokemonList.length + 1, 1.4) * oakItemBonus);
+        if(this.effectEngine[GameConstants.BattleItemType.xClick]){
+            clickAttack *= 1.5;
+        }
+        return clickAttack;
     }
 
     public calculateMoneyMultiplier(): number {
@@ -440,9 +446,13 @@ class Player {
         // TODO add money multipliers
         let oakItemBonus = OakItemRunner.isActive("Amulet Coin") ? (1 + OakItemRunner.calculateBonus("Amulet Coin") / 100) : 1;
         let moneytogain = Math.floor(money * oakItemBonus * (1 + AchievementHandler.achievementBonus()))
+        if(this.effectEngine[GameConstants.BattleItemType.Lucky_incense]){
+            moneytogain = Math.floor(moneytogain * 1.5);
+        }
         this._money(this._money() + moneytogain);
         GameHelper.incrementObservable(this.statistics.totalMoney, moneytogain);
         Game.updateMoney();
+
         Game.animateMoney(moneytogain,'playerMoney');
     }
 
@@ -526,6 +536,10 @@ class Player {
         let trainerBonus = trainer ? 1.5 : 1;
         let oakItemBonus = OakItemRunner.isActive("Exp Share") ? 1 + (OakItemRunner.calculateBonus("Exp Share") / 100) : 1;
         let expTotal = Math.floor(exp * level * trainerBonus * oakItemBonus * (1 + AchievementHandler.achievementBonus()) / 9);
+
+        if(this.effectEngine[GameConstants.BattleItemType.xExp]){
+            expTotal *= 1.5;
+        }
 
         for (let pokemon of this._caughtPokemonList()) {
             if (pokemon.levelObservable() < (this.gymBadges.length + 2) * 10) {
@@ -624,7 +638,12 @@ class Player {
     }
 
     public gainDungeonTokens(tokens: number) {
+        if(this.effectEngine[GameConstants.BattleItemType.Token_collector]){
+            tokens *= 1.5;
+        }
+
         this._dungeonTokens(Math.floor(this._dungeonTokens() + tokens));
+
         GameHelper.incrementObservable(this.statistics.totalTokens, tokens);
         Game.animateMoney(tokens,'playerMoneyDungeon');
     }
@@ -713,6 +732,14 @@ class Player {
         this._oakItemsEquipped = value;
     }
 
+    get effectEngine(): { [name: string]: number } {
+        return this._effectEngine;
+    }
+
+    set effectEngine(value: { [name: string]: number }) {
+        this._effectEngine = value;
+    }
+
     get starter(): GameConstants.Starter {
         return this._starter;
     }
@@ -785,7 +812,24 @@ class Player {
             }
         }
 
+        if(this.effectEngine[GameConstants.BattleItemType.xAttack]){
+            attack *= 1.5;
+        }
+
         return Math.round(attack);
+
+    }
+
+    public getRandomBerry() {
+        let i = GameHelper.getIndexFromDistribution(GameConstants.BerryDistribution);
+        Notifier.notify("You got a " + GameConstants.BerryType[i] + " berry!", GameConstants.NotificationOption.success);
+        let amount = 1;
+        if (this.effectEngine[GameConstants.BattleItemType.xClick]) {
+            if (Math.random() < 0.5) {
+                amount += 1;
+            }
+        }
+        player.berryList[i](player.berryList[i]() + amount);
     }
 
     get mineEnergy() {
@@ -972,6 +1016,7 @@ class Player {
             "_starter",
             "_oakItemExp",
             "_oakItemsEquipped",
+            "_effectEngine",
             "_itemList",
             "_itemMultipliers",
             "_keyItems",
@@ -1010,6 +1055,5 @@ class Player {
         let plainJS = ko.toJS(this);
         return Save.filter(plainJS, keep)
     }
-
 }
 
