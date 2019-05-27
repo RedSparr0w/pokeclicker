@@ -136,19 +136,19 @@
                                 <td width="33.33%">
                                     <span style="display: inline;">
                                         <img title="Money" src="assets/images/currency/money.png">
-                                        <span id="playerMoney" data-bind="text: player.money">0</span>
+                                        <span id="playerMoney" data-bind="text: new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(player.money)">0</span>
                                     </span>
                                 </td>
                                 <td width="33.33%">
                                     <span style="display: inline;">
                                         <img title="Dungeon Tokens" src="assets/images/currency/dungeonToken.png">
-                                        <span id="playerMoneyDungeon" data-bind="text: player.dungeonTokens">Not yet</span>
+                                        <span id="playerMoneyDungeon" data-bind="text: new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(player.dungeonTokens())">Not yet</span>
                                     </span>
                                 </td>
                                 <td width="33.33%">
                                     <span style="display: inline;">
                                         <img title="Quest points" src="assets/images/currency/questPoint.png">
-                                        <span id="playerMoneyQuest" data-bind="text: player.questPoints">Not yet</span>
+                                        <span id="playerMoneyQuest" data-bind="text: new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(player.questPoints)">Not yet</span>
                                     </span>
                                 </td>
                             </tr>
@@ -516,7 +516,7 @@
 
         <!--Right column-->
         <div class="col-lg-3">
-            <div class="page-item" id="oakItemsContainer" 
+            <div class="page-item" id="oakItemsContainer"
             data-bind="visible: player.starter != GameConstants.Starter.None" style="background-color: white;">
                 <div class="card">
                     <div>
