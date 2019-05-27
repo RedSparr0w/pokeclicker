@@ -1,43 +1,20 @@
-.prestige-table {
-  width: 100%;
-}
-.prestige-table td {
-  width: 14.2857143%;
-  position: relative;
-}
-.prestige-table td:after {
-  content: '';
-  display: block;
-  margin-top: 100%;
-}
 .prestige-upgrade {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  cursor: pointer;
 }
 
 .prestige-easy {
-  background-color: whitesmoke;
+  filter: hue-rotate(30deg) brightness(75%);
 }
 
 .prestige-medium {
-  background-color: whitesmoke;
+  filter: hue-rotate(-20deg) brightness(75%);
 }
 
 .prestige-hard {
-  background-color: whitesmoke;
+  filter: hue-rotate(-60deg) brightness(75%);
 }
 
 .prestige-locked {
-  background-color: grey;
-  cursor: not-allowed;
-  z-index: 2;
-}
-
-.prestige-reachable {
   background-color: lightgrey;
-  cursor: pointer;
-  z-index: 2;
+  cursor: not-allowed !important;
 }

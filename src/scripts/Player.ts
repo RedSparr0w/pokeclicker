@@ -11,7 +11,7 @@ class Player {
     public achievementsCompleted: { [name: string]: boolean };
     public prestigesCompleted: number[] = [0,0,0];
     public prestigePoints: number[] = [0,0,0];
-    public prestigeUpgradesBought = new Array(GameConstants.AMOUNT_OF_PRESTIGE_UPGRADES).fill(false);
+    public prestigeUpgradesBought = {};
 
     private _caughtShinyList: KnockoutObservableArray<string>;
     private _route: KnockoutObservable<number>;

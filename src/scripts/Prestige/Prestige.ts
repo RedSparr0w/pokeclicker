@@ -51,13 +51,9 @@ class Prestige {
      * Set the id of the upgrade to true in player and subtract the correct points.
      */
     public static buyUpgrade(upgradeId: number) {
-        if(upgradeId == 0){
-            return;
-        }
         if (this.canBuyUpgrade(upgradeId)) {
             player.prestigeUpgradesBought[upgradeId] = true;
         }
-        this.updateHTML();
     }
 
     /**
@@ -74,7 +70,7 @@ class Prestige {
      * Check if an upgrade is bought.
      */
     public static isUpgradeBought(upgradeId: number): boolean {
-        return player.prestigeUpgradesBought[upgradeId];
+        return !!player.prestigeUpgradesBought[upgradeId];
     }
 
 
@@ -101,12 +97,10 @@ class Prestige {
         if (!this.canReachUpgrade(upgradeId)) {
             Notifier.notify("Can't reach this upgrade yet", GameConstants.NotificationOption.danger);
             return false;
-
         }
         if (player.prestigePoints[prestigeUpgrade.costType] < prestigeUpgrade.cost) {
             Notifier.notify("Can't afford upgrade", GameConstants.NotificationOption.danger);
             return false;
-
         }
         return true;
     }
@@ -131,6 +125,7 @@ class Prestige {
 
     public static initialize() {
         // TODO add correct description and bonuses
+        this.addUpgrade(new PrestigeUpgrade(0, "Harvest time decreased by 33%", 2, GameConstants.PrestigeType.Easy, -0.33));
         this.addUpgrade(new PrestigeUpgrade(1, "Harvest time decreased by 33%", 2, GameConstants.PrestigeType.Easy, -0.33));
         this.addUpgrade(new PrestigeUpgrade(2, "Harvest time decreased by 33%", 1, GameConstants.PrestigeType.Easy, -0.33));
         this.addUpgrade(new PrestigeUpgrade(3, "Harvest time decreased by 33%", 2, GameConstants.PrestigeType.Easy, -0.33));
@@ -169,32 +164,4 @@ class Prestige {
         this.addUpgrade(new PrestigeUpgrade(36, "Harvest time decreased by 33%", 1, GameConstants.PrestigeType.Easy, -0.33));
         this.addUpgrade(new PrestigeUpgrade(37, "Harvest time decreased by 33%", 2, GameConstants.PrestigeType.Easy, -0.33));
     }
-
-    public static updateHTML() {
-        let html = "<table class='prestige-table'>";
-        for (let i = 0; i < this.upgradeLayout.length; i++) {
-            html += "<tr>";
-            for (let j = 0; j < this.upgradeLayout[i].length; j++) {
-                const id = this.upgradeLayout[i][j];
-                const cssClass = this.getUpgrade(id) !== undefined ? GameConstants.PrestigeType[this.getUpgrade(id).costType].toLocaleLowerCase() : "none";
-                let opacity = "prestige-locked";
-                if (this.isUpgradeBought(id) || id == 0) {
-                    opacity = ""
-                } else if (this.canReachUpgrade(id)) {
-                    opacity = "prestige-reachable";
-                }
-                const upgrade = this.getUpgrade(id);
-                if (upgrade) {
-                  html += `<td><div onclick=Prestige.buyUpgrade(${id}) class='prestige-upgrade prestige-${cssClass} ${opacity}'><strong>Cost: ${upgrade.cost} ${GameConstants.PrestigeType[upgrade.costType]} points</strong><p>${upgrade.description}</p></div></td>`;
-                } else {
-                  html += `<td><div class='prestige-upgrade prestige-${cssClass} ${opacity}'></div></td>`;
-                }
-            }
-
-            html += "</tr>";
-        }
-
-        $("#prestige-modal-body").html(html)
-    }
-
 }
