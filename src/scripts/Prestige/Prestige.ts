@@ -87,7 +87,6 @@ class Prestige {
     public static startPrestige(type: GameConstants.PrestigeType) {
         this.awardPrestigePoints(type);
         // TODO
-        player.caughtPokemonList([]);
     }
 
     /**
