@@ -172,19 +172,20 @@ class Prestige {
         for (let i = 0; i < this.upgradeLayout.length; i++) {
             html += "<tr>";
             for (let j = 0; j < this.upgradeLayout[i].length; j++) {
-                let id = this.upgradeLayout[i][j];
-                let cssClass = this.getUpgrade(id) !== undefined ? GameConstants.PrestigeType[this.getUpgrade(id).costType].toLocaleLowerCase() : "none";
+                const id = this.upgradeLayout[i][j];
+                const cssClass = this.getUpgrade(id) !== undefined ? GameConstants.PrestigeType[this.getUpgrade(id).costType].toLocaleLowerCase() : "none";
                 let opacity = "prestige-locked";
                 if (this.isUpgradeBought(id) || id == 0) {
                     opacity = ""
                 } else if (this.canReachUpgrade(id)) {
                     opacity = "prestige-reachable";
                 }
-
-
-                html += "<td>";
-                html += `<div onclick=Prestige.buyUpgrade(${id}) class='prestige-upgrade prestige-${cssClass} ${opacity}'>${id}</div>`;
-                html += "</td>";
+                const upgrade = this.getUpgrade(id);
+                if (upgrade) {
+                  html += `<td><div onclick=Prestige.buyUpgrade(${id}) class='prestige-upgrade prestige-${cssClass} ${opacity}'><strong>Cost: ${upgrade.cost} ${GameConstants.PrestigeType[upgrade.costType]} points</strong><p>${upgrade.description}</p></div></td>`;
+                } else {
+                  html += `<td><div class='prestige-upgrade prestige-${cssClass} ${opacity}'></div></td>`;
+                }
             }
 
             html += "</tr>";
