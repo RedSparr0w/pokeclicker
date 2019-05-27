@@ -64,7 +64,10 @@ class Prestige {
      * Reward 1 of each point that is lower or equal to the prestige that is started.
      */
     public static awardPrestigePoints(type: GameConstants.PrestigeType) {
-        // TODO
+        for(let i = 0; i <= type; i++){
+          player.prestigePoints[i]++;
+        }
+        return player.prestigePoints;
     }
 
     /**
