@@ -2,31 +2,32 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header p-0">
-              <table width="100%">
-                <tbody>
-                  <tr data-bind="foreach: player.prestigePoints">
-                    <td width="33.33%">
-                        <span style="display: inline;">
-                            <img src="assets/images/currency/money.png"
-                               data-bind="css: {
-                                 'prestige-easy': $index() == 0,
-                                 'prestige-medium': $index() == 1,
-                                 'prestige-hard': $index() == 2,
-                               }" />
-                            <span data-bind="text: new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format($data)">0</span>
-                        </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                <table width="100%">
+                    <tbody>
+                        <tr data-bind="foreach: player.prestigePoints">
+                            <td width="33.33%">
+                                <span style="display: inline;">
+                                    <img src="assets/images/currency/money.png"
+                                       data-bind="css: {
+                                         'prestige-easy': $index() == 0,
+                                         'prestige-medium': $index() == 1,
+                                         'prestige-hard': $index() == 2,
+                                       }" />
+                                    <span data-bind="text: new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format($data)">0</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-body p-0" id="prestige-modal-body">
-                <ul class="list-group" data-bind="foreach: Prestige.upgradeList">
-                    <!-- ko if: Prestige.canReachUpgrade(id) && !Prestige.isUpgradeBought(id) -->
+                <ul class="list-group" data-bind="foreach: Prestige.upgradeList()">
+                    <!-- ko if: !Prestige.isUpgradeBought(id) -->
                         <li class="list-group-item d-flex justify-content-between lh-condensed prestige-upgrade"
                             data-bind="css: {
-                              'prestige-locked': !Prestige.canBuyUpgrade(id),
-                            }">
+                              'prestige-locked': !Prestige.canReachUpgrade(id),
+                            },
+                            click: function(){Prestige.buyUpgrade(id);}">
                             <div>
                                 <strong data-bind="text: description">Upgrade Description</strong>
                             </div>

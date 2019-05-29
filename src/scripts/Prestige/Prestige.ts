@@ -61,7 +61,7 @@ class Prestige {
      */
     public static awardPrestigePoints(type: GameConstants.PrestigeType) {
         for(let i = 0; i <= type; i++){
-          player.prestigePoints[i]++;
+          player.prestigePoints[i](player.prestigePoints[i]()+1);
         }
         return player.prestigePoints;
     }

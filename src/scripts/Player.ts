@@ -10,7 +10,7 @@ class Player {
 
     public achievementsCompleted: { [name: string]: boolean };
     public prestigesCompleted: number[] = [0,0,0];
-    public prestigePoints: number[] = [0,0,0];
+    public prestigePoints: Array<KnockoutObservable<number>>;
     public prestigeUpgradesBought = {};
 
     private _caughtShinyList: KnockoutObservableArray<string>;
@@ -71,6 +71,9 @@ class Player {
                 return new CaughtPokemon(PokemonHelper.getPokemonByName(pokemon.name), pokemon.evolved, pokemon.attackBonus, pokemon.exp, pokemon.breeding)
             });
         }
+        this.prestigePoints = Array.apply(null, Array(3)).map(function (val, index) {
+            return ko.observable(savedPlayer.prestigePoints ? (savedPlayer.prestigePoints[index] || 20) : 20)
+        });
         this._caughtPokemonList = ko.observableArray<CaughtPokemon>(tmpCaughtList);
         this._routeKills = Array.apply(null, Array(GameConstants.AMOUNT_OF_ROUTES + 1)).map(function (val, index) {
             return ko.observable(savedPlayer._routeKills ? (savedPlayer._routeKills[index] || 0) : 0)
