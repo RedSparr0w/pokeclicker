@@ -21,7 +21,7 @@
                 </table>
             </div>
             <div class="modal-body p-0" id="prestige-modal-body">
-                <ul class="list-group" data-bind="foreach: Prestige.upgradeList()">
+                <ul class="list-group" data-bind="foreach: Prestige.upgradeList">
                     <!-- ko if: !Prestige.isUpgradeBought(id) -->
                         <li class="list-group-item d-flex justify-content-between lh-condensed prestige-upgrade"
                             data-bind="css: {
