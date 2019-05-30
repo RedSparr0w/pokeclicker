@@ -4,6 +4,7 @@
  */
 
 class Player {
+    private version: string = window.version || '0.0.0';
 
     private _money: KnockoutObservable<number>;
     private _dungeonTokens: KnockoutObservable<number>;
@@ -1006,10 +1007,10 @@ class Player {
             "tutorialProgress",
             "tutorialState",
             "tutorialComplete",
+            "version",
         ];
         let plainJS = ko.toJS(this);
         return Save.filter(plainJS, keep)
     }
 
 }
-
