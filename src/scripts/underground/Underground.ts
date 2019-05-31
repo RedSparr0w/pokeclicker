@@ -114,32 +114,28 @@ class Underground {
             let item = player._mineInventory()[i];
             if (item.id == id) {
                 if (item.amount() > 0) {
-                    let success = Underground.gainProfit(item);
-                    if (success) {
-                        let amt = item.amount();
-                        player._mineInventory()[i].amount(amt - 1);
-                    }
+                    let amt = item.amount();
+                    player._mineInventory()[i].amount(amt - 1);
+                    Underground.gainProfit(item);
                     return;
                 }
             }
         }
     }
 
-    private static gainProfit(item: UndergroundItem): boolean {
-        let success = true;
+    private static gainProfit(item: UndergroundItem) {
         switch (item.valueType) {
             case "Diamond":
                 player.diamonds += item.value;
                 break;
             case "Mine Egg":
-                success = player.gainEgg(BreedingHelper.createFossilEgg(item.name));
+                player.gainEgg(BreedingHelper.createFossilEgg(item.name));
                 break;
             default:
                 let type = item.valueType.charAt(0).toUpperCase() + item.valueType.slice(1); //Capitalizes string
                 let typeNum = GameConstants.PokemonType[type];
                 player._shardsCollected[typeNum](player._shardsCollected[typeNum]() + GameConstants.PLATE_VALUE);
         }
-        return success;
     }
 
     public static openUndergroundModal() {
