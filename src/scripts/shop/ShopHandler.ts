@@ -33,7 +33,8 @@ class ShopHandler {
             player.payCurrency(item.totalPrice(), item.currency);
             item.buy(this.amount());
             item.increasePriceMultiplier(this.amount());
-            Notifier.notify("You bought " + this.amount() + " " + item.name() + multiple, GameConstants.NotificationOption.success)
+            Notifier.notify("You bought " + this.amount() + " " + item.name() + multiple, GameConstants.NotificationOption.success);
+            this.showShop(this.shopObservable());
         } else {
             let curr = "currency";
             switch (item.currency) {
@@ -67,7 +68,7 @@ class ShopHandler {
 
     public static ownKeyItem(name: string): boolean {
         let keyItem = GameConstants.KeyItemType[name];
-        return !(keyItem != undefined && player.hasKeyItem(name.replace("_", " ")));
+        return keyItem != undefined && player.hasKeyItem(name.replace("_", " "));
     }
 
     public static calculateCss(i: number): string {
