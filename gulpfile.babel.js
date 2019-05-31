@@ -51,7 +51,7 @@ const dests = {
 };
 
 gulp.task('cname', () => {
-    const str = "pokeclicker.redsparr0w.com";
+    const str = 'pokeclicker.redsparr0w.com';
     return file('CNAME', str, {src: true})
         .pipe(gulp.dest('docs/'));
 });
@@ -128,7 +128,7 @@ gulp.task('copyWebsite', () => {
 gulp.task('build', ['copy', 'assets', 'import', 'scripts', 'styles', 'full-changelog']);
 
 gulp.task('website', done => {
-    runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite', () => done());
+    runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite', 'cname', () => done());
 });
 
 gulp.task('default', done => {
