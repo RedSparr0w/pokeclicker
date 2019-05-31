@@ -5,7 +5,7 @@ function playerVersionOlderThan(checkVersion){
   checkVersion = checkVersion.split('.').map(Number);
 
   if (typeof player === 'undefined'){
-    player = JSON.parse(localStorage.player || {});
+    player = JSON.parse(localStorage.player || '{}');
   }
   const playerVersion = (player.version || '0.0.0').split('.').map(Number);
 
@@ -16,7 +16,7 @@ function playerVersionOlderThan(checkVersion){
 ((version) => {
   // Get the saved player object
   if (typeof player === 'undefined'){
-    player = JSON.parse(localStorage.player || {});
+    player = JSON.parse(localStorage.player || '{}');
   }
 
   if (playerVersionOlderThan('1.0.0')){
