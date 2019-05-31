@@ -99,7 +99,7 @@
     </style>
 
 </head>
-<body class="no-select">
+<body class="no-select" data-bind="css: { 'dark-mode': player.darkMode() }">
 <div class="loader" id="loader">
     <br>
     <div class="loader-wrapper">
@@ -155,6 +155,10 @@
         </li>
         <li>
             <a class="dropdown-item" href="https://gitreports.com/issue/Ishadijcks/pokeclicker" target="_blank">Report a bug</a>
+        </li>
+        <hr class="seperator"></hr>
+        <li>
+            <a class="dropdown-item bg-inverse text-white" href="" data-bind="click: function(){ player.darkMode(!player.darkMode()); }, css: { 'active': player.darkMode() }">Dark mode</a>
         </li>
 
     </ul>
@@ -279,8 +283,8 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                    class="key-item"
                    data-bind="attr:{ title: KeyItemHandler.getKeyItemByName(player.recentKeyItem()).name(),  src: 'assets/images/keyitems/' + KeyItemHandler.getKeyItemByName(player.recentKeyItem()).name() + '.png'}"
                    src=""/><br>
-           <span data-bind="text: KeyItemHandler.getKeyItemByName(player.recentKeyItem()).name()">Name</span><br>
-           <span data-bind="text: KeyItemHandler.getKeyItemByName(player.recentKeyItem()).description()">Description</span>
+           <span><strong data-bind="text: KeyItemHandler.getKeyItemByName(player.recentKeyItem()).name()">Name</strong></span><br>
+           <span data-bind="html: KeyItemHandler.getKeyItemByName(player.recentKeyItem()).description()">Description</span>
 
        </div>
        <div class="modal-footer">
@@ -289,6 +293,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
    </div>
 </div>
 </div>
+
 
 <!-- Show keyitems modal-->
 <!-- Show Items modal-->
@@ -510,14 +515,14 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                 </td>
                                 <td width="33.33%">
                                     <span style="display: inline;">
-                                        <img title="Dungeon Tokens" src="assets/images/currency/dungeonToken.png">
-                                        <span id="playerMoneyDungeon" data-bind="text: player.dungeonTokens">Not yet</span>
+                                        <img title="Dungeon Tokens&#013;&#010;Gained by capturing Pokemon" src="assets/images/currency/dungeonToken.png">
+                                        <span id="playerMoneyDungeon" data-bind="text: player.dungeonTokens">0</span>
                                     </span>
                                 </td>
                                 <td width="33.33%">
                                     <span style="display: inline;">
                                         <img title="Quest points" src="assets/images/currency/questPoint.png">
-                                        <span id="playerMoneyQuest" data-bind="text: player.questPoints">Not yet</span>
+                                        <span id="playerMoneyQuest" data-bind="text: player.questPoints">0</span>
                                     </span>
                                 </td>
                             </tr>
@@ -737,10 +742,8 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                    Gym
                </button>
            </li>
-           <li class="nav-item" data-bind="if:player.town().shop">
-               <button class="btn btn-secondary"
-                       onclick="ShopHandler.showShop(player.town().shop())">Shop
-               </button>
+           <li class="nav-item" data-bind="visible:player.town().shop">
+               <a class="btn btn-secondary" href="#shopModal" data-toggle="modal" onclick="ShopHandler.showShop(player.town().shop())">Shop</a>
            </li>
            <li class="nav-item" data-bind="if:MapHelper.ableToTravel() && GameConstants.StartingTowns.indexOf(player.town().name()) > -1">
                <button class="btn btn-secondary"
@@ -794,6 +797,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
    </div>
 </div>
 </div>
+
 
                 <!--GymView-->
                 <div id="gymView" data-bind="if: Game.gameState() === GameConstants.GameState.gym">
@@ -868,73 +872,80 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
 </div>
 
                 <!--ShopView-->
-                <div id="shopView"
-     data-bind="if: Game.gameState() === GameConstants.GameState.shop">
-<div class="row justify-content-center" data-bind="foreach: ShopHandler.shopObservable().items">
-   <div class="col-sm-3"  data-bind="visible: ShopHandler.ownKeyItem(name())">
-       <div
-               data-bind="click: function() {ShopHandler.setSelected($index())}, attr: {class: ShopHandler.calculateCss($index())}">
-           <img src="" height="36px"
-                data-bind="attr:{ src: 'assets/images/items/' + name() + '.png' }">
-           <p data-bind="text: GameConstants.humanifyString(name())">Item Name</p>
-           <p>
-               <img src="" class="currencyImage"
-                    data-bind="attr:{ src: 'assets/images/currency/' + GameConstants.Currency[currency]+ '.png' }">
-               <span data-bind="text: totalPrice">Price</span>
-           </p>
-       </div>
-   </div>
+                <div class="modal fade noselect" id="shopModal" tabindex="-1" role="dialog"
+     aria-labelledby="shopModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 data-bind="text: player.town().name() + ' Shop'">Shop</h4>
+            </div>
+            <div class="modal-body">
+               <div class="row justify-content-center" data-bind="foreach: ShopHandler.shopObservable().items">
+                  <div class="col-sm-3"  data-bind="hidden: ShopHandler.ownKeyItem(name())">
+                      <div
+                              data-bind="click: function() {ShopHandler.setSelected($index())}, attr: {class: ShopHandler.calculateCss($index())}">
+                          <img src="" height="36px"
+                               data-bind="attr:{ src: 'assets/images/items/' + name() + '.png' }">
+                          <p data-bind="text: GameConstants.humanifyString(name())">Item Name</p>
+                          <p>
+                              <img src="" class="currencyImage"
+                                   data-bind="attr:{ src: 'assets/images/currency/' + GameConstants.Currency[currency]+ '.png' }">
+                              <span data-bind="text: totalPrice">Price</span>
+                          </p>
+                      </div>
+                  </div>
+               </div>
+                <div class="row justify-content-center">
+                   <div class="col-11 col-sm-10 col-md-11">
+                       <div class="input-group" style="margin-bottom: 6px; margin-top: 6px">
+                           <span class="input-group-btn">
+                               <button class="btn btn-secondary smallButton smallFont" type="button"
+                                       onclick="ShopHandler.increaseAmount(-100)">-100
+                               </button>
+                           </span>
+                           <span class="input-group-btn">
+                               <button class="btn btn-secondary smallButton smallFont"
+                                       type="button"
+                                       onclick="ShopHandler.increaseAmount(-10)">-10
+                               </button>
+                           </span>
+                           <span class="input-group-btn">
+                               <button class="btn btn-danger smallButton smallFont"
+                                       onclick="ShopHandler.resetAmount()">1
+                               </button>
+                           </span>
+                           <input id="amountOfItems" type="number" class="form-control form-control-number"
+                                  value="1" min="1" required name="amountOfItems"
+                                  oninput="ShopHandler.amount(parseInt($(this).val().toString()) || 0);"
+                                  onchange="ShopHandler.amount(parseInt($(this).val().toString()) || 0);" title="">
+                           <span class="input-group-btn">
+                               <button class="btn btn-secondary smallButton smallFont" type="button"
+                                       onclick="ShopHandler.increaseAmount(10)">+10
+                               </button>
+                           </span>
+                           <span class="input-group-btn">
+                               <button class="btn btn-secondary smallButton smallFont"
+                                       type="button"
+                                       onclick="ShopHandler.increaseAmount(100)">+100
+                               </button>
+                           </span>
+                           <span class="input-group-btn" style="float: right;">
+                               <button data-bind="attr: {class: ShopHandler.calculateButtonCss()}"
+                                       onclick="ShopHandler.buyItem()">Buy
+                               </button>
+                           </span>
+                       </div>
+                   </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="row justify-content-center">
-   <div class="col-11 col-sm-10 col-md-11">
-       <div class="input-group" style="margin-bottom: 6px; margin-top: 6px">
-           <span class="input-group-btn">
-               <button class="btn btn-secondary smallButton smallFont" type="button"
-                       onclick="ShopHandler.increaseAmount(-100)">-100
-               </button>
-           </span>
-           <span class="input-group-btn">
-               <button class="btn btn-secondary smallButton smallFont"
-                       type="button"
-                       onclick="ShopHandler.increaseAmount(-10)">-10
-               </button>
-           </span>
-           <span class="input-group-btn">
-               <button class="btn btn-danger smallButton smallFont"
-                       onclick="ShopHandler.resetAmount()">1
-               </button>
-           </span>
-           <input id="amountOfItems" type="number" class="form-control form-control-number"
-                  value="1" min="1" required name="amountOfItems"
-                  oninput="ShopHandler.amount(parseInt($(this).val().toString()) || 0);"
-                  onchange="ShopHandler.amount(parseInt($(this).val().toString()) || 0);" title="">
-           <span class="input-group-btn">
-               <button class="btn btn-secondary smallButton smallFont" type="button"
-                       onclick="ShopHandler.increaseAmount(10)">+10
-               </button>
-           </span>
-           <span class="input-group-btn">
-               <button class="btn btn-secondary smallButton smallFont"
-                       type="button"
-                       onclick="ShopHandler.increaseAmount(100)">+100
-               </button>
-           </span>
-           <span class="input-group-btn" style="float: right;">
-               <button data-bind="attr: {class: ShopHandler.calculateButtonCss()}"
-                       onclick="ShopHandler.buyItem()">Buy
-               </button>
-           </span>
-       </div>
-   </div>
-</div>
-<div class="row justify-content-center" style="margin-bottom: 6px">
-    <button class="btn btn-primary"
-            type="button"
-            onClick="Game.gameState(GameConstants.GameState.town)">Return to Town
-    </button>
-</div>
-    
-</div>
+
             </div>
 
             <div data-bind="if: Game.gameState() === GameConstants.GameState.dungeon">
@@ -2164,17 +2175,17 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                     <div>
                         <div>
                             <img class="clickable" src=""
-                                 data-bind="attr:{ src: 'assets/images/oakitems/' + $data.name() + '.png'},
-                                  css: {'oak-item-small-selected': OakItemRunner.isActive($data.name()),
-                                        'oak-item-small': !OakItemRunner.isActive($data.name()),
-                                        'oak-item-locked': !OakItemRunner.isUnlocked($data.name())
-
-                                        },
+                                 data-bind="attr:{ src: '/assets/images/oakitems/' + $data.displayName() + '.png'},
+                                  css: {
+                                    'oak-item-small-selected': OakItemRunner.isActive($data.id),
+                                    'oak-item-small': !OakItemRunner.isActive($data.id),
+                                    'oak-item-locked': !OakItemRunner.isUnlocked($data.id)
+                                 },
                                  event: {
-                                    mouseover: function(){OakItemRunner.hover($data.name())},
-                                    click: function(){OakItemRunner.click($data.name())},
+                                    mouseover: function(){OakItemRunner.hover($data.id)},
+                                    click: function(){OakItemRunner.click($data.id)},
                                     mouseout : function(){OakItemRunner.hoverRelease()}
-                                    }">
+                                 }">
                         </div>
 
                     </div>
@@ -2186,7 +2197,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                         <div class="row justify-content-sm-center">
                             <div style="height:20px;" class="col">
                                 <b>
-                                    <span data-bind="text: OakItemRunner.inspectedItem().name()"></span>
+                                    <span data-bind="text: OakItemRunner.inspectedItem().displayName()"></span>
                                 </b>
                             </div>
                         </div>
@@ -2234,13 +2245,13 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                         <div class="row justify-content-sm-center">
                             <div style="height:20px;" class="col">
                                 <b>
-                                    <span data-bind="text: OakItemRunner.inspectedItem().name()"></span>
+                                    <span data-bind="text: OakItemRunner.inspectedItem().displayName()"></span>
                                 </b>
                             </div>
                         </div>
 
                         <div style="min-height:80px; vertical-align: center">
-                            Capture <span data-bind="text: OakItemRunner.inspectedItem().unlockReq"></span> Pokémon to
+                            Capture <span data-bind="text: OakItemRunner.inspectedItem().unlockReq - player.caughtPokemonList.length"></span> new Pokémon to
                             unlock!
                         </div>
                     </div>
