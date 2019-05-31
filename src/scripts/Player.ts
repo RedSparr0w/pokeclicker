@@ -4,6 +4,8 @@
  */
 
 class Player {
+    private version: string = window.version || '0.0.0';
+
     private darkMode: KnockoutObservable<boolean>;
     private _money: KnockoutObservable<number>;
     private _dungeonTokens: KnockoutObservable<number>;
@@ -321,7 +323,7 @@ class Player {
     private _caughtAmount: Array<KnockoutObservable<number>>;
 
     public calculateClickAttack(): number {
-        let oakItemBonus = OakItemRunner.isActive("Poison Barb") ? (1 + OakItemRunner.calculateBonus("Poison Barb") / 100) : 1;
+        let oakItemBonus = OakItemRunner.isActive(GameConstants.OakItem.PoisonBarb) ? (1 + OakItemRunner.calculateBonus(GameConstants.OakItem.PoisonBarb) / 100) : 1;
         let clickAttack = Math.floor(Math.pow(this.caughtPokemonList.length + 1, 1.4) * oakItemBonus);
         if(this.effectEngine[GameConstants.BattleItemType.xClick]){
             clickAttack *= 1.5;
@@ -410,7 +412,7 @@ class Player {
     }
 
     public capturePokemon(pokemonName: string, shiny: boolean = false, supressNotification = false) {
-        OakItemRunner.use("Magic Ball");
+        OakItemRunner.use(GameConstants.OakItem.MagicBall);
         let pokemonData = PokemonHelper.getPokemonByName(pokemonName);
         if (!this.alreadyCaughtPokemon(pokemonName)) {
             let caughtPokemon: CaughtPokemon = new CaughtPokemon(pokemonData, false, 0, 0);
@@ -443,9 +445,9 @@ class Player {
     }
 
     public gainMoney(money: number) {
-        OakItemRunner.use("Amulet Coin");
+        OakItemRunner.use(GameConstants.OakItem.AmuletCoin);
         // TODO add money multipliers
-        let oakItemBonus = OakItemRunner.isActive("Amulet Coin") ? (1 + OakItemRunner.calculateBonus("Amulet Coin") / 100) : 1;
+        let oakItemBonus = OakItemRunner.isActive(GameConstants.OakItem.AmuletCoin) ? (1 + OakItemRunner.calculateBonus(GameConstants.OakItem.AmuletCoin) / 100) : 1;
         let moneytogain = Math.floor(money * oakItemBonus * (1 + AchievementHandler.achievementBonus()))
         if(this.effectEngine[GameConstants.BattleItemType.Lucky_incense]){
             moneytogain = Math.floor(moneytogain * 1.5);
@@ -532,10 +534,10 @@ class Player {
     }
 
     public gainExp(exp: number, level: number, trainer: boolean) {
-        OakItemRunner.use("Exp Share");
+        OakItemRunner.use(GameConstants.OakItem.ExpShare);
         // TODO add exp multipliers
         let trainerBonus = trainer ? 1.5 : 1;
-        let oakItemBonus = OakItemRunner.isActive("Exp Share") ? 1 + (OakItemRunner.calculateBonus("Exp Share") / 100) : 1;
+        let oakItemBonus = OakItemRunner.isActive(GameConstants.OakItem.ExpShare) ? 1 + (OakItemRunner.calculateBonus(GameConstants.OakItem.ExpShare) / 100) : 1;
         let expTotal = Math.floor(exp * level * trainerBonus * oakItemBonus * (1 + AchievementHandler.achievementBonus()) / 9);
 
         if(this.effectEngine[GameConstants.BattleItemType.xExp]){
@@ -1053,6 +1055,7 @@ class Player {
             "tutorialProgress",
             "tutorialState",
             "tutorialComplete",
+            "version",
         ];
         let plainJS = ko.toJS(this);
         return Save.filter(plainJS, keep)
