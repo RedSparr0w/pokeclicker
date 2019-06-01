@@ -112,14 +112,14 @@ namespace GameConstants {
     }
 
     export enum OakItem {
-        MagicBall = 0,
-        AmuletCoin,
-        PoisonBarb,
-        ExpShare,
+        Magic_Ball = 0,
+        Amulet_Coin,
+        Poison_Barb,
+        Exp_Share,
         Sprayduck,
-        ShinyCharm,
-        BlazeCassette,
-        CellBattery,
+        Shiny_Charm,
+        Blaze_Cassette,
+        Cell_Battery,
     }
 
     // Dungeons
@@ -324,13 +324,13 @@ namespace GameConstants {
         "shiny" = 4
     }
 
-    class Option {
-        optionText: String;
-        optionValue: GameConstants.SortOptionsEnum;
+    export class Option {
+        text: String;
+        value: any;
 
         constructor(text, value) {
-            this.optionText = text;
-            this.optionValue = value;
+            this.text = text;
+            this.value = value;
         }
     }
 
@@ -536,21 +536,40 @@ namespace GameConstants {
     }
 
     export const ItemPrice = {
+        // Money
         "Pokeball": 100,
         "Greatball": 500,
         "Ultraball": 2000,
         "Masterball": 10000,
+
         "xAttack": 600,
         "xClick": 400,
         "xExp": 800,
         "Token_collector": 1000,
         "Item_magnet": 1500,
         "Lucky_incense": 2000,
+
+        "SmallRestore": 100,
+        "MediumRestore": 100,
+        "LargeRestore": 100,
+
+        "PokeBlock": 0,
+
+        "Protein": 0,
+        "RareCandy": 0,
+
+        // Quest points
         "Eevee": 5000,
         "Porygon": 2000,
         "Jynx": 2500,
         "Mr_Mime": 1500,
         "Lickitung": 1000,
+
+        // TODO: Set prices for different kinds of eggs and stones
+        "Egg": 1000,
+        "EvolutionStone": 2500,
+
+        "Dungeon_ticket": 250,
     };
 
     export enum StoneType {
