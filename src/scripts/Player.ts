@@ -325,7 +325,7 @@ class Player {
     private _caughtAmount: Array<KnockoutObservable<number>>;
 
     public calculateClickAttack(): number {
-        let oakItemBonus = OakItemRunner.isActive(GameConstants.OakItem.PoisonBarb) ? (1 + OakItemRunner.calculateBonus(GameConstants.OakItem.PoisonBarb) / 100) : 1;
+        let oakItemBonus = OakItemRunner.isActive(GameConstants.OakItem.Poison_Barb) ? (1 + OakItemRunner.calculateBonus(GameConstants.OakItem.Poison_Barb) / 100) : 1;
         let clickAttack = Math.floor(Math.pow(this.caughtPokemonList.length + 1, 1.4) * oakItemBonus);
         if(this.effectEngine[GameConstants.BattleItemType.xClick]){
             clickAttack *= 1.5;
