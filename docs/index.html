@@ -103,7 +103,7 @@
     </style>
 
 </head>
-<body class="no-select" data-bind="css: { 'dark-mode': player.darkMode() }">
+<body class="no-select" data-bind="attr: {class: Settings.getSetting('theme').observableValue() }">
 <div class="loader" id="loader">
     <br>
     <div class="loader-wrapper">
@@ -146,6 +146,9 @@
             <a class="dropdown-item" href="#showItemsModal" data-toggle="modal">Items</a>
         </li>
         <li>
+            <a class="dropdown-item" href="#settingsModal" data-toggle="modal">Settings</a>
+        </li>
+        <li>
             <a class="dropdown-item" href="#saveModal" data-toggle="modal">Save</a>
         </li>
         <li>
@@ -159,10 +162,6 @@
         </li>
         <li>
             <a class="dropdown-item" href="https://gitreports.com/issue/Ishadijcks/pokeclicker" target="_blank">Report a bug</a>
-        </li>
-        <hr class="seperator"></hr>
-        <li>
-            <a class="dropdown-item bg-inverse text-white" href="" data-bind="click: function(){ player.darkMode(!player.darkMode()); }, css: { 'active': player.darkMode() }">Dark mode</a>
         </li>
 
     </ul>
@@ -363,13 +362,11 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                 <div class="row col-lg-10 col-md-12 offset-md-0 col-sm-12 offset-sm-0"
                                      style="padding-right: 0"
                                      data-bind="foreach: PokemonHelper.getPokemonsWithEvolution(ItemHandler.stoneSelected())">
-                                    <div class="col-md-6 col-sm-10 col-lg-4 offset-sm-1 offset-md-0 offset-md-0 breedingListItem" 
+                                    <div class="col-md-6 col-sm-10 col-lg-4 offset-sm-1 offset-md-0 offset-md-0 breedingListItem"
                                         data-bind="if: (player.alreadyCaughtPokemon($data.name))">
                                         <button class="btn btn-secondary smallButton list-group-item-action" style="padding-right:15px"
                                                 data-bind="click: function() {ItemHandler.pokemonSelected(name)}, css:{ 'pokemon-selected': ItemHandler.pokemonSelected() === name}">
-                                            <img class="smallImage"
-                                                 data-bind="attr:{ src: 'assets/images/pokemon/' + id +'.png' }"
-                                                 src=""/>
+                                            <img class="smallImage" data-bind="attr:{src: '/assets/images/' + (player.alreadyCaughtPokemonShiny($data.name) ? 'shiny' : '') + 'pokemon/' + id +'.png' }"/>
                                             <span data-bind="text: name" style="margin-left: 20px">Name</span>
 
                                             <span style="float:right; margin-top:8px"
@@ -379,7 +376,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                             </span>
                                             <span style="float:right; margin-top:8px"
                                                 data-bind="if: (player.alreadyCaughtPokemon(EvolutionStone.computeEvolution(
-                                                GameConstants.StoneType[ItemHandler.stoneSelected()], name)) 
+                                                GameConstants.StoneType[ItemHandler.stoneSelected()], name))
                                                 && !player.alreadyCaughtPokemonShiny(EvolutionStone.computeEvolution(
                                                     GameConstants.StoneType[ItemHandler.stoneSelected()], name)))">
                                                 <img class="pokeball-smallest" src="assets/images/pokeball/Pokeball-small.png"/>
@@ -420,12 +417,12 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                     <div class="col" style="text-align: center">
                                         <button class="btn btn-secondary amount-button list-group-item-action"
                                                 data-bind="click: function() {ItemHandler.amountSelected(Infinity)}, css:{ 'pokemon-selected': ItemHandler.amountSelected() === Infinity}">
-                                            <span>Until shiny</span>
+                                            <span>All</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
-
+                            <p><b>Evolution stone usage stops when a shiny evolution is encountered</b></p>
                             <div class="row no-gutters justify-content-sm-center">
                                 <div class="row justify-content-center" style="padding:15px;">
                                     <button data-bind="click: function(){ItemHandler.useStones()}" class="btn btn-lg btn-success">Use evolution stones!</button>
@@ -491,6 +488,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
     </div>
 
 </div>
+
 
 <div class="container">
     <div class="row justify-content-center">
@@ -885,17 +883,19 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
             </div>
             <div class="modal-body">
                <div class="row justify-content-center" data-bind="foreach: ShopHandler.shopObservable().items">
-                  <div class="col-sm-3"  data-bind="hidden: ShopHandler.ownKeyItem(name())">
-                      <div
-                              data-bind="click: function() {ShopHandler.setSelected($index())}, attr: {class: ShopHandler.calculateCss($index())}">
+                  <div class="col-sm-3">
+                      <div data-bind="click: function() {ShopHandler.setSelected($index())}, attr: {class: ShopHandler.calculateCss($index())}">
                           <img src="" height="36px"
-                               data-bind="attr:{ src: 'assets/images/items/' + name() + '.png' }">
+                               data-bind="attr:{ src: '/assets/images/items/' + name() + '.png' }">
                           <p data-bind="text: GameConstants.humanifyString(name())">Item Name</p>
-                          <p>
-                              <img src="" class="currencyImage"
-                                   data-bind="attr:{ src: 'assets/images/currency/' + GameConstants.Currency[currency]+ '.png' }">
-                              <span data-bind="text: totalPrice">Price</span>
-                          </p>
+                          <div data-bind="if: $data.isAvailable()">
+                               <img src="" class="currencyImage"
+                                       data-bind="attr:{ src: '/assets/images/currency/' + GameConstants.Currency[currency]+ '.png' }">
+                               <span data-bind="text: totalPrice">Price</span>
+                           </div>
+                           <div data-bind="ifnot: $data.isAvailable()">
+                               <span>Sold Out</span>
+                           </div>
                       </div>
                   </div>
                </div>
@@ -942,13 +942,11 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                    </div>
                 </div>
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
-    </div>
-</div>
+    </div></div>
 
             </div>
 
@@ -2107,8 +2105,8 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
             <div class="page-item pokemon-list-container" id="pokemonListContainer"
                  data-bind="visible: player.starter != GameConstants.Starter.None" style="background-color: white">
                 <select data-bind="options: GameConstants.SortOptions,
-                                   optionsText: 'optionText',
-                                   optionsValue: 'optionValue',
+                                   optionsText: 'text',
+                                   optionsValue: 'value',
                                    value: player._sortOption,
                                    optionsCaption: 'Sort By...'" title="">
                 </select>
@@ -2179,17 +2177,20 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                     <div>
                         <div>
                             <img class="clickable" src=""
-                                 data-bind="attr:{ src: '/assets/images/oakitems/' + $data.displayName() + '.png'},
+                                data-bind="
+                                  attr:{
+                                    src: '/assets/images/oakitems/' + GameConstants.humanifyString(GameConstants.OakItem[$data.id]) + '.png'
+                                  },
                                   css: {
                                     'oak-item-small-selected': OakItemRunner.isActive($data.id),
                                     'oak-item-small': !OakItemRunner.isActive($data.id),
                                     'oak-item-locked': !OakItemRunner.isUnlocked($data.id)
-                                 },
-                                 event: {
-                                    mouseover: function(){OakItemRunner.hover($data.id)},
-                                    click: function(){OakItemRunner.click($data.id)},
-                                    mouseout : function(){OakItemRunner.hoverRelease()}
-                                 }">
+                                  },
+                                  event: {
+                                      mouseover: function(){OakItemRunner.hover($data.id)},
+                                      click: function(){OakItemRunner.click($data.id)},
+                                      mouseout : function(){OakItemRunner.hoverRelease()}
+                                  }">
                         </div>
 
                     </div>
@@ -2201,7 +2202,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                         <div class="row justify-content-sm-center">
                             <div style="height:20px;" class="col">
                                 <b>
-                                    <span data-bind="text: OakItemRunner.inspectedItem().displayName()"></span>
+                                    <span data-bind="text: GameConstants.humanifyString(GameConstants.OakItem[OakItemRunner.inspectedItem().id])"></span>
                                 </b>
                             </div>
                         </div>
@@ -2249,13 +2250,13 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                         <div class="row justify-content-sm-center">
                             <div style="height:20px;" class="col">
                                 <b>
-                                    <span data-bind="text: OakItemRunner.inspectedItem().displayName()"></span>
+                                    <span data-bind="text: GameConstants.humanifyString(GameConstants.OakItem[OakItemRunner.inspectedItem().id])"></span>
                                 </b>
                             </div>
                         </div>
 
                         <div style="min-height:80px; vertical-align: center">
-                            Capture <span data-bind="text: OakItemRunner.inspectedItem().unlockReq - player.caughtPokemonList.length"></span> new Pokémon to
+                            Capture <span data-bind="text: OakItemRunner.inspectedItem().unlockReq - player.caughtPokemonList.length"></span> more unique Pokémon to
                             unlock!
                         </div>
                     </div>
@@ -2439,6 +2440,47 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
    </div>
 </div>
 </div>
+
+<!-- Settings Modal-->
+<div class="modal noselect fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style='justify-content: space-around;'>
+                <span>Settings</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('theme')}"></div>
+                    </div>
+                    <div class="col-md-8">
+                        <div data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('test')}"></div>
+                    </div>
+                </div>
+                <br/>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/html" id="MultipleChoiceSettingTemplate">
+    <div class="dropdown">
+        <h3 data-bind="text: $data.displayName"></h3>
+
+        <div class="btn-group" data-bind="foreach: $data.options">
+            <button class="btn btn-primary" data-bind="
+                css: {active: $parent.isSelected($data.value)()},
+                click: function(){ Settings.setSettingByName($parent.name, $data.value)},
+                text: $data.text"
+            >
+                Option
+            </button>
+        </div>
+    </div>
+</script>
+
 
 <!-- Changelog Modal -->
 <div class="modal fade noselect" id="changelogModal" tabindex="-1" role="dialog"
