@@ -28,10 +28,10 @@
        </div>
        <ul class="nav flex-sm-column featureList">
            <li class="nav-item" data-bind="if:player.town().gym">
-               <button data-bind="attr: { class: Gym.calculateCssClass(player.town().gym()) }"
-                       onclick="GymRunner.startGym(player.town().gym())">
+               <a class="btn btn-secondary" href="#gymModal" data-toggle="modal"
+                   data-bind="attr: { class: Gym.calculateCssClass(player.town().gym()) }">
                    Gym
-               </button>
+               </a>
            </li>
            <li class="nav-item" data-bind="if:player.town().shop">
                <button class="btn btn-secondary"
