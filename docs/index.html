@@ -464,7 +464,7 @@ aria-labelledby="keyItemModalLabel" aria-hidden="true">
                                     <div class="col-sm-11">
                                         <div data-bind="if: KeyItemHandler.inspectedItem().isUnlocked()">
                                             <p style="margin-top: 5px"
-                                               data-bind="text: KeyItemHandler.inspectedItem().description"></p>
+                                               data-bind="html: KeyItemHandler.inspectedItem().description"></p>
                                         </div>
                                         <div data-bind="ifnot: KeyItemHandler.inspectedItem().isUnlocked()">
                                             <p style="margin-top: 5px">?????</p>
@@ -2721,7 +2721,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                     data-bind="foreach: player.maxLevelPokemonList()">
                    <div class="col-md-6 col-sm-10 col-lg-4 offset-sm-1 offset-md-0 offset-md-0 breedingListItem">
                        <button class="btn btn-secondary smallButton list-group-item-action"
-                               data-bind="click: function() {$('#breedingModal').modal('hide');BreedingHelper.gainPokemonEgg($data);}">
+                               data-bind="click: function() { BreedingHelper.gainPokemonEgg($data);if (!player.hasFreeEggSlot()) {$('#breedingModal').modal('hide');}}">
                            <img class="smallImage"
                                 data-bind="attr:{ src: 'assets/images/' + (player.caughtShinyList().includes(name) ? 'shiny' : '') + 'pokemon/' + id +'.png' }"
                                 src=""/>
