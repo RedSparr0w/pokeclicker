@@ -287,6 +287,7 @@ class Player {
         if (!this.hasKeyItem(name)) {
             this.recentKeyItem(name);
             if (!supressModal) {
+                $('.modal').modal('hide');
                 $("#keyItemModal").modal('show');
             }
             this._keyItems().push(name);
