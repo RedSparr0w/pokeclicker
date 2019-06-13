@@ -74,14 +74,6 @@ namespace GameConstants {
         "Hammer" = 1,
     }
 
-    export const EvoStones = [
-        "Fire Stone",
-        "Water Stone",
-        "Thunder Stone",
-        "Leaf Stone",
-        "Moon Stone"
-    ];
-
     export const PLATE_VALUE = 25;
 
     // Oak items
@@ -566,6 +558,7 @@ namespace GameConstants {
         "Jynx": 2500,
         "Mr_Mime": 1500,
         "Lickitung": 1000,
+        "Togepi": 2500,
 
         // TODO: Set prices for different kinds of eggs and stones
         "Egg": 1000,
@@ -599,7 +592,8 @@ namespace GameConstants {
         "Porygon",
         "Jynx",
         "Mr_Mime",
-        "Lickitung"
+        "Lickitung",
+        "Togepi",
     }
 
     export enum BerryType {
