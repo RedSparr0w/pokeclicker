@@ -50,11 +50,13 @@ const dests = {
     githubPages: 'docs/'
 };
 
+/* currently broken
 gulp.task('cname', () => {
     const str = "www.pokeclicker.com";
     return file('CNAME', str, {src: true})
-        .pipe(gulp.dest('docs/'));
+        .pipe(gulp.dest('./docs'));
 });
+*/
 
 gulp.task('copy', () => gulp.src(srcs.libs)
     .pipe(gulp.dest(dests.libs))
@@ -73,21 +75,17 @@ gulp.task('browserSync', () => {
     });
 });
 
-gulp.task('import', () => {
+gulp.task('import', done => {
     let recentChangelogs = glob.sync('./src/assets/changelog/*.md').slice(-3).reverse();
 
     const htmlDest = './build';
     gulp.src('./src/index.html')
         .pipe(gulpImport('./src/components/'))
-        .pipe(inject(gulp.src(recentChangelogs)
-            .pipe(markdown()), {
-            starttag: '<!-- inject:head:html -->',
-            transform: (filePath, file) => file.contents.toString('utf8')
-        }))
         .pipe(gulp.dest(htmlDest));
+    done();
 });
 
-
+/* Not functioning correctly at the moment
 gulp.task('full-changelog', () => {
     let recentChangelogs = glob.sync('./src/assets/changelog/*.md').reverse();
 
@@ -100,6 +98,7 @@ gulp.task('full-changelog', () => {
         }))
         .pipe(gulp.dest(htmlDest));
 });
+*/
 
 gulp.task('html', () => {
     const htmlDest = './build';
@@ -127,26 +126,20 @@ gulp.task('styles', () => gulp.src(srcs.styles)
     .pipe(gulp.dest(dests.styles))
     .pipe(browserSync.reload({stream: true})));
 
-gulp.task('cleanWebsite', () => del([dests.githubPages]));
+gulp.task('cleanWebsite', done => del([dests.githubPages]));
 
 gulp.task('clean', () => del([dests.base]));
 
-gulp.task('copyWebsite', () => {
-    gulp.src(srcs.buildArtefacts).pipe(gulp.dest(dests.githubPages));
-});
+gulp.task('copyWebsite', () => gulp.src(srcs.buildArtefacts).pipe(gulp.dest(dests.githubPages)));
 
-gulp.task('build', ['copy', 'assets', 'import', 'scripts', 'styles', 'full-changelog']);
+gulp.task('build', gulp.series(['copy', 'assets', 'import', 'scripts', 'styles', /*'full-changelog'*/]));
 
-gulp.task('website', done => {
-    runSequence('clean', 'build', 'cleanWebsite', 'copyWebsite', 'cname', () => done());
-});
+gulp.task('website', gulp.series('clean', 'build', 'cleanWebsite', 'copyWebsite', /*'cname',*/));
 
-gulp.task('default', done => {
-    runSequence('clean', 'build', 'browserSync', () => {
-        gulp.watch(srcs.html, ['import', 'html']);
-        gulp.watch(srcs.assets, ['assets']);
-        gulp.watch(srcs.scripts, ['scripts']);
-        gulp.watch(srcs.styles, ['styles']);
-        done();
-    });
-});
+gulp.task('default', gulp.series('clean', 'build', 'browserSync', done => {
+    gulp.watch(srcs.html,  gulp.series(['import', 'html']));
+    gulp.watch(srcs.assets,  gulp.series(['assets']));
+    gulp.watch(srcs.scripts,  gulp.series(['scripts']));
+    gulp.watch(srcs.styles,  gulp.series(['styles']));
+    done();
+}));
