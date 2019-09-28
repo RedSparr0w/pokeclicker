@@ -243,4 +243,9 @@ class Prestige {
         player.prestigeBank[GameConstants.Currency.dungeontoken](0);
         player.prestigeBank[GameConstants.Currency.diamond](0);
     }
+
+    public static getTypeMultiplier(){
+      if (!player) return 1;
+      return GameConstants.PrestigeDifficultyMultiplier[player.prestigeType];
+    }
 }

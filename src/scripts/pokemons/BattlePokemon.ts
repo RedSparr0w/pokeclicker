@@ -33,8 +33,8 @@ class BattlePokemon implements enemyPokemonInterface {
         this.id = id;
         this.type1 = type1;
         this.type2 = type2;
-        this.health = ko.observable(maxHealth);
-        this.maxHealth = ko.observable(maxHealth);
+        this.health = ko.observable(Math.floor(maxHealth * Prestige.getTypeMultiplier()));
+        this.maxHealth = ko.observable(Math.floor(maxHealth * Prestige.getTypeMultiplier()));
         this.healthPercentage = ko.observable(100);
         this.level = level;
         this.catchRate = catchRate;
@@ -58,5 +58,3 @@ class BattlePokemon implements enemyPokemonInterface {
     }
 
 }
-
-

@@ -5,7 +5,7 @@ class GymPokemon {
 
     constructor(name: string, maxHealth: number, level: number) {
         this.name = name;
-        this.maxHealth = maxHealth;
+        this.maxHealth = Math.floor(maxHealth * Prestige.getTypeMultiplier());
         this.level = level;
     }
 }

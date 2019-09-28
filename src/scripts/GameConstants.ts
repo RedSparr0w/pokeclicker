@@ -96,6 +96,12 @@ namespace GameConstants {
         "Hard"
     }
 
+    export const PrestigeDifficultyMultiplier = [
+        1,
+        1.3,
+        1.8,
+    ];
+
     export const AMOUNT_OF_PRESTIGE_UPGRADES = 37;
 
     // Dungeons
