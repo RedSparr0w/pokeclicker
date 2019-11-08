@@ -4,6 +4,15 @@
     <title>Pokéclicker</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+    <script type="text/javascript">
+    /**
+     * Check if users browser supports specific functions
+     */
+    if (typeof [].flat == 'undefined'){
+      alert('Browser is unsupported,\nPlease use a different or newer browser..');
+      throw new Error('Browser is unsupported,\nPlease use a different or newer browser..');
+    }
+    </script>
     <script type="text/html" id="pokemonListTemplate">
         <tr data-bind='ifnot: $data.breeding()'>
             <td class="text-nowrap">
