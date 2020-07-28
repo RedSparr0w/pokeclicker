@@ -259,7 +259,9 @@ class MapHelper {
     }
 
     public static ableToTravel() {
-        if (player.highestRegion() >= GameConstants.MAX_AVAILABLE_REGION) return false;
+        if (player.highestRegion() >= GameConstants.MAX_AVAILABLE_REGION) {
+            return false;
+        }
         switch (player.highestRegion()) {
             case 0:
                 return App.game.badgeCase.hasBadge(BadgeCase.Badge.Elite_KantoChampion);
