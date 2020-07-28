@@ -97,18 +97,12 @@ class Party implements Feature {
     public calculatePokemonAttack(type1: PokemonType = PokemonType.None, type2: PokemonType = PokemonType.None): number {
         let attack = 0;
         for (const pokemon of this.caughtPokemon) {
-            let multiplier = 1;
-            const nativeRegion = PokemonHelper.calcNativeRegion(pokemon.name);
-            if (nativeRegion != player.region && nativeRegion != Infinity) {
-                // Pokemon only retain 20% of their total damage in other regions.
-                multiplier = 0.2;
-            }
             if (!pokemon.breeding) {
                 if (Battle.enemyPokemon() == null || type1 == PokemonType.None) {
-                    attack += pokemon.attack * multiplier;
+                    attack += pokemon.attack;
                 } else {
                     const dataPokemon = PokemonHelper.getPokemonByName(pokemon.name);
-                    attack += pokemon.attack * TypeHelper.getAttackModifier(dataPokemon.type1, dataPokemon.type2, Battle.enemyPokemon().type1, Battle.enemyPokemon().type2) * multiplier;
+                    attack += pokemon.attack * TypeHelper.getAttackModifier(dataPokemon.type1, dataPokemon.type2, Battle.enemyPokemon().type1, Battle.enemyPokemon().type2);
                 }
             }
         }
