@@ -259,7 +259,17 @@ class MapHelper {
     }
 
     public static ableToTravel() {
-        return player.highestRegion() < GameConstants.MAX_AVAILABLE_REGION && App.game.party.caughtPokemon.filter(p => p.id > 0).length >= GameConstants.TotalPokemonsPerRegion[player.highestRegion()];
+        if (player.highestRegion() >= GameConstants.MAX_AVAILABLE_REGION) return false;
+        switch (player.highestRegion()) {
+            case 0:
+                return App.game.badgeCase.hasBadge(BadgeCase.Badge.Elite_KantoChampion);
+                break;
+            case 1:
+                return App.game.badgeCase.hasBadge(BadgeCase.Badge.Elite_JohtoChampion);
+                break;
+            default:
+                return false;
+        }
     }
 
     public static travelToNextRegion() {
