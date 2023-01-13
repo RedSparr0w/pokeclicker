@@ -11028,22 +11028,22 @@
         
 
 <image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
-    x="624"
-    y="432"
+    x="592"
+    y="464"
     height="16"
     width="16"
     data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][118]() &gt;= 10"/>
 <rect class="city"
-    data-town="Roadside Stand"
-    x="624"
-    y="432"
+    data-town="Fish Shop"
+    x="592"
+    y="464"
     height="16"
     width="16"
-    data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][118]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Roadside Stand&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Roadside Stand&#39;) }">
+    data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][118]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Fish Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Roadside Stand&#39;) }">
 </rect>
 <image width="48" height="48"
-    x="608"
-    y="416"
+    x="576"
+    y="448"
     class="iconLocation"
     data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.statistics.routeKills[&#39;hoenn&#39;][118]() &gt;= 10
     , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
