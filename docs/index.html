@@ -11157,20 +11157,20 @@
     y="448"
     height="208"
     width="208"
-    data-bind="visible: (App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).curQuest() &lt; 5 &amp;&amp; App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).state() &gt;= 1)"/>
+    data-bind="visible: (App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).curQuest() &lt; 5 &amp;&amp; App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).state() == 1)"/>
 <rect class="city"
     data-town="A Raging Maelstrom"
     x="944"
     y="448"
     height="208"
     width="208"
-    data-bind="visible: (App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).curQuest() &lt; 5 &amp;&amp; App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).state() &gt;= 1), ">
+    data-bind="visible: (App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).curQuest() &lt; 5 &amp;&amp; App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).state() == 1), ">
 </rect>
 <image width="48" height="48"
     x="1024"
     y="528"
     class="iconLocation"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && (App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).curQuest() &lt; 5 &amp;&amp; App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).state() &gt;= 1)
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && (App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).curQuest() &lt; 5 &amp;&amp; App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).state() == 1)
     , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
 </image>
 
