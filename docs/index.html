@@ -11039,13 +11039,38 @@
     y="464"
     height="16"
     width="16"
-    data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][118]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Fish Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Roadside Stand&#39;) }">
+    data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][118]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Fish Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Fish Shop&#39;) }">
 </rect>
 <image width="48" height="48"
     x="576"
     y="448"
     class="iconLocation"
     data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.statistics.routeKills[&#39;hoenn&#39;][118]() &gt;= 10
+    , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+</image>
+
+
+        
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="672"
+    y="48"
+    height="16"
+    width="16"
+    data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][119]() &gt;= 10"/>
+<rect class="city"
+    data-town="Wind Chime Shop"
+    x="672"
+    y="48"
+    height="16"
+    width="16"
+    data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][119]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Wind Chime Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Wind Chime Shop&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="656"
+    y="32"
+    class="iconLocation"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.statistics.routeKills[&#39;hoenn&#39;][119]() &gt;= 10
     , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
 </image>
 
