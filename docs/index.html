@@ -9384,20 +9384,68 @@
     data-bind="click:function(){ MapHelper.moveToRoute(125, 2); } ">
     <rect data-route='125'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(125, 2) }"
-        height="48"
+        height="32"
         width="160"
         x="1328" y="160">
     </rect>
 
+
+</g>
+
+    <!--Route 125 extension-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(125, 2); } ">
+    <rect data-route='125'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(125, 2) }"
+        height="48"
+        width="32"
+        x="1328" y="192">
+    </rect>
+
+
+</g>
+
+    <!--Route 125 extension-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(125, 2); } ">
+    <rect data-route='125'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(125, 2) }"
+        height="32"
+        width="64"
+        x="1424" y="192">
+    </rect>
+
+
+</g>
+
+    <!--Route 125 extension-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(125, 2); } ">
+    <rect data-route='125'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(125, 2) }"
+        height="56"
+        width="80"
+        x="1328" y="240">
+    </rect>
+
     <text style="font-size: 32px"
-        x="1384"
-        y="194"
+        x="1344"
+        y="278"
         data-bind="visible: !MapHelper.isRouteCurrentLocation(125, 2)">
         125
     </text>
     <image width="48" height="48"
-        x="1384"
-        y="160"
+        x="1344"
+        y="244"
         class="iconLocation"
         transform='rotate(0)'
         data-bind="visible: MapHelper.isRouteCurrentLocation(125, 2),
@@ -9415,29 +9463,14 @@
     data-bind="click:function(){ MapHelper.moveToRoute(125, 2); } ">
     <rect data-route='125'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(125, 2) }"
-        height="48"
-        width="64"
-        x="1328" y="208">
-    </rect>
-
-
-</g>
-
-    <!--Route 125 extension-->
-    
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(125, 2); } ">
-    <rect data-route='125'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(125, 2) }"
-        height="48"
+        height="64"
         width="32"
-        x="1456" y="208">
+        x="1408" y="240">
     </rect>
 
 
 </g>
+
 
     <!--Route 125 extension-->
     
@@ -9447,25 +9480,9 @@
     data-bind="click:function(){ MapHelper.moveToRoute(125, 2); } ">
     <rect data-route='125'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(125, 2) }"
-        height="40"
-        width="80"
-        x="1328" y="256">
-    </rect>
-
-
-</g>
-
-    <!--Route 125 extension-->
-    
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(125, 2); } ">
-    <rect data-route='125'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(125, 2) }"
-        height="48"
-        width="80"
-        x="1408" y="256">
+        height="16"
+        width="16"
+        x="1424" y="224">
     </rect>
 
 
@@ -10424,6 +10441,64 @@
 
 
 
+    <!--Southern Island-->
+    
+
+<rect class="city"
+    data-town="Southern Island"
+    x="736"
+    y="832"
+    height="48"
+    width="32"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Southern Island')},
+        attr: { class: MapHelper.calculateTownCssClass('Southern Island') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="728"
+        y="832"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Southern Island')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+    <!--Southern Island extension 1-->
+    
+
+<rect class="city"
+    data-town="Southern Island"
+    x="752"
+    y="816"
+    height="16"
+    width="32"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Southern Island')},
+        attr: { class: MapHelper.calculateTownCssClass('Southern Island') },
+        ">
+</rect>
+
+
+
+    <!--Southern Island extension 2-->
+    
+
+<rect class="city"
+    data-town="Southern Island"
+    x="768"
+    y="832"
+    height="32"
+    width="16"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Southern Island')},
+        attr: { class: MapHelper.calculateTownCssClass('Southern Island') },
+        ">
+</rect>
+
+
     <!--Battle Frontier-->
     
 
@@ -10767,8 +10842,8 @@
 
     <rect class="city"
         data-town="Shoal Cave"
-        x="1392"
-        y="208"
+        x="1360"
+        y="192"
         height="48"
         width="64"
         data-bind="click:function(){MapHelper.moveToTown('Shoal Cave')},
@@ -10777,8 +10852,8 @@
 
 
     <image width="48" height="48"
-        x="1400"
-        y="208"
+        x="1368"
+        y="192"
         class="iconLocation"
         data-bind="visible: MapHelper.isTownCurrentLocation('Shoal Cave')
         , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
