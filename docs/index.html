@@ -19411,6 +19411,31 @@
     , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
 </image>
 
+     
+
+<image href="assets/images/map/rampagingyveltal.png" xlink:href="assets/images/map/rampagingyveltal.png"
+    x="192"
+    y="240"
+    height="80"
+    width="80"
+    data-bind="visible: TemporaryBattleList[&#39;Rampaging Yveltal&#39;] &amp;&amp; TemporaryBattleList[&#39;Rampaging Yveltal&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Rampaging Yveltal"
+    x="192"
+    y="240"
+    height="80"
+    width="80"
+    data-bind="visible: TemporaryBattleList[&#39;Rampaging Yveltal&#39;] &amp;&amp; TemporaryBattleList[&#39;Rampaging Yveltal&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Rampaging Yveltal&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="208"
+    y="256"
+    class="iconLocation"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Rampaging Yveltal&#39;] &amp;&amp; TemporaryBattleList[&#39;Rampaging Yveltal&#39;].isVisible()
+    , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+</image>
+
+
 </g>
 
                             <g data-bind='visible: player.region == GameConstants.Region.alola'>
