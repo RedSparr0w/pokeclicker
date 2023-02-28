@@ -10523,6 +10523,74 @@
 </rect>
 
 
+
+    <!--Sea Mauville-->
+    
+
+<rect class="city"
+    data-town="Sea Mauville"
+    x="368"
+    y="816"
+    height="64"
+    width="96"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Sea Mauville')},
+        attr: { class: MapHelper.calculateTownCssClass('Sea Mauville') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="392"
+        y="824"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Sea Mauville')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+    <!--Mossdeep Space Center-->
+    
+
+<rect class="city"
+    data-town="Mossdeep Space Center"
+    x="1440"
+    y="224"
+    height="80"
+    width="144"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Mossdeep Space Center')},
+        attr: { class: MapHelper.calculateTownCssClass('Mossdeep Space Center') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="1488"
+        y="240"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Mossdeep Space Center')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+    <!--Mossdeep Space Center extension-->
+    
+
+<rect class="city"
+    data-town="Mossdeep Space Center"
+    x="1472"
+    y="304"
+    height="48"
+    width="112"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Mossdeep Space Center')},
+        attr: { class: MapHelper.calculateTownCssClass('Mossdeep Space Center') },
+        ">
+</rect>
+
+
+	
     <!--Battle Frontier-->
     
 
@@ -11025,6 +11093,29 @@
     </image>
 
 
+
+    <!--Near Space-->
+    
+
+
+    <rect class="city"
+        data-town="Near Space"
+        x="1488"
+        y="128"
+        height="96"
+        width="32"
+        data-bind="click:function(){MapHelper.moveToTown('Near Space')},
+            attr: { class: MapHelper.calculateTownCssClass('Near Space') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="1480"
+        y="152"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Near Space')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
 
 
 
