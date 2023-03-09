@@ -19220,6 +19220,30 @@
     data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Coumarine City&#39;) }">
 </rect>
 
+    <!-- //TODO: improve the Safari Zone
+    
+
+<rect class="city"
+    data-town="Friendly Safari Zone" 
+    x="1216"
+    y="752"
+    height="64"
+    width="96"
+    data-bind="click:function(){Safari.startSafari()}, attr: { class: Safari.canAccess() ? &#39;completed&#39; : &#39;locked&#39; }">
+</rect>
+
+    
+
+<rect class="city"
+    data-town="Friendly Safari Zone" 
+    x="1232"
+    y="816"
+    height="32"
+    width="80"
+    data-bind="click:function(){Safari.startSafari()}, attr: { class: Safari.canAccess() ? &#39;completed&#39; : &#39;locked&#39; }">
+</rect>
+    -->
+
     
 
 <rect class="city"
@@ -19452,7 +19476,7 @@
     , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
 </image>
 
-	 
+
 	 
 
 <image href="assets/images/map/megamanectricoverworld.png" xlink:href="assets/images/map/megamanectricoverworld.png"
@@ -19477,7 +19501,7 @@
     , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
 </image>
 
-	 
+
 	 
 
 <image href="assets/images/map/megahoundoomoverworld.png" xlink:href="assets/images/map/megahoundoomoverworld.png"
