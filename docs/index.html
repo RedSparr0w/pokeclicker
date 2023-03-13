@@ -10587,7 +10587,7 @@
 </rect>
 
 
-	
+
     <!--Battle Frontier-->
     
 
@@ -11564,6 +11564,246 @@
     , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
 </image>
 
+     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.hoenn, 'Orre').id">
+        <image width="1600" height="960" data-bind="attr: {
+            'xlink:href':'assets/images/orre.png?v=0.10.10',
+            href:'assets/images/orre.png?v=0.10.10'
+        }"></image>
+
+        <!-- ----- -->
+        <!-- TOWNS -->
+        <!-- ----- -->
+
+        <!--Outskirt Stand-->
+        
+
+<rect class="city"
+    data-town="Outskirt Stand"
+    x="1424"
+    y="656"
+    height="48"
+    width="80"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Outskirt Stand')},
+        attr: { class: MapHelper.calculateTownCssClass('Outskirt Stand') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="1440"
+        y="656"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Outskirt Stand')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+        <!--Phenac City-->
+        
+
+<rect class="city"
+    data-town="Phenac City"
+    x="1152"
+    y="624"
+    height="112"
+    width="112"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Phenac City')},
+        attr: { class: MapHelper.calculateTownCssClass('Phenac City') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="1184"
+        y="656"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Phenac City')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+        <!--Phenac Stadium-->
+        
+
+<rect class="city"
+    data-town="Phenac Stadium"
+    x="1168"
+    y="576"
+    height="48"
+    width="80"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Phenac Stadium')},
+        attr: { class: MapHelper.calculateTownCssClass('Phenac Stadium') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="1184"
+        y="576"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Phenac Stadium')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+        <!--Pyrite Town-->
+        
+
+<rect class="city"
+    data-town="Pyrite Town"
+    x="480"
+    y="720"
+    height="64"
+    width="128"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Pyrite Town')},
+        attr: { class: MapHelper.calculateTownCssClass('Pyrite Town') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="520"
+        y="728"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Pyrite Town')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+        <!--Pyrite Town extension-->
+        
+
+<rect class="city"
+    data-town="Pyrite Town"
+    x="544"
+    y="784"
+    height="32"
+    width="64"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Pyrite Town')},
+        attr: { class: MapHelper.calculateTownCssClass('Pyrite Town') },
+        ">
+</rect>
+
+
+
+        <!--Pyrite Town extension-->
+        
+
+<rect class="city"
+    data-town="Pyrite Town"
+    x="528"
+    y="816"
+    height="64"
+    width="112"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Pyrite Town')},
+        attr: { class: MapHelper.calculateTownCssClass('Pyrite Town') },
+        ">
+</rect>
+
+
+
+        <!--Pyrite Town extension-->
+        
+
+<rect class="city"
+    data-town="Pyrite Town"
+    x="544"
+    y="704"
+    height="16"
+    width="64"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Pyrite Town')},
+        attr: { class: MapHelper.calculateTownCssClass('Pyrite Town') },
+        ">
+</rect>
+
+
+
+        <!--Pyrite Colosseum-->
+        
+
+<rect class="city"
+    data-town="Pyrite Colosseum"
+    x="544"
+    y="640"
+    height="64"
+    width="64"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Pyrite Colosseum')},
+        attr: { class: MapHelper.calculateTownCssClass('Pyrite Colosseum') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="552"
+        y="648"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Pyrite Colosseum')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+        <!-- -------- -->
+        <!-- DUNGEONS -->
+        <!-- -------- -->
+
+        <!--Pyrite Bldg-->
+        
+
+
+    <rect class="city"
+        data-town="Pyrite Bldg"
+        x="608"
+        y="688"
+        height="128"
+        width="80"
+        data-bind="click:function(){MapHelper.moveToTown('Pyrite Bldg')},
+            attr: { class: MapHelper.calculateTownCssClass('Pyrite Bldg') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="624"
+        y="728"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Pyrite Bldg')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+        <!--Pyrite Cave-->
+        
+
+
+    <rect class="city"
+        data-town="Pyrite Cave"
+        x="688"
+        y="688"
+        height="48"
+        width="64"
+        data-bind="click:function(){MapHelper.moveToTown('Pyrite Cave')},
+            attr: { class: MapHelper.calculateTownCssClass('Pyrite Cave') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="696"
+        y="688"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Pyrite Cave')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+    </g>
 </g>
 
                             <g data-bind='visible: player.region == GameConstants.Region.sinnoh'>
