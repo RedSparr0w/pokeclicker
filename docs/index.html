@@ -19126,6 +19126,47 @@
 
 
 
+    <!--Friend Safari-->
+    
+
+<rect class="city"
+    data-town="Friend Safari"
+    x="1216"
+    y="752"
+    height="64"
+    width="96"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Friend Safari')},
+        attr: { class: MapHelper.calculateTownCssClass('Friend Safari') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="1240"
+        y="760"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Friend Safari')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
+    
+
+<rect class="city"
+    data-town="Friend Safari"
+    x="1232"
+    y="816"
+    height="32"
+    width="80"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Friend Safari')},
+        attr: { class: MapHelper.calculateTownCssClass('Friend Safari') },
+        ">
+</rect>
+
+
+
     <!-- ----- -->
     <!--DUNGEONS-->
     <!-- ----- -->
@@ -19456,30 +19497,6 @@
     width="48"
     data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Coumarine City&#39;) }">
 </rect>
-
-    <!-- //TODO: improve the Safari Zone
-    
-
-<rect class="city"
-    data-town="Friendly Safari Zone" 
-    x="1216"
-    y="752"
-    height="64"
-    width="96"
-    data-bind="click:function(){Safari.startSafari()}, attr: { class: Safari.canAccess() ? &#39;completed&#39; : &#39;locked&#39; }">
-</rect>
-
-    
-
-<rect class="city"
-    data-town="Friendly Safari Zone" 
-    x="1232"
-    y="816"
-    height="32"
-    width="80"
-    data-bind="click:function(){Safari.startSafari()}, attr: { class: Safari.canAccess() ? &#39;completed&#39; : &#39;locked&#39; }">
-</rect>
-    -->
 
     
 
