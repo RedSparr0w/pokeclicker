@@ -78,7 +78,6 @@
     "gulp-typescript": "^5.0.1",
     "gulp-util": "^3.0.7",
     "husky": "^4.3.8",
-    "jsdom": "^21.1.1",
     "natives": "^1.1.6",
     "postcss-less": "^6.0.0",
     "stylelint": "^15.4.0",
