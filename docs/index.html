@@ -737,17 +737,20 @@
 <!-- <knockout data-bind="template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon sprite</knockout> -->
 
 <script type="text/html" id="pokemonGenderTemplate">
-    <!-- ko if: $data.pokemon.gender == GameConstants.BattlePokemonGender.Male -->
-    <knockout data-bind="html: `<i class='gender-icon-male'>♂</i>`"></knockout>
-    <!-- /ko -->
+    <!-- ko ifnot: $data.pokemon.displayName.includes('♂') || $data.pokemon.displayName.includes('♀') -->
+        <!-- ko if: $data.pokemon.gender == GameConstants.BattlePokemonGender.Male -->
+        <knockout data-bind="html: `<i class='gender-icon-male'>♂</i>`"></knockout>
+        <!-- /ko -->
 
-    <!-- ko if: $data.pokemon.gender == GameConstants.BattlePokemonGender.Female -->
-    <knockout data-bind="html: `<i class='gender-icon-female'>♀</i>`"></knockout>
+        <!-- ko if: $data.pokemon.gender == GameConstants.BattlePokemonGender.Female -->
+        <knockout data-bind="html: `<i class='gender-icon-female'>♀</i>`"></knockout>
+        <!-- /ko -->
     <!-- /ko -->
 </script>
 
 <!-- Example usage -->
 <!-- <knockout data-bind="template: { name: 'pokemonGenderTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon gender</knockout> -->
+
 <script type="text/html" id="pokemonAttackTemplate">
   <span style="display: inline;">
       Pokémon Attack:
