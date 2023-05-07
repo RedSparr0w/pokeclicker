@@ -3365,6 +3365,30 @@
 
 
 
+        
+
+<rect class="city"
+    data-town="Safari Zone"
+    x="752"
+    y="624"
+    height="80"
+    width="96"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Safari Zone')},
+        attr: { class: MapHelper.calculateTownCssClass('Safari Zone') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="776"
+        y="640"
+        class="iconLocation"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Safari Zone')
+        , attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+
+
+
         <!--Cinnabar Island-->
         
 
@@ -3852,17 +3876,6 @@
     height="56"
     width="64"
     data-bind="click:function(){BreedingController.openBreedingModal()}, attr: { class: App.game.breeding.canAccess() ? &#39;completed&#39; : &#39;locked&#39; }">
-</rect>
-
-        
-
-<rect class="city"
-    data-town="Safari Zone" 
-    x="752"
-    y="624"
-    height="80"
-    width="96"
-    data-bind="click:function(){Safari.startSafari()}, attr: { class: Safari.canAccess() ? &#39;completed&#39; : &#39;locked&#39; }">
 </rect>
 
         
