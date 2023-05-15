@@ -11798,6 +11798,107 @@
             href:'assets/images/orre.png?v=0.10.12'
         }"></image>
 
+    <!-- ------ -->
+    <!-- ROUTES -->
+    <!-- ------ -->
+
+    <!--Rock Poké Spot-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(135, 2); } ">
+    <rect data-route='135'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(135, 2) }"
+        height="64"
+        width="80"
+        x="1328" y="528">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="1344"
+        y="570"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(135, 2)">
+        RPS
+    </text>
+    <image width="48" height="48"
+        x="1344"
+        y="536"
+        class="iconLocation"
+        transform='rotate(0)'
+        data-bind="visible: MapHelper.isRouteCurrentLocation(135, 2),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+    
+
+</g>
+
+
+    <!--Oasis Poké Spot-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(136, 2); } ">
+    <rect data-route='136'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(136, 2) }"
+        height="64"
+        width="80"
+        x="544" y="544">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="560"
+        y="586"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(136, 2)">
+        OPS
+    </text>
+    <image width="48" height="48"
+        x="560"
+        y="552"
+        class="iconLocation"
+        transform='rotate(0)'
+        data-bind="visible: MapHelper.isRouteCurrentLocation(136, 2),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+    
+
+</g>
+
+
+    <!--Cave Poké Spot-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(137, 2); } ">
+    <rect data-route='137'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(137, 2) }"
+        height="64"
+        width="64"
+        x="848" y="272">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="856"
+        y="314"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(137, 2)">
+        CPS
+    </text>
+    <image width="48" height="48"
+        x="856"
+        y="280"
+        class="iconLocation"
+        transform='rotate(0)'
+        data-bind="visible: MapHelper.isRouteCurrentLocation(137, 2),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`}">
+    </image>
+    
+
+</g>
+
+
+
         <!-- ----- -->
         <!-- TOWNS -->
         <!-- ----- -->
