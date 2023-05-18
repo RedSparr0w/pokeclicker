@@ -1539,10 +1539,6 @@
 <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.gym">
     <div class="col no-gutters clickable" data-bind="click: function() {GymBattle.clickAttack()}" style="height: 280px; display: block;">
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
-            <knockout class="left">
-                <knockout data-bind="text: GymBattle.gym.leaderName.replace(/\d/g,'')"></knockout>
-            </knockout>
-
             <knockout>
                 <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': GymBattle.enemyPokemon() } }">Pokémon name</knockout>
             </knockout>
@@ -1578,7 +1574,7 @@
             <img data-bind="attr:{ src: GymBattle.gym.imagePath }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
         </div>
 
-        <div class="trainer-enemy">
+        <div>
             <knockout data-bind="template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': GymBattle.enemyPokemon() } }">Pokémon sprite</knockout>
         </div>
 
@@ -1595,7 +1591,10 @@
             Stop Auto
         </button>
         <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
-          <table width="100%">
+            <knockout>
+                <knockout data-bind="text: GymBattle.gym.leaderName.replace(/\d/g,'')"></knockout>
+            </knockout>
+            <table width="100%">
               <tr>
                 <td width="50%">
                     <knockout data-bind="template: { name: 'pokemonAttackTemplate', data: { 'pokemon': Battle.enemyPokemon() } }"></knockout>
@@ -1613,15 +1612,9 @@
 
 
                     <!-- One Time Battles -->
-                    
-<div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.temporaryBattle">
+                    <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.temporaryBattle">
     <div class="col no-gutters clickable" data-bind="click: function() {TemporaryBattleBattle.clickAttack()}" style="height: 280px; display: block;">
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
-
-            <knockout class="left">
-                <knockout data-bind="text: TemporaryBattleBattle.battle.getDisplayName()"></knockout>
-            </knockout>
-
             <knockout>
                 <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': TemporaryBattleBattle.enemyPokemon() } }">Pokémon name</knockout>
             </knockout>
@@ -1657,7 +1650,7 @@
             <img data-bind="attr:{ src: TemporaryBattleRunner.battleObservable().getImage() }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
         </div>
 
-        <div class="trainer-enemy" data-bind="ifnot: TemporaryBattleBattle.catching">
+        <div data-bind="ifnot: TemporaryBattleBattle.catching">
             <knockout data-bind="template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': TemporaryBattleBattle.enemyPokemon() } }">Pokémon sprite</knockout>
         </div>
 
@@ -1678,33 +1671,30 @@
             </div>
         </div>
         <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
-          <table width="100%">
-              <tr>
-                <td width="50%">
-                    <knockout data-bind="template: { name: 'pokemonAttackTemplate', data: { 'pokemon': Battle.enemyPokemon() } }"></knockout>
-                </td>
-                <td width="50%" data-bind="css: { 'text-muted': App.game.challenges.list.disableClickAttack.active() }">
-                    <span style="display: inline;">Click Attack:
-                        <span data-bind="text: App.game.party.calculateClickAttack().toLocaleString('en-US')"></span>
-                    </span>
-                </td>
-              </tr>
-          </table>
+            <knockout>
+                <knockout data-bind="text: TemporaryBattleBattle.battle.getDisplayName()"></knockout>
+            </knockout>
+            <table width="100%">
+                <tr>
+                    <td width="50%">
+                        <knockout data-bind="template: { name: 'pokemonAttackTemplate', data: { 'pokemon': Battle.enemyPokemon() } }"></knockout>
+                    </td>
+                    <td width="50%" data-bind="css: { 'text-muted': App.game.challenges.list.disableClickAttack.active() }">
+                        <span style="display: inline;">Click Attack:
+                            <span data-bind="text: App.game.party.calculateClickAttack().toLocaleString('en-US')"></span>
+                        </span>
+                    </td>
+                </tr>
+            </table>
         </h2>
     </div>
 </div>
 
 
                     <!-- Battle Frontier Battles -->
-                    
-<div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState == GameConstants.GameState.battleFrontier">
+                    <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState == GameConstants.GameState.battleFrontier">
     <div class="col no-gutters" data-bind="if: BattleFrontierBattle.enemyPokemon" style="height: 280px; display: block;">
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
-
-            <knockout class="left">
-                Stage <knockout data-bind="text: BattleFrontierRunner.stage">0</knockout> / <knockout data-bind="text: BattleFrontierRunner.highest">0</knockout>
-            </knockout>
-
             <knockout>
                 <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': BattleFrontierBattle.enemyPokemon() } }">Pokémon name</knockout>
             </knockout>
@@ -1723,7 +1713,7 @@
 
         </h2>
 
-        <div class="trainer-enemy">
+        <div>
             <knockout data-bind="template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': BattleFrontierBattle.enemyPokemon() } }">Pokémon sprite</knockout>
         </div>
         <div class="progress hitpoints trainerhitpoints">
@@ -1734,12 +1724,15 @@
             </div>
         </div>
         <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
-          <table width="100%">
-              <tr>
-                <td>
-                    <span style="display: inline;">
-                        Pokémon Attack:
-                        <span data-bind="
+            <knockout>
+                Stage <knockout data-bind="text: BattleFrontierRunner.stage">0</knockout> / <knockout data-bind="text: BattleFrontierRunner.highest">0</knockout>
+            </knockout>
+            <table width="100%">
+                <tr>
+                    <td>
+                        <span style="display: inline;">
+                            Pokémon Attack:
+                            <span data-bind="
                             text: App.game.party.calculatePokemonAttack(
                                 PokemonType.None,
                                 PokemonType.None,
@@ -1753,13 +1746,12 @@
                                         true,
                                     ).toLocaleString('en-US')} against ${Battle.enemyPokemon().name}`
                                     : '',
-                                trigger: 'hover',
-                            }
-                        "></span>
-                    </span>
-                  </td>
-              </tr>
-          </table>
+                                trigger: 'hover'}">
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+            </table>
         </h2>
     </div>
 </div>
