@@ -12644,32 +12644,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
-        <!--Phenac Stadium-->
-        
-
-<rect class="city"
-    data-town="Phenac Stadium"
-    x="1168"
-    y="576"
-    height="48"
-    width="80"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Phenac Stadium')},
-        attr: { class: MapHelper.calculateTownCssClass('Phenac Stadium') },
-        ">
-</rect>
-
-    <image width="48" height="48"
-        x="1184"
-        y="576"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Phenac Stadium'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
-
-
         <!--Pyrite Town-->
         
 
@@ -12747,32 +12721,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
-        <!--Pyrite Colosseum-->
-        
-
-<rect class="city"
-    data-town="Pyrite Colosseum"
-    x="544"
-    y="640"
-    height="64"
-    width="64"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Pyrite Colosseum')},
-        attr: { class: MapHelper.calculateTownCssClass('Pyrite Colosseum') },
-        ">
-</rect>
-
-    <image width="48" height="48"
-        x="552"
-        y="648"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Pyrite Colosseum'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
-
-
         <!--Agate Village-->
         
 
@@ -12842,101 +12790,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
-        <!--Mt. Battle-->
-        
-
-<rect class="city"
-    data-town="Mt. Battle"
-    x="800"
-    y="80"
-    height="64"
-    width="96"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Mt. Battle')},
-        attr: { class: MapHelper.calculateTownCssClass('Mt. Battle') },
-        ">
-</rect>
-
-    <image width="48" height="48"
-        x="824"
-        y="88"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Mt. Battle'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
-
-
-        <!--Cipher Lab-->
-        
-
-<rect class="city"
-    data-town="Cipher Lab"
-    x="848"
-    y="368"
-    height="80"
-    width="112"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Cipher Lab')},
-        attr: { class: MapHelper.calculateTownCssClass('Cipher Lab') },
-        ">
-</rect>
-
-    <image width="48" height="48"
-        x="880"
-        y="384"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Cipher Lab'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
-
-
-        <!--Eclo Canyon-->
-        
-
-<rect class="city"
-    data-town="Eclo Canyon"
-    x="1264"
-    y="384"
-    height="64"
-    width="112"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Eclo Canyon')},
-        attr: { class: MapHelper.calculateTownCssClass('Eclo Canyon') },
-        ">
-</rect>
-
-    <image width="48" height="48"
-        x="1296"
-        y="392"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Eclo Canyon'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
-
-
-        <!--Eclo Canyon extension-->
-        
-
-<rect class="city"
-    data-town="Eclo Canyon"
-    x="1328"
-    y="448"
-    height="32"
-    width="48"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Eclo Canyon')},
-        attr: { class: MapHelper.calculateTownCssClass('Eclo Canyon') },
-        ">
-</rect>
-
-
-
         <!--Realgam Tower-->
         
 
@@ -12997,69 +12850,61 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
-        <!--Orre Colosseum-->
+        <!-- -------- -->
+        <!-- DUNGEONS -->
+        <!-- -------- -->
+
+        <!--Phenac Stadium-->
         
 
-<rect class="city"
-    data-town="Orre Colosseum"
-    x="320"
-    y="576"
-    height="80"
-    width="112"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Orre Colosseum')},
-        attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') },
-        ">
-</rect>
+
+    <rect class="city"
+        data-town="Phenac Stadium"
+        x="1168"
+        y="576"
+        height="48"
+        width="80"
+        data-bind="click:function(){MapHelper.moveToTown('Phenac Stadium')},
+            attr: { class: MapHelper.calculateTownCssClass('Phenac Stadium') }">
+    </rect>
+
 
     <image width="48" height="48"
-        x="352"
-        y="592"
+        x="1184"
+        y="576"
         class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Orre Colosseum'),
+        data-bind="visible: MapHelper.isTownCurrentLocation('Phenac Stadium'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
 
 
 
-        <!--Orre Colosseum extension-->
+        <!--Pyrite Colosseum-->
         
 
-<rect class="city"
-    data-town="Orre Colosseum"
-    x="336"
-    y="656"
-    height="32"
-    width="80"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Orre Colosseum')},
-        attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') },
-        ">
-</rect>
+
+    <rect class="city"
+        data-town="Pyrite Colosseum"
+        x="544"
+        y="640"
+        height="64"
+        width="64"
+        data-bind="click:function(){MapHelper.moveToTown('Pyrite Colosseum')},
+            attr: { class: MapHelper.calculateTownCssClass('Pyrite Colosseum') }">
+    </rect>
 
 
-
-        <!--Orre Colosseum extension-->
-        
-
-<rect class="city"
-    data-town="Orre Colosseum"
-    x="352"
-    y="544"
-    height="32"
-    width="80"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Orre Colosseum')},
-        attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') },
-        ">
-</rect>
+    <image width="48" height="48"
+        x="552"
+        y="648"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Pyrite Colosseum'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
 
 
-
-        <!-- -------- -->
-        <!-- DUNGEONS -->
-        <!-- -------- -->
 
         <!--Pyrite Building-->
         
@@ -13110,6 +12955,162 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
+
+
+
+        <!--Mt. Battle-->
+        
+
+
+    <rect class="city"
+        data-town="Mt. Battle"
+        x="800"
+        y="80"
+        height="64"
+        width="96"
+        data-bind="click:function(){MapHelper.moveToTown('Mt. Battle')},
+            attr: { class: MapHelper.calculateTownCssClass('Mt. Battle') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="824"
+        y="88"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Mt. Battle'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+        <!--Cipher Lab-->
+        
+
+
+    <rect class="city"
+        data-town="Cipher Lab"
+        x="848"
+        y="368"
+        height="80"
+        width="112"
+        data-bind="click:function(){MapHelper.moveToTown('Cipher Lab')},
+            attr: { class: MapHelper.calculateTownCssClass('Cipher Lab') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="880"
+        y="384"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Cipher Lab'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+        <!--Snagem Hideout-->
+        
+
+
+    <rect class="city"
+        data-town="Snagem Hideout"
+        x="1264"
+        y="384"
+        height="64"
+        width="112"
+        data-bind="click:function(){MapHelper.moveToTown('Snagem Hideout')},
+            attr: { class: MapHelper.calculateTownCssClass('Snagem Hideout') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="1296"
+        y="392"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Snagem Hideout'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+        <!--Snagem Hideout extension-->
+        
+
+
+    <rect class="city"
+        data-town="Snagem Hideout"
+        x="1328"
+        y="448"
+        height="32"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Snagem Hideout')},
+            attr: { class: MapHelper.calculateTownCssClass('Snagem Hideout') }">
+    </rect>
+
+
+
+
+        <!--Orre Colosseum-->
+        
+
+
+    <rect class="city"
+        data-town="Orre Colosseum"
+        x="320"
+        y="576"
+        height="80"
+        width="112"
+        data-bind="click:function(){MapHelper.moveToTown('Orre Colosseum')},
+            attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="352"
+        y="592"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Orre Colosseum'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+        <!--Orre Colosseum extension-->
+        
+
+
+    <rect class="city"
+        data-town="Orre Colosseum"
+        x="336"
+        y="656"
+        height="32"
+        width="80"
+        data-bind="click:function(){MapHelper.moveToTown('Orre Colosseum')},
+            attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') }">
+    </rect>
+
+
+
+
+        <!--Orre Colosseum extension-->
+        
+
+
+    <rect class="city"
+        data-town="Orre Colosseum"
+        x="352"
+        y="544"
+        height="32"
+        width="80"
+        data-bind="click:function(){MapHelper.moveToTown('Orre Colosseum')},
+            attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') }">
+    </rect>
+
+
 
 
     </g>
