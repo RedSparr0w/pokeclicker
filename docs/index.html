@@ -2093,6 +2093,12 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                             <span class='float-right px-4 bg-uncaughtPokemon'>&nbsp;</span>
                         </div>
                         <div class='col-10 legend-item'>
+                            <span>Uncaught Shadow Pokemon:</span>
+                        </div>
+                        <div class='col-2'>
+                            <span class='float-right px-4 bg-uncaughtShadowPokemon'>&nbsp;</span>
+                        </div>
+                        <div class='col-10 legend-item'>
                             <span>Uncaught Shiny Pokemon and Missing Achievement:</span>
                         </div>
                         <div class='col-2'>
@@ -46627,6 +46633,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--incomplete')}"></tr>
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--questAtLocation')}"></tr>
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--uncaughtPokemon')}"></tr>
+                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--uncaughtShadowPokemon')}"></tr>
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--uncaughtShinyPokemonAndMissingAchievement')}"></tr>
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--uncaughtShinyPokemon')}"></tr>
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--missingAchievement')}"></tr>
