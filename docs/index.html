@@ -1755,7 +1755,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                   <knockout data-bind="text: GymBattle.gym.leaderName.replace(/\d/g,'')"></knockout>
                 </td>
                 <td width="50%">
-                  <knockout data-bind="text: `${GymRunner.gymObservable().clears().toLocaleString('en-US')} Clears`"></knockout>
+                  <knockout data-bind="text: `${(GymRunner.gymObservable()?.clears() ?? 0).toLocaleString('en-US')} Clears`"></knockout>
                 </td>
               </tr>
               <tr>
