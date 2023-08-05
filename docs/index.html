@@ -16657,6 +16657,32 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
+        
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="464"
+    y="112"
+    height="16"
+    width="16"
+    data-bind="visible: App.game.statistics.routeKills[&#39;sinnoh&#39;][217]() &gt;= 10"/>
+<rect class="city"
+    data-town="Secret Berry Shop"
+    x="464"
+    y="112"
+    height="16"
+    width="16"
+    data-bind="visible: App.game.statistics.routeKills[&#39;sinnoh&#39;][217]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Secret Berry Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Secret Berry Shop&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="448"
+    y="96"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.statistics.routeKills[&#39;sinnoh&#39;][217]() &gt;= 10,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
      
 
 <image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
