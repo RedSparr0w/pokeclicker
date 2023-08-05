@@ -4623,6 +4623,61 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         playerSpriteMove">
 </image>
 
+
+        <!--New Island-->
+        
+
+<image href="assets/images/map/new_island.png" xlink:href="assets/images/map/new_island.png"
+    x="1280"
+    y="800"
+    height="48"
+    width="64"
+    data-bind="visible: TownList[&#39;New Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town=""
+    x="1280"
+    y="800"
+    height="48"
+    width="64"
+    data-bind="visible: TownList[&#39;New Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;New Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Island&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="1288"
+    y="800"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TownList[&#39;New Island&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+        <!--New Island extension-->
+        
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="1280"
+    y="800"
+    height="48"
+    width="64"
+    data-bind="visible: TownList[&#39;New Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town=""
+    x="1280"
+    y="800"
+    height="48"
+    width="64"
+    data-bind="visible: TownList[&#39;New Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;New Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Island&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="1288"
+    y="800"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('New Island') && TownList[&#39;New Island&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
     
     </g>
 
