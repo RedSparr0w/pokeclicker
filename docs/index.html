@@ -45652,25 +45652,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="1472" y="624">
     </rect>
 
-    <text style="font-size: 32px"
-        x="1464"
-        y="650"
-        data-bind="visible: !MapHelper.isRouteCurrentLocation(27, 8)">
-        HB
-    </text>
-    <image width="48" height="48"
-        x="1456"
-        y="616"
-        class="iconLocation hide"
-        transform='rotate(0)'
-        rotate=""
-        localx="1472"
-        localy="624"
-        data-bind="visible: MapHelper.isRouteCurrentLocation(27, 8),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-    
 
 </g>
 
@@ -45687,25 +45668,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="1456" y="608">
     </rect>
 
-    <text style="font-size: 32px"
-        x="1448"
-        y="626"
-        data-bind="visible: !MapHelper.isRouteCurrentLocation(27, 8)">
-        HB
-    </text>
-    <image width="48" height="48"
-        x="1440"
-        y="592"
-        class="iconLocation hide"
-        transform='rotate(0)'
-        rotate=""
-        localx="1456"
-        localy="608"
-        data-bind="visible: MapHelper.isRouteCurrentLocation(27, 8),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-    
 
 </g>
 
@@ -46939,7 +46901,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(36, 8) }"
         height="32"
         width="64"
-        x="1376" y="192">
+        x="1376" y="224">
     </rect>
 
 
@@ -47809,7 +47771,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(46, 8); } ">
     <rect data-route='46'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(46, 8) }"
-        height="16"
+        height="32"
         width="16"
         x="496" y="128">
     </rect>
@@ -48266,20 +48228,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(53, 8); } ">
     <rect data-route='53'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(53, 8) }"
-        height="48"
+        height="32"
         width="80"
         x="48" y="80">
     </rect>
 
     <text style="font-size: 32px"
         x="64"
-        y="114"
+        y="106"
         data-bind="visible: !MapHelper.isRouteCurrentLocation(53, 8)">
         SHS
     </text>
     <image width="48" height="48"
         x="64"
-        y="80"
+        y="72"
         class="iconLocation hide"
         transform='rotate(0)'
         rotate=""
@@ -50369,7 +50331,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         data-town="Primeval Grotto"
         x="544"
         y="192"
-        height="32"
+        height="64"
         width="80"
         data-bind="click:function(){MapHelper.moveToTown('Primeval Grotto')},
             attr: { class: MapHelper.calculateTownCssClass('Primeval Grotto') }">
@@ -50378,7 +50340,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <image width="48" height="48"
         x="560"
-        y="184"
+        y="200"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Primeval Grotto'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -50392,8 +50354,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <rect class="city"
         data-town="Primeval Grotto"
-        x="528"
-        y="224"
+        x="576"
+        y="176"
         height="16"
         width="64"
         data-bind="click:function(){MapHelper.moveToTown('Primeval Grotto')},
@@ -50408,10 +50370,58 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <rect class="city"
         data-town="Primeval Grotto"
-        x="512"
-        y="240"
+        x="624"
+        y="192"
+        height="48"
+        width="16"
+        data-bind="click:function(){MapHelper.moveToTown('Primeval Grotto')},
+            attr: { class: MapHelper.calculateTownCssClass('Primeval Grotto') }">
+    </rect>
+
+
+
+    <!--Primeval Grotto extension-->
+    
+
+
+    <rect class="city"
+        data-town="Primeval Grotto"
+        x="528"
+        y="256"
         height="16"
         width="32"
+        data-bind="click:function(){MapHelper.moveToTown('Primeval Grotto')},
+            attr: { class: MapHelper.calculateTownCssClass('Primeval Grotto') }">
+    </rect>
+
+
+
+    <!--Primeval Grotto extension-->
+    
+
+
+    <rect class="city"
+        data-town="Primeval Grotto"
+        x="512"
+        y="208"
+        height="16"
+        width="32"
+        data-bind="click:function(){MapHelper.moveToTown('Primeval Grotto')},
+            attr: { class: MapHelper.calculateTownCssClass('Primeval Grotto') }">
+    </rect>
+
+
+
+    <!--Primeval Grotto extension-->
+    
+
+
+    <rect class="city"
+        data-town="Primeval Grotto"
+        x="496"
+        y="224"
+        height="32"
+        width="48"
         data-bind="click:function(){MapHelper.moveToTown('Primeval Grotto')},
             attr: { class: MapHelper.calculateTownCssClass('Primeval Grotto') }">
     </rect>
