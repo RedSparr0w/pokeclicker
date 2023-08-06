@@ -13100,18 +13100,18 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
-        <!--Kaminko's House-->
+        <!--Kaminko's Manor-->
         
 
 <rect class="city"
-    data-town="Kaminko&#39;s House"
+    data-town="Kaminko&#39;s Manor"
     x="272"
     y="368"
     height="176"
     width="96"
     data-bind="
-        click:function(){MapHelper.moveToTown('Kaminko\&#39;s House')},
-        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s House') },
+        click:function(){MapHelper.moveToTown('Kaminko\&#39;s Manor')},
+        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s Manor') },
         ">
 </rect>
 
@@ -13119,93 +13119,93 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="296"
         y="432"
         class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Kaminko\&#39;s House'),
+        data-bind="visible: MapHelper.isTownCurrentLocation('Kaminko\&#39;s Manor'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
 
 
 
-        <!--Kaminko's House extension-->
+        <!--Kaminko's Manor extension-->
         
 
 <rect class="city"
-    data-town="Kaminko&#39;s House"
+    data-town="Kaminko&#39;s Manor"
     x="256"
     y="400"
     height="112"
     width="16"
     data-bind="
-        click:function(){MapHelper.moveToTown('Kaminko\&#39;s House')},
-        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s House') },
+        click:function(){MapHelper.moveToTown('Kaminko\&#39;s Manor')},
+        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s Manor') },
         ">
 </rect>
 
 
 
-        <!--Kaminko's House extension-->
+        <!--Kaminko's Manor extension-->
         
 
 <rect class="city"
-    data-town="Kaminko&#39;s House"
+    data-town="Kaminko&#39;s Manor"
     x="368"
     y="384"
     height="144"
     width="16"
     data-bind="
-        click:function(){MapHelper.moveToTown('Kaminko\&#39;s House')},
-        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s House') },
+        click:function(){MapHelper.moveToTown('Kaminko\&#39;s Manor')},
+        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s Manor') },
         ">
 </rect>
 
 
 
-        <!--Kaminko's House extension-->
+        <!--Kaminko's Manor extension-->
         
 
 <rect class="city"
-    data-town="Kaminko&#39;s House"
+    data-town="Kaminko&#39;s Manor"
     x="384"
     y="400"
     height="112"
     width="16"
     data-bind="
-        click:function(){MapHelper.moveToTown('Kaminko\&#39;s House')},
-        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s House') },
+        click:function(){MapHelper.moveToTown('Kaminko\&#39;s Manor')},
+        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s Manor') },
         ">
 </rect>
 
 
 
-        <!--Kaminko's House extension-->
+        <!--Kaminko's Manor extension-->
         
 
 <rect class="city"
-    data-town="Kaminko&#39;s House"
+    data-town="Kaminko&#39;s Manor"
     x="400"
     y="416"
     height="80"
     width="16"
     data-bind="
-        click:function(){MapHelper.moveToTown('Kaminko\&#39;s House')},
-        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s House') },
+        click:function(){MapHelper.moveToTown('Kaminko\&#39;s Manor')},
+        attr: { class: MapHelper.calculateTownCssClass('Kaminko\&#39;s Manor') },
         ">
 </rect>
 
 
 
-        <!--SS Libra-->
+        <!--S. S. Libra-->
         
 
 <rect class="city"
-    data-town="SS Libra"
+    data-town="S. S. Libra"
     x="1104"
     y="496"
     height="48"
     width="96"
     data-bind="
-        click:function(){MapHelper.moveToTown('SS Libra')},
-        attr: { class: MapHelper.calculateTownCssClass('SS Libra') },
+        click:function(){MapHelper.moveToTown('S. S. Libra')},
+        attr: { class: MapHelper.calculateTownCssClass('S. S. Libra') },
         ">
 </rect>
 
@@ -13213,7 +13213,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="1128"
         y="496"
         class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('SS Libra'),
+        data-bind="visible: MapHelper.isTownCurrentLocation('S. S. Libra'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
@@ -13870,6 +13870,58 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Gateon Port&#39;) },
 		playerSpriteMove">
 </rect>
+
+
+    
+
+<image href="assets/images/map/Miror B.png" xlink:href="assets/images/map/Miror B.png"
+    x="896"
+    y="272"
+    height="96"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Miror B. 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Miror B. 1&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Miror B."
+    x="896"
+    y="272"
+    height="96"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Miror B. 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Miror B. 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Miror B. 1&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="904"
+    y="296"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Miror B. 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Miror B. 1&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+    
+
+<image href="assets/images/map/Zook.png" xlink:href="assets/images/map/Zook.png"
+    x="1168"
+    y="288"
+    height="96"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Zook&#39;] &amp;&amp; TemporaryBattleList[&#39;Zook&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Zook"
+    x="1168"
+    y="288"
+    height="96"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Zook&#39;] &amp;&amp; TemporaryBattleList[&#39;Zook&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Zook&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="1176"
+    y="312"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Zook&#39;] &amp;&amp; TemporaryBattleList[&#39;Zook&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
 
     </g>
