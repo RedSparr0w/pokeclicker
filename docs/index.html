@@ -51583,6 +51583,1059 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
+                            <g data-bind='visible: player.region == GameConstants.Region.paldea'>
+    <image width="1600" height="960" data-bind="attr: {
+        'xlink:href':'assets/images/paldea.png?v=0.10.14',
+        href:'assets/images/paldea.png?v=0.10.14'
+    }"></image>
+
+    <!-- ------ -->
+    <!-- ROUTES -->
+    <!-- ------ -->
+
+    <!--Poco Path-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(1, 9); } ">
+    <rect data-route='1'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(1, 9) }"
+        height="48"
+        width="48"
+        x="0" y="0">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="8"
+        y="34"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(1, 9)">
+        PP
+    </text>
+    <image width="48" height="48"
+        x="0"
+        y="0"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="0"
+        localy="0"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(1, 9),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
+
+</g>
+
+
+    <!--South Province (Area One)-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(2, 9); } ">
+    <rect data-route='2'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(2, 9) }"
+        height="48"
+        width="48"
+        x="48" y="0">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="48"
+        y="34"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(2, 9)">
+        SP1
+    </text>
+    <image width="48" height="48"
+        x="48"
+        y="0"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="48"
+        localy="0"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(2, 9),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
+
+</g>
+
+
+    <!--South Province (Area Two)-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(3, 9); } ">
+    <rect data-route='3'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(3, 9) }"
+        height="48"
+        width="48"
+        x="96" y="0">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="96"
+        y="34"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(3, 9)">
+        SP2
+    </text>
+    <image width="48" height="48"
+        x="96"
+        y="0"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="96"
+        localy="0"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(3, 9),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
+
+</g>
+
+
+    <!--South Province (Area Three)-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(4, 9); } ">
+    <rect data-route='4'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(4, 9) }"
+        height="48"
+        width="48"
+        x="144" y="0">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="144"
+        y="34"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(4, 9)">
+        SP3
+    </text>
+    <image width="48" height="48"
+        x="144"
+        y="0"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="144"
+        localy="0"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(4, 9),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
+
+</g>
+
+
+    <!-- ----- -->
+    <!-- TOWNS -->
+    <!-- ----- -->
+
+    <!--Cabo Poco-->
+    
+
+<rect class="city"
+    data-town="Cabo Poco"
+    x="0"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Cabo Poco')},
+        attr: { class: MapHelper.calculateTownCssClass('Cabo Poco') },
+        
+            css: { flash: MapHelper.ableToTravel() }
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="0"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Cabo Poco'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Poco Path Lighthouse-->
+    
+
+<rect class="city"
+    data-town="Poco Path Lighthouse"
+    x="48"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Poco Path Lighthouse')},
+        attr: { class: MapHelper.calculateTownCssClass('Poco Path Lighthouse') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="48"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Poco Path Lighthouse'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Los Platos-->
+    
+
+<rect class="city"
+    data-town="Los Platos"
+    x="96"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Los Platos')},
+        attr: { class: MapHelper.calculateTownCssClass('Los Platos') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="96"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Los Platos'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Mesagoza-->
+    
+
+<rect class="city"
+    data-town="Mesagoza"
+    x="144"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Mesagoza')},
+        attr: { class: MapHelper.calculateTownCssClass('Mesagoza') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="144"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Mesagoza'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Naranjuva Academy-->
+    
+
+<rect class="city"
+    data-town="Naranjuva Academy"
+    x="192"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Naranjuva Academy')},
+        attr: { class: MapHelper.calculateTownCssClass('Naranjuva Academy') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="192"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Naranjuva Academy'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Cortondo-->
+    
+
+<rect class="city"
+    data-town="Cortondo"
+    x="240"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Cortondo')},
+        attr: { class: MapHelper.calculateTownCssClass('Cortondo') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="240"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Cortondo'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Artazon-->
+    
+
+<rect class="city"
+    data-town="Artazon"
+    x="288"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Artazon')},
+        attr: { class: MapHelper.calculateTownCssClass('Artazon') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="288"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Artazon'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Levincia-->
+    
+
+<rect class="city"
+    data-town="Levincia"
+    x="336"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Levincia')},
+        attr: { class: MapHelper.calculateTownCssClass('Levincia') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="336"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Levincia'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Alfornada-->
+    
+
+<rect class="city"
+    data-town="Alfornada"
+    x="384"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Alfornada')},
+        attr: { class: MapHelper.calculateTownCssClass('Alfornada') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="384"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Alfornada'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Cascarrafa-->
+    
+
+<rect class="city"
+    data-town="Cascarrafa"
+    x="432"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Cascarrafa')},
+        attr: { class: MapHelper.calculateTownCssClass('Cascarrafa') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="432"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Cascarrafa'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Porto Marinada-->
+    
+
+<rect class="city"
+    data-town="Porto Marinada"
+    x="480"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Porto Marinada')},
+        attr: { class: MapHelper.calculateTownCssClass('Porto Marinada') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="480"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Porto Marinada'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Medali-->
+    
+
+<rect class="city"
+    data-town="Medali"
+    x="528"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Medali')},
+        attr: { class: MapHelper.calculateTownCssClass('Medali') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="528"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Medali'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Zapapico-->
+    
+
+<rect class="city"
+    data-town="Zapapico"
+    x="576"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Zapapico')},
+        attr: { class: MapHelper.calculateTownCssClass('Zapapico') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="576"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Zapapico'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Montenevera-->
+    
+
+<rect class="city"
+    data-town="Montenevera"
+    x="624"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Montenevera')},
+        attr: { class: MapHelper.calculateTownCssClass('Montenevera') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="624"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Montenevera'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Pokémon League Paldea-->
+    
+
+<rect class="city"
+    data-town="Pokémon League Paldea"
+    x="672"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Pokémon League Paldea')},
+        attr: { class: MapHelper.calculateTownCssClass('Pokémon League Paldea') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="672"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Pokémon League Paldea'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Segin Squad's Base-->
+    
+
+<rect class="city"
+    data-town="Segin Squad&#39;s Base"
+    x="720"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Segin Squad\&#39;s Base')},
+        attr: { class: MapHelper.calculateTownCssClass('Segin Squad\&#39;s Base') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="720"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Segin Squad\&#39;s Base'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Schedar Squad's Base-->
+    
+
+<rect class="city"
+    data-town="Schedar Squad&#39;s Base"
+    x="768"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Schedar Squad\&#39;s Base')},
+        attr: { class: MapHelper.calculateTownCssClass('Schedar Squad\&#39;s Base') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="768"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Schedar Squad\&#39;s Base'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Navi Squad's Base-->
+    
+
+<rect class="city"
+    data-town="Navi Squad&#39;s Base"
+    x="816"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Navi Squad\&#39;s Base')},
+        attr: { class: MapHelper.calculateTownCssClass('Navi Squad\&#39;s Base') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="816"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Navi Squad\&#39;s Base'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Ruchbah Squad's Base-->
+    
+
+<rect class="city"
+    data-town="Ruchbah Squad&#39;s Base"
+    x="864"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Ruchbah Squad\&#39;s Base')},
+        attr: { class: MapHelper.calculateTownCssClass('Ruchbah Squad\&#39;s Base') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="864"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Ruchbah Squad\&#39;s Base'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Caph Squad's Base-->
+    
+
+<rect class="city"
+    data-town="Caph Squad&#39;s Base"
+    x="912"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Caph Squad\&#39;s Base')},
+        attr: { class: MapHelper.calculateTownCssClass('Caph Squad\&#39;s Base') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="912"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Caph Squad\&#39;s Base'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Zero Gate-->
+    
+
+<rect class="city"
+    data-town="Zero Gate"
+    x="960"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Zero Gate')},
+        attr: { class: MapHelper.calculateTownCssClass('Zero Gate') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="960"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Zero Gate'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Zero Lab-->
+    
+
+<rect class="city"
+    data-town="Zero Lab"
+    x="1008"
+    y="320"
+    height="48"
+    width="48"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Zero Lab')},
+        attr: { class: MapHelper.calculateTownCssClass('Zero Lab') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="1008"
+        y="320"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Zero Lab'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!-- ----- -->
+    <!--DUNGEONS-->
+    <!-- ----- -->
+
+    <!--Inlet Grotto-->
+    
+
+
+    <rect class="city"
+        data-town="Inlet Grotto"
+        x="0"
+        y="640"
+        height="48"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Inlet Grotto')},
+            attr: { class: MapHelper.calculateTownCssClass('Inlet Grotto') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="0"
+        y="640"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Inlet Grotto'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Glaseado Mountain-->
+    
+
+
+    <rect class="city"
+        data-town="Glaseado Mountain"
+        x="48"
+        y="640"
+        height="48"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Glaseado Mountain')},
+            attr: { class: MapHelper.calculateTownCssClass('Glaseado Mountain') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="48"
+        y="640"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Glaseado Mountain'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Grasswither Shrine-->
+    
+
+
+    <rect class="city"
+        data-town="Grasswither Shrine"
+        x="96"
+        y="640"
+        height="48"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Grasswither Shrine')},
+            attr: { class: MapHelper.calculateTownCssClass('Grasswither Shrine') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="96"
+        y="640"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Grasswither Shrine'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Icerend Shrine-->
+    
+
+
+    <rect class="city"
+        data-town="Icerend Shrine"
+        x="144"
+        y="640"
+        height="48"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Icerend Shrine')},
+            attr: { class: MapHelper.calculateTownCssClass('Icerend Shrine') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="144"
+        y="640"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Icerend Shrine'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Groundblight Shrine-->
+    
+
+
+    <rect class="city"
+        data-town="Groundblight Shrine"
+        x="192"
+        y="640"
+        height="48"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Groundblight Shrine')},
+            attr: { class: MapHelper.calculateTownCssClass('Groundblight Shrine') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="192"
+        y="640"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Groundblight Shrine'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Firescourge Shrine-->
+    
+
+
+    <rect class="city"
+        data-town="Firescourge Shrine"
+        x="240"
+        y="640"
+        height="48"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Firescourge Shrine')},
+            attr: { class: MapHelper.calculateTownCssClass('Firescourge Shrine') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="240"
+        y="640"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Firescourge Shrine'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Area Zero-->
+    
+
+
+    <rect class="city"
+        data-town="Area Zero"
+        x="288"
+        y="640"
+        height="48"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Area Zero')},
+            attr: { class: MapHelper.calculateTownCssClass('Area Zero') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="288"
+        y="640"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Area Zero'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Area Zero Depths-->
+    
+
+
+    <rect class="city"
+        data-town="Area Zero Depths"
+        x="336"
+        y="640"
+        height="48"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Area Zero Depths')},
+            attr: { class: MapHelper.calculateTownCssClass('Area Zero Depths') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="336"
+        y="640"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Area Zero Depths'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!-- ------------------ -->
+    <!-- PLACES OF INTEREST -->
+    <!-- ------------------ -->
+
+    
+
+<rect class="city"
+    data-town="Dock" 
+    x="0"
+    y="912"
+    height="48"
+    width="48"
+    data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Coumarine City&#39;) },
+		playerSpriteMove">
+</rect>
+
+
+    
+
+<rect class="city"
+    data-town="Underground Entrance" 
+    x="48"
+    y="896"
+    height="64"
+    width="48"
+    data-bind="click:function(){App.game.underground.openUndergroundModal()}, attr: { class: App.game.underground.canAccess() ? &#39;completed&#39; : &#39;locked&#39; },
+		playerSpriteMove">
+</rect>
+
+
+     
+
+<rect class="city"
+    data-town="Farm" 
+    x="96"
+    y="912"
+    height="48"
+    width="48"
+    data-bind="click:function(){FarmController.openFarmModal()}, attr: { class: App.game.farming.canAccess() ? &#39;completed&#39; : &#39;locked&#39; },
+		playerSpriteMove">
+</rect>
+
+
+     
+
+<rect class="city"
+    data-town="Pokémon Day Care" 
+    x="144"
+    y="896"
+    height="64"
+    width="64"
+    data-bind="click:function(){BreedingController.openBreedingModal()}, attr: { class: App.game.breeding.canAccess() ? &#39;completed&#39; : &#39;locked&#39; },
+		playerSpriteMove">
+</rect>
+
+
+     
+
+<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+    x="1504"
+    y="912"
+    height="48"
+    width="96"
+    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+<rect class="city"
+    data-town="Instructor Jacq&#39;s Blimp"
+    x="1504"
+    y="912"
+    height="48"
+    width="96"
+    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="1528"
+    y="912"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+     
+
+<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
+    x="1504"
+    y="912"
+    height="48"
+    width="96"
+    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+<rect class="city"
+    data-town="Instructor Jacq&#39;s Blimp"
+    x="1504"
+    y="912"
+    height="48"
+    width="96"
+    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="1528"
+    y="912"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+</g>
+
 
                             <g id="playerSprite">
                                 <!-- This group is cleared actively via koExtenders.ts added to fix #3358 -->
