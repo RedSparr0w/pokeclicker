@@ -37479,6 +37479,84 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         playerSpriteMove">
 </image>
 
+
+            
+
+<image href="assets/images/map/Raid.png" xlink:href="assets/images/map/Raid.png"
+    x="416"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Max Raid 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 1&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Max Raid"
+    x="416"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Max Raid 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid 1&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="424"
+    y="472"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Max Raid 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 1&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+            
+
+<image href="assets/images/map/Raid.png" xlink:href="assets/images/map/Raid.png"
+    x="1056"
+    y="288"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Max Raid 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 2&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Max Raid"
+    x="1056"
+    y="288"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Max Raid 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid 2&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="1064"
+    y="296"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Max Raid 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 2&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+            
+
+<image href="assets/images/map/Raid.png" xlink:href="assets/images/map/Raid.png"
+    x="896"
+    y="800"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Max Raid 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 3&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Max Raid"
+    x="896"
+    y="800"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Max Raid 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid 3&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="904"
+    y="808"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Max Raid 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid 3&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
     </g>
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'North Galar').id">
         <image width="1600" height="960" data-bind="attr: {
