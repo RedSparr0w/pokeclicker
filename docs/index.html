@@ -13305,6 +13305,64 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+        <!--Orre Colosseum-->
+        
+
+<rect class="city"
+    data-town="Orre Colosseum"
+    x="320"
+    y="576"
+    height="80"
+    width="112"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Orre Colosseum')},
+        attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="352"
+        y="592"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Orre Colosseum'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+        <!--Orre Colosseum extension-->
+        
+
+<rect class="city"
+    data-town="Orre Colosseum"
+    x="336"
+    y="656"
+    height="32"
+    width="80"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Orre Colosseum')},
+        attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') },
+        ">
+</rect>
+
+
+
+        <!--Orre Colosseum extension-->
+        
+
+<rect class="city"
+    data-town="Orre Colosseum"
+    x="352"
+    y="544"
+    height="32"
+    width="80"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Orre Colosseum')},
+        attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') },
+        ">
+</rect>
+
 
 
         <!-- -------- -->
@@ -13635,66 +13693,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
-
-
-
-        <!--Orre Colosseum-->
-        
-
-
-    <rect class="city"
-        data-town="Orre Colosseum"
-        x="320"
-        y="576"
-        height="80"
-        width="112"
-        data-bind="click:function(){MapHelper.moveToTown('Orre Colosseum')},
-            attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') }">
-    </rect>
-
-
-    <image width="48" height="48"
-        x="352"
-        y="592"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Orre Colosseum'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
-
-
-        <!--Orre Colosseum extension-->
-        
-
-
-    <rect class="city"
-        data-town="Orre Colosseum"
-        x="336"
-        y="656"
-        height="32"
-        width="80"
-        data-bind="click:function(){MapHelper.moveToTown('Orre Colosseum')},
-            attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') }">
-    </rect>
-
-
-
-
-        <!--Orre Colosseum extension-->
-        
-
-
-    <rect class="city"
-        data-town="Orre Colosseum"
-        x="352"
-        y="544"
-        height="32"
-        width="80"
-        data-bind="click:function(){MapHelper.moveToTown('Orre Colosseum')},
-            attr: { class: MapHelper.calculateTownCssClass('Orre Colosseum') }">
-    </rect>
-
 
 
 
