@@ -54100,7 +54100,7 @@ aria-labelledby="receiveBadgeModalLabel" aria-hidden="true">
        <div class="modal-body">
            <p data-bind="html: GymRunner.gymObservable().defeatMessage"></p>
            <!-- ko if: !BadgeEnums[GymRunner.gymObservable().badgeReward].startsWith('Elite') -->
-           <img src="" width="56px" data-bind="attr:{ src: 'assets/images/badges/' + BadgeEnums[GymRunner.gymObservable().badgeReward] + '.png'}" onerror="this.src='assets/images/badges/Unknown.png'">
+           <img src="" width="56px" data-bind="attr:{ src: 'assets/images/badges/' + BadgeEnums[GymRunner.gymObservable().badgeReward] + '.svg'}" onerror="this.src='assets/images/badges/Unknown.png'">
            <!-- /ko -->
 
        </div>
@@ -57825,7 +57825,7 @@ aria-labelledby="badgeCaseModalLabel">
                         data-bind="foreach: $data[1]">
                         <div class="col-3 badgeEntry">
                             <img src="" width="60px"
-                                data-bind="attr:{ src: 'assets/images/badges/'+ $data +'.png'},
+                                data-bind="attr:{ src: 'assets/images/badges/'+ $data +'.svg'},
                                 css: { 'badge-not-acquired': !App.game.badgeCase.hasBadge(BadgeEnums[$data])}">
 
                             <p style="bottom: 0;"
