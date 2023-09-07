@@ -27222,7 +27222,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <rect data-route='21'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(21, 6) }"
         height="96"
-        width="32"
+        width="48"
         x="960" y="800">
     </rect>
 
@@ -28170,18 +28170,18 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <rect class="city"
         data-town="Ruins of Life"
-        x="944"
-        y="736"
-        height="64"
-        width="64"
+        x="960"
+        y="760"
+        height="40"
+        width="48"
         data-bind="click:function(){MapHelper.moveToTown('Ruins of Life')},
             attr: { class: MapHelper.calculateTownCssClass('Ruins of Life') }">
     </rect>
 
 
     <image width="48" height="48"
-        x="952"
-        y="744"
+        x="960"
+        y="756"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Life'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -29163,25 +29163,25 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(23, 6); } ">
     <rect data-route='23'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(23, 6) }"
-        height="104"
-        width="96"
-        x="976" y="472">
+        height="96"
+        width="80"
+        x="976" y="480">
     </rect>
 
     <text style="font-size: 32px"
-        x="992"
-        y="534"
+        x="984"
+        y="538"
         data-bind="visible: !MapHelper.isRouteCurrentLocation(23, 6)">
         H.D.
     </text>
     <image width="48" height="48"
-        x="1000"
-        y="500"
+        x="992"
+        y="504"
         class="iconLocation hide"
         transform='rotate(0)'
         rotate=""
         localx="976"
-        localy="472"
+        localy="480"
         data-bind="visible: MapHelper.isRouteCurrentLocation(23, 6),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
@@ -29199,9 +29199,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(23, 6); } ">
     <rect data-route='23'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(23, 6) }"
-        height="40"
+        height="16"
         width="24"
-        x="976" y="432">
+        x="976" y="464">
     </rect>
 
 
@@ -29216,9 +29216,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(23, 6); } ">
     <rect data-route='23'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(23, 6) }"
-        height="40"
+        height="32"
         width="24"
-        x="1048" y="432">
+        x="1032" y="448">
     </rect>
 
 
@@ -29233,9 +29233,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(23, 6); } ">
     <rect data-route='23'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(23, 6) }"
-        height="96"
-        width="16"
-        x="1072" y="448">
+        height="80"
+        width="32"
+        x="1056" y="464">
     </rect>
 
 
@@ -29270,6 +29270,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         height="16"
         width="32"
         x="1024" y="576">
+    </rect>
+
+
+</g>
+
+
+        <!--Haina Desert extension-->
+        
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(23, 6); } ">
+    <rect data-route='23'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(23, 6) }"
+        height="32"
+        width="16"
+        x="1056" y="544">
     </rect>
 
 
@@ -30910,17 +30927,17 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <rect class="city"
         data-town="Ruins of Abundance"
         x="1000"
-        y="416"
-        height="56"
-        width="48"
+        y="440"
+        height="48"
+        width="32"
         data-bind="click:function(){MapHelper.moveToTown('Ruins of Abundance')},
             attr: { class: MapHelper.calculateTownCssClass('Ruins of Abundance') }">
     </rect>
 
 
     <image width="48" height="48"
-        x="1000"
-        y="420"
+        x="992"
+        y="440"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Abundance'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
