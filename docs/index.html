@@ -3284,6 +3284,78 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
+        <!-- ------------------ -->
+        <!-- PLACES OF INTEREST -->
+        <!-- ------------------ -->
+
+        <!--Route 26-->
+        
+
+<rect class="city"
+    data-town="Route 26" 
+    x="112"
+    y="464"
+    height="240"
+    width="48"
+    data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
+            click: () =&gt; {
+                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+                },
+		playerSpriteMove">
+</rect>
+
+
+        <!--Route 27-->
+        
+
+<rect class="city"
+    data-town="Route 27" 
+    x="0"
+    y="656"
+    height="48"
+    width="112"
+    data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
+            click: () =&gt; {
+                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+                },
+		playerSpriteMove">
+</rect>
+
+
+        <!--Route 28-->
+        
+
+<rect class="city"
+    data-town="Route 28" 
+    x="0"
+    y="416"
+    height="48"
+    width="112"
+    data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
+            click: () =&gt; {
+                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+                },
+		playerSpriteMove">
+</rect>
+
+
+        <!--Route 28 Extension-->
+        
+
+<rect class="city"
+    data-town="Route 28" 
+    x="0"
+    y="480"
+    height="64"
+    width="32"
+    data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
+            click: () =&gt; {
+                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+                },
+		playerSpriteMove">
+</rect>
+
+
         <!-- ----- -->
         <!-- TOWNS -->
         <!-- ----- -->
@@ -6932,30 +7004,30 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <g
 
-    transform="rotate(90 ,1488, 352)"
+    transform="rotate(90 ,1488, 336)"
 
     data-bind="click:function(){ MapHelper.moveToRoute(26, 1); } ">
     <rect data-route='26'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(26, 1) }"
         height="48"
-        width="320"
-        x="1488" y="304">
+        width="336"
+        x="1488" y="288">
     </rect>
 
     <text style="font-size: 32px"
-        x="1632"
-        y="338"
+        x="1640"
+        y="322"
         data-bind="visible: !MapHelper.isRouteCurrentLocation(26, 1)">
         26
     </text>
     <image width="48" height="48"
-        x="1624"
-        y="304"
+        x="1632"
+        y="288"
         class="iconLocation hide"
         transform='rotate(-90)'
         rotate="true"
         localx="1488"
-        localy="352"
+        localy="336"
         data-bind="visible: MapHelper.isRouteCurrentLocation(26, 1),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
@@ -6974,29 +7046,80 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <rect data-route='28'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(28, 1) }"
         height="48"
-        width="192"
-        x="1296" y="528">
+        width="128"
+        x="1360" y="432">
     </rect>
 
     <text style="font-size: 32px"
-        x="1376"
-        y="562"
+        x="1408"
+        y="466"
         data-bind="visible: !MapHelper.isRouteCurrentLocation(28, 1)">
         28
     </text>
     <image width="48" height="48"
-        x="1368"
-        y="528"
+        x="1400"
+        y="432"
         class="iconLocation hide"
         transform='rotate(0)'
         rotate=""
-        localx="1296"
-        localy="528"
+        localx="1360"
+        localy="432"
         data-bind="visible: MapHelper.isRouteCurrentLocation(28, 1),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
     
+
+</g>
+
+
+     <!--Route 28 Extension-->
+     
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(28, 1); } ">
+    <rect data-route='28'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(28, 1) }"
+        height="64"
+        width="48"
+        x="1360" y="480">
+    </rect>
+
+
+</g>
+
+
+     <!--Route 28 Extension-->
+     
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(28, 1); } ">
+    <rect data-route='28'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(28, 1) }"
+        height="64"
+        width="32"
+        x="1328" y="496">
+    </rect>
+
+
+</g>
+
+
+     <!--Route 28 Extension-->
+     
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(28, 1); } ">
+    <rect data-route='28'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(28, 1) }"
+        height="64"
+        width="32"
+        x="1296" y="512">
+    </rect>
+
 
 </g>
 
@@ -7547,8 +7670,24 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <rect data-route='41'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(41, 1) }"
         height="48"
-        width="96"
+        width="64"
         x="128" y="672">
+    </rect>
+
+
+</g>
+
+    <!--Extra bit of Route 41-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(41, 1); } ">
+    <rect data-route='41'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(41, 1) }"
+        height="32"
+        width="32"
+        x="192" y="688">
     </rect>
 
 
@@ -7755,32 +7894,30 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <g
 
-    transform="rotate(90 ,1120, 192)"
+    transform="rotate(90 ,1120, 208)"
 
     data-bind="click:function(){ MapHelper.moveToRoute(45, 1); } ">
     <rect data-route='45'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(45, 1) }"
         height="48"
-        width="32"
-        x="1120" y="144">
+        width="16"
+        x="1120" y="160">
     </rect>
 
 
 </g>
 
-    <!--Extra bit of Route 45-->
-   
+     <!--Extra bit of Route 45-->
+    
 
 <g
-
-    transform="rotate(90 ,1136, 432)"
 
     data-bind="click:function(){ MapHelper.moveToRoute(45, 1); } ">
     <rect data-route='45'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(45, 1) }"
-        height="32"
-        width="64"
-        x="1136" y="400">
+        height="64"
+        width="32"
+        x="1136" y="432">
     </rect>
 
 
@@ -7792,30 +7929,30 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <g
 
-    transform="rotate(90 ,1040, 480)"
+    transform="rotate(90 ,1040, 496)"
 
     data-bind="click:function(){ MapHelper.moveToRoute(46, 1); } ">
     <rect data-route='46'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(46, 1) }"
         height="48"
-        width="192"
-        x="1040" y="432">
+        width="176"
+        x="1040" y="448">
     </rect>
 
     <text style="font-size: 32px"
-        x="1120"
-        y="466"
+        x="1112"
+        y="482"
         data-bind="visible: !MapHelper.isRouteCurrentLocation(46, 1)">
         46
     </text>
     <image width="48" height="48"
-        x="1112"
-        y="432"
+        x="1104"
+        y="448"
         class="iconLocation hide"
         transform='rotate(-90)'
         rotate="true"
         localx="1040"
-        localy="480"
+        localy="496"
         data-bind="visible: MapHelper.isRouteCurrentLocation(46, 1),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
@@ -7832,27 +7969,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(46, 1); } ">
     <rect data-route='46'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(46, 1) }"
-        height="16"
-        width="32"
-        x="1088" y="480">
-    </rect>
-
-
-</g>
-
-    <!--Extra bit of Route 46-->
-    
-
-<g
-
-    transform="rotate(90 ,1040, 448)"
-
-    data-bind="click:function(){ MapHelper.moveToRoute(46, 1); } ">
-    <rect data-route='46'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(46, 1) }"
         height="32"
         width="32"
-        x="1040" y="416">
+        x="1040" y="464">
     </rect>
 
 
@@ -8276,10 +8395,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <rect class="city"
     data-town="Indigo Plateau Johto"
-    x="1440"
-    y="64"
-    height="88"
-    width="144"
+    x="1424"
+    y="0"
+    height="16"
+    width="176"
     data-bind="
         click:function(){MapHelper.moveToTown('Indigo Plateau Johto')},
         attr: { class: MapHelper.calculateTownCssClass('Indigo Plateau Johto') },
@@ -8288,7 +8407,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <image width="48" height="48"
         x="1488"
-        y="84"
+        y="-16"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Indigo Plateau Johto'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -8302,10 +8421,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <rect class="city"
     data-town="Indigo Plateau Johto"
-    x="1488"
-    y="152"
-    height="152"
-    width="48"
+    x="1408"
+    y="16"
+    height="16"
+    width="192"
     data-bind="
         click:function(){MapHelper.moveToTown('Indigo Plateau Johto')},
         attr: { class: MapHelper.calculateTownCssClass('Indigo Plateau Johto') },
@@ -8313,7 +8432,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
+    <!--Indigo Plateau 2.0 Extension-->
+    
 
+<rect class="city"
+    data-town="Indigo Plateau Johto"
+    x="1392"
+    y="32"
+    height="176"
+    width="208"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Indigo Plateau Johto')},
+        attr: { class: MapHelper.calculateTownCssClass('Indigo Plateau Johto') },
+        ">
+</rect>
 
 
 
@@ -8559,7 +8691,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         data-town="Whirl Islands"
         x="192"
         y="624"
-        height="48"
+        height="64"
         width="64"
         data-bind="click:function(){MapHelper.moveToTown('Whirl Islands')},
             attr: { class: MapHelper.calculateTownCssClass('Whirl Islands') }">
@@ -8568,7 +8700,85 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <image width="48" height="48"
         x="200"
+        y="632"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Whirl Islands'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Whirl Islands Extension-->
+    
+
+
+    <rect class="city"
+        data-town="Whirl Islands"
+        x="256"
         y="624"
+        height="48"
+        width="16"
+        data-bind="click:function(){MapHelper.moveToTown('Whirl Islands')},
+            attr: { class: MapHelper.calculateTownCssClass('Whirl Islands') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="240"
+        y="624"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Whirl Islands'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Whirl Islands Extension-->
+    
+
+
+    <rect class="city"
+        data-town="Whirl Islands"
+        x="256"
+        y="704"
+        height="32"
+        width="48"
+        data-bind="click:function(){MapHelper.moveToTown('Whirl Islands')},
+            attr: { class: MapHelper.calculateTownCssClass('Whirl Islands') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="256"
+        y="696"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Whirl Islands'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
+    <!--Whirl Islands Extension-->
+    
+
+
+    <rect class="city"
+        data-town="Whirl Islands"
+        x="304"
+        y="688"
+        height="32"
+        width="16"
+        data-bind="click:function(){MapHelper.moveToTown('Whirl Islands')},
+            attr: { class: MapHelper.calculateTownCssClass('Whirl Islands') }">
+    </rect>
+
+
+    <image width="48" height="48"
+        x="288"
+        y="680"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Whirl Islands'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -8686,37 +8896,21 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         data-town="Ice Path"
         x="1104"
         y="144"
-        height="48"
-        width="64"
+        height="64"
+        width="96"
         data-bind="click:function(){MapHelper.moveToTown('Ice Path')},
             attr: { class: MapHelper.calculateTownCssClass('Ice Path') }">
     </rect>
 
 
     <image width="48" height="48"
-        x="1112"
-        y="144"
+        x="1128"
+        y="152"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Ice Path'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
-
-
-     <!--Ice Path Extension-->
-     
-
-
-    <rect class="city"
-        data-town="Ice Path"
-        x="1168"
-        y="176"
-        height="16"
-        width="16"
-        data-bind="click:function(){MapHelper.moveToTown('Ice Path')},
-            attr: { class: MapHelper.calculateTownCssClass('Ice Path') }">
-    </rect>
-
 
 
 
@@ -8728,7 +8922,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         data-town="Dark Cave"
         x="1072"
         y="432"
-        height="48"
+        height="64"
         width="64"
         data-bind="click:function(){MapHelper.moveToTown('Dark Cave')},
             attr: { class: MapHelper.calculateTownCssClass('Dark Cave') }">
@@ -8737,28 +8931,12 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <image width="48" height="48"
         x="1080"
-        y="432"
+        y="440"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Dark Cave'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
-
-
-     <!--Dark Cave Extension-->
-     
-
-
-    <rect class="city"
-        data-town="Dark Cave"
-        x="1120"
-        y="480"
-        height="16"
-        width="16"
-        data-bind="click:function(){MapHelper.moveToTown('Dark Cave')},
-            attr: { class: MapHelper.calculateTownCssClass('Dark Cave') }">
-    </rect>
-
 
 
      <!--Dark Cave Extension-->
@@ -8819,18 +8997,18 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <rect class="city"
         data-town="Victory Road Johto"
-        x="1488"
-        y="304"
-        height="48"
-        width="64"
+        x="1456"
+        y="208"
+        height="128"
+        width="112"
         data-bind="click:function(){MapHelper.moveToTown('Victory Road Johto')},
             attr: { class: MapHelper.calculateTownCssClass('Victory Road Johto') }">
     </rect>
 
 
     <image width="48" height="48"
-        x="1496"
-        y="304"
+        x="1488"
+        y="248"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Victory Road Johto'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -8880,6 +9058,51 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+     <!--Mt. Silver Extension-->
+     
+
+
+    <rect class="city"
+        data-town="Mt. Silver"
+        x="1232"
+        y="304"
+        height="64"
+        width="112"
+        data-bind="click:function(){MapHelper.moveToTown('Mt. Silver')},
+            attr: { class: MapHelper.calculateTownCssClass('Mt. Silver') }">
+    </rect>
+
+
+
+     <!--Mt. Silver Extension-->
+     
+
+
+    <rect class="city"
+        data-town="Mt. Silver"
+        x="1200"
+        y="368"
+        height="96"
+        width="144"
+        data-bind="click:function(){MapHelper.moveToTown('Mt. Silver')},
+            attr: { class: MapHelper.calculateTownCssClass('Mt. Silver') }">
+    </rect>
+
+
+
+     <!--Mt. Silver Extension-->
+     
+
+
+    <rect class="city"
+        data-town="Mt. Silver"
+        x="1200"
+        y="464"
+        height="32"
+        width="80"
+        data-bind="click:function(){MapHelper.moveToTown('Mt. Silver')},
+            attr: { class: MapHelper.calculateTownCssClass('Mt. Silver') }">
+    </rect>
 
 
 
@@ -8949,6 +9172,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     height="64"
     width="64"
     data-bind="click:function(){BreedingController.openBreedingModal()}, attr: { class: App.game.breeding.canAccess() ? &#39;completed&#39; : &#39;locked&#39; },
+		playerSpriteMove">
+</rect>
+
+
+     
+
+<rect class="city"
+    data-town="Route 22" 
+    x="1536"
+    y="416"
+    height="48"
+    width="64"
+    data-bind="attr: { class: MapHelper.accessToRoute(22, GameConstants.Region.johto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
+        click: () =&gt; {
+            Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Olivine City.&#39;});
+            },
 		playerSpriteMove">
 </rect>
 
