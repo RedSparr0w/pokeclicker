@@ -9457,6 +9457,60 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
+    
+
+<image href="assets/images/map/red-back.png" xlink:href="assets/images/map/red-back.png"
+    x="1264"
+    y="312"
+    height="64"
+    width="64"
+    data-bind="visible: App.game.badgeCase.hasBadge(BadgeEnums.Elite_JohtoChampion)"/>
+<rect class="city"
+    data-town="Red"
+    x="1264"
+    y="312"
+    height="64"
+    width="64"
+    data-bind="visible: App.game.badgeCase.hasBadge(BadgeEnums.Elite_JohtoChampion), click: () =&gt; {
+            Notifier.notify({message: &#39;...&#39;});
+        }">
+</rect>
+<image width="48" height="48"
+    x="1272"
+    y="320"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.badgeCase.hasBadge(BadgeEnums.Elite_JohtoChampion),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+    
+
+<image href="assets/images/map/red.png" xlink:href="assets/images/map/red.png"
+    x="1264"
+    y="312"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Red&#39;] &amp;&amp; TemporaryBattleList[&#39;Red&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Red"
+    x="1264"
+    y="312"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Red&#39;] &amp;&amp; TemporaryBattleList[&#39;Red&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Red&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="1272"
+    y="320"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Red&#39;] &amp;&amp; TemporaryBattleList[&#39;Red&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
      
 
 <image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
