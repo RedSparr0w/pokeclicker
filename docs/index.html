@@ -16343,6 +16343,32 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+    <!--Great Marsh-->
+    
+
+<rect class="city"
+    data-town="Great Marsh"
+    x="928"
+    y="720"
+    height="80"
+    width="96"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Great Marsh')},
+        attr: { class: MapHelper.calculateTownCssClass('Great Marsh') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="952"
+        y="736"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Great Marsh'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
     <!--Sunyshore City-->
     
 
