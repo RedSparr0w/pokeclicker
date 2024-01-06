@@ -453,7 +453,9 @@
                                                     visible: ItemList[$data].unlockedRegion <= player.highestRegion() || player.amountOfItem($data) > 0">
                                             <img data-bind="attr: {src: ItemList[$data].image }" style="max-width: 32px; margin: -10px; padding: 12px 0px;">
                                             <div class="d-inline-block" data-bind="text: ItemList[$data].displayName" style="margin-left: 20px; margin-top:8px;"></div>
-                                            <div class="float-right" style="margin-top: 8px" data-bind="template: { name: 'pokerusStatusTemplate', data: { 'pokerus': ItemList[$data].getPokerusStatus() }}"></div>
+                                            <div class="float-right" style="margin-top: 8px" data-bind="template: { name: 'pokerusStatusTemplate', data: {
+                                                    'pokerus': ItemList[$data].getPokerusStatus(),
+                                                    'evsProgress': ItemList[$data].getPokerusProgress() }}"></div>
                                             <!-- ko if: ItemList[$data] instanceof CaughtIndicatingItem -->
                                             <div class="float-right mr-1" style="margin-top: 8px;" data-bind="template: { name: 'caughtStatusTemplate', data: {'status': ItemList[$data].getCaughtStatus()}}"></div>
                                             <!-- /ko -->
@@ -764,7 +766,7 @@
         <!-- ko if: $data.pokerus -->
         <img width="" src="" data-bind="attr: { src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[$data.pokerus]}.png`, width: $data.width },
             tooltip: {
-                title:  $data.evs !== undefined ? `EVs: ${$data.evs.toLocaleString('en-US')}` : '',
+                title:  ($data.evs !== undefined ? `EVs: ${$data.evs.toLocaleString('en-US')}` : '') + ($data.evsProgress ?? ''),
                 trigger: 'hover',
                 placement: 'top',
             }"/>
@@ -17204,20 +17206,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="416"
     height="80"
     width="80"
-    data-bind="visible: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Spear Pillar&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Distortion World&#39;)]() == 0"/>
+    data-bind="visible: App.game.quests.getQuestLine(&#39;A New World&#39;)?.curQuest() === 10"/>
 <rect class="city"
     data-town="Distortion World"
     x="624"
     y="416"
     height="80"
     width="80"
-    data-bind="visible: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Spear Pillar&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Distortion World&#39;)]() == 0, click:function(){MapHelper.moveToTown(&#39;Distortion World&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Distortion World&#39;) }">
+    data-bind="visible: App.game.quests.getQuestLine(&#39;A New World&#39;)?.curQuest() === 10, click:function(){MapHelper.moveToTown(&#39;Distortion World&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Distortion World&#39;) }">
 </rect>
 <image width="48" height="48"
     x="640"
     y="432"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('Distortion World') && App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Spear Pillar&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Distortion World&#39;)]() == 0,
+    data-bind="visible: MapHelper.isTownCurrentLocation('Distortion World') && App.game.quests.getQuestLine(&#39;A New World&#39;)?.curQuest() === 10,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -54631,6 +54633,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                   title: $data.description ? `<u>${$data.displayName}:</u><br/>${$data.description}` : '',
                   trigger: 'hover',
                   placement:'bottom',
+                  boundary: 'viewport',
                   html: true
                 }">
                <knockout data-bind="if: ($data instanceof PokemonItem)">
@@ -54638,6 +54641,13 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         data-bind="template: { name: 'pokerusStatusTemplate', data: {
                             'pokerus': $data.getPokerusStatus(), 'width': '32px',
                             'evs': App.game.party.getPokemonByName($data.type)?.evs() }}">
+                    </span>
+               </knockout>
+               <knockout data-bind="if: ($data instanceof EvolutionStone)">
+                    <span style="position: absolute; top: 12px; left: 20px;"
+                        data-bind="template: { name: 'pokerusStatusTemplate', data: {
+                            'pokerus': ItemList[$data.name].getPokerusStatus(), 'width': '32px',
+                            'evsProgress': ItemList[$data.name].getPokerusProgress() }}">
                     </span>
                </knockout>
                <knockout data-bind="if: ($data instanceof CaughtIndicatingItem)">
