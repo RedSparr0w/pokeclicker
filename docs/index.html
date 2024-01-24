@@ -60018,7 +60018,7 @@ aria-labelledby="badgeCaseModalLabel">
                         <button class="btn btn-weather-dock" style="right: 0px; top: 0px; width: auto; padding: 0 4px;"
                             data-bind='style: { background: Weather.weatherConditions[weatherType].color },
                                 tooltip: {
-                                    title: WeatherType[weatherType],
+                                    title: GameConstants.humanifyString(WeatherType[weatherType]),
                                     placement: "bottom",
                                     trigger: "hover",
                                     boundary: "window",
@@ -61279,7 +61279,7 @@ aria-labelledby="purifyChamberModalLabel">
         <button class='btn btn-sm' style="right: 0px; top: 0px; width: auto; height: 41px;"
         data-bind='style: { background: Weather.weatherConditions[weatherForecast.weatherType].color },
             tooltip: {
-                title: WeatherType[weatherForecast.weatherType],
+                title: GameConstants.humanifyString(WeatherType[weatherForecast.weatherType]),
                 placement: "bottom",
                 trigger: "hover",
                 boundary: "window",
@@ -61289,6 +61289,7 @@ aria-labelledby="purifyChamberModalLabel">
     </td>
     <!-- /ko -->
 </script>
+
 
 <!-- Consumable Modal -->
 <div class="modal noselect fade" id="consumableModal" tabindex="-1" role="dialog" aria-labelledby="consumableModal">
