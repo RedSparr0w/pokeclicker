@@ -14,6 +14,7 @@
     "stylelint-fix": "npm run stylelint -- --fix",
     "website": "npm run tl:update && npm test && cross-env NODE_ENV=production gulp website",
     "publish": "npm test && node publish.js",
+    "publish-PR": "cross-env NODE_ENV=development gulp website-PR && node publish-PR.js",
     "tl:init": "git submodule update --init",
     "tl:update": "git submodule update --remote",
     "clean": "npm ci && npm run tl:init"

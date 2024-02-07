@@ -106,6 +106,7 @@ gulp.task('copy', (done) => {
     // Copy package.json to our base directory
     gulp.src('./package.json').pipe(gulp.dest(`${dests.base}/`));
 
+    // Copy our libraries over
     gulp.src(srcs.libs)
         .pipe(gulp.dest(dests.libs))
         .pipe(browserSync.reload({stream: true}));
@@ -244,12 +245,24 @@ gulp.task('cname', (done) => {
     fs.writeFile(`${dests.githubPages}CNAME`, config.CNAME, done);
 });
 
+gulp.task('symlinks-PR', (done) => {
+    fs.writeFile(`${dests.base}/assets`, '../../assets', done);
+});
+
 gulp.task('build', done => {
     gulp.series('copy', 'assets', 'locales', 'compile-html', 'scripts', 'styles')(done);
 });
 
+gulp.task('build-PR', done => {
+    gulp.series('copy', 'locales', 'compile-html', 'scripts', 'styles', 'symlinks-PR')(done);
+});
+
 gulp.task('website', done => {
     gulp.series('clean', 'build', 'cleanWebsite', 'copyWebsite', 'cname')(done);
+});
+
+gulp.task('website-PR', done => {
+    gulp.series('clean', 'build-PR')(done);
 });
 
 gulp.task('default', done => {
