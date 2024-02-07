@@ -1,7 +1,6 @@
 /// <reference path="../../declarations/GameHelper.d.ts" />
 
 class DungeonRunner {
-
     public static dungeon: Dungeon;
     public static timeLeft: KnockoutObservable<number> = ko.observable(GameConstants.DUNGEON_TIME);
     public static timeLeftPercentage: KnockoutObservable<number> = ko.observable(100);
@@ -73,6 +72,9 @@ class DungeonRunner {
         DungeonRunner.defeatedBoss(null);
         DungeonRunner.dungeonFinished(false);
         App.game.gameState = GameConstants.GameState.dungeon;
+
+        // If we have a dungeon guide, start them walking
+        DungeonGuides.startDungeon();
     }
 
     public static tick() {
@@ -263,6 +265,8 @@ class DungeonRunner {
             DungeonRunner.fighting(false);
             DungeonRunner.fightingBoss(false);
             MapHelper.moveToTown(DungeonRunner.dungeon.name);
+            DungeonGuides.clears(0);
+            DungeonGuides.endDungeon();
         }
     }
 
@@ -277,6 +281,7 @@ class DungeonRunner {
                 type: NotificationConstants.NotificationOption.danger,
             });
         }
+        DungeonGuides.endDungeon();
     }
 
     public static dungeonWon() {
@@ -293,6 +298,7 @@ class DungeonRunner {
                 setting: NotificationConstants.NotificationSetting.Dungeons.dungeon_complete,
             });
         }
+        DungeonGuides.endDungeon();
     }
 
     public static timeLeftSeconds = ko.pureComputed(() => {
