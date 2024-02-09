@@ -200,7 +200,18 @@
 
 <!-- Game menu-->
 <div id="startMenu" class="dropdown clearfix" style="position:absolute; right:0; top:0; z-index: 100;">
-    <button class="btn btn-secondary mr-1"
+    <button class="btn btn-secondary mr-1 float-left" style="display: none;"
+        data-bind="visible: Settings.getSetting('disableAutoSave').observableValue,
+            click: () => { Save.store(player) },
+            tooltip: {
+                html: true,
+                title: `Save the game.<br/>Shortcut: ${Settings.getSetting('hotkey.forceSave').prefix}${Settings.getSetting('hotkey.forceSave').observableValue()}`,
+                trigger: 'hover',
+                placement: 'bottom'
+            }">
+        <img src="assets/images/floppy-disk.svg" height="20px" width="20px" style="margin-top: -3px;">
+    </button>
+    <button class="btn btn-secondary mr-1 float-left"
         data-bind="visible: Settings.getSetting('showMuteButton').observableValue(),
             click: () => { Settings.getSetting('sound.muted').toggle() },
             tooltip: { title: Settings.getSetting('sound.muted').observableValue() ? 'Click to unmute all sounds.' : 'Click to mute all sounds.', trigger: 'hover', placement: 'bottom' }">
@@ -1164,7 +1175,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 trigger: 'hover',
                 placement: 'top'
             }">
-        <div class="" data-bind="text: App.game.wallet.amountText($data.currency), attr: { id: `animateCurrency-${Currency[$data.currency]}` }">0</div>
+        <div class="" data-bind="text: App.game.wallet.amountText($data.currency),
+            attr: { id: `animateCurrency-${Currency[$data.currency]}` },
+            tooltip: {
+                title: Settings.getSetting('currencyMainDisplayReduced').observableValue()
+                    ? App.game.wallet.currencies[$data.currency]().toLocaleString('en-US')
+                    : '',
+                trigger: 'hover',
+                placement: 'bottom'
+            }">0</div>
     </div>
 </script>
 
@@ -2271,8 +2290,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <img class="lock" src="assets/images/breeding/lock.svg" data-bind="hidden: !$data.lock,
                 tooltip: {
                     title: $data.lockMessage,
-                    placement: 'bottom',
-                    trigger: 'hover'
+                    placement: 'top',
+                    trigger: 'hover',
+                    boundary: 'window'
                 }" />
           </li>
           <!-- /ko -->
@@ -55494,12 +55514,41 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmLeaveDungeon')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmBeformeMulchingAllPlots')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('breedingQueueClearConfirmation')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmChangeHeldItem')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('disableRightClickMenu')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('catchFilters.initialEnabled')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('catchFilters.invertPriorityOrder')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('breedingEfficiencyAllModifiers')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('useWebWorkerForGameTicks')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('disableOfflineProgress')}"></tr>
+                                <tr data-bind="with: Settings.getSetting('disableAutoSave')">
+                                    <td class="p-2">
+                                        <label class="m-0" data-bind="attr: { for: 'checkbox-' + $data.name }, text: `${$data.displayName}:`"></label>
+                                    </td>
+                                    <td class="p-2">
+                                        <input class="clickable" type="checkbox"
+                                            data-bind="checked: $data.observableValue(), attr: {name, id: 'checkbox-' + $data.name }"
+                                            onchange="(() => {
+                                                if (!this.checked) {
+                                                    Settings.setSettingByName('disableAutoSave', false);
+                                                    return;
+                                                }
+
+                                                Notifier.confirm({
+                                                    title: 'Disable Auto Save?',
+                                                    message: 'Disabling auto save will require you to manually save the game before exiting or any progress will be lost!\r\n\r\nProceed at your own risk.',
+                                                    type: NotificationConstants.NotificationOption.danger,
+                                                    confirm: 'Yes'
+                                                }).then(confirmed => {
+                                                    if (confirmed) {
+                                                        Settings.setSettingByName('disableAutoSave', true);
+                                                    } else {
+                                                        this.checked = false;
+                                                    }
+                                                });
+                                            })()"/>
+                                    </td>
+                                </tr>
                                 <tr data-bind="visible: player.highestRegion() > 0, with: Settings.getSetting('breedingQueueSizeSetting')">
                                     <td class="p-2" data-bind="text: `${$data.displayName}:`">setting name</td>
                                     <td class="p-0">
@@ -58856,7 +58905,8 @@ aria-labelledby="badgeCaseModalLabel">
                                                 title: $data.pauseTooltip,
                                                 trigger: 'hover',
                                                 placement: 'top',
-                                                html: true
+                                                html: true,
+                                                boundary: 'window'
                                             }, css: { disabled: !$data.isPausable() }">Pause</button>
                                         </td>
                                     </tr>
