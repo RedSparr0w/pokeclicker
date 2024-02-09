@@ -229,7 +229,18 @@
 
 <!-- Game menu-->
 <div id="startMenu" class="dropdown clearfix" style="position:absolute; right:0; top:0; z-index: 100;">
-    <button class="btn btn-secondary mr-1"
+    <button class="btn btn-secondary mr-1 float-left" style="display: none;"
+        data-bind="visible: Settings.getSetting('disableAutoSave').observableValue,
+            click: () => { Save.store(player) },
+            tooltip: {
+                html: true,
+                title: `Save the game.<br/>Shortcut: ${Settings.getSetting('hotkey.forceSave').prefix}${Settings.getSetting('hotkey.forceSave').observableValue()}`,
+                trigger: 'hover',
+                placement: 'bottom'
+            }">
+        <img src="assets/images/floppy-disk.svg" height="20px" width="20px" style="margin-top: -3px;">
+    </button>
+    <button class="btn btn-secondary mr-1 float-left"
         data-bind="visible: Settings.getSetting('showMuteButton').observableValue(),
             click: () => { Settings.getSetting('sound.muted').toggle() },
             tooltip: { title: Settings.getSetting('sound.muted').observableValue() ? 'Click to unmute all sounds.' : 'Click to mute all sounds.', trigger: 'hover', placement: 'bottom' }">
@@ -55320,6 +55331,34 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('breedingEfficiencyAllModifiers')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('useWebWorkerForGameTicks')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('disableOfflineProgress')}"></tr>
+                                <tr data-bind="with: Settings.getSetting('disableAutoSave')">
+                                    <td class="p-2">
+                                        <label class="m-0" data-bind="attr: { for: 'checkbox-' + $data.name }, text: `${$data.displayName}:`"></label>
+                                    </td>
+                                    <td class="p-2">
+                                        <input class="clickable" type="checkbox"
+                                            data-bind="checked: $data.observableValue(), attr: {name, id: 'checkbox-' + $data.name }"
+                                            onchange="(() => {
+                                                if (!this.checked) {
+                                                    Settings.setSettingByName('disableAutoSave', false);
+                                                    return;
+                                                }
+
+                                                Notifier.confirm({
+                                                    title: 'Disable Auto Save?',
+                                                    message: 'Disabling auto save will require you to manually save the game before exiting or any progress will be lost!\r\n\r\nProceed at your own risk.',
+                                                    type: NotificationConstants.NotificationOption.danger,
+                                                    confirm: 'Yes'
+                                                }).then(confirmed => {
+                                                    if (confirmed) {
+                                                        Settings.setSettingByName('disableAutoSave', true);
+                                                    } else {
+                                                        this.checked = false;
+                                                    }
+                                                });
+                                            })()"/>
+                                    </td>
+                                </tr>
                                 <tr data-bind="visible: player.highestRegion() > 0, with: Settings.getSetting('breedingQueueSizeSetting')">
                                     <td class="p-2" data-bind="text: `${$data.displayName}:`">setting name</td>
                                     <td class="p-0">
