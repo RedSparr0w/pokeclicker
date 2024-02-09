@@ -2111,8 +2111,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <img class="lock" src="assets/images/breeding/lock.svg" data-bind="hidden: !$data.lock,
                 tooltip: {
                     title: $data.lockMessage,
-                    placement: 'bottom',
-                    trigger: 'hover'
+                    placement: 'top',
+                    trigger: 'hover',
+                    boundary: 'window'
                 }" />
           </li>
           <!-- /ko -->
@@ -58715,7 +58716,8 @@ aria-labelledby="badgeCaseModalLabel">
                                                 title: $data.pauseTooltip,
                                                 trigger: 'hover',
                                                 placement: 'top',
-                                                html: true
+                                                html: true,
+                                                boundary: 'window'
                                             }, css: { disabled: !$data.isPausable() }">Pause</button>
                                         </td>
                                     </tr>
