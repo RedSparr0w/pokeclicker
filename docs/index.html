@@ -992,7 +992,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 trigger: 'hover',
                 placement: 'top'
             }">
-        <div class="" data-bind="text: App.game.wallet.amountText($data.currency), attr: { id: `animateCurrency-${Currency[$data.currency]}` }">0</div>
+        <div class="" data-bind="text: App.game.wallet.amountText($data.currency),
+            attr: { id: `animateCurrency-${Currency[$data.currency]}` },
+            tooltip: {
+                title: Settings.getSetting('currencyMainDisplayReduced').observableValue()
+                    ? App.game.wallet.currencies[$data.currency]().toLocaleString('en-US')
+                    : '',
+                trigger: 'hover',
+                placement: 'bottom'
+            }">0</div>
     </div>
 </script>
 
@@ -55305,6 +55313,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmLeaveDungeon')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmBeformeMulchingAllPlots')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('breedingQueueClearConfirmation')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmChangeHeldItem')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('disableRightClickMenu')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('catchFilters.initialEnabled')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('catchFilters.invertPriorityOrder')}"></tr>
