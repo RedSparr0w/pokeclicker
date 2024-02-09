@@ -3376,7 +3376,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Pallet Town')},
         attr: { class: MapHelper.calculateTownCssClass('Pallet Town') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -4324,20 +4324,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="592"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Oak&#39;s Blimp"
     x="432"
     y="592"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="456"
     y="592"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -4350,20 +4350,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="592"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Oak&#39;s Blimp"
     x="432"
     y="592"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="456"
     y="592"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -4402,20 +4402,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="592"
     height="64"
     width="64"
-    data-bind="visible: !MapHelper.ableToTravel() &amp;&amp; player.highestRegion() == 0 &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Champion Blue&#39;)]() &gt;= 1"/>
+    data-bind="visible: !MapHelper.canTravelToNextRegion() &amp;&amp; player.highestRegion() == 0 &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Champion Blue&#39;)]() &gt;= 1"/>
 <rect class="city"
     data-town="Professor Oak"
     x="432"
     y="592"
     height="64"
     width="64"
-    data-bind="visible: !MapHelper.ableToTravel() &amp;&amp; player.highestRegion() == 0 &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Champion Blue&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) }">
+    data-bind="visible: !MapHelper.canTravelToNextRegion() &amp;&amp; player.highestRegion() == 0 &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Champion Blue&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="440"
     y="600"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && !MapHelper.ableToTravel() &amp;&amp; player.highestRegion() == 0 &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Champion Blue&#39;)]() &gt;= 1,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && !MapHelper.canTravelToNextRegion() &amp;&amp; player.highestRegion() == 0 &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Champion Blue&#39;)]() &gt;= 1,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -8077,7 +8077,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('New Bark Town')},
         attr: { class: MapHelper.calculateTownCssClass('New Bark Town') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -9228,20 +9228,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="720"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Elm&#39;s Blimp"
     x="1184"
     y="720"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="1208"
     y="720"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -9254,20 +9254,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="720"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Elm&#39;s Blimp"
     x="1184"
     y="720"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="1208"
     y="720"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -11211,7 +11211,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Littleroot Town')},
         attr: { class: MapHelper.calculateTownCssClass('Littleroot Town') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -12592,20 +12592,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="688"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Birch&#39;s Blimp"
     x="304"
     y="688"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="328"
     y="688"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -12618,20 +12618,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="688"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Birch&#39;s Blimp"
     x="304"
     y="688"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="328"
     y="688"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -15845,7 +15845,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Twinleaf Town')},
         attr: { class: MapHelper.calculateTownCssClass('Twinleaf Town') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -17280,20 +17280,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="848"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Rowan&#39;s Blimp"
     x="192"
     y="848"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="216"
     y="848"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -17306,20 +17306,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="848"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Rowan&#39;s Blimp"
     x="192"
     y="848"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="216"
     y="848"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -19336,7 +19336,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Aspertia City')},
         attr: { class: MapHelper.calculateTownCssClass('Aspertia City') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -20276,20 +20276,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="768"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Juniper&#39;s Blimp"
     x="160"
     y="768"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) }">
 </rect>
 <image width="48" height="48"
     x="184"
     y="768"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -20302,20 +20302,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="768"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Juniper&#39;s Blimp"
     x="160"
     y="768"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) }">
 </rect>
 <image width="48" height="48"
     x="184"
     y="768"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -21951,7 +21951,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Vaniville Town')},
         attr: { class: MapHelper.calculateTownCssClass('Vaniville Town') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -22903,20 +22903,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="832"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Sycamore&#39;s Blimp"
     x="912"
     y="832"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="936"
     y="832"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -22929,20 +22929,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="832"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Sycamore&#39;s Blimp"
     x="912"
     y="832"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) }">
 </rect>
 <image width="48" height="48"
     x="936"
     y="832"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -25621,7 +25621,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Iki Town Outskirts')},
         attr: { class: MapHelper.calculateTownCssClass('Iki Town Outskirts') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -26569,20 +26569,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="480"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Kukui&#39;s Blimp"
     x="1152"
     y="480"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) }">
 </rect>
 <image width="48" height="48"
     x="1176"
     y="480"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -26595,20 +26595,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="480"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Kukui&#39;s Blimp"
     x="1152"
     y="480"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) }">
 </rect>
 <image width="48" height="48"
     x="1176"
     y="480"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -37465,7 +37465,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Postwick')},
         attr: { class: MapHelper.calculateTownCssClass('Postwick') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -37830,20 +37830,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="864"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Magnolia&#39;s Blimp"
     x="784"
     y="864"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) }">
 </rect>
 <image width="48" height="48"
     x="808"
     y="864"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -37856,20 +37856,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="864"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Magnolia&#39;s Blimp"
     x="784"
     y="864"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) }">
 </rect>
 <image width="48" height="48"
     x="808"
     y="864"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -49928,7 +49928,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -49955,7 +49955,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -49973,7 +49973,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -49991,7 +49991,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -50009,7 +50009,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -50027,7 +50027,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -50045,7 +50045,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -50063,7 +50063,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -50081,7 +50081,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Prelude Beach')},
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -52742,20 +52742,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="592"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Laventon&#39;s Blimp"
     x="32"
     y="592"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) }">
 </rect>
 <image width="48" height="48"
     x="56"
     y="592"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -52768,20 +52768,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="592"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Professor Laventon&#39;s Blimp"
     x="32"
     y="592"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) }">
 </rect>
 <image width="48" height="48"
     x="56"
     y="592"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -53272,7 +53272,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         click:function(){MapHelper.moveToTown('Cabo Poco')},
         attr: { class: MapHelper.calculateTownCssClass('Cabo Poco') },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.canTravelToNextRegion() }
         ">
 </rect>
 
@@ -54108,20 +54108,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="912"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Instructor Jacq&#39;s Blimp"
     x="1504"
     y="912"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) }">
 </rect>
 <image width="48" height="48"
     x="1528"
     y="912"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -54134,20 +54134,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="912"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
 <rect class="city"
     data-town="Instructor Jacq&#39;s Blimp"
     x="1504"
     y="912"
     height="48"
     width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) }">
+    data-bind="visible: MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) }">
 </rect>
 <image width="48" height="48"
     x="1528"
     y="912"
     class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && MapHelper.canTravelToNextRegion() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -59978,16 +59978,15 @@ aria-labelledby="badgeCaseModalLabel">
             </div>
             <div class="modal-body bg-ocean">
                 <img class="my-5" src='assets/images/ship.png' style='width: 100%;'>
-                <div style='margin-top:20px' data-bind="foreach: GameHelper.enumStrings(GameConstants.Region)">
-                    <!-- ko if: $data !== 'none' -->
-                    <div class="btn-group w-100 my-1" data-bind="visible: GameConstants.Region[$data] <= player.highestRegion() && GameConstants.Region[$data] <= GameConstants.MAX_AVAILABLE_REGION">
+                <div style='margin-top:20px' data-bind="foreach: GameHelper.enumNumbers(GameConstants.Region).filter(r => r !== GameConstants.Region.none && r <= GameConstants.MAX_AVAILABLE_REGION)">
+                    <div class="btn-group w-100 my-1" data-bind="visible: $data <= player.highestRegion()">
                         <button style="position: relative;" class='btn btn-block btn-success ship-modal-region-button'
                             data-dismiss='modal'
-                            data-bind='click: () => { MapHelper.moveToTown(GameConstants.DockTowns[GameConstants.Region[$data]]); player.region = GameConstants.Region[$data]; player._subregion(0); $("#ShipModal").modal("hide");  },
-                            attr: { disabled: player.region == GameConstants.Region[$data] }'>
-                            <img style="position:absolute; left: 10px;" data-bind="visible: player.region == GameConstants.Region[$data], attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` }"/> <knockout data-bind="text: GameConstants.camelCaseToString($data)">Region</knockout>
+                            data-bind='click: () => { MapHelper.moveToRegion($data); $("#ShipModal").modal("hide");  },
+                            attr: { disabled: player.region == $data || !MapHelper.accessToShip() }'>
+                            <img style="position:absolute; left: 10px;" data-bind="visible: player.region == $data, attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` }"/> <knockout data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[$data])">Region</knockout>
                         </button>
-                        <!-- ko using: Weather.regionalWeather[GameConstants.Region[$data]], as: 'weatherType' -->
+                        <!-- ko using: Weather.regionalWeather[$data], as: 'weatherType' -->
                         <button class="btn btn-weather-dock" style="right: 0px; top: 0px; width: auto; padding: 0 4px;"
                             data-bind='style: { background: Weather.weatherConditions[weatherType].color },
                                 tooltip: {
@@ -60000,7 +59999,6 @@ aria-labelledby="badgeCaseModalLabel">
                         </button>
                         <!-- /ko -->
                     </div>
-                    <!-- /ko -->
                 </div>
             </div>
         </div>
