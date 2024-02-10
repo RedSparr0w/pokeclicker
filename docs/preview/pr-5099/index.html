@@ -54517,8 +54517,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         View
     </button>
     <div id="plotListCard" class="card-body p-0 px-2 show" data-bind="css: { ShiftPressed: GameController.keyHeld.Shift() }">
+      <!-- ko if: Settings.getSetting('showFarmModuleControls').observableValue() -->
       <div class="row py-0 mt-1">
-
         <div class="col-3 px-1">
             <div class="btn-group w-100">
                 <button type="button" class="btn btn-sm btn-primary px-1 py-0" data-bind="tooltip: {title: App.game.farming.unlockedBerries[FarmController.selectedBerry()]() ? BerryType[FarmController.selectedBerry()] : '???', trigger: 'hover', placement: 'top'},
@@ -54620,6 +54620,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             </div>
         </div>
       </div>
+      <!-- /ko -->
       <div class="row py-1" data-bind="foreach: App.game.farming.plotList">
         <!-- ko if: $index() % GameConstants.FARM_PLOT_WIDTH == 0 -->
         <div class="w-100"></div>
@@ -54666,7 +54667,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
           html: true,
       }">ⓘ</button>
     <knockout class="float-right pr-2 pt-1" data-bind="foreach: App.game.farming.farmHands.hired()">
-      <img class="pixelated" src="" height="24px" data-bind="attr:{ src: `assets/images/profile/trainer-${$data.trainerSprite}.png` },
+      <img class="pixelated m-1" src="" height="24px" data-bind="attr:{ src: `assets/images/profile/trainer-${$data.trainerSprite}.png` },
       tooltip: {
           title: $data.tooltip(),
           trigger: 'hover',
@@ -55467,9 +55468,10 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr><th colspan="2">Farm</th></tr>
                             </thead>
                             <tbody>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showFarmModule')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showFarmModuleControls')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('farmDisplay')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('farmBoostDisplay')}"></tr>
-                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showFarmModule')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('berryDexMode')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('sizeUnits')}"></tr>
                             </tbody>
