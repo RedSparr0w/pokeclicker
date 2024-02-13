@@ -54686,8 +54686,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         <!-- ko if: $data.wanderer -->
                             <!-- ko ifnot: $data.wanderer.catching -->
                                 <div class="pokemonSprite wandererSprite"
-                                data-bind="style: { backgroundImage: FarmController.getWandererStyle($data)},
-                                    css: {'walkDownFlash': $data.wanderer.distractTime() > 0, 'walkDown': $data.wanderer.distractTime() === 0}">
+                                    data-bind="style: { backgroundImage: FarmController.getWandererStyle($data)},
+                                    class: FarmController.getWandererCss($data)">
                                 </div>
                             <!-- /ko -->
                             <!-- ko if: $data.wanderer.catching -->
@@ -59226,13 +59226,12 @@ aria-labelledby="badgeCaseModalLabel">
                                                 <!-- ko ifnot: $data.wanderer.catching -->
                                                     <div class="pokemonSprite wandererSprite"
                                                         data-bind="style: { backgroundImage: FarmController.getWandererStyle($data)},
-                                                            class: FarmController.getWandererCss($data)"
-                                                    ></div>
+                                                        class: FarmController.getWandererCss($data)">
+                                                    </div>
                                                 <!-- /ko -->
                                                 <!-- ko if: $data.wanderer.catching -->
                                                     <img src="" class="pokeball-animated wandererCapture" style="z-index: 1;"
-                                                        data-bind="attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.wanderer.pokeball()] + '.svg'}"    
-                                                    />
+                                                        data-bind="attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.wanderer.pokeball()] + '.svg'}"/>
                                                 <!-- /ko -->
                                             <!-- /ko -->
                                             <div class="plotButton"
