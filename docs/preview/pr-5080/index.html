@@ -633,13 +633,16 @@
                         <div id="itemBag-heldItems" class="collapse show mt-1">
                             <div class="card-body pt-2 p-1">
                                 <div class="row justify-content-center">
-                                    <!-- ko foreach: HeldItem.getSortedHeldItems() -->
+                                    <!-- ko foreach: Object.values(HeldItem.getSortedHeldItems()) -->
+                                    <h5 class="card-title col-12 mb-2" data-bind="text: $data.title, visible: $data.items.some(i => i.isUnlocked())"></h5>
+                                    <!-- ko foreach: $data.items -->
                                     <div class="col-6 col-lg-3 mb-2" data-bind="visible: $data.isUnlocked()">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name },
                                                 click: () => { HeldItem.heldItemSelected($data); $('#heldItemModal').modal('show'); }">
                                         </div>
                                     </div>
+                                    <!-- /ko -->
                                     <!-- /ko -->
                                 </div>
                             </div>
@@ -2227,11 +2230,11 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <!-- ko if: player.town() instanceof DungeonTown -->
                 <div class="btn-group btn-block" style="margin-top: 0px;">
                     <button class="btn btn-secondary p-0" onclick="DungeonRunner.initializeDungeon(player.town().dungeon)" data-bind="
-                        visible: player.town() instanceof DungeonTown,
-                        if: player.town().dungeon,
-                        attr: { class: player.town().dungeon && App.game.wallet.currencies[GameConstants.Currency.dungeonToken]() >= player.town().dungeon.tokenCost ? 'btn btn-success p-0' : 'btn btn-secondary p-0' }">
-                            Start<br/>
-                            <span data-bind="template: { name: 'currencyTemplate', data: {'amount': player.town().dungeon.tokenCost, 'currency': GameConstants.Currency.dungeonToken}}"></span>
+                       visible: player.town() instanceof DungeonTown,
+                       if: player.town().dungeon,
+                       attr: { class: player.town().dungeon && (App.game.wallet.currencies[GameConstants.Currency.dungeonToken]() >= player.town().dungeon.tokenCost ? 'btn btn-success p-0' : 'btn btn-secondary p-0') + (player.town().dungeon.isUnlocked() ? '' : ' disabled') }">
+                        Start<br/>
+                        <span data-bind="template: { name: 'currencyTemplate', data: {'amount': player.town().dungeon.tokenCost, 'currency': GameConstants.Currency.dungeonToken}}"></span>
                     </button>
                     <button class="btn btn-info p-0 btn-dungeon-guide" href="#dungeonGuidesModal" data-toggle="modal" data-bind="
                         tooltip: { html: true, title: `Hire a Dungeon Guide!`, trigger: 'hover', placement:'right' },
