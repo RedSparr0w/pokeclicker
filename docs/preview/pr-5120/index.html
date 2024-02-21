@@ -25952,33 +25952,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-        
-        <!--Ruins of Conflict-->
-        
-
-<image href="" xlink:href=""
-    x="544"
-    y="208"
-    height="48"
-    width="112"
-    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0"/>
-<rect class="city"
-    data-town="Ruins of Conflict"
-    x="544"
-    y="208"
-    height="48"
-    width="112"
-    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0, click:function(){MapHelper.moveToTown(&#39;Ruins of Conflict&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Ruins of Conflict&#39;) }">
-</rect>
-<image width="48" height="48"
-    x="576"
-    y="208"
-    class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Conflict') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0,
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
-</image>
-
 
         <!--Melemele Woods-->
         
@@ -26243,17 +26216,28 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!--Ruins of Conflict-->
         
 
-
-
-    <image width="48" height="48"
-        x="536"
-        y="208"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Conflict'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
+<image href="" xlink:href=""
+    x="544"
+    y="208"
+    height="48"
+    width="112"
+    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0"/>
+<rect class="city"
+    data-town="Ruins of Conflict"
+    x="544"
+    y="208"
+    height="48"
+    width="112"
+    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0, click:function(){MapHelper.moveToTown(&#39;Ruins of Conflict&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Ruins of Conflict&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="576"
+    y="208"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Conflict') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
 
         <!--Seaward Cave-->
@@ -28860,10 +28844,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <rect class="city"
         data-town="Ruins of Life"
-        x="960"
-        y="760"
-        height="40"
-        width="48"
+        x="944"
+        y="768"
+        height="64"
+        width="80"
         data-bind="click:function(){MapHelper.moveToTown('Ruins of Life')},
             attr: { class: MapHelper.calculateTownCssClass('Ruins of Life') }">
     </rect>
@@ -28871,7 +28855,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <image width="48" height="48"
         x="960"
-        y="756"
+        y="776"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Life'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
