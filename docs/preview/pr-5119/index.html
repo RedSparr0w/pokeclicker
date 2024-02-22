@@ -54708,11 +54708,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <button class="btn btn-sm btn-primary" style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px;" onclick="App.game.underground.openUndergroundModal()">
         View
     </button>
+
     <div id="undergroundCard" class="card-body p-0 show">
-
         <div>
-            <span class="font-weight-bold">Mine</span>
-
             <div class='progress' style="height: 25px;">
                 <div class='progress-bar bg-warning' role='progressbar'
                      aria-valuemin='0' aria-valuemax='100'
@@ -54721,19 +54719,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 </div>
             </div>
 
-            <div class='progress'>
-                <div class='progress-bar bg-info' role='progressbar'
-                     aria-valuemin='0' aria-valuemax='100'
-                     data-bind="style: { width: (100 * Mine.excavatedTileCount() / Mine.allTileCount()).toFixed(2) + '%' }">
-                    <span data-bind="text: (100 * Mine.excavatedTileCount() / Mine.allTileCount()).toFixed(2) + '% cleared'"></span>
-                </div>
-            </div>
-
             <div class="container">
-                <div class="row text-center">
-                    <div class="col"
-                            data-bind="
-                                        text: Mine.itemsFound() + ' / ' + Mine.itemsBuried() + ' items found' ,
+                <div class="row">
+                    <div class="col">
+                        <div data-bind="text: 'Treasures found: ' + Mine.itemsFound() + ' / ' + Mine.itemsBuried(),
                                         tooltip: {
                                             title: () =>
                                                 Mine.surveyResult() || 'Conduct a Survey to get more details',
@@ -54741,15 +54730,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                                 placement: 'top',
                                                 boundary: 'window',
                                                 html: true,
-                                        }"
-                    >
+                                        }"></div>
+                        <div data-bind="text: 'Partially discovered: ' + (Mine.itemsFound() + Mine.itemsPartiallyFound())"></div>
                     </div>
                 </div>
 
                 <!-- ko if: Settings.getSetting('showUndergroundModuleMineControls').observableValue() -->
-                <!-- ko foreach: ['SmallRestore','MediumRestore','LargeRestore'] -->
-                <div class="row">
-                    <button class="col btn btn-secondary" data-bind="
+                <div class="row" data-bind="foreach: ['SmallRestore','MediumRestore','LargeRestore']">
+                    <button class="col btn btn-secondary p-0" data-bind="
                                     click: function(){ ItemList[$data].use();},
                                     css: { disabled: player._itemList[$data]() <= 0},
                                     tooltip: {
@@ -54759,10 +54747,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                         boundary: 'window',
                                         html: true,
                                     }">
-                        <img class="restore-item" data-bind="attr: { src: ItemList[$data].image }"> × <span data-bind="text: player._itemList[$data]().toLocaleString('en-US')">(?)</span>
+                        <img style="width: 32px;" data-bind="attr: { src: ItemList[$data].image }"><br/>
+                        <span style="line-height: 1;" data-bind="text: GameHelper.formatAmount(player._itemList[$data]())">(?)</span>
                     </button>
                 </div>
-                <!-- /ko -->
 
                 <div class="row">
                     <button class='col btn btn-warning' onClick='Mine.bomb()' data-bind="tooltip: {title: `Bomb will mine 2 layers of ${App.game.underground.getBombEfficiency()} (cleared or uncleared) random tiles.`, trigger: 'hover', placement: 'bottom', boundary: 'window'}">Bomb (<knockout data-bind="text: Underground.BOMB_ENERGY"></knockout> energy)</button>
@@ -54770,45 +54758,45 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <!-- /ko -->
             </div>
         </div>
-
-        <!-- ko if: Settings.getSetting('showUndergroundModuleDailyTrades').observableValue() -->
-        <div class="">
-            <span class="font-weight-bold">Daily trades</span>
-
-            <div class="table-responsive">
-                <table class="table table-sm table-hover table-striped m-0 text-left">
-                    <thead>
-                    </thead>
-                    <tbody>
-                    <!-- ko foreach: DailyDeal.list -->
-                    <tr data-bind="tooltip: {
-                                    title: () => `${$data.amount1} ${$data.item1.name} → ${$data.amount2} ${$data.item2.name}`,
-                                    trigger: 'hover',
-                                    placement: 'top',
-                                    boundary: 'window',
-                                    html: true,
-                                }">
-                        <td class="vertical-middle">
-                            <span data-bind="text: `${$data.amount1} ×`"></span>
-                        </td>
-                        <td class='vertical-middle'>
-                            <img class='mineInventoryItem' data-bind='attr: {src: $data.item1.image }'>
-                        </td>
-                        <td class='vertical-middle'>→</td>
-                        <td class="vertical-middle">
-                            <span data-bind="text: `${$data.amount2} ×`"></span>
-                        </td>
-                        <td class='vertical-middle'>
-                            <img class='mineInventoryItem' data-bind='attr: {src: $data.item2.image }'>
-                        </td>
-                    </tr>
-                    <!-- /ko -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- /ko -->
     </div>
+
+    <!-- ko if: Settings.getSetting('showUndergroundModuleDailyTrades').observableValue() -->
+    <div  class="card-header p-0" data-toggle="collapse" href="#undergroundDailyTradesCard">
+        <span>Daily trades</span>
+    </div>
+
+    <div id="undergroundDailyTradesCard" class="table-responsive show">
+        <table class="table table-sm table-hover table-striped m-0 text-left">
+            <thead>
+            </thead>
+            <tbody>
+            <!-- ko foreach: DailyDeal.list -->
+            <tr data-bind="tooltip: {
+                            title: () => `${$data.amount1} ${$data.item1.name} → ${$data.amount2} ${$data.item2.name}`,
+                            trigger: 'hover',
+                            placement: 'top',
+                            boundary: 'window',
+                            html: true,
+                        }">
+                <td class="text-center vertical-middle">
+                    <span style="line-height: 1;" data-bind="text: `${$data.amount1} ×`"></span>
+                </td>
+                <td class='text-center vertical-middle'>
+                    <img class='mineInventoryItem' data-bind='attr: {src: $data.item1.image }'>
+                </td>
+                <td class='text-center vertical-middle'>→</td>
+                <td class="text-center vertical-middle">
+                    <span style="line-height: 1;" data-bind="text: `${$data.amount2} ×`"></span>
+                </td>
+                <td class='text-center vertical-middle'>
+                    <img class='mineInventoryItem' data-bind='attr: {src: $data.item2.image }'>
+                </td>
+            </tr>
+            <!-- /ko -->
+            </tbody>
+        </table>
+    </div>
+    <!-- /ko -->
 </div>
 
 
@@ -57562,25 +57550,14 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                 <span data-bind="text: 'Energy: ' + Math.floor(App.game.underground.energy) + ' / ' + App.game.underground.getMaxEnergy() + (Math.floor(App.game.underground.energy) < App.game.underground.getMaxEnergy() ? ' (' + Underground.energyTick() + 's)' : '')"></span>
                             </div>
                         </div>
-                        <div class='progress'>
-                            <div id='mineProgressBar' class='progress-bar bg-info' role='progressbar'
-                                 aria-valuemin='0' aria-valuemax='100'
-                                 data-bind="style: { width: (100 * Mine.excavatedTileCount() / Mine.allTileCount()).toFixed(2) + '%' }">
-                                <span data-bind="text: (100 * Mine.excavatedTileCount() / Mine.allTileCount()).toFixed(2) + '% cleared'"></span>
-                            </div>
-                        </div>
                     </div>
                     <div id="mineBody" class="container" style="margin:auto">
                     </div>
                     <div class='row no-gutters'>
-                        <button class='col-12 col-md-4 btn btn-primary' onClick='Mine.toolSelected(Mine.Tool.Hammer)'
-                        data-bind="tooltip: {title: 'Hammer will mine 1 layer of all 9 tiles in a chosen 3x3 area.', trigger: 'hover', placement: 'top', boundary: 'window'}">Hammer (<knockout data-bind="text: Underground.HAMMER_ENERGY"></knockout> energy)</button>
-                        <button class='col-12 col-md-4 btn btn-info' onClick='Mine.toolSelected(Mine.Tool.Chisel)'
-                        data-bind="tooltip: {title: 'Chisel will mine 2 layers on a single chosen tile.', trigger: 'hover', placement: 'top', boundary: 'window'}">Chisel (<knockout data-bind="text: Underground.CHISEL_ENERGY"></knockout> energy)</button>
-                        <button class="col-12 col-md-4 btn btn-secondary"
+                        <div class="col-12"
                             id="mine-survey-result"
                             data-bind="
-                                text: Mine.itemsFound() + ' / ' + Mine.itemsBuried() + ' items found' ,
+                                text: 'Treasures found: ' + Mine.itemsFound() + ' / ' + Mine.itemsBuried() + ', Partially discovered: ' + (Mine.itemsFound() + Mine.itemsPartiallyFound()),
                                 tooltip: {
                                     title: () =>
                                         Mine.surveyResult() || 'Conduct a Survey to get more details',
@@ -57590,16 +57567,20 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                         html: true,
                                 }"
                             >
-                        </button>
+                        </div>
+                        <button class='col-12 col-md-4 btn btn-primary' onClick='Mine.toolSelected(Mine.Tool.Hammer)'
+                        data-bind="tooltip: {title: 'Hammer will mine 1 layer of all 9 tiles in a chosen 3x3 area.', trigger: 'hover', placement: 'top', boundary: 'window'}">Hammer (<knockout data-bind="text: Underground.HAMMER_ENERGY"></knockout> energy)</button>
+                        <button class='col-12 col-md-4 btn btn-info' onClick='Mine.toolSelected(Mine.Tool.Chisel)'
+                        data-bind="tooltip: {title: 'Chisel will mine 2 layers on a single chosen tile.', trigger: 'hover', placement: 'top', boundary: 'window'}">Chisel (<knockout data-bind="text: Underground.CHISEL_ENERGY"></knockout> energy)</button>
                         <button class='col-12 col-md-4 btn btn-success'
                                 onClick='Mine.survey(); $(this).tooltip("hide")'
                                 data-bind="disable: Mine.surveyResult() ? true : false, tooltip: {title: `Survey gives you information about the items to be found on this layer. It also fully damages ${App.game.underground.getSurvey_Efficiency()} (cleared or uncleared) random tile${App.game.underground.getSurvey_Efficiency() > 1 ? 's' : ''}.`, trigger: 'hover', placement: 'bottom', boundary: 'window'}">
                             Survey (<knockout data-bind="text: App.game.underground.getSurvey_Cost()"></knockout> energy)
                         </button>
                         <!-- FIX NUMBER-->
-                        <button class='col-12 col-md-4 btn btn-warning' onClick='Mine.bomb()'
+                        <button class='col-12 col-md-6 btn btn-warning' onClick='Mine.bomb()'
                         data-bind="tooltip: {title: `Bomb will mine 2 layers of ${App.game.underground.getBombEfficiency()} (cleared or uncleared) random tiles.`, trigger: 'hover', placement: 'bottom', boundary: 'window'}">Bomb (<knockout data-bind="text: Underground.BOMB_ENERGY"></knockout> energy)</button>
-                        <button class='col-12 col-md-4 btn btn-danger' onClick='Mine.skipLayer(true)'
+                        <button class='col-12 col-md-6 btn btn-danger' onClick='Mine.skipLayer(true)'
                         data-bind="tooltip: {title: `Skips the current layer. Fully mine a layer to recover one Skip.`, trigger: 'hover', placement: 'bottom', boundary: 'window'}">Skip (<knockout data-bind="text: `${Mine.skipsRemaining()} / ${Mine.maxSkips}`"></knockout>)</button>
                     </div>
                 </div>
