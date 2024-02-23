@@ -24563,43 +24563,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
-        <!--Melemele Sea-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(19, 6); } ">
-    <rect data-route='19'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(19, 6) }"
-        height="48"
-        width="208"
-        x="1248" y="640">
-    </rect>
-
-    <text style="font-size: 32px"
-        x="1256"
-        y="674"
-        data-bind="visible: !MapHelper.isRouteCurrentLocation(19, 6)">
-        Melemele Sea
-    </text>
-    <image width="48" height="48"
-        x="1328"
-        y="640"
-        class="iconLocation hide"
-        transform='rotate(0)'
-        rotate=""
-        localx="1248"
-        localy="640"
-        data-bind="visible: MapHelper.isRouteCurrentLocation(19, 6),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-    
-
-</g>
-
-
-        <!--Melemele Sea extension thingy-->
+        <!--Melemele Sea extension-->
         
 
 <g
@@ -25314,34 +25278,34 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
-        <!--Kala'e Bay-->
+        <!--Melemele Sea-->
         
 
 <g
 
-    data-bind="click:function(){ MapHelper.moveToRoute(20, 6); } ">
-    <rect data-route='20'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(20, 6) }"
-        height="96"
-        width="128"
-        x="864" y="192">
+    data-bind="click:function(){ MapHelper.moveToRoute(19, 6); } ">
+    <rect data-route='19'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(19, 6) }"
+        height="48"
+        width="208"
+        x="1248" y="640">
     </rect>
 
     <text style="font-size: 32px"
-        x="848"
-        y="250"
-        data-bind="visible: !MapHelper.isRouteCurrentLocation(20, 6)">
-        Kala&#39;e Bay
+        x="1256"
+        y="674"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(19, 6)">
+        Melemele Sea
     </text>
     <image width="48" height="48"
-        x="904"
-        y="216"
+        x="1328"
+        y="640"
         class="iconLocation hide"
         transform='rotate(0)'
         rotate=""
-        localx="864"
-        localy="192"
-        data-bind="visible: MapHelper.isRouteCurrentLocation(20, 6),
+        localx="1248"
+        localy="640"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(19, 6),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
@@ -25516,6 +25480,42 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="944" y="288">
     </rect>
 
+
+</g>
+
+
+        <!--Kala'e Bay-->
+        
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(20, 6); } ">
+    <rect data-route='20'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(20, 6) }"
+        height="96"
+        width="128"
+        x="864" y="192">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="848"
+        y="250"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(20, 6)">
+        Kala&#39;e Bay
+    </text>
+    <image width="48" height="48"
+        x="904"
+        y="216"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="864"
+        localy="192"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(20, 6),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
 
 </g>
 
@@ -25956,28 +25956,27 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!--Melemele Woods-->
         
 
-<image href="" xlink:href=""
-    x="448"
-    y="208"
-    height="48"
-    width="224"
-    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1"/>
 <rect class="city"
     data-town="Melemele Woods"
-    x="448"
-    y="208"
+    x="480"
+    y="160"
     height="48"
-    width="224"
-    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Melemele Woods&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Melemele Woods&#39;) }">
+    width="192"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Melemele Woods')},
+        attr: { class: MapHelper.calculateTownCssClass('Melemele Woods') },
+        ">
 </rect>
-<image width="48" height="48"
-    x="536"
-    y="208"
-    class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('Melemele Woods') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1,
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
-</image>
+
+    <image width="48" height="48"
+        x="552"
+        y="160"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Melemele Woods'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
 
 
         <!--Melemele Woods Extension-->
@@ -25985,10 +25984,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <rect class="city"
     data-town="Melemele Woods"
-    x="464"
-    y="160"
+    x="448"
+    y="208"
     height="48"
-    width="208"
+    width="96"
     data-bind="
         click:function(){MapHelper.moveToTown('Melemele Woods')},
         attr: { class: MapHelper.calculateTownCssClass('Melemele Woods') },
@@ -26063,6 +26062,33 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         ">
 </rect>
 
+
+
+        <!--Melemele Woods Extension-->
+        
+
+<image href="" xlink:href=""
+    x="544"
+    y="208"
+    height="48"
+    width="128"
+    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1"/>
+<rect class="city"
+    data-town="Melemele Woods"
+    x="544"
+    y="208"
+    height="48"
+    width="128"
+    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Melemele Woods&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Melemele Woods&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="584"
+    y="208"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Melemele Woods') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
 
         <!--Roadside Motel-->
@@ -26187,13 +26213,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     <image width="48" height="48"
-        x="536"
-        y="208"
+        x="496"
+        y="160"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Verdant Cavern'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
+
+
+
+        <!--Melemele Meadow extension-->
+        
+
+
 
 
 
@@ -26203,13 +26236,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     <image width="48" height="48"
-        x="536"
-        y="208"
+        x="608"
+        y="128"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Melemele Meadow'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
+
+
+
+        <!--Melemele Meadow extension-->
+        
+
+
 
 
 
@@ -26238,6 +26278,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
+
+
+        <!--Ruins of Conflict-->
+        
+
+
+
+    <image width="48" height="48"
+        x="576"
+        y="208"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Conflict'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
 
 
         <!--Seaward Cave-->
