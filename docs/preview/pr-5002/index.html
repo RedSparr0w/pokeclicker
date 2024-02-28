@@ -105,6 +105,35 @@
 <link id="theme-link" href="https://bootswatch.com/4/yeti/bootstrap.min.css" rel="stylesheet" data-bind="attr: {href: 'https://bootswatch.com/4/' + Settings.getSetting('theme').observableValue() + '/bootstrap.min.css'}">
 
 <!--$DEV_BANNER-->
+<div class="modal" data-keyboard="false" data-backdrop="static" id="developmentModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title">Welcome to the development site!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-left">
+                <p></p>
+                <i class="text-warning">This is the development version of the game, do not take your save from this version to the main game!</i>
+                <hr/>
+                <p>Bringing your save back over to the main game will very likely cause problems, whenever testing something new please re-import a fresh save file to avoid any bugs.</a>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Let's GO!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function checkDevModal(event) {
+        $('#developmentModal').modal('show');
+    });
+</script>
+
+
 <!-- Spash Screen -->
 <div class="d-flex align-items-center justify-content-center background-night py-4" id="saveSelector">
     <div class="justify-content-center container row">
@@ -200,7 +229,18 @@
 
 <!-- Game menu-->
 <div id="startMenu" class="dropdown clearfix" style="position:absolute; right:0; top:0; z-index: 100;">
-    <button class="btn btn-secondary mr-1"
+    <button class="btn btn-secondary mr-1 float-left" style="display: none;"
+        data-bind="visible: Settings.getSetting('disableAutoSave').observableValue,
+            click: () => { Save.store(player) },
+            tooltip: {
+                html: true,
+                title: `Save the game.<br/>Shortcut: ${Settings.getSetting('hotkey.forceSave').prefix}${Settings.getSetting('hotkey.forceSave').observableValue()}`,
+                trigger: 'hover',
+                placement: 'bottom'
+            }">
+        <img src="assets/images/floppy-disk.svg" height="20px" width="20px" style="margin-top: -3px;">
+    </button>
+    <button class="btn btn-secondary mr-1 float-left"
         data-bind="visible: Settings.getSetting('showMuteButton').observableValue(),
             click: () => { Settings.getSetting('sound.muted').toggle() },
             tooltip: { title: Settings.getSetting('sound.muted').observableValue() ? 'Click to unmute all sounds.' : 'Click to mute all sounds.', trigger: 'hover', placement: 'bottom' }">
@@ -593,13 +633,16 @@
                         <div id="itemBag-heldItems" class="collapse show mt-1">
                             <div class="card-body pt-2 p-1">
                                 <div class="row justify-content-center">
-                                    <!-- ko foreach: HeldItem.getSortedHeldItems() -->
+                                    <!-- ko foreach: Object.values(HeldItem.getSortedHeldItems()) -->
+                                    <h5 class="card-title col-12 mb-2" data-bind="text: $data.title, visible: $data.items.some(i => i.isUnlocked())"></h5>
+                                    <!-- ko foreach: $data.items -->
                                     <div class="col-6 col-lg-3 mb-2" data-bind="visible: $data.isUnlocked()">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name },
                                                 click: () => { HeldItem.heldItemSelected($data); $('#heldItemModal').modal('show'); }">
                                         </div>
                                     </div>
+                                    <!-- /ko -->
                                     <!-- /ko -->
                                 </div>
                             </div>
@@ -963,7 +1006,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 trigger: 'hover',
                 placement: 'top'
             }">
-        <div class="" data-bind="text: App.game.wallet.amountText($data.currency), attr: { id: `animateCurrency-${Currency[$data.currency]}` }">0</div>
+        <div class="" data-bind="text: App.game.wallet.amountText($data.currency),
+            attr: { id: `animateCurrency-${Currency[$data.currency]}` },
+            tooltip: {
+                title: Settings.getSetting('currencyMainDisplayReduced').observableValue()
+                    ? App.game.wallet.currencies[$data.currency]().toLocaleString('en-US')
+                    : '',
+                trigger: 'hover',
+                placement: 'bottom'
+            }">0</div>
     </div>
 </script>
 
@@ -1977,7 +2028,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                <button class="btn btn-secondary p-0" onclick="DungeonRunner.initializeDungeon(player.town().dungeon)" data-bind="
                    visible: player.town() instanceof DungeonTown,
                    if: player.town().dungeon,
-                   attr: { class: player.town().dungeon && App.game.wallet.currencies[GameConstants.Currency.dungeonToken]() >= player.town().dungeon.tokenCost ? 'btn btn-success p-0' : 'btn btn-secondary p-0' }">
+                   attr: { class: player.town().dungeon && (App.game.wallet.currencies[GameConstants.Currency.dungeonToken]() >= player.town().dungeon.tokenCost ? 'btn btn-success p-0' : 'btn btn-secondary p-0') + (player.town().dungeon.isUnlocked() ? '' : ' disabled') }">
                     Start<br/>
                     <span data-bind="template: { name: 'currencyTemplate', data: {'amount': player.town().dungeon.tokenCost, 'currency': GameConstants.Currency.dungeonToken}}"></span>
                </button>
@@ -2063,8 +2114,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <img class="lock" src="assets/images/breeding/lock.svg" data-bind="hidden: !$data.lock,
                 tooltip: {
                     title: $data.lockMessage,
-                    placement: 'bottom',
-                    trigger: 'hover'
+                    placement: 'top',
+                    trigger: 'hover',
+                    boundary: 'window'
                 }" />
           </li>
           <!-- /ko -->
@@ -54459,6 +54511,195 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </div>
 
 
+                    <!-- Farm -->
+                    <div id="farmDisplay" class="card sortable border-secondary mb-3" data-bind="visible: App.game.farming.canAccess() && Settings.getSetting('showFarmModule').observableValue(), if: Settings.getSetting('showFarmModule').observableValue()">
+    <div class="card-header p-0" data-toggle="collapse" href="#plotListCard">
+        <span>Farm</span>
+    </div>
+    <button class='btn btn-sm btn-primary' style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px;" onclick="FarmController.openFarmModal()">
+        View
+    </button>
+    <!-- ko ifnot: Settings.getSetting('showFarmModuleControls').observableValue() -->
+    <div class="dropdown" style="position: absolute; left: 0px; top: 0px;">
+        <button class='btn btn-sm btn-primary dropdown-toggle dropdown-toggle-no-arrow' style="width: auto; height: 41px;" data-toggle="dropdown"
+            data-bind="tooltip: {title: App.game.farming.unlockedBerries[FarmController.selectedBerry()]() ? BerryType[FarmController.selectedBerry()] : '???', trigger: 'hover', placement: 'right'}">
+            <img src="" alt="selected berry image" height="28px" data-bind="attr:{ src: FarmController.getBerryImage(FarmController.selectedBerry()) },
+                css: {'berryLocked': !App.game.farming.unlockedBerries[FarmController.selectedBerry()]() }">
+        </button>
+        <div class="dropdown-menu" style="max-height: 275px; overflow-y: auto;"
+            data-bind="foreach: GameHelper.enumNumbers(BerryType).filter(b => App.game.farming.unlockedBerries[b]?.())">
+            <button class="dropdown-item d-flex small px-3" type="button"
+                data-bind="click: () => FarmController.selectedBerry($data), css: { 'active': FarmController.selectedBerry() === $data }">
+                <knockout class="flex-grow-1" data-bind="text: BerryType[$data]"></knockout>
+                <knockout data-bind="text: App.game.farming.berryList[$data]() >= 1e6
+                    ? GameConstants.formatNumber(App.game.farming.berryList[$data]())
+                    : App.game.farming.berryList[$data]().toLocaleString('en-US')"></knockout>
+            </button>
+        </div>
+    </div>
+    <!-- /ko -->
+    <div id="plotListCard" class="card-body p-0 px-2 show" data-bind="css: { ShiftPressed: GameController.keyHeld.Shift() }">
+      <!-- ko if: Settings.getSetting('showFarmModuleControls').observableValue() -->
+      <div class="row py-0 mt-1">
+        <div class="col-3 px-1">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-sm btn-primary px-1 py-0" data-bind="tooltip: {title: App.game.farming.unlockedBerries[FarmController.selectedBerry()]() ? BerryType[FarmController.selectedBerry()] : '???', trigger: 'hover', placement: 'top'},
+                    click: () => FarmController.selectedFarmModuleTool(FarmingTool.Berry),
+                    css: { active: FarmController.selectedFarmModuleTool() === FarmingTool.Berry }">
+                    <img src="" alt="selected berry image" height="28px" data-bind="attr:{ src: FarmController.getBerryImage(FarmController.selectedBerry()) },
+                        css: {'berryLocked': !App.game.farming.unlockedBerries[FarmController.selectedBerry()]() }">
+                </button>
+                <button type="button" class="btn btn-sm btn-primary p-0 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
+                <div class="dropdown-menu dropdown-menu-right" style="max-height: 275px; overflow-y: auto;"
+                    data-bind="foreach: GameHelper.enumNumbers(BerryType).filter(b => App.game.farming.unlockedBerries[b]?.())">
+                    <button class="dropdown-item d-flex small px-3 py-1" type="button"
+                        data-bind="click: () => { FarmController.selectedBerry($data); FarmController.selectedFarmModuleTool(FarmingTool.Berry) },
+                            css: { active: FarmController.selectedBerry() === $data }">
+                        <knockout class="flex-grow-1" data-bind="text: BerryType[$data]"></knockout>
+                        <knockout data-bind="text: App.game.farming.berryList[$data]() >= 1e6
+                            ? GameConstants.formatNumber(App.game.farming.berryList[$data]())
+                            : App.game.farming.berryList[$data]().toLocaleString('en-US')"></knockout>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 px-1">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-sm btn-primary px-1 py-0" data-bind="tooltip: {title: ItemList[MulchType[FarmController.selectedMulch()]].displayName, trigger: 'hover', placement: 'top'},
+                    click: () => FarmController.selectedFarmModuleTool(FarmingTool.Mulch),
+                    css: { active: FarmController.selectedFarmModuleTool() === FarmingTool.Mulch }">
+                    <img src="" alt="selected mulch image" height="28px" data-bind="attr:{ src: ItemList[MulchType[FarmController.selectedMulch()]].image }">
+                </button>
+                <button type="button" class="btn btn-sm btn-primary p-0 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
+                <div class="dropdown-menu dropdown-menu-right" data-bind="foreach: GameHelper.enumNumbers(MulchType).filter(m => m > MulchType.None)">
+                    <button class="dropdown-item d-flex small px-3 py-1" type="button"
+                        data-bind="click: () => { FarmController.selectedMulch($data); FarmController.selectedFarmModuleTool(FarmingTool.Mulch) },
+                            css: { active: FarmController.selectedMulch() === $data }">
+                        <knockout class="flex-grow-1" data-bind="text: ItemList[MulchType[$data]].displayName"></knockout>
+                        <knockout data-bind="text: App.game.farming.mulchList[$data]() >= 1e6
+                            ? GameConstants.formatNumber(App.game.farming.mulchList[$data]())
+                            : App.game.farming.mulchList[$data]().toLocaleString('en-US')"></knockout>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 px-1">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-sm btn-primary px-1 py-0"
+                    data-bind="tooltip: {title: `${ItemList.Berry_Shovel.displayName} (${App.game.farming.shovelAmt().toLocaleString()})`, trigger: 'hover', placement: 'top'},
+                        click: () => FarmController.selectedFarmModuleTool(FarmingTool.Shovel),
+                        css: { active: FarmController.selectedFarmModuleTool() === FarmingTool.Shovel },
+                        visible: FarmController.selectedFarmModuleTool() !== FarmingTool.MulchShovel">
+                    <img src="" alt="Berry Shovel" height="28px" data-bind="attr:{ src: ItemList['Berry_Shovel'].image }">
+                </button>
+                <button type="button" class="btn btn-sm btn-primary px-1 py-0"
+                    data-bind="tooltip: {title: `${ItemList.Mulch_Shovel.displayName} (${App.game.farming.mulchShovelAmt().toLocaleString()})`, trigger: 'hover', placement: 'top'},
+                        click: () => FarmController.selectedFarmModuleTool(FarmingTool.MulchShovel),
+                        css: { active: FarmController.selectedFarmModuleTool() === FarmingTool.MulchShovel },
+                        visible: FarmController.selectedFarmModuleTool() === FarmingTool.MulchShovel">
+                    <img src="" alt="Mulch Shovel" height="28px" data-bind="attr:{ src: ItemList['Mulch_Shovel'].image }">
+                </button>
+                <button type="button" class="btn btn-sm btn-primary p-0 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <button class="dropdown-item d-flex small px-3 py-1" type="button"
+                        data-bind="click: () => { FarmController.selectedFarmModuleTool(FarmingTool.Shovel) },
+                            css: { active: FarmController.selectedFarmModuleTool() == FarmingTool.Shovel }">
+                        <knockout class="flex-grow-1">Shovel</knockout>
+                        <knockout data-bind="text: `(${App.game.farming.shovelAmt().toLocaleString()})`"></knockout>
+                    </button>
+                    <button class="dropdown-item d-flex small px-3 py-1" type="button"
+                        data-bind="click: () => { FarmController.selectedFarmModuleTool(FarmingTool.MulchShovel) },
+                            css: { active: FarmController.selectedFarmModuleTool() == FarmingTool.MulchShovel }">
+                        <knockout class="flex-grow-1">Mulch Shovel</knockout>
+                        <knockout data-bind="text: `(${App.game.farming.mulchShovelAmt().toLocaleString()})`"></knockout>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-3 px-1">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-sm btn-primary px-1 py-0" style="height:30px" data-bind="
+                    click: () => FarmController.selectedFarmModuleTool(FarmingTool.Lock),
+                    tooltip: {title: 'Lock/Unlock a plot from interaction.', trigger: 'hover', placement: 'top'},
+                    css: { active: FarmController.selectedFarmModuleTool() == FarmingTool.Lock }">
+                    <img alt="Lock" src="assets/images/farm/plotSafeLock.svg" height="22px">
+                </button>
+                <button type="button" class="btn btn-sm btn-primary p-0 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <button class="dropdown-item d-flex small px-3 py-1" type="button"
+                        data-bind="click: () => FarmController.toggleAllPlotLocksTo(true)">
+                        <knockout class="flex-grow-1">Lock All</knockout>
+                    </button>
+                    <button class="dropdown-item d-flex small px-3 py-1" type="button"
+                        data-bind="click: () => FarmController.toggleAllPlotLocksTo(false)">
+                        <knockout class="flex-grow-1">Unlock All</knockout>
+                    </button>
+                    <button class="dropdown-item d-flex small px-3 py-1" type="button"
+                        data-bind="click: () => FarmController.toggleAllPlotLocks()">
+                        <knockout class="flex-grow-1">Flip All</knockout>
+                    </button>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /ko -->
+      <div class="row py-1" data-bind="foreach: App.game.farming.plotList">
+        <!-- ko if: $index() % GameConstants.FARM_PLOT_WIDTH == 0 -->
+        <div class="w-100"></div>
+        <!-- /ko -->
+        <div class="plot col" data-bind="css: { plotLocked : !$data.isUnlocked }">
+            <div class="plot-content" data-bind="class: FarmController.calculateCssClassMini()">
+                <div class="plotImage">
+                    <img style="width: 100%" src="assets/images/farm/soil.png"
+                        data-bind="class: FarmController.calcMulchClass($data)">
+                    <!-- ko if: !$data.isUnlocked -->
+                    <div class="plotButton plotLockHover" data-bind="tooltip: {
+                      title: `Unlock this plot in the Farm`,
+                      placement: 'bottom',
+                      trigger: 'hover'
+                    }" onclick="FarmController.openFarmModal()">
+                      <img alt="lock" class="lock" src="assets/images/breeding/lock.svg">
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: $data.isUnlocked -->
+                    <div class="plotButton"
+                      data-bind="ifnot: $data.isEmpty(),
+                      click: function(data, event){FarmController.plotClickMini($index(), event)},
+                      tooltip: {title: $data.tooltip(), trigger: 'hover', animation: false, html: true}">
+                      <img width="100%" height="100%" src=""
+                          style="width: 68.75%; max-height: 100%; image-rendering: pixelated;"
+                          data-bind="attr:{ src: FarmController.getImage($index())}">
+                    </div>
+                    <!-- /ko -->
+                    <!-- ko if: $data.isSafeLocked -->
+                    <img class ="plotSafeLockIcon" src= "assets/images/farm/plotSafeLock.svg" >
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="card-footer p-0">
+      <button type="button" class="btn float-left"
+      data-bind="visible: FarmController.additionalInfoTooltip().length !== 0,
+      tooltip: {
+          title: FarmController.additionalInfoTooltip(),
+          trigger: 'hover',
+          placement:'top',
+          html: true,
+      }">ⓘ</button>
+    <knockout class="float-right pr-2 pt-1" data-bind="foreach: App.game.farming.farmHands.hired()">
+      <img class="pixelated mx-1" src="" height="24px" data-bind="attr:{ src: `assets/images/profile/trainer-${$data.trainerSprite}.png` },
+      tooltip: {
+          title: $data.tooltip(),
+          trigger: 'hover',
+          placement:'top',
+          html: true,
+      }">
+    </div>
+</div>
+
+
                     <!-- Shortcuts Menu -->
                     <div id="shortcutsContainer" class="card sortable border-secondary mb-3" data-bind="visible: player.highestRegion">
     <div class="card-header p-0" data-toggle="collapse" href="#shortcutsBody">
@@ -54474,7 +54715,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
               </button>
             </td>
           </tr>
-          <tr data-bind="visible: App.game.farming.canAccess">
+          <tr data-bind="visible: App.game.farming.canAccess() && !Settings.getSetting('showFarmModule').observableValue()">
             <td class="p-0">
               <button class="btn btn-block btn-primary m-0" onclick="FarmController.openFarmModal()">
                   Farm
@@ -55219,26 +55460,55 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <th>Option</th>
                               </tr>
                             </thead> -->
+                            <thead>
+                                <tr><th colspan="2">General</th></tr>
+                            </thead>
                             <tbody>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('translation.language')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('gameDisplayStyle')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('theme')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('backgroundImage')}"></tr>
+                            </tbody>
+                            <thead>
+                                <tr><th colspan="2">Currency</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showCurrencyGainedAnimation')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showCurrencyLostAnimation')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('currencyMainDisplayReduced')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('currencyMainDisplayExtended')}"></tr>
+                            </tbody>
+                            <thead>
+                                <tr><th colspan="2">Hatchery</th></tr>
+                            </thead>
+                            <tbody>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('breedingDisplay')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('eggAnimation')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('hideHatchery')}"></tr>
+                            </tbody>
+                            <thead>
+                                <tr><th colspan="2">Farm</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showFarmModule')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showFarmModuleControls')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('farmDisplay')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('farmBoostDisplay')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('berryDexMode')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('sizeUnits')}"></tr>
-                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showCurrencyGainedAnimation')}"></tr>
-                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showCurrencyLostAnimation')}"></tr>
+                            </tbody>
+                            <thead>
+                                <tr><th colspan="2">Other</th></tr>
+                            </thead>
+                            <tbody>
                                 <tr data-bind="visible: Object.values(App.game.challenges.list).filter(c => c.active()).length > 0, template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('hideChallengeRelatedModules')}"></tr>
-                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('currencyMainDisplayReduced')}"></tr>
-                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('currencyMainDisplayExtended')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showGymGoAnimation')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showMuteButton')}"></tr>
+                            </tbody>
+                            <thead>
                                 <tr><th colspan="2">Map Colors</th></tr>
+                            </thead>
+                            <tbody>
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--locked')}"></tr>
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--incomplete')}"></tr>
                                 <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--questAtLocation')}"></tr>
@@ -55263,7 +55533,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                         }">Reset Resizable Modules</button>
                                     </td>
                                 </tr>
-                            </tbody>
+                            </thead>
                         </table>
                     </div>
 
@@ -55276,12 +55546,41 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmLeaveDungeon')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmBeformeMulchingAllPlots')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('breedingQueueClearConfirmation')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('confirmChangeHeldItem')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('disableRightClickMenu')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('catchFilters.initialEnabled')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('catchFilters.invertPriorityOrder')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('breedingEfficiencyAllModifiers')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('useWebWorkerForGameTicks')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('disableOfflineProgress')}"></tr>
+                                <tr data-bind="with: Settings.getSetting('disableAutoSave')">
+                                    <td class="p-2">
+                                        <label class="m-0" data-bind="attr: { for: 'checkbox-' + $data.name }, text: `${$data.displayName}:`"></label>
+                                    </td>
+                                    <td class="p-2">
+                                        <input class="clickable" type="checkbox"
+                                            data-bind="checked: $data.observableValue(), attr: {name, id: 'checkbox-' + $data.name }"
+                                            onchange="(() => {
+                                                if (!this.checked) {
+                                                    Settings.setSettingByName('disableAutoSave', false);
+                                                    return;
+                                                }
+
+                                                Notifier.confirm({
+                                                    title: 'Disable Auto Save?',
+                                                    message: 'Disabling auto save will require you to manually save the game before exiting or any progress will be lost!\r\n\r\nProceed at your own risk.',
+                                                    type: NotificationConstants.NotificationOption.danger,
+                                                    confirm: 'Yes'
+                                                }).then(confirmed => {
+                                                    if (confirmed) {
+                                                        Settings.setSettingByName('disableAutoSave', true);
+                                                    } else {
+                                                        this.checked = false;
+                                                    }
+                                                });
+                                            })()"/>
+                                    </td>
+                                </tr>
                                 <tr data-bind="visible: player.highestRegion() > 0, with: Settings.getSetting('breedingQueueSizeSetting')">
                                     <td class="p-2" data-bind="text: `${$data.displayName}:`">setting name</td>
                                     <td class="p-0">
@@ -55925,12 +56224,11 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                 </tr>
             </table>
 
-            <p><h5 class="text-primary"><strong>EVs and Pokérus (BETA)</strong></h5></p>
+            <p><h5 class="text-primary"><strong>EVs and Pokérus</strong></h5></p>
             <p><strong>What is Pokérus, and what are EVs?</strong><br/>
             <span class="text-muted">Pokérus is a virus your Pokémon can catch. EVs, also called Effort Values, increase the attack of your Pokémon.</span></p>
             <p><strong>When do I unlock EVs?</strong><br/>
             <span class="text-muted">EVs are unlocked after defeating the Distortion World Dungeon in Sinnoh.</span></p>
-            <p class="text-danger"><i>NOTE: This is a <strong>beta</strong> feature, so things will likely change in the future; feel free to post any feedback/bugs in the <a href="https://discord.gg/a6DFe4p" target="_blank">Discord</a>.</i></p>
             <p><strong>How do I spread Pokérus?</strong><br/>
             <span class="text-muted">Pokérus is spread by Pokémon that are infected, to other Pokémon in the hatchery (not in the queue) that share a type with the infected Pokémon. Neither Pokémon can be ready to hatch, nor can a Hatchery Helper be used on either Pokémon, in order to spread the virus.</span></p>
             <p><strong>How do I gain EVs?</strong><br/>
@@ -56583,7 +56881,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <li class="nav-item"><a class="nav-link active" href="#breeding-pokemon" data-toggle="tab" onclick="$('#breeding-fireall').show()">Pokémon</a></li>
                             <li class="nav-item"><a class="nav-link" href="#breeding-eggs" data-toggle="tab" onclick="$('#breeding-fireall').show()">Eggs</a></li>
                             <li class="nav-item"><a class="nav-link" href="#breeding-fossils" data-toggle="tab" onclick="$('#breeding-fireall').show()">Fossils</a></li>
-                            <li class="nav-item" data-bind="visible: App.game.breeding.hatcheryHelpers.isUnlocked()" onclick="$('#breeding-fireall').show()"><a class="nav-link" href="#breeding-helpers" data-toggle="tab">Helpers (BETA)</a></li>
+                            <li class="nav-item" data-bind="visible: App.game.breeding.hatcheryHelpers.isUnlocked()" onclick="$('#breeding-fireall').show()"><a class="nav-link" href="#breeding-helpers" data-toggle="tab">Helpers</a></li>
                             <li class="nav-item"><a class="nav-link" href="#breeding-help" data-toggle="tab" onclick="$('#breeding-fireall').show()">Help</a></li>
                             <li class="d-lg-block d-none"><button type="button" class="btn btn-danger" data-dismiss="modal" style="font-size: 18px; font-weight: 700;">×</button></li>
                         </ul>
@@ -57046,10 +57344,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                         <h4><u>Queue</u></h4>
                         <p>You will gain access to a queue in the hatchery once you reach the Johto region, and more queue slots for each new region reached after that.</p>
 
-                        <h4><u>Hatchery Helpers (BETA)</u></h4>
+                        <h4><u>Hatchery Helpers</u></h4>
                         <p><i>(unlocked after hatching 100 total Pokémon)</i></p>
                         <p>Hatchery Helpers will help out by automatically breeding your Pokémon for you.</p>
-                        <p class="text-danger"><i>NOTE: This is a <strong>beta</strong> feature, so things will likely change in the future; feel free to post any feedback/bugs in the <a href="https://discord.gg/a6DFe4p" target="_blank">Discord</a>.</i></p>
                         <p>The cost displayed is how much you will be charged per hatch.</p>
                         <p>They will only breed Pokémon based on your current Hatchery filters.</p>
                         <p>All of the Helpers have different step efficiencies and will hatch eggs faster or slower depending on their value.</p>
@@ -58638,7 +58935,8 @@ aria-labelledby="badgeCaseModalLabel">
                                                 title: $data.pauseTooltip,
                                                 trigger: 'hover',
                                                 placement: 'top',
-                                                html: true
+                                                html: true,
+                                                boundary: 'window'
                                             }, css: { disabled: !$data.isPausable() }">Pause</button>
                                         </td>
                                     </tr>
@@ -58722,7 +59020,7 @@ aria-labelledby="badgeCaseModalLabel">
             <div class="modal-header p-0">
                 <ul class="nav nav-tabs nav-fill">
                     <li class="nav-item" onclick="FarmController.farmingModalTabSelected('berryFarmView')"><a data-toggle='tab' class='nav-link active' href="#berryFarmView">Farm</a></li>
-                    <li class='nav-item' onclick="FarmController.farmingModalTabSelected('farmHandsView')" data-bind="visible: App.game.farming.farmHands.isUnlocked()"><a data-toggle='tab' class='nav-link' href="#farmHandsView">Farm Hands (BETA)</a></li>
+                    <li class='nav-item' onclick="FarmController.farmingModalTabSelected('farmHandsView')" data-bind="visible: App.game.farming.farmHands.isUnlocked()"><a data-toggle='tab' class='nav-link' href="#farmHandsView">Farm Hands</a></li>
                     <li class='nav-item' onclick="FarmController.farmingModalTabSelected('berryDexView')"><a data-toggle='tab' class='nav-link' href="#berryDexView">Berrydex</a></li>
                     <li class='nav-item' onclick="FarmController.farmingModalTabSelected('helpView')"><a data-toggle='tab' class='nav-link' href="#helpView">Help</a></li>
                     <btn class="btn btn-primary">
@@ -58739,8 +59037,8 @@ aria-labelledby="badgeCaseModalLabel">
 
 
                             <ul class="nav nav-tabs nav-fill">
-                                <li class="nav-item"><a data-toggle='tab' class='nav-link active' href="#seeds" data-bind="click: function(){FarmController.berryListVisible(true);}">Berries</a></li>
-                                <li class='nav-item'><a data-toggle='tab' class='nav-link' href="#mulches" data-bind="click: function(){FarmController.berryListVisible(false);}">Mulch</a></li>
+                                <li class="nav-item"><a data-toggle='tab' class='nav-link active' href="#seeds" data-bind="click: () => FarmController.selectedFarmTool(FarmingTool.Berry) && FarmController.berryListVisible(true);">Berries</a></li>
+                                <li class='nav-item'><a data-toggle='tab' class='nav-link' href="#mulches" data-bind="click: () => FarmController.selectedFarmTool(FarmingTool.Mulch) && FarmController.berryListVisible(false);">Mulch</a></li>
                             </ul>
 
                             <div class="tab-content">
@@ -58748,7 +59046,10 @@ aria-labelledby="badgeCaseModalLabel">
                                     <ul id="seedList" class="list-group p-0">
                                         <!-- ko foreach: FarmController.getUnlockedBerryListWithIndex() -->
                                         <li class="list-group-item list-group-item-action seed-list-item p-2"
-                                            data-bind="click: function() {FarmController.selectedBerry($data);FarmController.selectedShovel(false);FarmController.selectedMulchShovel(false);FarmController.selectedPlotSafeLock(false);}, css: { 'active': FarmController.selectedBerry() === $data && !FarmController.selectedShovel() }">
+                                            data-bind="click: function() {
+                                                FarmController.selectedBerry($data);
+                                                FarmController.selectedFarmTool(FarmingTool.Berry);
+                                            }, css: { 'active': FarmController.selectedBerry() === $data && FarmController.selectedFarmTool() == FarmingTool.Berry }">
                                             <img src="" height="28px"
                                                 data-bind="attr:{ src: FarmController.getBerryImage($data) },
                                                 css: {'berryLocked': !App.game.farming.unlockedBerries[$data]() }">
@@ -58796,8 +59097,11 @@ aria-labelledby="badgeCaseModalLabel">
                                     <ul id="mulchList" class="list-group p-0">
                                         <!-- ko foreach: Object.keys(MulchType).filter(value => !isNaN(value) && value != -1) -->
                                         <li class="list-group-item list-group-item-action seed-list-item p-2"
-                                            data-bind="click: function() {FarmController.selectedMulch($data);FarmController.selectedShovel(false);FarmController.selectedMulchShovel(false);FarmController.selectedPlotSafeLock(false);},
-                                                css: { 'active': FarmController.selectedMulch() == $data && !FarmController.selectedShovel() },
+                                            data-bind="click: function() {
+                                                    FarmController.selectedMulch($data);
+                                                    FarmController.selectedFarmTool(FarmingTool.Mulch)
+                                                },
+                                                css: { 'active': FarmController.selectedMulch() == $data && FarmController.selectedFarmTool() == FarmingTool.Mulch },
                                                 tooltip: {title: ItemList[MulchType[$data]].description, trigger: 'hover', animation: false}">
                                             <img src="" width="24px"
                                                  data-bind="attr:{ src: ItemList[MulchType[$data]].image }">
@@ -58831,8 +59135,10 @@ aria-labelledby="badgeCaseModalLabel">
                             <ul id="shovelList" class="list-group">
                                 <!-- ko if: FarmController.berryListVisible() -->
                                 <li class="list-group-item list-group-item-action seed-list-item p-2"
-                                    data-bind="click: function() {FarmController.selectedShovel(true);FarmController.selectedMulchShovel(false);FarmController.selectedPlotSafeLock(false);},
-                                    css: { 'active': FarmController.selectedShovel() },
+                                    data-bind="click: function() {
+                                        FarmController.selectedFarmTool(FarmingTool.Shovel);
+                                    },
+                                    css: { 'active': FarmController.selectedFarmTool() == FarmingTool.Shovel },
                                     tooltip: {title: 'Clear a Plant from a plot.', trigger: 'hover', animation: false}">
                                     <img src="" height="24px"
                                         data-bind="attr:{ src: ItemList['Berry_Shovel'].image }">
@@ -58842,10 +59148,12 @@ aria-labelledby="badgeCaseModalLabel">
                                 <!-- /ko -->
                             </ul>
                             <ul id="shovelMulch" class="list-group p-0">
-                                <!-- ko if: !FarmController.berryListVisible() -->
+                                <!-- ko ifnot: FarmController.berryListVisible() -->
                                 <li class="list-group-item list-group-item-action seed-list-item p-3"
-                                    data-bind="click: function() {FarmController.selectedMulchShovel(true);FarmController.selectedShovel(false);FarmController.selectedMulch(-1);FarmController.selectedPlotSafeLock(false);},
-                            css: { 'active': FarmController.selectedMulchShovel() },
+                                    data-bind="click: function() {
+                                        FarmController.selectedFarmTool(FarmingTool.MulchShovel);
+                                    },
+                            css: { 'active': FarmController.selectedFarmTool() == FarmingTool.MulchShovel },
                             tooltip: {title: 'Clear a Mulch from a plot.', trigger: 'hover', animation: false}">
                                     <img src="" height="21px"
                                          data-bind="attr:{ src: ItemList['Mulch_Shovel'].image }">
@@ -58857,7 +59165,7 @@ aria-labelledby="badgeCaseModalLabel">
                         </div>
 
                         <div class="col-12 col-lg-8">
-                            <div id="plotList" class="row" data-bind="foreach: App.game.farming.plotList">
+                            <div id="plotList" class="row" data-bind="foreach: App.game.farming.plotList, css: { ShiftPressed: GameController.keyHeld.Shift() }">
                                 <!-- ko if: $index() % GameConstants.FARM_PLOT_WIDTH == 0 -->
                                 <div class="w-100"></div>
                                 <!-- /ko -->
@@ -58866,9 +59174,6 @@ aria-labelledby="badgeCaseModalLabel">
                                         <div class="plotImage">
                                             <img style="width: 100%" src="assets/images/farm/soil.png"
                                                 data-bind="class: FarmController.calcMulchClass($data)">
-                                            <!-- ko if: $data.isSafeLocked -->
-                                            <img class ="plotSafeLockIcon" src= "assets/images/farm/plotSafeLock.svg" >
-                                            <!-- /ko -->
                                             <!-- ko if: !$data.isUnlocked -->
                                             <div class="plotButton plotLockHover">
                                                 <div>
@@ -58892,6 +59197,9 @@ aria-labelledby="badgeCaseModalLabel">
                                                     style="width: 68.75%; max-height: 100%; image-rendering: pixelated;"
                                                     data-bind="attr:{ src: FarmController.getImage($index())}">
                                             </div>
+                                            <!-- ko if: $data.isSafeLocked -->
+                                            <img class ="plotSafeLockIcon" src= "assets/images/farm/plotSafeLock.svg" >
+                                            <!-- /ko -->
                                         </div>
                                     </div>
                                 </div>
@@ -59141,14 +59449,14 @@ aria-labelledby="badgeCaseModalLabel">
 
                     <h4><u>Locking Plots</u></h4>
                     <p>You can lock specific plots by toggling on the lock with the lock button
-                    <br/>or using the hotkey (default: 'L').
-                    <br/>You can also press <i>Shift + Click</i> while having any tool/berry selected to safely lock a plot.</p>
+                    <br/>or using the hotkey <kbd data-bind="text: Settings.getSetting('hotkey.farm.togglePlotSafeLock').observableValue()"></kbd>.
+                    <br/>You can also press <kbd>Shift + Click</kbd> while having any tool/berry selected to safely lock a plot.</p>
 
                     <p>Locking a plot prevents you from planting, harvesting,<br/>or interacting with the plot in any way.</p>
 
                     <p><i>Locked plots ignore Harvest All, Plant All, or Mulch All buttons as well as Farm Hand activity.</i></p>
 
-                    <p>You can unlock a plot by using the toggle or pressing <i>Shift + Click</i> on the plot again.</p>
+                    <p>You can unlock a plot by using the toggle or pressing <kbd>Shift + Click</kbd> on the plot again.</p>
 
                     <h4><u>Trades</u></h4>
                     <p>Berries can be traded with Berry Masters in later regions for other useful items.</p>
@@ -59157,14 +59465,21 @@ aria-labelledby="badgeCaseModalLabel">
                     <p>Ripe Berry plants may attract wild Pokémon that will join your party. Some Pokémon can only be found using certain Berry species.</p>
                     <p>Some Berry Auras will increase or decrease the chance of encountering Wandering Pokémon. If your total Repel Aura value reaches 1 or greater, no Wandering Pokémon will appear.</p>
 
-                    <h4><u>Farm Hands (BETA)</u></h4>
+                    <h4><u>Farm Hands</u></h4>
                     <p><i>(unlocked after obtaining 8 unique berries)</i></p>
                     <p>Farm Hands can help around the Farm; they will harvest and plant berries as needed and accrue Farm Points while doing so.</p>
-                    <p class="text-danger"><i>NOTE: This is a <strong>beta</strong> feature, so things will likely change in the future; feel free to post any feedback/bugs in the <a href="https://discord.gg/a6DFe4p" target="_blank">Discord</a>.</i></p>
                     <p>Up to 3 Farm Hands can be hired at a time.</p>
                     <p>If they run out of energy, they won't do any work for that cycle, but will regenerate some energy instead. If there's no work to do currently, they will also regenerate some energy.</p>
                     <p>Efficiency refers to how many actions they can do per work cycle.</p>
                     <p><i>More Farm Hands can be unlocked through shops and unlocking unique berries</i></p>
+
+                    <h4><u>Farm Module</u></h4>
+                    <p>
+                        Monitor and interact with the farm in a limited capacity without opening the full modal. Harvest or plant berries, apply mulch, use shovels, and lock/unlock plots with the extended controls.<br />
+                        Hide the extended controls for less clutter while still being able to plant and harvest berries or disable the module completely in the settings.<br />
+                        You can also use <kbd>Shift + Click</kbd> to safely lock/unlock a plot.<br />
+                        The Farm shortcut will be hidden when the Farm module is enabled.
+                    </p>
                 </div>
 
                 <div id="farmHandsView" class="tab-pane fade">
@@ -59294,9 +59609,11 @@ aria-labelledby="badgeCaseModalLabel">
                         ">Fire All</button>
                 <div class="safeLockButton" data-bind="visible: FarmController.farmingModalTabSelected() == 'berryFarmView'">
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary" data-bind="
-                            click: function() {FarmController.selectedPlotSafeLock() ? FarmController.selectedPlotSafeLock(false) : FarmController.selectedPlotSafeLock(true);FarmController.selectedShovel(false);FarmController.selectedMulchShovel(false);},
-                            css: { 'active': FarmController.selectedPlotSafeLock() },
+                        <button type="button" class="btn btn-primary" onclick="this.blur();" data-bind="
+                            click: () => {
+                                FarmController.selectedFarmTool() == FarmingTool.Lock ? FarmController.selectedFarmTool(FarmController.berryListVisible() ? FarmingTool.Berry : FarmingTool.Mulch) : FarmController.selectedFarmTool(FarmingTool.Lock);
+                            },
+                            css: { 'active': FarmController.selectedFarmTool() == FarmingTool.Lock },
                             tooltip: {title: 'Toggle locking a plot from interaction.',  trigger: 'hover', animation: false}
                         ">
                             <img src="assets/images/farm/plotSafeLock.svg" height="22">
