@@ -17,10 +17,10 @@
     <script src="libs/Sortable.min.js"></script>
 
     <!-- New module-based code from './modules' -->
-    <script src="scripts/modules.min.js?v=0.10.19"></script>
+    <script src="scripts/modules.min.js?v=0.10.20"></script>
 
     <!--Minified scripts-->
-    <script src="scripts/script.min.js?v=0.10.19"></script>
+    <script src="scripts/script.min.js?v=0.10.20"></script>
 
     <!--Popper.js-->
     <script src="libs/popper.min.js"></script>
@@ -38,7 +38,7 @@
     <link href="libs/introjs-modern.css" rel="stylesheet">
 
     <!--Minified styles-->
-    <link href="styles/styles.min.css?v=0.10.19" rel="stylesheet">
+    <link href="styles/styles.min.css?v=0.10.20" rel="stylesheet">
 
     <!-- Google Analytics-->
     <style>
@@ -855,7 +855,7 @@
 
 <script type="text/html" id="pokemonSpriteTemplate">
     <img class="enemy"
-        data-bind="attr:{ src: PokemonHelper.getImage($data.pokemon.id, $data.pokemon.shiny, $data.pokemon.gender == GameConstants.BattlePokemonGender.Female, $data.pokemon.shadow) }"
+        data-bind="attr:{ src: PokemonHelper.getImage($data.pokemon.id, $data.pokemon.shiny, $data.pokemon.gender, $data.pokemon.shadow) }"
         src=""/>
 </script>
 
@@ -1017,6 +1017,30 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             }">0</div>
     </div>
 </script>
+
+<script type="text/html" id="wanderingPokémonDisplay">
+    <!-- ko if: App.game.party.getPokemon(pokemonMap[$data].id)?.pokerus -->
+    <img class="dungeon-pokemon-pkrs" src="" data-bind="
+    attr:{ src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[App.game.party.getPokemonByName($data)?.pokerus]}.png` },
+    tooltip: {
+        title: `EVs: ${App.game.party.getPokemonByName($data).evs().toLocaleString('en-US')}`,
+        placement: 'bottom',
+        trigger: 'hover'
+    }" />
+    <!-- /ko -->
+    <img class="dungeon-pokemon-preview" src="" data-bind="attr:{ src: PokemonHelper.getImage(pokemonMap[$data].id, App.game.party.getPokemonByName($data)?.shiny ?? false, undefined, GameConstants.ShadowStatus.None) },
+    css: { 'dungeon-pokemon-locked': !App.game.party.alreadyCaughtPokemonByName($data) }" onerror="this.src='assets/images/pokemon/0.png';"/>
+    <sup class="shiny" data-bind="visible: App.game.party.alreadyCaughtPokemonByName($data, true)">✨</sup>
+    <img class="lock" src="assets/images/breeding/lock.svg" data-bind="hidden: pokemonMap[$data].nativeRegion <= player.highestRegion(),
+    tooltip: {
+      title: `Reach ${GameConstants.camelCaseToString(GameConstants.Region[pokemonMap[$data].nativeRegion])} to attract this Pokémon!`,
+        placement: 'top',
+        trigger: 'hover'
+    }">
+</script>
+
+<!-- Example usage -->
+<!-- <span data-bind="template: { name: 'wanderingPokémonDisplay', data: 'Pikachu'}"></span> -->
 
 
 <div id="game" class="container loading" data-bind="css: {'container': Settings.getSetting('gameDisplayStyle').observableValue() === 'standard3', 'container-fluid': Settings.getSetting('gameDisplayStyle').observableValue() !== 'standard3'}">
@@ -2086,7 +2110,12 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     trigger: 'hover'
                 }" />
             <img class="dungeon-pokemon-preview" src="" data-bind="attr:{ src: $data.image },
-                css: { 'dungeon-pokemon-locked': $data.uncaught }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
+                css: { 'dungeon-pokemon-locked': $data.uncaught, 'shadow-trainer': $data.shadowTrainer }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
+            <!-- ko if: $data.shadow -->
+            <img class="dungeon-pokemon-preview dungeon-pokemon-locked uncaught-shadow" src="" data-bind="attr:{ src: $data.shadowBackground },
+            css: { 'uncaught-pokemon': !$data.caught }, visible: !$data.shadowCaught," onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
+            <img class="shadow-icon" src="assets/images/status/purified.svg" data-bind="visible: $data.purified"/>
+            <!-- /ko -->
             <sup class="shiny" data-bind="visible: $data.shiny">✨</sup>
             <img class="lock" src="assets/images/breeding/lock.svg" data-bind="
                 hidden: !$data.lock,
@@ -2100,7 +2129,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
           <!--Display all available bosses in this dungeon-->
           <!-- ko foreach: player.town().dungeon.bossEncounterList.filter(i => !i.hide) -->
           <li class="list-inline-item">
+            <!-- ko ifnot: $data.shadow -->
             <img class="boss" src="assets/images/dungeons/boss.svg"/>
+            <!-- /ko -->
             <img class="dungeon-pokemon-pkrs" src="" data-bind="
                 attr:{ src: $data.pkrsImage },
                 tooltip: {
@@ -2109,8 +2140,13 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     trigger: 'hover'
                 }" />
             <img class="dungeon-pokemon-preview" src="" data-bind="attr:{ src: $data.image },
-                css: { 'dungeon-pokemon-locked': $data.uncaught }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
+                css: { 'dungeon-pokemon-locked': $data.uncaught, 'shadow-trainer': $data.shadowTrainer }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
             <sup class="shiny" data-bind="visible: $data.shiny">✨</sup>
+            <!-- ko if: $data.shadow -->
+            <img class="dungeon-pokemon-preview dungeon-pokemon-locked uncaught-shadow" src="" data-bind="attr:{ src: $data.shadowBackground },
+                css: { 'uncaught-pokemon': !$data.caught }, visible: !$data.shadowCaught," onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
+            <img class="shadow-icon" src="assets/images/status/purified.svg" data-bind="visible: $data.purified"/>
+            <!-- /ko -->
             <img class="lock" src="assets/images/breeding/lock.svg" data-bind="hidden: !$data.lock,
                 tooltip: {
                     title: $data.lockMessage,
@@ -2281,8 +2317,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Kanto').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/kanto-kanto.png?v=0.10.19',
-            href:'assets/images/kanto-kanto.png?v=0.10.19'
+            'xlink:href':'assets/images/kanto-kanto.png?v=0.10.20',
+            href:'assets/images/kanto-kanto.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -4844,8 +4880,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Sevii Islands 123').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/kanto-sevii123.png?v=0.10.19',
-            href:'assets/images/kanto-sevii123.png?v=0.10.19'
+            'xlink:href':'assets/images/kanto-sevii123.png?v=0.10.20',
+            href:'assets/images/kanto-sevii123.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -5413,8 +5449,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Sevii Islands 4567').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/kanto-sevii4567.png?v=0.10.19',
-            href:'assets/images/kanto-sevii4567.png?v=0.10.19'
+            'xlink:href':'assets/images/kanto-sevii4567.png?v=0.10.20',
+            href:'assets/images/kanto-sevii4567.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -7010,8 +7046,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.johto'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/johto.png?v=0.10.19',
-        href:'assets/images/johto.png?v=0.10.19'
+        'xlink:href':'assets/images/johto.png?v=0.10.20',
+        href:'assets/images/johto.png?v=0.10.20'
     }"></image>
 
     <!-- ------ -->
@@ -9642,8 +9678,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.hoenn'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/hoenn.png?v=0.10.19',
-        href:'assets/images/hoenn.png?v=0.10.19'
+        'xlink:href':'assets/images/hoenn.png?v=0.10.20',
+        href:'assets/images/hoenn.png?v=0.10.20'
     }"></image>
 
     <!-- ------ -->
@@ -13133,8 +13169,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
      <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.hoenn, 'Orre').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/orre.png?v=0.10.19',
-            href:'assets/images/orre.png?v=0.10.19'
+            'xlink:href':'assets/images/orre.png?v=0.10.20',
+            href:'assets/images/orre.png?v=0.10.20'
         }"></image>
 
     <!-- ------ -->
@@ -14493,8 +14529,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.sinnoh'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/sinnoh.png?v=0.10.19',
-        href:'assets/images/sinnoh.png?v=0.10.19'
+        'xlink:href':'assets/images/sinnoh.png?v=0.10.20',
+        href:'assets/images/sinnoh.png?v=0.10.20'
     }"></image>
 
     <!-- ------ -->
@@ -17589,8 +17625,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.unova'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/unova.png?v=0.10.19',
-        href:'assets/images/unova.png?v=0.10.19'
+        'xlink:href':'assets/images/unova.png?v=0.10.20',
+        href:'assets/images/unova.png?v=0.10.20'
     }"></image>
 
     <!-- ------ -->
@@ -20768,8 +20804,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.kalos'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/kalos.png?v=0.10.19',
-        href:'assets/images/kalos.png?v=0.10.19'
+        'xlink:href':'assets/images/kalos.png?v=0.10.20',
+        href:'assets/images/kalos.png?v=0.10.20'
     }"></image>
 
     <!-- ------ -->
@@ -23389,8 +23425,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Melemele Island').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-melemele.png?v=0.10.19',
-            href:'assets/images/alola-melemele.png?v=0.10.19'
+            'xlink:href':'assets/images/alola-melemele.png?v=0.10.20',
+            href:'assets/images/alola-melemele.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -26747,8 +26783,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Akala Island').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-akala.png?v=0.10.19',
-            href:'assets/images/alola-akala.png?v=0.10.19'
+            'xlink:href':'assets/images/alola-akala.png?v=0.10.20',
+            href:'assets/images/alola-akala.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -28999,8 +29035,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Ula\'ula Island').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-ulaula.png?v=0.10.19',
-            href:'assets/images/alola-ulaula.png?v=0.10.19'
+            'xlink:href':'assets/images/alola-ulaula.png?v=0.10.20',
+            href:'assets/images/alola-ulaula.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -31721,8 +31757,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Poni Island').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-poni.png?v=0.10.19',
-            href:'assets/images/alola-poni.png?v=0.10.19'
+            'xlink:href':'assets/images/alola-poni.png?v=0.10.20',
+            href:'assets/images/alola-poni.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -33816,8 +33852,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Magikarp Jump').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-magikarp-jump.png?v=0.10.19',
-            href:'assets/images/alola-magikarp-jump.png?v=0.10.19'
+            'xlink:href':'assets/images/alola-magikarp-jump.png?v=0.10.20',
+            href:'assets/images/alola-magikarp-jump.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -35915,8 +35951,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'South Galar').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/galar-south.png?v=0.10.19',
-            href:'assets/images/galar-south.png?v=0.10.19'
+            'xlink:href':'assets/images/galar-south.png?v=0.10.20',
+            href:'assets/images/galar-south.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -38397,8 +38433,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'North Galar').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/galar-north.png?v=0.10.19',
-            href:'assets/images/galar-north.png?v=0.10.19'
+            'xlink:href':'assets/images/galar-north.png?v=0.10.20',
+            href:'assets/images/galar-north.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -39484,8 +39520,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'Isle of Armor').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/galar-isle-of-armor.png?v=0.10.19',
-            href:'assets/images/galar-isle-of-armor.png?v=0.10.19'
+            'xlink:href':'assets/images/galar-isle-of-armor.png?v=0.10.20',
+            href:'assets/images/galar-isle-of-armor.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -42366,8 +42402,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'Crown Tundra').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/galar-crown-tundra.png?v=0.10.19',
-            href:'assets/images/galar-crown-tundra.png?v=0.10.19'
+            'xlink:href':'assets/images/galar-crown-tundra.png?v=0.10.20',
+            href:'assets/images/galar-crown-tundra.png?v=0.10.20'
         }"></image>
 
         <!-- ------ -->
@@ -44394,8 +44430,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.hisui'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/hsiui.png?v=0.10.19',
-        href:'assets/images/hisui.png?v=0.10.19'
+        'xlink:href':'assets/images/hsiui.png?v=0.10.20',
+        href:'assets/images/hisui.png?v=0.10.20'
     }"></image>
 
     <!-- ------ -->
@@ -53155,8 +53191,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.paldea'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/paldea.png?v=0.10.19',
-        href:'assets/images/paldea.png?v=0.10.19'
+        'xlink:href':'assets/images/paldea.png?v=0.10.20',
+        href:'assets/images/paldea.png?v=0.10.20'
     }"></image>
 
     <!-- ------ -->
@@ -54648,7 +54684,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <div class="w-100"></div>
         <!-- /ko -->
         <div class="plot col" data-bind="css: { plotLocked : !$data.isUnlocked }">
-            <div class="plot-content" data-bind="class: FarmController.calculateCssClassMini()">
+            <div class="plot-content" data-bind="class: FarmController.calculateCssClassMini($data)">
                 <div class="plotImage">
                     <img style="width: 100%" src="assets/images/farm/soil.png"
                         data-bind="class: FarmController.calcMulchClass($data)">
@@ -54662,14 +54698,26 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     </div>
                     <!-- /ko -->
                     <!-- ko if: $data.isUnlocked -->
-                    <div class="plotButton"
-                      data-bind="ifnot: $data.isEmpty(),
-                      click: function(data, event){FarmController.plotClickMini($index(), event)},
-                      tooltip: {title: $data.tooltip(), trigger: 'hover', animation: false, html: true}">
-                      <img width="100%" height="100%" src=""
-                          style="width: 68.75%; max-height: 100%; image-rendering: pixelated;"
-                          data-bind="attr:{ src: FarmController.getImage($index())}">
-                    </div>
+                        <!-- ko if: $data.wanderer -->
+                            <!-- ko ifnot: $data.wanderer.catching -->
+                                <div class="pokemonSprite wandererSprite"
+                                    data-bind="style: { backgroundImage: FarmController.getWandererStyle($data)},
+                                    class: FarmController.getWandererCss($data)">
+                                </div>
+                            <!-- /ko -->
+                            <!-- ko if: $data.wanderer.catching -->
+                                <img src="" class="pokeball-animated wandererCapture" style="z-index: 1;"
+                                    data-bind="attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.wanderer.pokeball()] + '.svg'}"/>
+                            <!-- /ko -->
+                        <!-- /ko -->
+                        <div class="plotButton"
+                        data-bind="ifnot: $data.isEmpty(),
+                        click: function(data, event){FarmController.plotClickMini($index(), event)},
+                        tooltip: {title: $data.tooltip(), trigger: 'hover', animation: false, html: true}">
+                        <img width="100%" height="100%" src=""
+                            style="width: 68.75%; max-height: 100%; image-rendering: pixelated;"
+                            data-bind="attr:{ src: FarmController.getImage($index())}">
+                        </div>
                     <!-- /ko -->
                     <!-- ko if: $data.isSafeLocked -->
                     <img class ="plotSafeLockIcon" src= "assets/images/farm/plotSafeLock.svg" >
@@ -59164,7 +59212,7 @@ aria-labelledby="badgeCaseModalLabel">
                 </ul>
             </div>
 
-            <div class="modal-body tab-content p-0">
+            <div class="modal-body tab-content p-0" style="overflow-x: hidden;">
 
                 <div id="berryFarmView" class="tab-pane fade in active show">
                     <div id="farmView" class="justify-content-center no-select row">
@@ -59305,9 +59353,9 @@ aria-labelledby="badgeCaseModalLabel">
                                 <div class="w-100"></div>
                                 <!-- /ko -->
                                 <div class="plot col" data-bind="css: { plotLocked : !$data.isUnlocked }">
-                                    <div class="plot-content" data-bind="class: FarmController.calculateCssClass()">
+                                    <div class="plot-content" data-bind="class: FarmController.calculateCssClass($data)">
                                         <div class="plotImage">
-                                            <img style="width: 100%" src="assets/images/farm/soil.png"
+                                            <img style="width: 100%;" src="assets/images/farm/soil.png"
                                                 data-bind="class: FarmController.calcMulchClass($data)">
                                             <!-- ko if: !$data.isUnlocked -->
                                             <div class="plotButton plotLockHover">
@@ -59323,6 +59371,18 @@ aria-labelledby="badgeCaseModalLabel">
                                                     <span data-bind="template: { name: 'currencyTemplate', data: {'amount': App.game.farming.plotFPCost($index()), 'currency': GameConstants.Currency.farmPoint}}"></span>
                                                 </div>
                                             </div>
+                                            <!-- /ko -->
+                                            <!-- ko if: $data.wanderer -->
+                                                <!-- ko ifnot: $data.wanderer.catching -->
+                                                    <div class="pokemonSprite wandererSprite"
+                                                        data-bind="style: { backgroundImage: FarmController.getWandererStyle($data)},
+                                                        class: FarmController.getWandererCss($data)">
+                                                    </div>
+                                                <!-- /ko -->
+                                                <!-- ko if: $data.wanderer.catching -->
+                                                    <img src="" class="pokeball-animated wandererCapture" style="z-index: 1;"
+                                                        data-bind="attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.wanderer.pokeball()] + '.svg'}"/>
+                                                <!-- /ko -->
                                             <!-- /ko -->
                                             <div class="plotButton"
                                                 data-bind="ifnot: $data.isEmpty(),
@@ -59462,7 +59522,7 @@ aria-labelledby="badgeCaseModalLabel">
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <!-- ko if: App.game.farming.berryData[$data].wander.some((w) => !Berry.baseWander.includes(w) && !Berry.colorWander[App.game.farming.berryData[$data].color].includes(w)) -->
+                                    <!-- ko if: App.game.farming.berryData[$data].wander.some((w) => ![...Berry.baseWander, ...Berry.colorWander[App.game.farming.berryData[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
                                     <table class="table table-striped table-hover table-bordered table-sm m-0">
                                         <thead>
                                             <tr class="text-light">
@@ -59472,30 +59532,8 @@ aria-labelledby="badgeCaseModalLabel">
                                         <tbody>
                                             <tr>
                                                 <td class="p-0">
-                                                    <ul id="wanderPokemonList" class="list-inline" data-bind="foreach: App.game.farming.berryData[$data].wander.filter((w) => !Berry.baseWander.includes(w) && !Berry.colorWander[App.game.farming.berryData[$data].color].includes(w))">
-                                                        <li class="list-inline-item">
-                                                            <!-- ko if: App.game.party.getPokemonByName($data)?.pokerus -->
-                                                            <img class="dungeon-pokemon-pkrs" src="" data-bind="
-                                                                attr:{ src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[App.game.party.getPokemonByName($data)?.pokerus]}.png` },
-                                                                tooltip: {
-                                                                    title: `EVs: ${App.game.party.getPokemonByName($data).evs().toLocaleString('en-US')}`,
-                                                                    placement: 'bottom',
-                                                                    trigger: 'hover'
-                                                                }" />
-                                                            <!-- /ko -->
-                                                            <img class="dungeon-pokemon-preview" src="" data-bind="
-                                                                attr:{ src: `assets/images/${(App.game.party.alreadyCaughtPokemonByName($data, true) ? 'shiny' : '')}pokemon/${pokemonMap[$data].id}.png` },
-                                                                css: { 'dungeon-pokemon-locked': !App.game.party.alreadyCaughtPokemonByName($data) }" onerror="this.src='assets/images/pokemon/0.png';" />
-                                                            <sup class="shiny" data-bind="visible: App.game.party.alreadyCaughtPokemonByName($data, true)">✨</sup>
-                                                            <!-- ko if: PokemonHelper.calcNativeRegion(pokemonMap[$data].id) > player.highestRegion() -->
-                                                            <img class="lock" src="assets/images/breeding/lock.svg" data-bind="tooltip: {
-                                                                title: `Reach ${GameConstants.camelCaseToString(GameConstants.Region[PokemonHelper.calcNativeRegion(pokemonMap[$data].id)])} to attract this Pokémon!`,
-                                                                placement: 'top',
-                                                                trigger: 'hover'
-                                                            }">
-                                                            <!-- /ko -->
-                                                        </li>
-
+                                                    <ul id="wanderPokemonList" class="list-inline" data-bind="foreach: App.game.farming.berryData[$data].wander.filter((w) => ![...Berry.baseWander, ...Berry.colorWander[App.game.farming.berryData[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION)">
+                                                        <li class="list-inline-item" data-bind="template: { name: 'wanderingPokémonDisplay', data: $data}"></li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -59597,12 +59635,13 @@ aria-labelledby="badgeCaseModalLabel">
                     <p>Berries can be traded with Berry Masters in later regions for other useful items.</p>
 
                     <h4><u>Wandering Pokémon</u></h4>
-                    <p>Ripe Berry plants may attract wild Pokémon that will join your party. Some Pokémon can only be found using certain Berry species.</p>
+                    <p>Ripe Berry plants may attract wild Pokémon that you can then capture. Some Pokémon can only be found using certain Berry species.</p>
                     <p>Some Berry Auras will increase or decrease the chance of encountering Wandering Pokémon. If your total Repel Aura value reaches 1 or greater, no Wandering Pokémon will appear.</p>
+                    <p>Pokémon are more likely to let you catch them when attracted to berries.</p>
 
                     <h4><u>Farm Hands</u></h4>
                     <p><i>(unlocked after obtaining 8 unique berries)</i></p>
-                    <p>Farm Hands can help around the Farm; they will harvest and plant berries as needed and accrue Farm Points while doing so.</p>
+                    <p>Farm Hands can help around the Farm; they will harvest and plant berries as needed or catch wild wanderers, and accrue Farm Points while doing so.</p>
                     <p>Up to 3 Farm Hands can be hired at a time.</p>
                     <p>If they run out of energy, they won't do any work for that cycle, but will regenerate some energy instead. If there's no work to do currently, they will also regenerate some energy.</p>
                     <p>Efficiency refers to how many actions they can do per work cycle.</p>
@@ -59675,6 +59714,16 @@ aria-labelledby="badgeCaseModalLabel">
                                             <td class="text-left">Should Harvest:</td>
                                             <td class="text-center tight align-middle">
                                                 <input class="clickable" type="checkbox" data-bind="checked: $data.shouldHarvest"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-left">Manage Wanderers: <span class="ml-1" style="position: absolute; float: right; line-height: 100%;" data-bind="tooltip: {
+                                                title: 'They will use your Poké Balls Filters and consume your Poké Balls !',
+                                                trigger: 'hover',
+                                                placement: 'left',
+                                            }">ⓘ</span></td>
+                                            <td class="text-center tight align-middle">
+                                                <input class="clickable" type="checkbox" data-bind="checked: $data.shouldCatch"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -59953,31 +60002,13 @@ aria-labelledby="badgeCaseModalLabel">
                             <th class="bg-dark">Wandering Pokémon</th>
                           </tr>
                           <tr>
-                            <th data-bind="text: 'Attracted by all Berries'">Base Wanderers</th>
-                            <td style="position: absolute; right: 0;"
-                            data-bind="visible: App.game.keyItems.hasKeyItem(KeyItemType.Pokerus_virus),
-                            tooltip: {
-                              title: 'These Pokémon do not gain EVs when attracted to the Farm.',
-                              trigger: 'hover',
-                              placement:'top',
-                              html: true,
-                            }">ⓘ</td>
+                            <th colspan="2" data-bind="text: 'Attracted by all Berries'">Base Wanderers</th>
                           </tr>
                           <tr id="wanderRow">
                             <td id="wanderPokemonList">
                               <ul class="list-inline">
-                              <!-- ko foreach: Berry.baseWander -->
-                              <li class="list-inline-item no-pokerus">
-                                <img class="dungeon-pokemon-preview" src="" data-bind="attr:{ src: `assets/images/${(App.game.party.alreadyCaughtPokemonByName($data, true) ? 'shiny' : '')}pokemon/${pokemonList.find((p) => p.name == $data).id}.png` },
-                                css: { 'dungeon-pokemon-locked': !App.game.party.alreadyCaughtPokemonByName(pokemonList.find((p) => p.name == $data).name) }" onerror="this.src='assets/images/pokemon/0.png';"/>
-                                <sup class="shiny" data-bind="visible: App.game.party.alreadyCaughtPokemonByName($data, true)">✨</sup>
-                                <img class="lock" src="assets/images/breeding/lock.svg" data-bind="hidden: PokemonHelper.calcNativeRegion(pokemonList.find((p) => p.name == $data).id) <= player.highestRegion(),
-                                tooltip: {
-                                  title: `Reach ${GameConstants.camelCaseToString(GameConstants.Region[PokemonHelper.calcNativeRegion(pokemonList.find((p) => p.name == $data).id)])} to attract this Pokémon!`,
-                                    placement: 'top',
-                                    trigger: 'hover'
-                                }">
-                                </li>
+                              <!-- ko foreach: Berry.baseWander.filter(w => pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
+                                <li class="list-inline-item" data-bind="template: { name: 'wanderingPokémonDisplay', data: $data}"></li>
                               <!-- /ko -->
                               </ul>
                             </td>
@@ -59988,59 +60019,21 @@ aria-labelledby="badgeCaseModalLabel">
                           <tr id="wanderRow">
                             <td id="wanderPokemonList">
                               <ul class="list-inline">
-                              <!-- ko foreach: Berry.colorWander[App.game.farming.berryData[$data].color] -->
-                              <li class="list-inline-item">
-                                <!-- ko if: App.game.party.getPokemon(pokemonMap[$data].id)?.pokerus -->
-                                <img class="dungeon-pokemon-pkrs" src="" data-bind="
-                                attr:{ src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[App.game.party.getPokemon(pokemonMap[$data].id)?.pokerus]}.png` },
-                                tooltip: {
-                                    title: `EVs: ${App.game.party.getPokemonByName(pokemonList.find((p) => p.name == $data).name).evs().toLocaleString('en-US')}`,
-                                    placement: 'bottom',
-                                    trigger: 'hover'
-                                }" />
-                                <!-- /ko -->
-                                <img class="dungeon-pokemon-preview" src="" data-bind="attr:{ src: `assets/images/${(App.game.party.alreadyCaughtPokemonByName($data, true) ? 'shiny' : '')}pokemon/${pokemonList.find((p) => p.name == $data).id}.png` },
-                                css: { 'dungeon-pokemon-locked': !App.game.party.alreadyCaughtPokemonByName(pokemonList.find((p) => p.name == $data).name) }" onerror="this.src='assets/images/pokemon/0.png';"/>
-                                <sup class="shiny" data-bind="visible: App.game.party.alreadyCaughtPokemonByName($data, true)">✨</sup>
-                                <img class="lock" src="assets/images/breeding/lock.svg" data-bind="hidden: PokemonHelper.calcNativeRegion(pokemonList.find((p) => p.name == $data).id) <= player.highestRegion(),
-                                tooltip: {
-                                  title: `Reach ${GameConstants.camelCaseToString(GameConstants.Region[PokemonHelper.calcNativeRegion(pokemonList.find((p) => p.name == $data).id)])} to attract this Pokémon!`,
-                                    placement: 'top',
-                                    trigger: 'hover'
-                                }">
-                                </li>
+                              <!-- ko foreach: Berry.colorWander[App.game.farming.berryData[$data].color].filter(w => pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
+                              <li class="list-inline-item" data-bind="template: { name: 'wanderingPokémonDisplay', data: $data}"></li>
                               <!-- /ko -->
                               </ul>
                             </td>
                           </tr>
-                          <!-- ko if: App.game.farming.berryData[$data].wander.filter((w) => !Berry.baseWander.some((b) => w === b) && !Berry.colorWander[App.game.farming.berryData[$data].color].some((b) => w === b)) != "" -->
+                          <!-- ko if: App.game.farming.berryData[$data].wander.some((w) => ![...Berry.baseWander, ...Berry.colorWander[App.game.farming.berryData[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
                           <tr>
                             <th colspan="2" data-bind="text: `Attracted to ${BerryType[$data]} Berry`">Specific Wanderers</th>
                           </tr>
                           <tr id="wanderRow">
                             <td id="wanderPokemonList">
                               <ul class="list-inline">
-                              <!-- ko foreach: App.game.farming.berryData[$data].wander.filter((w) => !Berry.baseWander.some((b) => w === b) && !Berry.colorWander[App.game.farming.berryData[$data].color].some((b) => w === b)) -->
-                              <li class="list-inline-item">
-                                <!-- ko if: App.game.party.getPokemon(pokemonMap[$data].id)?.pokerus -->
-                                <img class="dungeon-pokemon-pkrs" src="" data-bind="
-                                attr:{ src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[App.game.party.getPokemon(pokemonMap[$data].id)?.pokerus]}.png` },
-                                tooltip: {
-                                    title: `EVs: ${App.game.party.getPokemonByName(pokemonList.find((p) => p.name == $data).name).evs().toLocaleString('en-US')}`,
-                                    placement: 'bottom',
-                                    trigger: 'hover'
-                                }" />
-                                <!-- /ko -->
-                                <img class="dungeon-pokemon-preview" src="" data-bind="attr:{ src: `assets/images/${(App.game.party.alreadyCaughtPokemonByName($data, true) ? 'shiny' : '')}pokemon/${pokemonList.find((p) => p.name == $data).id}.png` },
-                                css: { 'dungeon-pokemon-locked': !App.game.party.alreadyCaughtPokemonByName(pokemonList.find((p) => p.name == $data).name) }" onerror="this.src='assets/images/pokemon/0.png';"/>
-                                <sup class="shiny" data-bind="visible: App.game.party.alreadyCaughtPokemonByName($data, true)">✨</sup>
-                                <img class="lock" src="assets/images/breeding/lock.svg" data-bind="hidden: PokemonHelper.calcNativeRegion(pokemonList.find((p) => p.name == $data).id) <= player.highestRegion(),
-                                tooltip: {
-                                  title: `Reach ${GameConstants.camelCaseToString(GameConstants.Region[PokemonHelper.calcNativeRegion(pokemonList.find((p) => p.name == $data).id)])} to attract this Pokémon!`,
-                                    placement: 'top',
-                                    trigger: 'hover'
-                                }">
-                                </li>
+                              <!-- ko foreach: App.game.farming.berryData[$data].wander.filter((w) => ![...Berry.baseWander, ...Berry.colorWander[App.game.farming.berryData[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
+                                <li class="list-inline-item" data-bind="template: { name: 'wanderingPokémonDisplay', data: $data}"></li>
                               <!-- /ko -->
                               </ul>
                             </td>
@@ -60239,7 +60232,7 @@ aria-labelledby="badgeCaseModalLabel">
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody data-bind='foreach: GemDeal.getDeals(ShopHandler.shopObservable())'>
+                            <tbody data-bind='foreach: GemDeals.getDeals(ShopHandler.shopObservable().shop)'>
                                 <!-- ko if: $data.isVisible() -->
                                     <!-- ko foreach: gems -->
                                     <tr>
@@ -60276,7 +60269,7 @@ aria-labelledby="badgeCaseModalLabel">
                                         </td>
                                         <td class='vertical-middle' data-bind="attr: { rowspan: $parent.gems.length }">
                                             <div class="btn-group btn-block" data-bind="let: { tradeAmount: ko.observable(1) }">
-                                                <button class='btn btn-success btn-block' data-bind='click: function(){GemDeal.use(ShopHandler.shopObservable(), $parentContext.$index(), tradeAmount())}, css: { disabled: !GemDeal.canUse(ShopHandler.shopObservable(), $parentContext.$index()) }'>
+                                                <button class='btn btn-success btn-block' data-bind='click: function(){GemDeals.use(ShopHandler.shopObservable().shop, $parentContext.$index(), tradeAmount())}, css: { disabled: !GemDeals.canUse(ShopHandler.shopObservable().shop, $parentContext.$index()) }'>
                                                     <knockout data-bind="text: !ItemList[$parent.item.itemType.name].isSoldOut() ? 'Trade' : 'Sold out'"></knockout>
                                                 </button>
                                                 <button type="button" data-bind="visible: ItemList[$parent.item.itemType.name].maxAmount > 1, text: tradeAmount() + '&nbsp;'" class="btn btn-success dropdown-toggle dropdown-toggle-split active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"'>
@@ -60539,7 +60532,7 @@ aria-labelledby="badgeCaseModalLabel">
                                     <!-- ko foreach: Safari.pokemonGrid -->
                                         <div class="pokemonSprite walkDown" data-bind="css: { shiny: $data.shiny },
                                         style: {
-                                            backgroundImage: `${$data.shiny ? 'url(\'assets/images/dynamic-background/pokemon/sparkle.png\'), ' : ''}url('assets/images/dynamic-background/pokemon/${Math.floor($data.id).toString().padStart(3, '0')}${$data.shiny ? 's' : ''}.png')`,
+                                            backgroundImage: `${$data.shiny ? 'url(\'assets/images/dynamic-background/pokemon/sparkle.png\'), ' : ''}url('assets/images/dynamic-background/pokemon/${Math.floor($data.id).toString()}${$data.shiny ? 's' : ''}.png')`,
                                             top: `${32 * $data.y - 8}px`,
                                             left: `${32 * $data.x - 4}px`,
                                         }"></div>
