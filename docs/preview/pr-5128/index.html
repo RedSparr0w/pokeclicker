@@ -54489,12 +54489,13 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
               </div>
             </div>
             <!-- ko ifnot: $data.isNone() -->
-            <div style="margin-top: 20px;" class="clickable" data-bind="click: function(){ if (progress() >= 100) App.game.breeding.hatchPokemonEgg($index()) },
-                                                                        tooltip: {
-                                                                            title: BreedingController.getEggPokemonName($data) || '???',
-                                                                            trigger: 'hover',
-                                                                            placement: 'bottom',
-                                                                        }">
+            <div style="margin-top: 20px;" class="clickable" data-bind="
+                click: function(){ if (progress() >= 100) App.game.breeding.hatchPokemonEgg($index()) },
+                tooltip: {
+                    title: BreedingController.getEggPokemonName($data) || '???',
+                    trigger: 'hover',
+                    placement: 'bottom',
+                }">
                 <!-- ko if: $data.type == EggType.Fossil -->
                 <img class="egg" data-bind="attr: {src: BreedingController.getEggImage($data)}, class: BreedingController.getEggCssClass($data)"/>
                 <!-- /ko -->
