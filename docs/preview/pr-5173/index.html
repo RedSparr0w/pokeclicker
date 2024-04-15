@@ -1970,9 +1970,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         </div>
         <div class="progress hitpoints trainerhitpoints">
           <div class="progress-bar bg-success" role="progressbar"
-                  data-bind="attr:{ style: 'width:' + ContestBattle.contest.audiencePercentageAppeal() + '%' }"
+                  data-bind="attr:{ style: 'width:' + ContestRunner.audienceAppealPercentage() + '%' }"
                   aria-valuemin="0" aria-valuemax="100">
-              <span data-bind="text: ContestBattle.contest.audienceAppeal().toLocaleString('en-US') + ' / ' + ContestBattle.contest.maxAudienceAppeal().toLocaleString('en-US')" style="font-size: 12px;"></span>
+              <span data-bind="text: ContestRunner.audienceAppeal().toLocaleString('en-US') + ' / ' + ContestRunner.maxAudienceAppeal().toLocaleString('en-US')" style="font-size: 12px;"></span>
           </div>
       </div>
       <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
@@ -2339,10 +2339,12 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <div data-bind="foreach: { data: ContestRunner.contestRankObservable(), as: 'rank' }">
             <h5 data-bind="text: `${ContestRank[rank]} Rank`"></h5>
             <div data-bind="foreach: { data: ContestRunner.contestTypeObservable(), as: 'type' }">
-              <button data-bind="text: `${ContestType[type]}`, click: () => {new Contest(rank, type).onclick()}"></button>
-              <!-- TODO: click to start contests -->
-              <!-- TODO: add ribbon images -->
-              <!-- TODO: add stat for max streak/trainers defeated -->
+                <button data-bind="click: () => {ContestRunner.startContest(rank, type)}">
+                    <h5 data-bind="text: `${ContestType[type]}`"></h5>
+                    <img data-bind="attr:{ src: ContestHall.getRibbonImage(rank, type)}">
+                    <!-- TODO: add stat for max streak/trainers defeated -->
+                    <!-- TODO: flex spacing -->
+                  </button>
             </div>
         </div>
         <a class="btn btn-block btn-danger text-light" onclick="App.game.battleFrontier.leave()">Leave</a>
@@ -58471,7 +58473,7 @@ aria-labelledby="pokedexModalLabel">
                 <tr>
                   <td class="text-left">Contest Appeal</td>
                   <td class="text-left tight"><code
-                    data-bind="text: (App.game.party.getPokemon($data) ? App.game.party.getPokemon($data).appeal : 0).toLocaleString('en-US')">-</code>
+                    data-bind="text: (App.game.party.getPokemon($data) ? App.game.party.getPokemon($data).contestAppeal : 0).toLocaleString('en-US')">-</code>
                   </td>
                 </tr>
                 <!-- /ko -->
