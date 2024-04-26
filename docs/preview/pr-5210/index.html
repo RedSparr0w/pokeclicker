@@ -40,7 +40,6 @@
     <!--Minified styles-->
     <link href="styles/styles.min.css?v=0.10.20" rel="stylesheet">
 
-    <!-- Google Analytics-->
     <style>
         #game.loading {
             display: none !important;
@@ -134,7 +133,7 @@
 </script>
 
 
-<!-- Spash Screen -->
+<!-- Splash Screen -->
 <div class="d-flex align-items-center justify-content-center background-night py-4" id="saveSelector">
     <div class="justify-content-center container row">
         <div class="col-6">
@@ -2322,7 +2321,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 </lineargradient>
                             </defs>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.kanto'>
+                            <g data-bind='if: player.region == GameConstants.Region.kanto, childrenComplete: () => GameController.applyRouteBindings()'>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Kanto').id">
         <image width="1600" height="960" data-bind="attr: {
@@ -7053,7 +7052,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.johto'>
+                            <g data-bind='if: player.region == GameConstants.Region.johto, childrenComplete: () => GameController.applyRouteBindings()'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/johto.png?v=0.10.20',
         href:'assets/images/johto.png?v=0.10.20'
@@ -9685,7 +9684,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.hoenn'>
+                            <g data-bind='if: player.region == GameConstants.Region.hoenn, childrenComplete: () => GameController.applyRouteBindings()'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/hoenn.png?v=0.10.20',
         href:'assets/images/hoenn.png?v=0.10.20'
@@ -14536,7 +14535,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.sinnoh'>
+                            <g data-bind='if: player.region == GameConstants.Region.sinnoh, childrenComplete: () => GameController.applyRouteBindings()'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/sinnoh.png?v=0.10.20',
         href:'assets/images/sinnoh.png?v=0.10.20'
@@ -17632,7 +17631,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.unova'>
+                            <g data-bind='if: player.region == GameConstants.Region.unova, childrenComplete: () => GameController.applyRouteBindings()'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/unova.png?v=0.10.20',
         href:'assets/images/unova.png?v=0.10.20'
@@ -20811,7 +20810,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.kalos'>
+                            <g data-bind='if: player.region == GameConstants.Region.kalos, childrenComplete: () => GameController.applyRouteBindings()'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/kalos.png?v=0.10.20',
         href:'assets/images/kalos.png?v=0.10.20'
@@ -23430,7 +23429,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.alola'>
+                            <g data-bind='if: player.region == GameConstants.Region.alola, childrenComplete: () => GameController.applyRouteBindings()'>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Melemele Island').id">
         <image width="1600" height="960" data-bind="attr: {
@@ -35956,7 +35955,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.galar'>
+                            <g data-bind='if: player.region == GameConstants.Region.galar, childrenComplete: () => GameController.applyRouteBindings()'>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'South Galar').id">
         <image width="1600" height="960" data-bind="attr: {
@@ -44437,7 +44436,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.hisui'>
+                            <g data-bind='if: player.region == GameConstants.Region.hisui, childrenComplete: () => GameController.applyRouteBindings()'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/hsiui.png?v=0.10.20',
         href:'assets/images/hisui.png?v=0.10.20'
@@ -53198,7 +53197,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.paldea'>
+                            <g data-bind='if: player.region == GameConstants.Region.paldea, childrenComplete: () => GameController.applyRouteBindings()'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/paldea.png?v=0.10.20',
         href:'assets/images/paldea.png?v=0.10.20'
@@ -57092,6 +57091,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
             </div>
             <div class="modal-body p-0">
                 <div class="tab-content p-3 h-100">
+                    <!-- ko let: { categoryModeEnabled: ko.observable(false), categoryModeSelected: ko.observable(0) } -->
                     <div class="tab-pane fade in active show" id="breeding-pokemon">
                         <div class="row">
                             <div class="col-12 d-lg-none d-block">
@@ -57167,12 +57167,17 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 <label>Category</label>
                                                 <div class="dropdown show">
                                                     <button type="button" class="text-left custom-select col-12 btn btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                        data-bind="text: BreedingFilters.category.value() == -1 ? 'All' : PokemonCategories.categories().find(c => c.id == BreedingFilters.category.value()).name()">
+                                                        data-bind="text: BreedingFilters.category.value() == -1 ? 'All'
+                                                            : BreedingFilters.category.value() == -2 ? 'Categorized'
+                                                            : PokemonCategories.categories().find(c => c.id == BreedingFilters.category.value()).name()">
                                                         Categories
                                                     </button>
                                                     <div class="border-secondary dropdown-menu col-12 category-dropdown">
                                                         <div class="dropdown-item dropdown-text" data-bind="click : function(){ BreedingFilters.category.value(-1); Settings.setSettingByName('breedingCategoryFilter', -1) }">
                                                             All
+                                                        </div>
+                                                        <div class="dropdown-item dropdown-text" data-bind="click : function(){ BreedingFilters.category.value(-2); Settings.setSettingByName('breedingCategoryFilter', -2) }">
+                                                            Categorized
                                                         </div>
                                                         <div class="dropdown-divider"></div>
                                                         <!-- ko foreach : PokemonCategories.categories -->
@@ -57269,6 +57274,61 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-12">
+                                                <hr style="border-color:grey;">
+                                            </div>
+
+                                            <!-- Category Mode-->
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary btn-block" data-bind="
+                                                        click: () => categoryModeEnabled(!categoryModeEnabled()),
+                                                        text: categoryModeEnabled() ? 'Disable Category Mode' : 'Enable Category Mode',
+                                                        tooltip: {
+                                                            title: 'Use Category Mode to quickly assign and remove Pokémon from categories. Select a category then click the desired Pokémon to add or remove.',
+                                                            placement: 'top',
+                                                            trigger: 'hover'
+                                                        }">
+                                                        Enable Category Mode
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- ko if: categoryModeEnabled() -->
+                                            <div class="col-12">
+                                                <div class="form-group mb-1">
+                                                    <label>Selected Category</label>
+                                                    <div class="dropdown show">
+                                                        <button type="button" class="text-left custom-select col-12 btn btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                            data-bind="text: PokemonCategories.categories().find(c => c.id == categoryModeSelected()).name()">
+                                                            Select A Category
+                                                        </button>
+                                                        <div class="border-secondary dropdown-menu col-12 category-dropdown" data-bind="foreach: PokemonCategories.categories">
+                                                            <div class="dropdown-item" data-bind="text : $data.name(),
+                                                                style: { color: GameHelper.isColorLight($data.color()) ? 'black' : 'white', background: $data.color() },
+                                                                click: () => categoryModeSelected($data.id)">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <button type="button" class="btn btn-success btn-block" data-bind="tooltip: {
+                                                    title: 'Add all Pokémon matching the current filters to this category.',
+                                                    placement: 'bottom',
+                                                    trigger: 'hover'
+                                                },
+                                                click: () => PartyController.addCategory(BreedingController.hatcheryFilteredList().filter(p => p.isHatchable()), categoryModeSelected())">Add All</button>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <button type="button" class="btn btn-danger btn-block" data-bind="tooltip: {
+                                                    title: 'Remove all Pokémon matching the current filters from this category.',
+                                                    placement: 'bottom',
+                                                    trigger: 'hover'
+                                                },
+                                                click: () => PartyController.removeCategory(BreedingController.hatcheryFilteredList().filter(p => p.isHatchable()), categoryModeSelected())">Remove All</button>
+                                            </div>
+                                            <!-- /ko -->
                                         </div>
                                     </div>
                                 </div>
@@ -57285,7 +57345,10 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                         <!-- ko if: modalUtils.observableState.breedingModal !== 'hidden' && App.game.party.hasMaxLevelPokemon() -->
                                         <ul class="row justify-content-center w-100 p-0 m-0" data-bind="foreach: lazyHatcheryList, childrenComplete: () => { lazyLoadCallback('lazyHatcheryList'); }">
                                             <!-- ko if: $data.isHatchable() && ($data.matchesHatcheryFilters() || BreedingController.viewResetWaiting()) -->
-                                            <li class="col-sm-4 col-md-3 col-lg-2 pokedexEntry" data-bind="style:{background: PokedexHelper.getBackgroundColors($data.name)}, class: App.game.breeding.hasFreeEggSlot() || App.game.breeding.hasFreeQueueSlot() ? '' : 'disabled'">
+                                            <li class="col-sm-4 col-md-3 col-lg-2 pokedexEntry" data-bind="
+                                                style:{background: PokedexHelper.getBackgroundColors($data.name)},
+                                                class: App.game.breeding.hasFreeEggSlot() || App.game.breeding.hasFreeQueueSlot() ? '' : 'disabled',
+                                                css: { 'category-highlight': categoryModeEnabled() && $data.category.includes(categoryModeSelected()) }">
                                                 <div class="breedingListShiny" data-bind="visible: App.game.party.alreadyCaughtPokemon($data.id, true)">✨</div>
                                                 <img class="breeding-shadow-icon shadow-icon" src="assets/images/status/shadow.svg" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Shadow"/>
                                                 <img class="breeding-shadow-icon shadow-icon" src="assets/images/status/purified.svg" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Purified"/>
@@ -57294,21 +57357,59 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 </div>
                                                 <img src="" class="pokedex-pokemon-sprite" data-bind="attr:{ src: PokemonHelper.getImage($data.id) }">
                                                 <span class="pokedex-bottom-text" data-bind="text: BreedingController.getDisplayValue($data)">value</span>
-                                                <a class="overlay" href="#breed" data-bind="click: function() { App.game.breeding.addPokemonToHatchery($data); App.game.breeding.checkCloseModal();}"></a>
+                                                <a class="overlay" href="#breed" data-bind="click: function() {
+                                                    if (categoryModeEnabled()) {
+                                                        $data.toggleCategory(categoryModeSelected());
+                                                    } else {
+                                                        App.game.breeding.addPokemonToHatchery($data);
+                                                        App.game.breeding.checkCloseModal();
+                                                    }
+                                                }"></a>
                                                 <span class="pokedex-top-text text-truncate px-1" data-bind="text: $data.displayName,
                                                     tooltip: {
-                                                        title: PokemonHelper.displayName($data.name),
+                                                        title: categoryModeEnabled() ? '' : PokemonHelper.displayName($data.name),
                                                         trigger: 'hover',
                                                         placement: 'top',
                                                         boundary: 'viewport'
                                                     }">name</span>
 
                                                 <!-- Category Button -->
-                                                <div class="pokemonCategory dropdown">
-                                                    <button data-toggle="dropdown" data-bind="class: `category-${App.game.party.getPokemon($data.id).category + 1}`"></button>
-                                                    <div class="border-secondary dropdown-menu category-dropdown">
-                                                        <!-- ko foreach: { data: PokemonCategories.categories, as: 'pokemonCategory' } -->
-                                                        <a class="dropdown-item category" href="#" data-bind="text: pokemonCategory.name, style: { color: GameHelper.isColorLight($data.color()) ? 'black' : 'white', background: pokemonCategory.color, 'text-shadow': `0 0 6px ${GameHelper.isColorLight($data.color()) ? 'white' : 'black'}` }, click: () => { App.game.party.getPokemon($parent.id).category = pokemonCategory.id }">Category</a>
+                                                <div class="pokemonCategory dropdown" data-bind="let: { pokemon: App.game.party.getPokemon($data.id) }">
+                                                    <div data-toggle="dropdown" style="height: 15px;">
+                                                        <!-- Limit category display to 12 for UI purposes -->
+                                                        <div class="d-flex position-relative category-display" data-bind="foreach: pokemon.category.slice(0, 12)">
+                                                            <button data-bind="class: `category-${$data + 1}`"></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="border-secondary dropdown-menu multiselect-dropdown category-dropdown px-2">
+                                                        <div class="form-check d-flex align-items-center", data-bind="with: PokemonCategories.categories().find(c => c.id === 0), as: 'pokemonCategory'">
+                                                            <input type="checkbox" class="form-check-input mt-0" style="cursor: pointer;"
+                                                                data-bind="attr: { id: `${$parent.id}-category0` },
+                                                                    checked: pokemon.isUncategorized,
+                                                                    disable: pokemon.isUncategorized,
+                                                                    click: () => { pokemon.resetCategory(); return true; }">
+                                                            <label class="form-check-label text-truncate w-100 p-1" style="max-width: 200px; cursor: pointer;"
+                                                                data-bind="
+                                                                    text: pokemonCategory.name,
+                                                                    attr: { for: `${$parent.id}-category0` },
+                                                                    style: { color: GameHelper.isColorLight(pokemonCategory.color()) ? 'black' : 'white', background: pokemonCategory.color, 'text-shadow': `0 0 6px ${GameHelper.isColorLight(pokemonCategory.color()) ? 'white' : 'black'}` }"
+                                                                onclick="event.stopPropagation();"></label>
+                                                        </div>
+                                                        <div class="dropdown-divider"></div>
+                                                        <!-- ko foreach: { data: PokemonCategories.playerCategories, as: 'pokemonCategory' } -->
+                                                        <div class="form-check d-flex align-items-center">
+                                                            <input type="checkbox" class="form-check-input mt-0" style="cursor: pointer;"
+                                                                data-bind="
+                                                                    attr: { id: `${$parent.id}-category${pokemonCategory.id}` },
+                                                                    checked: pokemon._category,
+                                                                    checkedValue: pokemonCategory.id">
+                                                            <label class="form-check-label text-truncate w-100 p-1" style="max-width: 200px; cursor: pointer;"
+                                                                data-bind="
+                                                                    text: pokemonCategory.name,
+                                                                    attr: { for: `${$parent.id}-category${pokemonCategory.id}` },
+                                                                    style: { color: GameHelper.isColorLight(pokemonCategory.color()) ? 'black' : 'white', background: pokemonCategory.color, 'text-shadow': `0 0 6px ${GameHelper.isColorLight(pokemonCategory.color()) ? 'white' : 'black'}` }"
+                                                                onclick="event.stopPropagation();"></label>
+                                                        </div>
                                                         <!-- /ko -->
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item dropdown-text" href="#categoryModal" data-toggle="modal">
@@ -57325,6 +57426,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             </div>
                         </div>
                     </div>
+                    <!-- /ko -->
 
                     <div class="tab-pane fade" id="breeding-eggs">
                         <div class="scrolling-div-breeding-list">
@@ -57456,8 +57558,8 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                             },
                                                             buttonClass: 'custom-select-sm',
                                                             itemLabel: {
-                                                                class: 'text-white small',
-                                                                style: (item) => ({ 'background-color': item.color() })
+                                                                class: 'small',
+                                                                style: (item) => ({ 'background-color': item.color(), color: GameHelper.isColorLight(item.color()) ? 'black' : 'white' })
                                                             },
                                                             showSelectAll: true,
                                                             selectAllText: 'All Categories',
@@ -58016,6 +58118,7 @@ aria-labelledby="pokedexModalLabel">
                 <button type="button" class="btn btn-danger position-absolute" data-dismiss="modal" style="right:0; top:0; font-size: 18px; font-weight: 700;">×</button>
             </div>
 
+            <!-- ko let: { categoryModeEnabled: ko.observable(false), categoryModeSelected: ko.observable(0) } -->
             <div class="modal-body pt-0 overflow-hidden" style="background-color: inherit;">
                 <div class="row">
                     <div class="col-12 d-lg-none d-block">
@@ -58075,12 +58178,17 @@ aria-labelledby="pokedexModalLabel">
                                         <label for="pokedex-filter-category">Category</label>
                                         <div class="dropdown show">
                                             <button type="button" class="text-left custom-select col-12 btn btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                data-bind="text: PokedexFilters.category.value() == -1 ? 'All' : PokemonCategories.categories().find(c => c.id == PokedexFilters.category.value()).name()">
+                                                data-bind="text: PokedexFilters.category.value() == -1 ? 'All'
+                                                    : PokedexFilters.category.value() == -2 ? 'Categorized'
+                                                    : PokemonCategories.categories().find(c => c.id == PokedexFilters.category.value()).name()">
                                                 Categories
                                             </button>
                                             <div class="border-secondary dropdown-menu col-12 category-dropdown">
                                                 <div class="dropdown-item dropdown-text" data-bind="click : function(){ Settings.setSettingByName('pokedexCategoryFilter', -1) }">
                                                     All
+                                                </div>
+                                                <div class="dropdown-item dropdown-text" data-bind="click : function(){ Settings.setSettingByName('pokedexCategoryFilter', -2) }">
+                                                    Categorized
                                                 </div>
                                                 <div class="dropdown-divider"></div>
                                                 <!-- ko foreach : PokemonCategories.categories -->
@@ -58183,6 +58291,61 @@ aria-labelledby="pokedexModalLabel">
                                             <!-- /ko -->
                                         </div>
                                     </div>
+
+                                    <div class="col-12">
+                                        <hr style="border-color:grey;">
+                                    </div>
+
+                                    <!-- Category Mode -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-block" data-bind="
+                                                click: () => categoryModeEnabled(!categoryModeEnabled()),
+                                                text: categoryModeEnabled() ? 'Disable Category Mode' : 'Enable Category Mode',
+                                                tooltip: {
+                                                    title: 'Use Category Mode to quickly assign and remove Pokémon from categories. Select a category then click the desired Pokémon to add or remove.',
+                                                    placement: 'top',
+                                                    trigger: 'hover'
+                                                }">
+                                                Enable Category Mode
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- ko if: categoryModeEnabled() -->
+                                    <div class="col-12">
+                                        <div class="form-group mb-1">
+                                            <label>Selected Category</label>
+                                            <div class="dropdown show">
+                                                <button type="button" class="text-left custom-select col-12 btn btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                    data-bind="text: PokemonCategories.categories().find(c => c.id == categoryModeSelected()).name()">
+                                                    Select A Category
+                                                </button>
+                                                <div class="border-secondary dropdown-menu col-12 category-dropdown" data-bind="foreach: PokemonCategories.categories">
+                                                    <div class="dropdown-item" data-bind="text : $data.name(),
+                                                        style: { color: GameHelper.isColorLight($data.color()) ? 'black' : 'white', background: $data.color() },
+                                                        click: () => categoryModeSelected($data.id)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <button type="button" class="btn btn-success btn-block" data-bind="tooltip: {
+                                            title: 'Add all Pokémon matching the current filters to this category.',
+                                            placement: 'bottom',
+                                            trigger: 'hover'
+                                        },
+                                        click: () => PartyController.addCategory(PokedexHelper.filteredListPartyPokemon(), categoryModeSelected())">Add All</button>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <button type="button" class="btn btn-danger btn-block" data-bind="tooltip: {
+                                            title: 'Remove all Pokémon matching the current filters from this category.',
+                                            placement: 'bottom',
+                                            trigger: 'hover'
+                                        },
+                                        click: () => PartyController.removeCategory(PokedexHelper.filteredListPartyPokemon(), categoryModeSelected())">Remove All</button>
+                                    </div>
+                                    <!-- /ko -->
                                 </div>
                             </div>
                         </div>
@@ -58208,8 +58371,8 @@ aria-labelledby="pokedexModalLabel">
                             </div>
                             <!-- /ko -->
                             <ul class="row justify-content-center w-100 p-0 m-0" data-bind="foreach: lazyLoad('lazyPokedexList', $element, PokedexHelper.filteredList, { pageSize: 60, reset: PokedexHelper.resetPokedexFlag }), childrenComplete: () => { lazyLoadCallback('lazyPokedexList'); }">
-                                <li class="col-sm-4 col-md-3 col-lg-2 pokedexEntry"
-                                        data-bind="style:{background: PokedexHelper.getBackgroundColors($data.name)}">
+                                <li class="col-sm-4 col-md-3 col-lg-2 pokedexEntry" data-bind="style:{background: PokedexHelper.getBackgroundColors($data.name)},
+                                    css: { 'category-highlight': categoryModeEnabled() && App.game.party.getPokemon($data.id)?.category.includes(categoryModeSelected()) }">
                                         <span class="id pokedex-top-text" data-bind="text: ($data.id > 0 ? Math.floor($data.id) + '' : '???').padStart(3, 0)">number</span>
                                             <div data-bind="visible: App.game.party.alreadyCaughtPokemonByName(name)" style="position: absolute;right: 2px;top: -15px;">
                                                 <img width="18px" src="" data-bind="attr: { src: `assets/images/pokeball/Pokeball${App.game.party.alreadyCaughtPokemon($data.id, true) ? '-shiny' : ''}.svg`}"/>
@@ -58229,10 +58392,18 @@ aria-labelledby="pokedexModalLabel">
                                             <!-- /ko -->
                                             <img src="" class="pokedex-pokemon-sprite" data-bind="css: { 'pokemon-not-seen': !PokedexHelper.pokemonSeen($data.id)(), 'pokemon-seen-but-not-caught': !App.game.party.alreadyCaughtPokemonByName(name) && PokedexHelper.pokemonSeen($data.id)() }, attr:{ src: PokemonHelper.getImage($data.id)}">
                                             <!-- ko if: PokedexHelper.pokemonSeen($data.id) -->
-                                            <a class="overlay" href="#pokemonStatisticsModal" data-toggle="modal" data-bind="click: () => {App.game.statistics.selectedPokemonID($data.id)},
+                                            <a class="overlay" href="#pokemonStatisticsModal" data-toggle="modal" data-bind="
+                                                click: (_, event) => {
+                                                    if (categoryModeEnabled()) {
+                                                        App.game.party.getPokemon($data.id)?.toggleCategory(categoryModeSelected());
+                                                        event.stopPropagation(); // prevent statistics modal from opening
+                                                    } else {
+                                                        App.game.statistics.selectedPokemonID($data.id);
+                                                    }
+                                                },
                                                 tooltip: {
                                                     html: true,
-                                                    title: `<u>Information:</u>
+                                                    title: categoryModeEnabled() ? '' : `<u>Information:</u>
                                                         <br/>Base Attack: <strong>${$data.attack}</strong>
                                                         <br/>Catch Rate: <strong>${PokemonFactory.catchRateHelper($data.catchRate, true)}%</strong>
                                                         <br/>Hatch Steps: <strong>${App.game.party.getPokemon($data.id)?.getEggSteps().toLocaleString('en-US') || 'Unknown'}</strong>` +
@@ -58250,18 +58421,49 @@ aria-labelledby="pokedexModalLabel">
 
                                             <span class="pokedex-bottom-text text-truncate px-1" data-bind="text: PokemonHelper.displayName($data.name),
                                                 tooltip: {
-                                                    title: PokemonHelper.displayName($data.name),
+                                                    title: categoryModeEnabled() ? '' : PokemonHelper.displayName($data.name),
                                                     trigger: 'hover',
                                                     placement: 'bottom'
                                                 }">name</span>
 
                                                 <!-- Category Button -->
                                                 <!-- ko if: App.game.party.alreadyCaughtPokemonByName($data.name) -->
-                                                <div class="pokemonCategory dropdown">
-                                                    <button data-toggle="dropdown" data-bind="class: `category-${App.game.party.getPokemon($data.id).category + 1}`"></button>
-                                                    <div class="border-secondary dropdown-menu category-dropdown">
-                                                        <!-- ko foreach: { data: PokemonCategories.categories, as: 'pokemonCategory' } -->
-                                                        <a class="dropdown-item category" href="#" data-bind="text: pokemonCategory.name, style: { color: GameHelper.isColorLight($data.color()) ? 'black' : 'white', background: pokemonCategory.color, 'text-shadow': `0 0 6px ${GameHelper.isColorLight($data.color()) ? 'white' : 'black'}` }, click: () => { App.game.party.getPokemon($parent.id).category = pokemonCategory.id }">Category</a>
+                                                <div class="pokemonCategory dropdown" data-bind="let: { pokemon: App.game.party.getPokemon($data.id) }">
+                                                    <div data-toggle="dropdown" style="height: 15px;">
+                                                        <!-- Limit category display to 12 for UI purposes -->
+                                                        <div class="d-flex position-relative category-display" data-bind="foreach: pokemon.category.slice(0, 12)">
+                                                            <button data-bind="class: `category-${$data + 1}`"></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="border-secondary dropdown-menu multiselect-dropdown category-dropdown px-2">
+                                                        <div class="form-check d-flex align-items-center", data-bind="with: PokemonCategories.categories().find(c => c.id === 0), as: 'pokemonCategory'">
+                                                            <input type="checkbox" class="form-check-input mt-0" style="cursor: pointer;"
+                                                                data-bind="attr: { id: `${$parent.id}-category0` },
+                                                                    checked: pokemon.isUncategorized,
+                                                                    disable: pokemon.isUncategorized,
+                                                                    click: () => { pokemon.resetCategory(); return true; }">
+                                                            <label class="form-check-label text-truncate w-100 p-1" style="max-width: 200px; cursor: pointer;"
+                                                                data-bind="
+                                                                    text: pokemonCategory.name,
+                                                                    attr: { for: `${$parent.id}-category0` },
+                                                                    style: { color: GameHelper.isColorLight(pokemonCategory.color()) ? 'black' : 'white', background: pokemonCategory.color, 'text-shadow': `0 0 6px ${GameHelper.isColorLight(pokemonCategory.color()) ? 'white' : 'black'}` }"
+                                                                onclick="event.stopPropagation();"></label>
+                                                        </div>
+                                                        <div class="dropdown-divider"></div>
+                                                        <!-- ko foreach: { data: PokemonCategories.playerCategories, as: 'pokemonCategory' } -->
+                                                        <div class="form-check d-flex align-items-center">
+                                                            <input type="checkbox" class="form-check-input mt-0" style="cursor: pointer;"
+                                                                data-bind="
+                                                                    attr: { id: `${$parent.id}-category${pokemonCategory.id}` },
+                                                                    checked: pokemon._category,
+                                                                    checkedValue: pokemonCategory.id">
+                                                            <label class="form-check-label text-truncate w-100 p-1" style="max-width: 200px; cursor: pointer;"
+                                                                data-bind="
+                                                                    text: pokemonCategory.name,
+                                                                    attr: { for: `${$parent.id}-category${pokemonCategory.id}` },
+                                                                    style: { color: GameHelper.isColorLight(pokemonCategory.color()) ? 'black' : 'white', background: pokemonCategory.color, 'text-shadow': `0 0 6px ${GameHelper.isColorLight(pokemonCategory.color()) ? 'white' : 'black'}` }"
+                                                                onclick="event.stopPropagation();"></label>
+                                                        </div>
                                                         <!-- /ko -->
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item dropdown-text" href="#categoryModal" data-toggle="modal">
@@ -58277,6 +58479,7 @@ aria-labelledby="pokedexModalLabel">
                     </div>
                 </div>
             </div>
+            <!-- /ko -->
             <!--
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -60432,28 +60635,40 @@ aria-labelledby="badgeCaseModalLabel">
             </div>
             <div class="modal-body bg-ocean">
                 <img class="my-5" src='assets/images/ship.png' style='width: 100%;'>
-                <div style='margin-top:20px' data-bind="foreach: GameHelper.enumStrings(GameConstants.Region)">
-                    <!-- ko if: $data !== 'none' -->
-                    <div class="btn-group w-100 my-1" data-bind="visible: GameConstants.Region[$data] <= player.highestRegion() && GameConstants.Region[$data] <= GameConstants.MAX_AVAILABLE_REGION">
-                        <button style="position: relative;" class='btn btn-block btn-success ship-modal-region-button'
-                            data-dismiss='modal'
-                            data-bind='click: () => { MapHelper.moveToTown(GameConstants.DockTowns[GameConstants.Region[$data]]); player.region = GameConstants.Region[$data]; player._subregion(0); $("#ShipModal").modal("hide");  },
-                            attr: { disabled: player.region == GameConstants.Region[$data] }'>
-                            <img style="position:absolute; left: 10px;" data-bind="visible: player.region == GameConstants.Region[$data], attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` }"/> <knockout data-bind="text: GameConstants.camelCaseToString($data)">Region</knockout>
-                        </button>
-                        <!-- ko using: Weather.regionalWeather[GameConstants.Region[$data]], as: 'weatherType' -->
-                        <button class="btn btn-weather-dock" style="right: 0px; top: 0px; width: auto; padding: 0 4px;"
-                            data-bind='style: { background: Weather.weatherConditions[weatherType].color },
-                                tooltip: {
-                                    title: GameConstants.humanifyString(WeatherType[weatherType]),
-                                    placement: "bottom",
-                                    trigger: "hover",
-                                    boundary: "window",
-                                }'>
-                            <img width=30px src="" data-bind="attr: { src: `assets/images/weather/${WeatherType[weatherType]}.png` }"/>
-                        </button>
+                <div style='margin-top:20px'>
+                    <!-- ko foreach: GameHelper.enumStrings(GameConstants.Region) -->
+                        <!-- ko if: $data !== 'none' && GameConstants.Region[$data] <= GameConstants.MAX_AVAILABLE_REGION -->
+                            <!-- ko if: GameConstants.Region[$data] <= player.highestRegion() -->
+                            <div class="btn-group w-100 my-1">
+                                <button style="position: relative;" class='btn btn-block btn-success ship-modal-region-button'
+                                    data-dismiss='modal'
+                                    data-bind='click: () => { MapHelper.moveToTown(GameConstants.DockTowns[GameConstants.Region[$data]]); player.region = GameConstants.Region[$data]; player._subregion(0); $("#ShipModal").modal("hide");  },
+                                    attr: { disabled: player.region == GameConstants.Region[$data] }'>
+                                    <img style="position:absolute; left: 10px;" data-bind="visible: player.region == GameConstants.Region[$data], attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` }"/> <knockout data-bind="text: GameConstants.camelCaseToString($data)">Region</knockout>
+                                </button>
+                                <!-- ko using: Weather.regionalWeather[GameConstants.Region[$data]], as: 'weatherType' -->
+                                <button class="btn btn-weather-dock" style="right: 0px; top: 0px; width: auto; padding: 0 4px;"
+                                    data-bind='style: { background: Weather.weatherConditions[weatherType].color },
+                                        tooltip: {
+                                            title: GameConstants.humanifyString(WeatherType[weatherType]),
+                                            placement: "bottom",
+                                            trigger: "hover",
+                                            boundary: "window",
+                                        }'>
+                                    <img width=30px src="" data-bind="attr: { src: `assets/images/weather/${WeatherType[weatherType]}.png` }"/>
+                                </button>
+                                <!-- /ko -->
+                            </div>
+                            <!-- /ko -->
+                            <!-- ko if: GameConstants.Region[$data] > player.highestRegion() -->
+                            <div class="btn-group w-100 my-1">
+                                <button style="position: relative;" class='btn btn-block btn-success ship-modal-region-button'
+                                        data-bind='attr: { disabled: true }'>
+                                    <knockout>Unexplored region</knockout>
+                                </button>
+                            </div>
+                            <!-- /ko -->
                         <!-- /ko -->
-                    </div>
                     <!-- /ko -->
                 </div>
             </div>
@@ -61266,7 +61481,7 @@ aria-labelledby="damageCalculatorModalLabel" aria-hidden="true">
                             </td>
                             <td data-bind="contentEditable: $data.name"></td>
                             <td>
-                                <div class="btn-group">
+                                <div class="btn-group" data-bind="visible: PokemonCategories.categories().length > 1">
                                     <button type="button" class="btn btn-sm py-0 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false" title="Move Pokémon from this category to another category."></button>
                                     <div class="dropdown-menu pt-0">
@@ -61274,7 +61489,8 @@ aria-labelledby="damageCalculatorModalLabel" aria-hidden="true">
                                         <div data-bind="foreach: PokemonCategories.categories()">
                                             <!-- ko if: $data.id !== $parent.id -->
                                             <button class="dropdown-item small" type="button"
-                                                data-bind="text: $data.name, style: { 'background-color': $data.color() },
+                                                data-bind="text: $data.name,
+                                                    style: { 'background-color': $data.color(), color: GameHelper.isColorLight($data.color()) ? 'black' : 'white' },
                                                     click: () => PartyController.moveCategoryPokemon($parent.id, $data.id)"></button>
                                             <!-- /ko -->
                                         </div>
@@ -61283,7 +61499,7 @@ aria-labelledby="damageCalculatorModalLabel" aria-hidden="true">
                             </td>
                             <td>
                                 <button type="button" class="close text-danger" title="Remove Category" style="opacity: 1;"
-                                    data-bind="visible: $data.id > 1, click: () => { PokemonCategories.removeCategory($data.id) }">
+                                    data-bind="visible: $data.id > 0, click: () => { PokemonCategories.removeCategory($data.id) }">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </td>
