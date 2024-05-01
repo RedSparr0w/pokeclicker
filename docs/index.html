@@ -29039,6 +29039,32 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         playerSpriteMove">
 </image>
 
+
+        
+
+<image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
+    x="864"
+    y="432"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Ash Ketchum"
+    x="864"
+    y="432"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="872"
+    y="440"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
     </g>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Ula\'ula Island').id">
@@ -33829,32 +33855,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Seafolk Village&#39;) },
 		playerSpriteMove">
 </rect>
-
-
-        
-
-<image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
-    x="720"
-    y="160"
-    height="64"
-    width="64"
-    data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible()"/>
-<rect class="city"
-    data-town="Ash Ketchum"
-    x="720"
-    y="160"
-    height="64"
-    width="64"
-    data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].protectedOnclick()">
-</rect>
-<image width="48" height="48"
-    x="728"
-    y="168"
-    class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(),
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
-</image>
 
     </g>
 
