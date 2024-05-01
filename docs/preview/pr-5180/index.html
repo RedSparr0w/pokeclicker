@@ -1965,6 +1965,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 PokemonType.None,
                                 PokemonType.None,
                                 true,
+                                GameConstants.Region.none,
+                                false,
+                                false, 
+                                WeatherType.Clear,
                             ).toLocaleString('en-US'),
                             tooltip: {
                                 title: Battle.enemyPokemon()
@@ -1972,6 +1976,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                         Battle.enemyPokemon().type1,
                                         Battle.enemyPokemon().type2,
                                         true,
+                                        GameConstants.Region.none,
+                                        false,
+                                        false, 
+                                        WeatherType.Clear,
                                     ).toLocaleString('en-US')} against ${Battle.enemyPokemon().name}`
                                     : '',
                                 trigger: 'hover'}">
@@ -2201,6 +2209,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <h5>Welcome to the Battle Frontier!</h5>
         <p>
             Here you will be battling through many stages to earn Battle Points.<br/>
+            There is no regional attack debuff or weather effects.<br/>
             You can leave early and return to your checkpoint later on.<br/>
             You'll get special items if you reach special milestone stages.<br/>
             When you are ready, click Start!<br/>
