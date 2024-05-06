@@ -59441,7 +59441,7 @@ aria-labelledby="pokedexModalLabel">
                 <tr>
                   <td class="text-left">Breeding Efficiency</td>
                   <td class="text-left tight"><code
-                      data-bind="text: SortOptionConfigs[SortOptions.breedingEfficiency].getValue(App.game.party.getPokemon(pokemonMap[$data].id)).toLocaleString('en-US', { maximumSignificantDigits: 2 })"></code>
+                      data-bind="text: SortOptionConfigs[SortOptions.breedingEfficiency].getValue(App.game.party.getPokemon(pokemonMap[$data].id)).toLocaleString('en-US', { maximumFractionDigits: 3 })"></code>
                   </td>
                 </tr>
                 <!-- /ko -->
@@ -59810,7 +59810,7 @@ aria-labelledby="pokedexModalLabel">
                                 <td class="text-center tight" data-bind="text: $data.vitaminsUsed[VitaminController.currentlySelected()]().toLocaleString('en-US')">-</td>
                                 <td class="text-center tight" data-bind="text: $data.getBreedingAttackBonus().toLocaleString('en-US')">-</td>
                                 <td class="text-center tight" data-bind="text: $data.getEggSteps().toLocaleString('en-US')">-</td>
-                                <td class="text-center tight" data-bind="text: $data.breedingEfficiency().toLocaleString('en-US', { maximumSignificantDigits: 2 })">-</td>
+                                <td class="text-center tight" data-bind="text: $data.breedingEfficiency().toLocaleString('en-US', { maximumFractionDigits: 3 })">-</td>
                             </tr>
                         </tbody>
                     </table>
@@ -59946,7 +59946,7 @@ aria-labelledby="pokedexModalLabel">
                                             class: ($parent.vitaminUsesRemaining() && player.itemList[GameConstants.VitaminType[$data]]() && !$parent.breeding ? 'text-success' : 'text-muted')">+</button>
                                 </td>
                                 <!-- /ko -->
-                                <td class="text-center align-middle tight" data-bind="text: SortOptionConfigs[SortOptions.breedingEfficiency].getValue($data).toLocaleString('en-US', { maximumSignificantDigits: 2 })">-</td>
+                                <td class="text-center align-middle tight" data-bind="text: SortOptionConfigs[SortOptions.breedingEfficiency].getValue($data).toLocaleString('en-US', { maximumFractionDigits: 3 })">-</td>
                                 <td class="text-center align-middle tight" data-bind="text: $data.getBreedingAttackBonus().toLocaleString('en-US')">-</td>
                                 <td class="text-center align-middle tight" data-bind="text: $data.getEggSteps().toLocaleString('en-US')">-</td>
                             </tr>
