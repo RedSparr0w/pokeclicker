@@ -732,6 +732,208 @@
 </script>
 
 
+<!-- Dungeon guides modal-->
+<div class="modal noselect fade" id="dungeonGuidesModal" tabindex="-1" role="dialog" aria-labelledby="dungeonGuidesModal">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style='justify-content: space-around;'>
+                <h5 class="modal-title">Hire a Dungeon Guide (BETA)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-left p-2">
+                <ul class="nav nav-tabs nav-fill">
+                    <li class="nav-item"><a class="nav-link active" href="#dungeonGuidesModalHireTab" data-toggle="tab">Hire</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dungeonGuidesModalHelpTab" data-toggle="tab">Help</a></li>
+                </ul>
+                <div class="tab-content">
+                    <!-- Hiring Tab -->
+                    <div id="dungeonGuidesModalHireTab" class="tab-pane fade active show">
+                        <!-- ko if: player.town instanceof DungeonTown -->
+                        <div class="row m-0 justify-content-center d-flex" data-bind="foreach: DungeonGuides.available()" style="max-width: 100%;">
+                            <div class="card text-left col-md-4 col-sm-6 col-xs-12 p-0 align-items-stretch">
+                                <h5 class="card-header">
+                                    <knockout data-bind="text: $data.name">Name</knockout>
+                                    <img class="float-right pixelated" src="" height="24px" data-bind="attr:{ src: `assets/images/profile/trainer-${$data.trainerSprite}.png` }">
+                                </h5>
+                                <div class="card-body p-0 text-center">
+                                    <div class="card h-100">
+                                        <div class="card-header p-1">
+                                            Description
+                                        </div>
+                                        <div class="card-body p-1 flex-grow-0" data-bind="html: $data.description">
+                                            Description
+                                        </div>
+                                        <div class="card-header p-1">
+                                            Cost / Run
+                                        </div>
+                                        <div class="card-body p-1 flex-grow-1" data-bind="foreach: $data.calcCost(1, player.town.dungeon.tokenCost, player.region)">
+                                            <knockout class="w-100" data-bind="template: { name: 'currencyTemplate', data: {'amount': $data.amount, 'currency': $data.currency}}">cost</knockout><br/>
+                                        </div>
+                                        <div class="card-header p-1">
+                                            Movement Speed
+                                        </div>
+                                        <div class="card-body p-1 flex-grow-0" data-bind="text: `${($data.interval / 1000).toLocaleString('en-US')} seconds`">
+                                            Speed
+                                        </div>
+                                        <div class="card-header p-1">
+                                            Statistics
+                                        </div>
+                                        <div class="card-body p-1 flex-grow-0">
+                                            <knockout data-bind="text: `Total Attempts: ${App.game.statistics.dungeonGuideAttempts[$data.index]().toLocaleString()}`">Attempts</knockout><br/>
+                                            <knockout data-bind="text: `Total Clears: ${App.game.statistics.dungeonGuideClears[$data.index]().toLocaleString()}`">Clears</knockout>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <butto class="btn btn-block btn-primary" href="#dungeonGuidesSubModal" data-toggle="modal" data-bind="click: () => DungeonGuides.selected($data.index)">Hire!</butto>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+
+                    <!-- Help Tab -->
+                    <div id="dungeonGuidesModalHelpTab" class="tab-pane fade col-10 offset-1 text-center">
+                        <h4><u>Help</u></h4>
+                        <p>Dungeon guides will automatically guide you through the dungeon, opening any chest they come accross, go down ladders they find and start boss battles.</p>
+                        <p>You must pay an upfront cost for however many attempts you want to run of the dungeon <span class="text-danger">(non refundable)</span>, they will however give you a discount the more runs you purchase in one go.</p>
+                        <p>They do not guarantee a successful dungeon clear, and will charge regardless of the outcome.</p>
+                        <p>Each guide operates at their own speed, with some possessing a sense for specific dungeon tiles and others actively avoiding particular tiles whenever possible.</p>
+                        <p class="text-warning"><i>NOTE: This is a <strong>beta</strong> feature, so things are likely to change in future updates;<br/>feel free to post any feedback/bugs in the <a href="https://discord.gg/a6DFe4p" target="_blank">Discord</a>.</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal noselect fade" id="dungeonGuidesSubModal" tabindex="-1" role="dialog" aria-labelledby="dungeonGuidesSubModal">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style='justify-content: space-around;'>
+                <h5 class="modal-title">Explore Dungeon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-left p-2">
+                <!-- ko if: player.town instanceof DungeonTown -->
+                <table class="table table-striped table-hover m-0 text-center">
+                    <tbody>
+                        <tr>
+                            <td>Dungeon Attempts</td>
+                        </tr>
+                        <tr>
+                            <td class="p-0">
+                                <input type="number" class="form-control" min="1" step="1" data-bind="value: DungeonGuides.clears"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Guide Cost</td>
+                        </tr>
+                        <tr>
+                            <td data-bind="foreach: DungeonGuides.calcCost()">
+                                <knockout data-bind="template: { name: 'currencyTemplate', data: {'amount': $data.amount, 'currency': $data.currency}}"></knockout><br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Dungeon Cost</td>
+                        </tr>
+                        <tr data-bind="with: DungeonGuides.calcDungeonCost()">
+                            <td data-bind="template: { name: 'currencyTemplate', data: {'amount': $data.amount, 'currency': $data.currency}}"></td>
+                        </tr>
+                        <tr class="bg-danger">
+                            <td>ALL CHARGES NON REFUNDABLE</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <button class="btn btn-block btn-primary" data-dismiss="modal" data-bind="click: () => DungeonGuides.hire()">Start!</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal noselect fade" id="dungeonGuidesDungeonModal" tabindex="-1" role="dialog" aria-labelledby="dungeonGuidesDungeonModal">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style='justify-content: space-around;'>
+                <h5 class="modal-title">Dungeon Guide</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <!-- ko if: player.town instanceof DungeonTown && DungeonGuides.hired() -->
+                    <div class="card text-left col-12 p-0" data-bind="with: DungeonGuides.hired()">
+                        <h5 class="card-header">
+                            <knockout data-bind="text: $data.name">Name</knockout>
+                            <img class="float-right pixelated" src="" height="24px" data-bind="attr:{ src: `assets/images/profile/trainer-${$data.trainerSprite}.png` }">
+                        </h5>
+                        <div class="card-body p-0">
+                            <table class="table table-striped table-hover table-bordered table-sm m-0" style="overflow: visible;">
+                                <tbody class="text-center">
+                                    <tr>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td data-bind="html: $data.description">Description</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cost / Run</th>
+                                    </tr>
+                                    <tr>
+                                        <td data-bind="foreach: $data.calcCost(1, player.town.dungeon.tokenCost, player.region)">
+                                            <knockout data-bind="template: { name: 'currencyTemplate', data: {'amount': $data.amount, 'currency': $data.currency}}"></knockout><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Movement Speed</th>
+                                    </tr>
+                                    <tr>
+                                        <td data-bind="text: `${($data.interval / 1000).toLocaleString('en-US')} seconds`">Speed</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Statistics</th>
+                                    </tr>
+                                    <tr>
+                                        <td data-bind="text: `Total Attempts: ${App.game.statistics.dungeonGuideAttempts[$data.index]().toLocaleString()}`">Attempts</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-bind="text: `Total Clears: ${App.game.statistics.dungeonGuideClears[$data.index]().toLocaleString()}`">Clears</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Attempts Remaining</th>
+                                    </tr>
+                                    <tr>
+                                        <td data-bind="text: DungeonGuides.clears()">Attempts</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <button class="btn btn-block btn-danger" data-bind="click: () => $data.fire()" data-dismiss="modal" aria-label="fire">Fire!</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                <!-- /ko -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--Templates -->
 <script type="text/html" id="currencyTemplate">
     <span style="display: inline;">
@@ -998,7 +1200,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <script type="text/html" id="currency-display-template">
     <div class="currency-display d-flex flex-wrap mx-1 my-2 justify-content-center">
-        <img src="" class="mx-1" height="25px" data-bind="attr: { src: `assets/images/currency/${Currency[$data.currency]}.svg` },
+        <img src="" class="mx-1" height="25px" data-bind="attr: { src: `assets/images/currency/${GameConstants.Currency[$data.currency]}.svg` },
             tooltip: {
                 html: true,
                 title: $data.tooltip,
@@ -1006,7 +1208,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 placement: 'top'
             }">
         <div class="" data-bind="text: App.game.wallet.amountText($data.currency),
-            attr: { id: `animateCurrency-${Currency[$data.currency]}` },
+            attr: { id: `animateCurrency-${GameConstants.Currency[$data.currency]}` },
             tooltip: {
                 title: Settings.getSetting('currencyMainDisplayReduced').observableValue()
                     ? App.game.wallet.currencies[$data.currency]().toLocaleString('en-US')
@@ -1494,18 +1696,18 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <div id="currencyBody" class="card-body p-1 show">
         <div class="currency-wrapper" data-bind="css: { 'short-currencies': Settings.getSetting('currencyMainDisplayReduced').observableValue() }">
             <div class="currency-line">
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: Currency.money, tooltip: 'Pokédollars<br /><br />Gained by defeating Pokémon and trainers in battle.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: Currency.dungeonToken, tooltip: 'Dungeon Tokens<br /><br />Gained by catching wild Pokémon.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: Currency.questPoint, tooltip: 'Quest Points<br /><br />Gained by completing Quests.' } }"></div>
+                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.money, tooltip: 'Pokédollars<br /><br />Gained by defeating Pokémon and trainers in battle.' } }"></div>
+                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.dungeonToken, tooltip: 'Dungeon Tokens<br /><br />Gained by catching wild Pokémon.' } }"></div>
+                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.questPoint, tooltip: 'Quest Points<br /><br />Gained by completing Quests.' } }"></div>
             </div>
 
             <!-- ko if: Settings.getSetting('currencyMainDisplayExtended').observableValue() -->
             <div class="currency-line">
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: Currency.farmPoint, tooltip: 'Farm Points<br /><br />Gained by harvesting berries on the Farm.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: Currency.diamond, tooltip: 'Diamonds<br /><br />Gained by selling treasure found in the Underground.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: Currency.battlePoint, tooltip: 'Battle Points<br /><br />Gained at the Battle Frontier.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: Currency.contestToken, tooltip: 'Contest Tokens<br /><br />Gained by competing in Contests.' } },
-                    visible: App.game.wallet.currencies[Currency.contestToken]() > 0"></div>
+                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.farmPoint, tooltip: 'Farm Points<br /><br />Gained by harvesting berries on the Farm.' } }"></div>
+                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.diamond, tooltip: 'Diamonds<br /><br />Gained by selling treasure found in the Underground.' } }"></div>
+                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.battlePoint, tooltip: 'Battle Points<br /><br />Gained at the Battle Frontier.' } }"></div>
+                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.contestToken, tooltip: 'Contest Tokens<br /><br />Gained by competing in Contests.' } },
+                    visible: App.game.wallet.currencies[GameConstants.Currency.contestToken]() > 0"></div>
             </div>
             <!-- /ko -->
         </div>
@@ -1686,7 +1888,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             </div>
         </div>
         <!-- /ko -->
-        <!-- ko if: DungeonRunner.map.currentTile().type() === GameConstants.DungeonTile.chest -->
+        <!-- ko if: DungeonRunner.map.currentTile().type() === GameConstants.DungeonTileType.chest -->
         <div data-bind="with: DungeonRunner.map.currentTile()">
             <div class="dungeon-chest" style="height: 95px">
                 <img data-bind='attr: { src: `assets/images/dungeons/chest-${$data.metadata.tier}.png` }'/>
@@ -1697,17 +1899,17 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             </button>
         </div>
         <!-- /ko -->
-        <!-- ko if: (DungeonRunner.map.currentTile().type() === GameConstants.DungeonTile.boss && !DungeonRunner.fightingBoss()) -->
+        <!-- ko if: (DungeonRunner.map.currentTile().type() === GameConstants.DungeonTileType.boss && !DungeonRunner.fightingBoss()) -->
         <div>
             <button class="btn btn-danger dungeon-button">Start Bossfight</button>
         </div>
         <!-- /ko -->
-        <!-- ko if: (DungeonRunner.map.currentTile().type() === GameConstants.DungeonTile.ladder) -->
+        <!-- ko if: (DungeonRunner.map.currentTile().type() === GameConstants.DungeonTileType.ladder) -->
         <div>
             <button class="btn btn-warning dungeon-button">Go to next floor</button>
         </div>
         <!-- /ko -->
-        <!-- ko if: DungeonRunner.map.currentTile().type() === GameConstants.DungeonTile.entrance && DungeonRunner.map.playerMoved() -->
+        <!-- ko if: DungeonRunner.map.currentTile().type() === GameConstants.DungeonTileType.entrance && DungeonRunner.map.playerMoved() -->
         <div>
             <button class="btn btn-warning dungeon-button">Leave Dungeon</button>
         </div>
@@ -2056,13 +2258,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <div class="row no-gutters">
        <div class="col-4 no-gutters">
            <div class="list-group">
-               <button class="btn btn-secondary p-0" onclick="DungeonRunner.initializeDungeon(player.town.dungeon)" data-bind="
-                   visible: player.town instanceof DungeonTown,
-                   if: player.town.dungeon,
-                   attr: { class: player.town.dungeon && (App.game.wallet.currencies[GameConstants.Currency.dungeonToken]() >= player.town.dungeon.tokenCost ? 'btn btn-success p-0' : 'btn btn-secondary p-0') + (player.town.dungeon.isUnlocked() ? '' : ' disabled') }">
-                    Start<br/>
-                    <span data-bind="template: { name: 'currencyTemplate', data: {'amount': player.town.dungeon.tokenCost, 'currency': GameConstants.Currency.dungeonToken}}"></span>
-               </button>
+                <!-- ko if: player.town instanceof DungeonTown -->
+                <div class="btn-group btn-block" style="margin-top: 0px;">
+                    <button class="btn btn-secondary p-0" onclick="DungeonRunner.initializeDungeon(player.town.dungeon)" data-bind="
+                        visible: player.town instanceof DungeonTown,
+                        if: player.town.dungeon,
+                        attr: { class: player.town.dungeon && (App.game.wallet.currencies[GameConstants.Currency.dungeonToken]() >= player.town.dungeon.tokenCost ? 'btn btn-success p-0' : 'btn btn-secondary p-0') + (player.town.dungeon.isUnlocked() ? '' : ' disabled') }">
+                        Start<br/>
+                        <span data-bind="template: { name: 'currencyTemplate', data: {'amount': player.town.dungeon.tokenCost, 'currency': GameConstants.Currency.dungeonToken}}"></span>
+                    </button>
+                    <button class="btn btn-info p-0 btn-dungeon-guide" href="#dungeonGuidesModal" data-toggle="modal" data-bind="
+                        tooltip: { html: true, title: `Hire a Dungeon Guide!`, trigger: 'hover', placement:'right' },
+                        visible: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(player.town.dungeon.name)]() >= 10">↻</button>
+                </div>
+                <!-- /ko -->
 
                 <!-- ko foreach: player.town.content -->
                 <div class="btn-group btn-block" style="margin-top: 0px;">
@@ -2075,9 +2284,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         "></button>
                     <!-- ko if: $data instanceof Gym -->
                     <button class="btn btn-info p-0 btn-gym-auto-restart" data-bind="
-                        tooltip: { html: true, title: `Auto restart Gym fight<br/>Cost: <img src='assets/images/currency/money.svg' height='18px'></button> ${($data.moneyReward * 2).toLocaleString('en-US')} per battle<br/><br/><i class='text-warning'>You will not receive Pokédollars for clearing the gym</i>`, trigger: 'hover', placement:'right' },
+                        tooltip: {
+                            html: true,
+                            title: $data.autoRestartTooltip,
+                            trigger: 'hover',
+                            placement:'right'
+                        },
                         click: () => GymRunner.startGym($data, true),
-                        visible: $data.isUnlocked() && App.game.statistics.gymsDefeated[GameConstants.getGymIndex($data.town)]() >= 100">↻</button>
+                        visible: $data.isUnlocked() && App.game.statistics.gymsDefeated[GameConstants.getGymIndex($data.town)]() >= 10">↻</button>
                     <!-- /ko -->
                 </div>
                 <!-- /ko -->
@@ -2166,6 +2380,35 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         </ul>
       </div>
     </knockout>
+    <knockout data-bind="if: player.town.content.find(c => c instanceof SafariTownContent)">
+        <div id="dungeonPokemonList" class="card pt-2 pb-3 px-1">
+          <!--Display all available Pokémon in this Safari-->
+          <ul class="list-inline mb-0">
+            <!-- ko foreach: SafariPokemonList.getDisplayList() -->
+            <li class="list-inline-item">
+              <img class="dungeon-pokemon-pkrs" src="" data-bind="
+                  attr:{ src: $data.pkrsImage },
+                  tooltip: {
+                      title: $data.EVs,
+                      placement: 'bottom',
+                      trigger: 'hover'
+                  }" />
+              <img class="dungeon-pokemon-preview" src="" data-bind="attr:{ src: $data.image },
+                  css: { 'dungeon-pokemon-locked': $data.uncaught }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
+              <sup class="shiny" data-bind="visible: $data.shiny">✨</sup>
+              <img class="lock" src="assets/images/breeding/lock.svg" data-bind="
+                  hidden: !$data.lock,
+                  tooltip: {
+                      title: $data.lockMessage,
+                      placement: 'top',
+                      trigger: 'hover',
+                      boundary: 'window'
+                  }" />
+            </li>
+            <!-- /ko -->
+          </ul>
+        </div>
+      </knockout>
 </div>
 </knockout>
 
@@ -2173,28 +2416,38 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             </div>
 
             <!-- ko if: App.game.gameState === GameConstants.GameState.dungeon -->
-            <div id="dungeonMap" class="card sortable-disabled border-secondary mb-3 dungeon no-select">
-                <div class="card-header p-0">
-                    <div style="position: absolute; left: 2px">
-                        <img title="Chests opened in current dungeon" src="assets/images/dungeons/chest.png" height="25px" />
-                        <span data-bind="text: `${DungeonRunner.chestsOpened()}/${DungeonRunner.map.totalChests()}`"></span>
+                <div id="dungeonMap" class="card sortable-disabled border-secondary mb-3 dungeon no-select">
+                    <div class="card-header p-0">
+                        <div style="position: absolute; left: 2px">
+                            <img title="Chests opened in current dungeon" src="assets/images/dungeons/chest.png" height="25px" />
+                            <span data-bind="text: `${DungeonRunner.chestsOpened()}/${DungeonRunner.map.totalChests()}`"></span>
+                        </div>
+                        
+                        <div style="position: absolute; right: 4px">
+                            <img title="Encounters won in current dungeon" src="assets/images/dungeons/encounter.png" height="25px" />
+                            <span data-bind="text: `${DungeonRunner.encountersWon()}/${DungeonRunner.map.totalFights()}`"></span>
+                        </div>
+                        <span data-bind="text: `${DungeonRunner.dungeon.name}`"></span>
+                        <!-- ko if: DungeonGuides.hired() -->
+                        <a href="#dungeonGuidesDungeonModal" data-toggle="modal" data-bind="tooltip: {
+                            title: `Attempts remaining: ${DungeonGuides.clears()}`,
+                            placement: 'top',
+                            trigger: 'hover'
+                        }">
+                            <img class="pixelated" src="" height="24px" data-bind="attr:{ src: `assets/images/profile/trainer-${DungeonGuides.hired().trainerSprite}.png` }">
+                        </a>
+                        <!-- /ko -->
                     </div>
-                    <div style="position: absolute; right: 4px">
-                        <img title="Encounters won in current dungeon" src="assets/images/dungeons/encounter.png" height="25px" />
-                        <span data-bind="text: `${DungeonRunner.encountersWon()}/${DungeonRunner.map.totalFights()}`"></span>
+                    <div class="card-body p-0 text-center">
+                        <table class="dungeon-board">
+                            <tbody data-bind="foreach: DungeonRunner.map.board()[DungeonRunner.map.playerPosition().floor]">
+                                <tr data-bind="foreach: $data">
+                                    <td data-bind=" click: function(){DungeonRunner.map.moveToCoordinates($context.$index(), $parentContext.$index()) }, attr: { class: $data.cssClass}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <span data-bind="text: `${DungeonRunner.dungeon.name}`"></span>
                 </div>
-                <div class="card-body p-0 text-center">
-                    <table class="dungeon-board">
-                      <tbody data-bind="foreach: DungeonRunner.map.board()[DungeonRunner.map.playerPosition().floor]">
-                        <tr data-bind="foreach: $data">
-                            <td data-bind=" click: function(){DungeonRunner.map.moveToCoordinates($context.$index(), $parentContext.$index()) }, attr: { class: $data.cssClass}"></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                </div>
-            </div>
             <!-- /ko -->
 
             <!-- Battle Frontier Information Container  -->
@@ -2224,6 +2477,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <!-- /ko -->
     <!-- ko if: BattleFrontierRunner.started -->
     <div id="battleFrontierRewards" class="card-body text-center p-0 show">
+        <!-- ko let: { availableMilestones: BattleFrontierMilestones.availableMilestones().slice(0, 4) } -->
         <table class="table table-hover table-striped table-bordered table-sm m-0">
             <thead>
                 <tr>
@@ -2234,7 +2488,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     <th class="text-left">Reward</th>
                 </tr>
             </thead>
-            <tbody data-bind="foreach: BattleFrontierMilestones.availableMilestones().slice(0, 4)">
+            <tbody>
+                <!-- ko foreach: availableMilestones -->
                 <tr>
                     <th class="tight" data-bind="text: $data.stage.toLocaleString('en-US')"></td>
                     <td class="text-left">
@@ -2242,8 +2497,18 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         <knockout data-bind="text: $data.displayName"></knockout>
                     </td>
                 </tr>
+                <!-- /ko -->
+                <!-- ko ifnot: availableMilestones.length -->
+                <tr>
+                    <th class="tight">–</td>
+                    <td class="text-left">
+                        You've received every available reward. Congratulations!
+                    </td>
+                </tr>
+                <!-- /ko -->
             </tbody>
         </table>
+        <!-- /ko -->
         <a class="btn btn-block btn-danger text-light" onclick="BattleFrontierRunner.battleQuit()">Quit Battle</a>
     </div>
     <!-- /ko -->
@@ -2275,7 +2540,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 <i>NOTE: These colors can be customized in the settings menu</i>
                             </div>
                         </div>`}">ⓘ</button>
-                    <button class='btn btn-sm' style="position: absolute; right: 48px; top: 0px; width: auto; height: 41px;"
+                    <button class='btn btn-sm' style="position: absolute; right: 96px; top: 0px; width: auto; height: 41px;"
                     data-bind='style: { background: DayCycle.color() },
                         tooltip: {
                             title: DayCycle.tooltip(),
@@ -2285,7 +2550,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         }'>
                         <img width=30px src="" data-bind="attr: { src: DayCycle.image() }"/>
                     </button>
-                    <button class='btn btn-sm' style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px;"
+                    <button class='btn btn-sm' style="position: absolute; right: 48px; top: 0px; width: auto; height: 41px;"
                     data-bind='style: { background: Weather.color() },
                         tooltip: {
                             title: Weather.tooltip(),
@@ -2294,6 +2559,16 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                             trigger: "hover"
                         }'>
                         <img width=30px src="" data-bind="attr: { src: Weather.image() }"/>
+                    </button>
+                    <button class='btn btn-sm' style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px;"
+                    data-bind='style: { background: MoonCycle.color() },
+                        tooltip: {
+                            title: MoonCycle.tooltip(),
+                            html: true,
+                            placement: "bottom",
+                            trigger: "hover"
+                        }'>
+                        <img width=30px src="" data-bind="attr: { src: MoonCycle.image() }"/>
                     </button>
                     <div id="mapBody" class="card-body p-0 show">
                         <div id="subregion-travel-buttons" class="btn-group mr-2" role="group" style="width: 100%;" data-bind="
@@ -23715,7 +23990,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
-        <!--Route 1 Hau'oli Outskirts-->
+        <!--Route 1 Hau'oli Outskirts extension-->
         
 
 <g
@@ -23728,25 +24003,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="752" y="656">
     </rect>
 
-    <text style="font-size: 32px"
-        x="744"
-        y="682"
-        data-bind="visible: !MapHelper.isRouteCurrentLocation(18, 6)">
-        Outskirts
-    </text>
-    <image width="48" height="48"
-        x="792"
-        y="648"
-        class="iconLocation hide"
-        transform='rotate(0)'
-        rotate=""
-        localx="752"
-        localy="656"
-        data-bind="visible: MapHelper.isRouteCurrentLocation(18, 6),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-    
 
 </g>
 
@@ -23779,23 +24035,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         height="32"
         width="64"
         x="976" y="592">
-    </rect>
-
-
-</g>
-
-
-        <!--Route 1 Hau'oli Outskirts extension-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
-    <rect data-route='18'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="48"
-        width="64"
-        x="1040" y="544">
     </rect>
 
 
@@ -24006,7 +24245,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
-        <!--Route 1 Hau'oli Outskirts extension-->
+        <!--Route 1 Hau'oli Outskirts-->
         
 
 <g
@@ -24014,130 +24253,30 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
     <rect data-route='18'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="32"
-        width="96"
-        x="688" y="624">
-    </rect>
-
-
-</g>
-
-
-        <!--Route 1 Hau'oli Outskirts extension-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
-    <rect data-route='18'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="16"
-        width="16"
-        x="736" y="656">
-    </rect>
-
-
-</g>
-
-
-        <!--Route 1 Hau'oli Outskirts extension-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
-    <rect data-route='18'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="16"
-        width="32"
-        x="784" y="640">
-    </rect>
-
-
-</g>
-
-
-        <!--Route 1 Hau'oli Outskirts extension-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
-    <rect data-route='18'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="16"
-        width="128"
-        x="624" y="608">
-    </rect>
-
-
-</g>
-
-
-        <!--Route 1 Hau'oli Outskirts extension-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
-    <rect data-route='18'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="16"
-        width="32"
-        x="656" y="624">
-    </rect>
-
-
-</g>
-
-
-        <!--Route 1 Hau'oli Outskirts extension-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
-    <rect data-route='18'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="32"
-        width="96"
-        x="576" y="576">
-    </rect>
-
-
-</g>
-
-
-        <!--Route 1 Hau'oli Outskirts extension-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
-    <rect data-route='18'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="32"
+        height="48"
         width="64"
-        x="528" y="544">
+        x="1040" y="544">
     </rect>
 
-
-</g>
-
-
-        <!--Route 1 Hau'oli Outskirts extension-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(18, 6); } ">
-    <rect data-route='18'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(18, 6) }"
-        height="16"
-        width="32"
-        x="544" y="576">
-    </rect>
-
+    <text style="font-size: 32px"
+        x="1000"
+        y="578"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(18, 6)">
+        Outskirts
+    </text>
+    <image width="48" height="48"
+        x="1048"
+        y="544"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="1040"
+        localy="544"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(18, 6),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
 
 </g>
 
@@ -24743,42 +24882,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
-        <!--Melemele Sea-->
-        
-
-<g
-
-    data-bind="click:function(){ MapHelper.moveToRoute(19, 6); } ">
-    <rect data-route='19'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(19, 6) }"
-        height="48"
-        width="208"
-        x="1248" y="640">
-    </rect>
-
-    <text style="font-size: 32px"
-        x="1256"
-        y="674"
-        data-bind="visible: !MapHelper.isRouteCurrentLocation(19, 6)">
-        Melemele Sea
-    </text>
-    <image width="48" height="48"
-        x="1328"
-        y="640"
-        class="iconLocation hide"
-        transform='rotate(0)'
-        rotate=""
-        localx="1248"
-        localy="640"
-        data-bind="visible: MapHelper.isRouteCurrentLocation(19, 6),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-    
-
-</g>
-
-
         <!--Melemele Sea extension-->
         
 
@@ -24890,7 +24993,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <rect data-route='19'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(19, 6) }"
         height="16"
-        width="160"
+        width="144"
         x="1104" y="720">
     </rect>
 
@@ -25494,34 +25597,34 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
-        <!--Kala'e Bay-->
+        <!--Melemele Sea-->
         
 
 <g
 
-    data-bind="click:function(){ MapHelper.moveToRoute(20, 6); } ">
-    <rect data-route='20'
-        data-bind="attr: { class: MapHelper.calculateRouteCssClass(20, 6) }"
-        height="96"
-        width="128"
-        x="864" y="192">
+    data-bind="click:function(){ MapHelper.moveToRoute(19, 6); } ">
+    <rect data-route='19'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(19, 6) }"
+        height="48"
+        width="208"
+        x="1248" y="640">
     </rect>
 
     <text style="font-size: 32px"
-        x="848"
-        y="250"
-        data-bind="visible: !MapHelper.isRouteCurrentLocation(20, 6)">
-        Kala&#39;e Bay
+        x="1256"
+        y="674"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(19, 6)">
+        Melemele Sea
     </text>
     <image width="48" height="48"
-        x="904"
-        y="216"
+        x="1328"
+        y="640"
         class="iconLocation hide"
         transform='rotate(0)'
         rotate=""
-        localx="864"
-        localy="192"
-        data-bind="visible: MapHelper.isRouteCurrentLocation(20, 6),
+        localx="1248"
+        localy="640"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(19, 6),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
@@ -25696,6 +25799,42 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="944" y="288">
     </rect>
 
+
+</g>
+
+
+        <!--Kala'e Bay-->
+        
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(20, 6); } ">
+    <rect data-route='20'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(20, 6) }"
+        height="96"
+        width="128"
+        x="864" y="192">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="848"
+        y="250"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(20, 6)">
+        Kala&#39;e Bay
+    </text>
+    <image width="48" height="48"
+        x="904"
+        y="216"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="864"
+        localy="192"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(20, 6),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
 
 </g>
 
@@ -25997,15 +26136,151 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+        <!--Hau'oli City extension-->
+        
+
+<rect class="city"
+    data-town="Hau&#39;oli City"
+    x="688"
+    y="624"
+    height="32"
+    width="96"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hau\&#39;oli City')},
+        attr: { class: MapHelper.calculateTownCssClass('Hau\&#39;oli City') },
+        ">
+</rect>
+
+
+
+        <!--Hau'oli City extension-->
+        
+
+<rect class="city"
+    data-town="Hau&#39;oli City"
+    x="736"
+    y="656"
+    height="16"
+    width="16"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hau\&#39;oli City')},
+        attr: { class: MapHelper.calculateTownCssClass('Hau\&#39;oli City') },
+        ">
+</rect>
+
+
+
+        <!--Hau'oli City extension-->
+        
+
+<rect class="city"
+    data-town="Hau&#39;oli City"
+    x="784"
+    y="640"
+    height="16"
+    width="32"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hau\&#39;oli City')},
+        attr: { class: MapHelper.calculateTownCssClass('Hau\&#39;oli City') },
+        ">
+</rect>
+
+
+
+        <!--Hau'oli City extension-->
+        
+
+<rect class="city"
+    data-town="Hau&#39;oli City"
+    x="624"
+    y="608"
+    height="16"
+    width="128"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hau\&#39;oli City')},
+        attr: { class: MapHelper.calculateTownCssClass('Hau\&#39;oli City') },
+        ">
+</rect>
+
+
+
+        <!--Hau'oli City extension-->
+        
+
+<rect class="city"
+    data-town="Hau&#39;oli City"
+    x="656"
+    y="624"
+    height="16"
+    width="32"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hau\&#39;oli City')},
+        attr: { class: MapHelper.calculateTownCssClass('Hau\&#39;oli City') },
+        ">
+</rect>
+
+
+
+        <!--Hau'oli City extension-->
+        
+
+<rect class="city"
+    data-town="Hau&#39;oli City"
+    x="576"
+    y="576"
+    height="32"
+    width="96"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hau\&#39;oli City')},
+        attr: { class: MapHelper.calculateTownCssClass('Hau\&#39;oli City') },
+        ">
+</rect>
+
+
+
+        <!--Hau'oli City extension-->
+        
+
+<rect class="city"
+    data-town="Hau&#39;oli City"
+    x="528"
+    y="544"
+    height="32"
+    width="64"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hau\&#39;oli City')},
+        attr: { class: MapHelper.calculateTownCssClass('Hau\&#39;oli City') },
+        ">
+</rect>
+
+
+
+        <!--Hau'oli City extension-->
+        
+
+<rect class="city"
+    data-town="Hau&#39;oli City"
+    x="544"
+    y="576"
+    height="16"
+    width="32"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hau\&#39;oli City')},
+        attr: { class: MapHelper.calculateTownCssClass('Hau\&#39;oli City') },
+        ">
+</rect>
+
+
+
         <!--Melemele Woods-->
         
 
 <rect class="city"
     data-town="Melemele Woods"
-    x="448"
-    y="208"
+    x="480"
+    y="160"
     height="48"
-    width="224"
+    width="192"
     data-bind="
         click:function(){MapHelper.moveToTown('Melemele Woods')},
         attr: { class: MapHelper.calculateTownCssClass('Melemele Woods') },
@@ -26013,8 +26288,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
     <image width="48" height="48"
-        x="536"
-        y="208"
+        x="552"
+        y="160"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Melemele Woods'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -26028,10 +26303,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <rect class="city"
     data-town="Melemele Woods"
-    x="464"
-    y="160"
+    x="448"
+    y="208"
     height="48"
-    width="208"
+    width="96"
     data-bind="
         click:function(){MapHelper.moveToTown('Melemele Woods')},
         attr: { class: MapHelper.calculateTownCssClass('Melemele Woods') },
@@ -26106,6 +26381,33 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         ">
 </rect>
 
+
+
+        <!--Melemele Woods Extension-->
+        
+
+<image href="" xlink:href=""
+    x="544"
+    y="208"
+    height="48"
+    width="128"
+    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1"/>
+<rect class="city"
+    data-town="Melemele Woods"
+    x="544"
+    y="208"
+    height="48"
+    width="128"
+    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Melemele Woods&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Melemele Woods&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="584"
+    y="208"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
 
         <!--Roadside Motel-->
@@ -26230,13 +26532,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     <image width="48" height="48"
-        x="536"
-        y="208"
+        x="496"
+        y="160"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Verdant Cavern'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
+
+
+
+        <!--Melemele Meadow extension-->
+        
+
+
 
 
 
@@ -26246,8 +26555,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     <image width="48" height="48"
-        x="536"
-        y="208"
+        x="608"
+        y="128"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Melemele Meadow'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -26256,13 +26565,47 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+        <!--Melemele Meadow extension-->
+        
+
+
+
+
+
+        <!--Ruins of Conflict-->
+        
+
+<image href="" xlink:href=""
+    x="544"
+    y="208"
+    height="48"
+    width="112"
+    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0"/>
+<rect class="city"
+    data-town="Ruins of Conflict"
+    x="544"
+    y="208"
+    height="48"
+    width="112"
+    data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0, click:function(){MapHelper.moveToTown(&#39;Ruins of Conflict&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Ruins of Conflict&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="576"
+    y="208"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Conflict') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
         <!--Ruins of Conflict-->
         
 
 
 
     <image width="48" height="48"
-        x="536"
+        x="576"
         y="208"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Conflict'),
@@ -26783,6 +27126,58 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="120"
     class="iconLocation hide"
     data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Hau 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 3&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+        
+        
+
+<image href="assets/images/map/skullgrunts.png" xlink:href="assets/images/map/skullgrunts.png"
+    x="432"
+    y="736"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 1&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Team Skull Grunts"
+    x="432"
+    y="736"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 1&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="472"
+    y="744"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Skull 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 1&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+        
+
+<image href="assets/images/map/skullgrunts.png" xlink:href="assets/images/map/skullgrunts.png"
+    x="144"
+    y="192"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 2&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Team Skull Grunts"
+    x="144"
+    y="192"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 2&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="184"
+    y="200"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Skull 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 2&#39;].isVisible(),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -27875,9 +28270,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(21, 6); } ">
     <rect data-route='21'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(21, 6) }"
-        height="96"
+        height="64"
         width="48"
-        x="960" y="800">
+        x="960" y="832">
     </rect>
 
 
@@ -28824,10 +29219,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <rect class="city"
         data-town="Ruins of Life"
-        x="960"
-        y="760"
-        height="40"
-        width="48"
+        x="944"
+        y="768"
+        height="64"
+        width="80"
         data-bind="click:function(){MapHelper.moveToTown('Ruins of Life')},
             attr: { class: MapHelper.calculateTownCssClass('Ruins of Life') }">
     </rect>
@@ -28835,7 +29230,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <image width="48" height="48"
         x="960"
-        y="756"
+        y="776"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Life'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -29009,6 +29404,58 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="296"
     class="iconLocation hide"
     data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Gladion 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Gladion 1&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+        
+
+<image href="assets/images/map/sudowoodooverworld.png" xlink:href="assets/images/map/sudowoodooverworld.png"
+    x="1024"
+    y="288"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Recon Squad 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Recon Squad 2&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Is this a Johto reference?"
+    x="1024"
+    y="288"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Recon Squad 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Recon Squad 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Recon Squad 2&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Recon Squad 2&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; }">
+</rect>
+<image width="48" height="48"
+    x="1032"
+    y="296"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Recon Squad 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Recon Squad 2&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+        
+
+<image href="assets/images/map/skullgrunts.png" xlink:href="assets/images/map/skullgrunts.png"
+    x="1056"
+    y="480"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 3&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Team Skull Grunts"
+    x="1056"
+    y="480"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 3&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="1096"
+    y="488"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Skull 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 3&#39;].isVisible(),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -30972,6 +31419,32 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+        <!--Aether House-->
+        
+
+<rect class="city"
+    data-town="Aether House"
+    x="736"
+    y="688"
+    height="64"
+    width="64"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Aether House')},
+        attr: { class: MapHelper.calculateTownCssClass('Aether House') },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="744"
+        y="696"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Aether House'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+
+
+
         <!--Pokémon League Alola-->
         
 
@@ -31687,24 +32160,76 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         
 
 <image href="assets/images/map/hau.png" xlink:href="assets/images/map/hau.png"
-    x="1136"
-    y="304"
+    x="1296"
+    y="320"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;Hau 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 5&#39;].isVisible()"/>
 <rect class="city"
     data-town="Pokémon Trainer Hau"
-    x="1136"
-    y="304"
+    x="1296"
+    y="320"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;Hau 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hau 5&#39;].protectedOnclick()">
 </rect>
 <image width="48" height="48"
-    x="1144"
-    y="312"
+    x="1304"
+    y="328"
     class="iconLocation hide"
     data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Hau 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 5&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+        
+
+<image href="assets/images/map/skullgrunts.png" xlink:href="assets/images/map/skullgrunts.png"
+    x="720"
+    y="240"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 4&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Team Skull Grunts"
+    x="720"
+    y="240"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 4&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="760"
+    y="248"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Skull 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 4&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+        
+
+<image href="assets/images/map/totem.png" xlink:href="assets/images/map/totem.png"
+    x="1040"
+    y="480"
+    height="48"
+    width="48"
+    data-bind="visible: TemporaryBattleList[&#39;Psychium Z Trial&#39;] &amp;&amp; TemporaryBattleList[&#39;Psychium Z Trial&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Trial Site of Haina Desert"
+    x="1040"
+    y="480"
+    height="48"
+    width="48"
+    data-bind="visible: TemporaryBattleList[&#39;Psychium Z Trial&#39;] &amp;&amp; TemporaryBattleList[&#39;Psychium Z Trial&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Psychium Z Trial&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="1040"
+    y="480"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Psychium Z Trial&#39;] &amp;&amp; TemporaryBattleList[&#39;Psychium Z Trial&#39;].isVisible(),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
 </image>
@@ -33078,107 +33603,158 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!--Exeggutor Island-->
         
 
+<image href="" xlink:href=""
+    x="208"
+    y="704"
+    height="96"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended"/>
 <rect class="city"
     data-town="Exeggutor Island"
     x="208"
     y="704"
     height="96"
     width="64"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Exeggutor Island')},
-        attr: { class: MapHelper.calculateTownCssClass('Exeggutor Island') },
-        ">
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) }">
 </rect>
+<image width="48" height="48"
+    x="216"
+    y="728"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Exeggutor Island') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
-    <image width="48" height="48"
-        x="216"
-        y="728"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Exeggutor Island'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
-
-        <!--Exeggutor Island-->
+        <!--Exeggutor Island extension-->
         
 
+<image href="" xlink:href=""
+    x="192"
+    y="720"
+    height="64"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended"/>
 <rect class="city"
     data-town="Exeggutor Island"
     x="192"
     y="720"
     height="64"
     width="16"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Exeggutor Island')},
-        attr: { class: MapHelper.calculateTownCssClass('Exeggutor Island') },
-        ">
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) }">
 </rect>
+<image width="48" height="48"
+    x="176"
+    y="728"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
-
-        <!--Exeggutor Island-->
+        <!--Exeggutor Island extension-->
         
 
+<image href="" xlink:href=""
+    x="272"
+    y="688"
+    height="96"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended"/>
 <rect class="city"
     data-town="Exeggutor Island"
     x="272"
     y="688"
     height="96"
     width="16"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Exeggutor Island')},
-        attr: { class: MapHelper.calculateTownCssClass('Exeggutor Island') },
-        ">
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) }">
 </rect>
+<image width="48" height="48"
+    x="256"
+    y="712"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
-
-        <!--Exeggutor Island-->
+        <!--Exeggutor Island extension-->
         
 
+<image href="" xlink:href=""
+    x="288"
+    y="704"
+    height="32"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended"/>
 <rect class="city"
     data-town="Exeggutor Island"
     x="288"
     y="704"
     height="32"
     width="16"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Exeggutor Island')},
-        attr: { class: MapHelper.calculateTownCssClass('Exeggutor Island') },
-        ">
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) }">
 </rect>
+<image width="48" height="48"
+    x="272"
+    y="696"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
-
-        <!--Exeggutor Island-->
+        <!--Exeggutor Island extension-->
         
 
+<image href="" xlink:href=""
+    x="304"
+    y="704"
+    height="16"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended"/>
 <rect class="city"
     data-town="Exeggutor Island"
     x="304"
     y="704"
     height="16"
     width="64"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Exeggutor Island')},
-        attr: { class: MapHelper.calculateTownCssClass('Exeggutor Island') },
-        ">
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) }">
 </rect>
+<image width="48" height="48"
+    x="312"
+    y="688"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
-
-        <!--Exeggutor Island-->
+        <!--Exeggutor Island extension-->
         
 
+<image href="" xlink:href=""
+    x="208"
+    y="688"
+    height="16"
+    width="48"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended"/>
 <rect class="city"
     data-town="Exeggutor Island"
     x="208"
     y="688"
     height="16"
     width="48"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Exeggutor Island')},
-        attr: { class: MapHelper.calculateTownCssClass('Exeggutor Island') },
-        ">
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) }">
 </rect>
-
+<image width="48" height="48"
+    x="208"
+    y="672"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
 
         <!--Altar of the Sunne and Moone-->
@@ -33432,43 +34008,255 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!--Exeggutor Island Hill-->
         
 
+<image href="" xlink:href=""
+    x="288"
+    y="624"
+    height="80"
+    width="96"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island Hill"
+    x="288"
+    y="624"
+    height="80"
+    width="96"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="312"
+    y="640"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Exeggutor Island Hill') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
-    <rect class="city"
-        data-town="Exeggutor Island Hill"
-        x="288"
-        y="624"
-        height="80"
-        width="96"
-        data-bind="click:function(){MapHelper.moveToTown('Exeggutor Island Hill')},
-            attr: { class: MapHelper.calculateTownCssClass('Exeggutor Island Hill') }">
-    </rect>
-
-
-    <image width="48" height="48"
-        x="312"
-        y="640"
-        class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Exeggutor Island Hill'),
-            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-            playerSpriteMove">
-    </image>
-
-
-        <!--Exeggutor Island Hill-->
         
 
+<image href="" xlink:href=""
+    x="304"
+    y="608"
+    height="16"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island Hill"
+    x="304"
+    y="608"
+    height="16"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="312"
+    y="592"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
-    <rect class="city"
-        data-town="Exeggutor Island Hill"
-        x="304"
-        y="608"
-        height="16"
-        width="64"
-        data-bind="click:function(){MapHelper.moveToTown('Exeggutor Island Hill')},
-            attr: { class: MapHelper.calculateTownCssClass('Exeggutor Island Hill') }">
-    </rect>
 
+        <!--Exeggutor Island Hill during Quest-->
+        
 
+<image href="" xlink:href=""
+    x="288"
+    y="624"
+    height="80"
+    width="96"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island"
+    x="288"
+    y="624"
+    height="80"
+    width="96"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="312"
+    y="640"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+        
+
+<image href="" xlink:href=""
+    x="304"
+    y="608"
+    height="16"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island"
+    x="304"
+    y="608"
+    height="16"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="312"
+    y="592"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+        
+
+<image href="" xlink:href=""
+    x="208"
+    y="704"
+    height="96"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island"
+    x="208"
+    y="704"
+    height="96"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="216"
+    y="728"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Exeggutor Island Hill') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+        
+
+<image href="" xlink:href=""
+    x="192"
+    y="720"
+    height="64"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island"
+    x="192"
+    y="720"
+    height="64"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="176"
+    y="728"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+        
+
+<image href="" xlink:href=""
+    x="272"
+    y="688"
+    height="96"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island"
+    x="272"
+    y="688"
+    height="96"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="256"
+    y="712"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+        
+
+<image href="" xlink:href=""
+    x="288"
+    y="704"
+    height="32"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island"
+    x="288"
+    y="704"
+    height="32"
+    width="16"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="272"
+    y="696"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+        
+
+<image href="" xlink:href=""
+    x="304"
+    y="704"
+    height="16"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island"
+    x="304"
+    y="704"
+    height="16"
+    width="64"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="312"
+    y="688"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+        
+
+<image href="" xlink:href=""
+    x="208"
+    y="688"
+    height="16"
+    width="48"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended"/>
+<rect class="city"
+    data-town="Exeggutor Island"
+    x="208"
+    y="688"
+    height="16"
+    width="48"
+    data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) }">
+</rect>
+<image width="48" height="48"
+    x="208"
+    y="672"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
 
         <!--Vast Poni Canyon-->
@@ -33855,6 +34643,58 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Seafolk Village&#39;) },
 		playerSpriteMove">
 </rect>
+
+
+        
+
+<image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
+    x="720"
+    y="160"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Ash Ketchum"
+    x="720"
+    y="160"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="728"
+    y="168"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
+        
+
+<image href="assets/images/map/skullgrunts.png" xlink:href="assets/images/map/skullgrunts.png"
+    x="768"
+    y="528"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 6&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Team Skull Gang"
+    x="768"
+    y="528"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Skull 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 6&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 6&#39;].protectedOnclick()">
+</rect>
+<image width="48" height="48"
+    x="808"
+    y="536"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('') && TemporaryBattleList[&#39;Skull 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 6&#39;].isVisible(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
 
     </g>
 
@@ -56314,6 +57154,8 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
             <span class="text-muted"><code>Tier 1:</code> 100 clears.</span><br/>
             <span class="text-muted"><code>Tier 2:</code> 250 clears.</span><br/>
             <span class="text-muted"><code>Tier 3:</code> 400 clears.</span><br/></p>
+            <p><strong>How do I unlock Dungeon Guides (BETA) for dungeons?</strong><br/>
+            <span class="text-muted">You need to have cleared the dungoen at least 10 times in order to make use of Dungeon Guides.</span></p>
             <p><strong>How do the floors in dungeons work?</strong><br/>
             <span class="text-muted">Dungeons can't get bigger than 10x10, instead they get a second floor of at least 5x5. The boss tile is always in the second floor, the first floor has a stairs tile instead. When you reach the second floor, time stops and you get 10 extra seconds.</span></p>
             <p><strong>Can I progress towards more than 1 quest at a time?</strong><br/>
@@ -61683,71 +62525,131 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
 
 
 <!-- Battle Cafe Modal -->
-<div class="modal fade noselect" id="battleCafeModal" tabindex="-1" role="dialog"
-aria-labelledby="battleCafeModalLabel">
-<div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-   <div class="modal-content">
-       <div class="modal-header">
-           <h5 class="modal-title">Battle Café</h5>
-       </div>
-       <div class="modal-body">
-            <div>
+<div class="modal fade noselect" id="battleCafeModal" tabindex="-1" role="dialog" aria-labelledby="battleCafeModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Battle Café</h5>
+        </div>
+        <div class="modal-body">
                 <h4>Select a Sweet</h4>
-                <div class="row col-15 justify-content-center">
-                    <!-- ko foreach: GameHelper.enumStrings(GameConstants.AlcremieSweet) -->
-                    <div class="clickable col-4" data-bind="
-                        click: () => BattleCafeController.selectedSweet(GameConstants.AlcremieSweet[$data]),
-                        css: { 'bg-info': BattleCafeController.selectedSweet() == GameConstants.AlcremieSweet[$data] },
-                        style: { 'opacity' : BattleCafeController.canBuySweet(GameConstants.AlcremieSweet[$data])() ? '1' : '0.5' }
-                    ">
-                        <h5>
-                            <span data-bind="text: $data"></span>
-                            <img style="max-width: 40px;" data-bind="attr: { src: 'assets/images/sweets/' + $data + '.png' }"/>
-                            <knockout data-bind="template: { name: 'caughtStatusTemplate', data: {'status': BattleCafeController.getCaughtStatus(GameConstants.AlcremieSweet[$data])()}}"></knockout>
-                        </h5>
-                        <div>
-                            <!-- ko foreach: BattleCafeController.getPrice(GameConstants.AlcremieSweet[$data]) -->
-                            <div>
-                                <img style="width: 30px;" data-bind="
-                                    attr: { src: FarmController.getBerryImage($data.berry) },
-                                    tooltip: { title: BerryType[$data.berry], trigger: 'hover', placement: 'left' }
-                                "/>
-                                <span data-bind="text: $data.amount.toLocaleString('en-US')"></span> (<span data-bind="text: App.game.farming.berryList[$data.berry]().toLocaleString('en-US')"></span>)
+                <div class="sweet-display my-3" data-bind="foreach: GameHelper.enumStrings(GameConstants.AlcremieSweet)">
+                    <div class="mx-1 mb-1">
+                        <div class="card clickable" data-bind="click: () => BattleCafeController.selectedSweet(GameConstants.AlcremieSweet[$data])">
+                            <div class="card-body bg-secondary rounded text-center p-1"
+                                data-bind="css: { 'bg-info': BattleCafeController.selectedSweet() == GameConstants.AlcremieSweet[$data] }">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="d-flex align-items-center justify-content-between w-100">
+                                        <knockout class="pokeball-image" data-bind="template: { name: 'caughtStatusTemplate', data: {
+                                            'status': BattleCafeController.getCaughtStatus(GameConstants.AlcremieSweet[$data])()
+                                        }}"></knockout>
+                                        <knockout class="pokerus-image" data-bind="template: { name: 'pokerusStatusTemplate', data: {
+                                            'pokerus': BattleCafeController.getPokerusStatus(GameConstants.AlcremieSweet[$data])(),
+                                        }}"></knockout>
+                                    </div>
+                                    <img style="width: 40px; margin-top: -3px;" data-bind="attr: { src: 'assets/images/sweets/' + $data + '.png' }"/>
+                                    <h6 class="card-title mb-1" data-bind="text: $data.replace(' Sweet', '')"></h6>
+                                    <div class="d-flex" data-bind="foreach: BattleCafeController.getPrice(GameConstants.AlcremieSweet[$data])">
+                                        <img style="width: 24px;" data-bind="attr: { src: FarmController.getBerryImage($data.berry) },
+                                            tooltip: { title: `${BerryType[$data.berry]} × ${$data.amount.toLocaleString('en-US')}`, trigger: 'hover', placement: 'bottom' }">
+                                    </div>
+                                </div>
                             </div>
-                            <!-- /ko -->
                         </div>
                     </div>
-                    <!-- /ko -->
                 </div>
+
+                <!-- ko with: GameConstants.AlcremieSweet[BattleCafeController.selectedSweet()] -->
+                <div class="card mb-3">
+                    <div class="card-header d-flex align-items-center p-0">
+                        <img height="36" data-bind="attr: { src: 'assets/images/sweets/' + $data + '.png' }"/>
+                        <span class="flex-grow-1 text-center font-weight-bold" data-bind="text: $data"></span>
+                        <img height="36" data-bind="attr: { src: 'assets/images/sweets/' + $data + '.png' }"/>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-lg-6 pb-3">
+                                <table class="table table-sm mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0 w-50">Cost Per Spin</th>
+                                            <th class="border-top-0 w-50">Owned</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: BattleCafeController.getPrice(GameConstants.AlcremieSweet[$data])">
+                                        <tr>
+                                            <td class="border-top-0 p-0">
+                                                <img style="width: 30px;" data-bind="attr: { src: FarmController.getBerryImage($data.berry) }">
+                                                <span data-bind="text: `${BerryType[$data.berry]} × ${$data.amount.toLocaleString('en-US')}`"></span>
+                                            </td>
+                                            <td class="align-middle border-top-0 p-0" data-bind="text: App.game.farming.berryList[$data.berry]().toLocaleString('en-US'),
+                                                css: { 'text-danger': $data.amount > App.game.farming.berryList[$data.berry]() }"></td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Maximum Spins</td>
+                                            <td data-bind="text: BattleCafeController.calcMaxSpins(BattleCafeController.selectedSweet()).toLocaleString('en-US')"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="alcremie-display" data-bind="foreach: Object.values(BattleCafeController.evolutions[GameConstants.AlcremieSweet[$data]]).sort((a, b) => pokemonMap[a.name].id - pokemonMap[b.name].id)">
+                                    <div class="card">
+                                        <div class="card-body bg-secondary rounded text-center p-1">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <div class="d-flex align-items-center justify-content-between w-100">
+                                                    <knockout class="pokeball-image" data-bind="template: { name: 'caughtStatusTemplate', data: {
+                                                        'status': PartyController.getCaughtStatusByName($data.name)
+                                                    }}"></knockout>
+                                                    <knockout class="pokerus-image" data-bind="template: { name: 'pokerusStatusTemplate', data: {
+                                                        'pokerus': PartyController.getPokerusStatusByName($data.name),
+                                                        'evs': App.game.party.getPokemonByName($data.name)?.evs()
+                                                    }}"></knockout>
+                                                </div>
+                                                <img src="" style="width: 64px; margin-top: -8px;" data-bind="attr: { src: PokemonHelper.getImage(pokemonMap[$data.name].id) },
+                                                    css: { 'dungeon-pokemon-locked': !App.game.party.alreadyCaughtPokemonByName($data.name) }">
+                                                <h6 class="card-title small mb-0" style="margin-top: -8px;"
+                                                    data-bind="text: App.game.party.alreadyCaughtPokemonByName($data.name) ? $data.name.match(/.+\(\w+\s(.+)\)/)[1] : '???'"></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header py-2 font-weight-bold">Spin!</div>
+                    <div class="card-body col-lg-6 align-self-center p-2">
+                        <div>Remaining Spin Attempts: <span data-bind="text: BattleCafeController.spinsLeft()"></span></div>
+                        <img style="width: 60px;" src="assets/images/profile/trainer-1.png" data-bind="
+                            attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` },
+                            class: BattleCafeController.isSpinning() ? 'player-animated' + (BattleCafeController.clockwise() ? '' : '-counter') : ''" />
+                        <div class="input-group justify-content-center align-items-center mt-3">
+                            <label class="m-0 pr-1" for="battleCafeDuration">Spin Duration (seconds):</label>
+                            <input style="max-width: 100px;" class="form-control col-4" id="battleCafeDuration" type="number" min="1" max="20" value="3"/>
+                        </div>
+                        <div class="d-flex mt-3">
+                            <div class="col-6 px-1">
+                                <button class="btn btn-primary btn-block" onclick="BattleCafeController.spin(true);">Clockwise</button>
+                            </div>
+                            <div class="col-6 px-1">
+                                <button class="btn btn-primary btn-block" onclick="BattleCafeController.spin(false);">Counter-Clockwise</button>
+                            </div>
+                        </div>
+                        <div class="text-muted small mt-2">Spin Attempts Reset At Midnight</div>
+                    </div>
+                </div>
+                <!-- /ko -->
             </div>
-            <hr/>
-            <h4>Spin!</h4>
-            <div class="pb-2">
-                <span>Remaining Spin Attempts: </span><span data-bind="text: BattleCafeController.spinsLeft()"></span>
-            </div>
-            <div>
-                <img style="width: 60px;" data-bind="
-                attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` },
-                class: BattleCafeController.isSpinning() ? 'player-animated' + (BattleCafeController.clockwise() ? '' : '-counter') : ''
-                " src="assets/images/profile/trainer-1.png">
-            </div>
-            <div class="input-group justify-content-center align-items-center pt-3">
-                <label class="m-0 pr-1" for="battleCafeDuration">Spin Duration (seconds):</label><input style="max-width: 100px;" class="form-control col-4" id="battleCafeDuration" type="number" min="1" max="20" value="3"/>
-            </div>
-            <div class="pt-2">
-                <button style="width: 200px;" class="btn btn-primary" onclick="BattleCafeController.spin(true);">Clockwise</button>
-                <button style="width: 200px;" class="btn btn-primary" onclick="BattleCafeController.spin(false);">Counter-Clockwise</button>
-            </div>
-            <div class="pb-2">
-                <span>Spin Attempts Reset at Midnight</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
-
-       <div class="modal-footer">
-           <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-       </div>
-   </div>
-</div>
+    </div>
 </div>
 
 
