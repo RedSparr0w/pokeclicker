@@ -3085,9 +3085,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(11, 0); } ">
     <rect data-route='11'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(11, 0) }"
-        height="24"
+        height="32"
         width="48"
-        x="1328" y="536">
+        x="1328" y="528">
     </rect>
 
 
@@ -4627,8 +4627,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <rect class="city"
     data-town="Underground Entrance" 
-    x="1328"
-    y="480"
+    x="1152"
+    y="624"
     height="64"
     width="48"
     data-bind="click:function(){App.game.underground.openUndergroundModal()}, attr: { class: App.game.underground.canAccess() ? &#39;completed&#39; : &#39;locked&#39; },
@@ -4640,8 +4640,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <rect class="city"
     data-town="Farm" 
-    x="1152"
-    y="640"
+    x="1328"
+    y="480"
     height="48"
     width="48"
     data-bind="click:function(){FarmController.openFarmModal()}, attr: { class: App.game.farming.canAccess() ? &#39;completed&#39; : &#39;locked&#39; },
