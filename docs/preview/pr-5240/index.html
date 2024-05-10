@@ -3085,9 +3085,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="click:function(){ MapHelper.moveToRoute(11, 0); } ">
     <rect data-route='11'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(11, 0) }"
-        height="24"
+        height="32"
         width="48"
-        x="1328" y="536">
+        x="1328" y="528">
     </rect>
 
 
@@ -4627,8 +4627,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <rect class="city"
     data-town="Underground Entrance" 
-    x="1328"
-    y="480"
+    x="1152"
+    y="624"
     height="64"
     width="48"
     data-bind="click:function(){App.game.underground.openUndergroundModal()}, attr: { class: App.game.underground.canAccess() ? &#39;completed&#39; : &#39;locked&#39; },
@@ -4640,8 +4640,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <rect class="city"
     data-town="Farm" 
-    x="1152"
-    y="640"
+    x="1328"
+    y="480"
     height="48"
     width="48"
     data-bind="click:function(){FarmController.openFarmModal()}, attr: { class: App.game.farming.canAccess() ? &#39;completed&#39; : &#39;locked&#39; },
@@ -57253,7 +57253,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
             <span class="text-muted">EVs can be gained in a variety of ways, but are primarily gained by capturing (not breeding) Pokémon.</span></p>
             <p class="text-muted">You can use the Contagious Poké Ball selector (unlocked after getting Pokérus) to focus catching Pokémon with less than 50 EVs. Note that setting this selector to "Do not catch" will prevent you from catching any Contagious Pokémon, even if your Caught selector has a Poké Ball set.</p>
             <span class="text-muted">Base Yield: <code>0.1EV</code><br/>
-            Base Wanderer Yield: <code>0EV</code><br/>
+            Base Wanderer Yield: <code>0.1EV</code><br/>
             Wanderer Yield: <code>0.5EV</code><br/>
             Evolution Item / Shopmon / Safari Yield: <code>1EV</code><br/>
             Shadow Modifier: <code>2×</code><br/>
@@ -57266,8 +57266,6 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
             Power Bracer Modifier: <code>2×</code><br/>
             Rowap Aura Modifier: <code>Multiplier</code> based off Farm Setup<br/>
             Blue Flute Modifier: <code>%</code> based off Achievement Bonus</span></p>
-            <p><strong>Why aren't some of my wanderers getting EVs?</strong><br/>
-            <span class="text-muted">The wanderers that are attracted by any berry (base wanderers) don't get EVs</span></p>
             <p><strong>What is the EV Attack Bonus?</strong><br/>
             <span class="text-muted">The EV Damage Multiplier is multiplicative, and scales linearly until 1.5x (50EVs). The bonus thereafter has diminishing returns relative to the number of EVs gained, but has no limit.</span></p>
 
@@ -61140,7 +61138,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <span data-bind="template: { name: 'shopBodyTemplate' }"></span>
                 </div>
                 <div id="berryMasterTrade" class="tab-pane fade">
-                    <div class="table-responsive" id="dailyDealsBody">
+                    <div class="table-responsive" id="dailyDealsBody" style="min-height: 250px;">
                         <table class="table table-sm table-striped m-0 text-left">
                             <thead>
                                 <tr>
@@ -61153,12 +61151,18 @@ aria-labelledby="badgeCaseModalLabel">
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody data-bind='foreach: BerryDeal.getDeals(ShopHandler.shopObservable().location)'>
+
+                            <!-- ko foreach: BerryDeal.getDeals(ShopHandler.shopObservable().location) -->
+                            <tbody data-bind="let: { tradeAmount: ko.observable(1) }">
                                 <!-- ko foreach: berries -->
                                 <tr>
                                     <td class="align-middle" data-bind="text: App.game.farming.berryList[$data.berryType]().toLocaleString('en-US')"></td>
                                     <td class="align-middle"><img height="28px" data-bind="attr: {src: FarmController.getBerryImage($data.berryType) }, css: {'berryLocked': !App.game.farming.unlockedBerries[$data.berryType]() }"></img></td>
-                                    <td class="align-middle" data-bind="text: amount.toLocaleString('en-US') + ' x ' + (App.game.farming.unlockedBerries[$data.berryType]() ? BerryType[$data.berryType] : '???')"></td>
+                                    <td class="align-middle">
+                                        <span data-bind="text: amount.toLocaleString('en-US') + ' '"></span>
+                                        <span data-bind="text: '(' + (amount * tradeAmount()).toLocaleString('en-US') + ')', css: { 'text-danger': amount * tradeAmount() > App.game.farming.berryList[$data.berryType]() }"></span>
+                                        <span data-bind="text: ' x ' + (App.game.farming.unlockedBerries[$data.berryType]() ? BerryType[$data.berryType] : '???')"></span>
+                                    </td>
                                     <!-- ko if: $index() === 0 -->
                                     <td class="align-middle" data-bind="attr: { rowspan: $parent.berries.length }">→</td>
                                     <td class="align-middle" data-bind="attr: { rowspan: $parent.berries.length }">
@@ -61172,7 +61176,7 @@ aria-labelledby="badgeCaseModalLabel">
                                               }">
                                     </td>
                                     <td class="align-middle" data-bind='attr: { rowspan: $parent.berries.length }'>
-                                        <span data-bind='text: $parent.item.amount + " × " + $parent.item.itemType.displayName'></span>
+                                        <span data-bind='text: ($parent.item.amount).toLocaleString("en-US") + " (" + ($parent.item.amount * tradeAmount()).toLocaleString("en-US") + ") × " + $parent.item.itemType.displayName'></span>
                                         <span style="float: right; margin-right: 5px">
                                             <knockout data-bind="if: ($parent.item.itemType instanceof CaughtIndicatingItem)">
                                                 <span data-bind="template: { name: 'caughtStatusTemplate', data: {'status': $parent.item.itemType.getCaughtStatus()}}"></span>
@@ -61187,13 +61191,13 @@ aria-labelledby="badgeCaseModalLabel">
                                         </span>
                                     </td>
                                     <td class="align-middle" data-bind="attr: { rowspan: $parent.berries.length }">
-                                        <div class="btn-group btn-block" data-bind="let: { tradeAmount: ko.observable(1) }">
-                                            <button class='btn btn-success btn-block' data-bind='click: function(){BerryDeal.use(ShopHandler.shopObservable()?.location, $parentContext.$index(), tradeAmount())}, css: { disabled: !BerryDeal.canUse(ShopHandler.shopObservable()?.location, $parentContext.$index()) }'>
+                                        <div class="btn-group btn-block">
+                                            <button class='btn btn-success btn-block' data-bind='attr:{ disabled: (tradeAmount() > $parent.calculateMaxTrades() || !BerryDeal.canUse(ShopHandler.shopObservable()?.location, $parentContext.$index())) }, click: function(){BerryDeal.use(ShopHandler.shopObservable()?.location, $parentContext.$index(), tradeAmount())}, css: { disabled: (tradeAmount() > $parent.calculateMaxTrades() || !BerryDeal.canUse(ShopHandler.shopObservable()?.location, $parentContext.$index())) }'>
                                                 Trade
                                             </button>
-                                            <button type="button" data-bind="text: tradeAmount() + '&nbsp;', css: { disabled: !BerryDeal.canUse(ShopHandler.shopObservable()?.location, $parentContext.$index()) }" class="btn btn-success dropdown-toggle dropdown-toggle-split active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button type="button" data-bind="text: tradeAmount().toLocaleString('en-US') + '&nbsp;'" class="btn btn-success dropdown-toggle dropdown-toggle-split active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             </button>
-                                            <div class="dropdown-menu" data-bind="foreach: [1, 10, 100, 1000, Infinity]">
+                                            <div class="dropdown-menu" data-bind="foreach: [1, 10, 100, 1000, $parent.calculateMaxTrades()]">
                                                 <button class="dropdown-item" type="button" data-bind="click: function(){tradeAmount($data)}, text: $data.toLocaleString('en-US')"></button>
                                             </div>
                                         </div>
@@ -61202,6 +61206,7 @@ aria-labelledby="badgeCaseModalLabel">
                                 </tr>
                                 <!-- /ko -->
                             </tbody>
+                            <!-- /ko -->
                         </table>
                     </div>
                 </div>
@@ -61490,7 +61495,7 @@ aria-labelledby="badgeCaseModalLabel">
                             <div class="btn-group w-100 my-1">
                                 <button style="position: relative;" class='btn btn-block btn-success ship-modal-region-button'
                                     data-dismiss='modal'
-                                    data-bind='click: () => { MapHelper.moveToTown(GameConstants.DockTowns[GameConstants.Region[$data]]); player.region = GameConstants.Region[$data]; player.subregion = 0; $("#ShipModal").modal("hide");  },
+                                    data-bind='click: () => { player.region = GameConstants.Region[$data]; player.subregion = 0; MapHelper.moveToTown(GameConstants.DockTowns[GameConstants.Region[$data]]); $("#ShipModal").modal("hide"); },
                                     attr: { disabled: player.region == GameConstants.Region[$data] }'>
                                     <img style="position:absolute; left: 10px;" data-bind="visible: player.region == GameConstants.Region[$data], attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` }"/> <knockout data-bind="text: GameConstants.camelCaseToString($data)">Region</knockout>
                                 </button>
