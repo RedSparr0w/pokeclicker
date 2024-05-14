@@ -1348,7 +1348,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Battle Item container-->
-                    <div id="battleItemContainer" class="card sortable border-secondary mb-3" data-bind="visible: !(Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableBattleItems.active())">
+                    <div id="battleItemContainer" class="card sortable border-secondary mb-3" data-bind="hidden: Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableBattleItems.active() && !App.game.badgeCase.hasBadge(BadgeEnums.Heat)">
+  <div data-bind="hidden: Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableBattleItems.active()">
     <div class="card-header p-0" data-toggle="collapse" href="#battleItemContainerBody">
       <span>Battle Items</span>
     </div>
@@ -1373,10 +1374,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <tbody>
           <tbody data-bind="foreach: GameHelper.chunk(6, Object.keys(ItemList).filter(i=>ItemList[i].constructor.name == 'BattleItem'))">
             <tr data-bind="foreach: $data">
-                 <td class="amount p-0" data-bind="text: GameHelper.formatAmount(player.itemList[$data]()),tooltip:{title:player.itemList[$data]().toLocaleString('en-US'),trigger:'hover',placement:'top',animation:false}"></td>
+                <td class="amount p-0" data-bind="text: GameHelper.formatAmount(player.itemList[$data]()),tooltip:{title:player.itemList[$data]().toLocaleString('en-US'),trigger:'hover',placement:'top',animation:false}"></td>
             </tr>
             <tr data-bind="foreach: $data">
-                 <td class="p-0" data-bind="attr: {
+                <td class="p-0" data-bind="attr: {
                                 disabled: !player.itemList[$data]()
                             },
                             css: {
@@ -1388,7 +1389,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 click: function(){ItemHandler.useItem($data, EffectEngineRunner.amountToUse())}
                             },
                             tooltip: {
-                              title: ItemList[$data].displayName + '<br/>' + ItemList[$data].description,
+                              title: '<strong>' + ItemList[$data].displayName + '</strong>' + '<br/>' + ItemList[$data].description,
                               trigger: 'hover',
                               placement: $(window).innerWidth() < 768 ? 'bottom' : 'left',
                               html: true
@@ -1408,113 +1409,151 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         </tbody>
       </table>
     </div>
-    <div class="card-header p-0" data-toggle="collapse" href="#fluteItemContainerBody" data-bind="visible: App.game.badgeCase.hasBadge(BadgeEnums.Heat)">
+  </div>
+
+  <div class="position-relative" data-bind="visible: App.game.badgeCase.hasBadge(BadgeEnums.Heat)">
+    <div class="card-header p-0 position-relative" data-toggle="collapse" href="#fluteItemContainerBody">
       <span>Flutes</span>
+      <button type="button" class="btn"
+        style="position: absolute; left: 0px; top: 0px; width: auto; height: 41px; padding: 4px;"
+        data-bind="visible: FluteEffectRunner.additionalInfoTooltip().length !== 0,
+        tooltip: {
+            title: FluteEffectRunner.additionalInfoTooltip(),
+            trigger: 'hover',
+            placement:'left',
+            html: true,
+          }">ⓘ
+    </button>
     </div>
+      <button type="button" class="btn btn-sm btn-primary"
+          style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px;"
+          onclick="App.game.gems.openGemModal()"
+          title="Controls"
+          data-toggle="popover"
+          data-html="true"
+          data-content="Click to see your total gems<br/>Click on flutes to toggle effects"
+          data-placement="right"
+          data-trigger="hover">
+      <img src="assets/images/keyitems/Gem_case.png">
+    </button>
     <div id="fluteItemContainerBody" class="card-body p-0 show">
-      <p data-bind="visible: (App.game.challenges.list.disableBattleItems.active() || App.game.challenges.list.disableGems.active()) && App.game.badgeCase.hasBadge(BadgeEnums.Heat)" class="bg-danger my-0">
-          Flutes are disabled.
-      </p>
       <!-- Flutes -->
-      <table class="table table-bordered m-0" data-bind="visible: App.game.badgeCase.hasBadge(BadgeEnums.Heat)">
+      <table class="table table-bordered m-0">
         <tbody>
           <tbody data-bind="foreach: GameHelper.chunk(6, Object.keys(ItemList).filter(i=>ItemList[i].constructor.name == 'FluteItem'))">
             <tr data-bind="foreach: $data">
+              <td class="amount p-0" data-bind="text: GameHelper.formatAmount(FluteEffectRunner.getLowestGem(ItemList[$data].name)),
+                tooltip:{
+                  title:FluteEffectRunner.fluteGemTooltip(ItemList[$data]),
+                  trigger:'hover',
+                  placement:'top',
+                  animation:false,
+                  sanitize: false,
+                  html:true
+                }">
+              </td>
+            </tr>
+            <tr data-bind="foreach: $data">
               <td class="p-0" data-bind="attr: {
-                                disabled: !player.itemList[$data]()
-                            },
-                            css: {
-                                'bg-primary': FluteEffectRunner.getEffect($data) > 30,
-                                'bg-warning': FluteEffectRunner.getEffect($data) <= 30 && FluteEffectRunner.getEffect($data) > 0,
-                                'bg-secondary': !FluteEffectRunner.isActive($data)(),
-                            },
-                            style: {
-                                'opacity': player.itemList[$data]() || FluteEffectRunner.isActive($data)() ? '1' : '0.1'
-                            },
-                            event: {
-                                click: function(){ItemHandler.useItem($data)}
-                            },
-                            tooltip: {
-                              title: ItemList[$data].displayName + '<br/>' + ItemList[$data].getDescription() + '<br/>' + 'Consumes: ' + ItemList[$data].gemTypes[0] + ' (' + App.game.gems.gemWallet[PokemonType[ItemList[$data].gemTypes[0]]]().toLocaleString('en-US') + '), ' + ItemList[$data].gemTypes[1] + ' (' + App.game.gems.gemWallet[PokemonType[ItemList[$data].gemTypes[1]]]().toLocaleString('en-US') + '), and ' + ItemList[$data].gemTypes[2] + ' (' + App.game.gems.gemWallet[PokemonType[ItemList[$data].gemTypes[2]]]().toLocaleString('en-US') + ') Gems',
-                              trigger: 'hover',
-                              placement: $(window).innerWidth() < 768 ? 'bottom' : 'left',
-                              html: true
-                            }">
+                              disabled: !player.itemList[$data]()
+                          },
+                          css: {
+                              'bg-primary': FluteEffectRunner.getEffect($data) > 30,
+                              'bg-warning': FluteEffectRunner.getEffect($data) <= 30 && FluteEffectRunner.getEffect($data) > 0,
+                              'bg-secondary': !FluteEffectRunner.isActive($data)(),
+                          },
+                          style: {
+                              'opacity': player.itemList[$data]() || FluteEffectRunner.isActive($data)() ? '1' : '0.1'
+                          },
+                          event: {
+                              click: function(){ItemHandler.useItem($data)}
+                          },
+                          tooltip: {
+                            title: ItemList[$data].getFormattedTooltip(ItemList[$data]),
+                            trigger: 'hover',
+                            placement: $(window).innerWidth() < 768 ? 'bottom' : 'left',
+                            sanitize: false,
+                            html: true
+                          }">
                 <img src="" class="clickable" data-bind="attr: { src: ItemList[$data].image }" width="26px">
               </td>
             </tr>
             <tr data-bind="foreach: $data">
-                <td class="text-light p-0">
-              <!-- ko if: FluteEffectRunner.getEffect($data) > 0 -->
-                <code data-bind="
-                text: player.effectTimer[$data](),
+              <td class="text-light p-0" data-bind="
                 tooltip: {
                   title: FluteEffectRunner.fluteTooltip($data),
                   trigger:'hover',
                   placement:'bottom',
                   html:true
-                }">
+              }">
+              <!-- ko if: FluteEffectRunner.getEffect($data) > 0 -->
+                <code data-bind="
+                text: player.effectTimer[$data]()">
                 </code>
               <!-- /ko -->
+              </td>
+            </tr>
+          </tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div data-bind="hidden: !App.game.zMoves.canAccess() || (Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableBattleItems.active())">
+    <div class="card-header p-0" data-toggle="collapse" href="#zCrystalItemContainerBody">
+        <span>Z-Crystals</span>
+      </div>
+      <div id="zCrystalItemContainerBody" class="card-body p-0 show">
+        <p data-bind="visible: App.game.challenges.list.disableBattleItems.active()" class="bg-danger my-0">
+          Z-Moves are disabled.
+        </p>
+        <table class="table table-bordered m-0" data-bind="visible: App.game.zMoves.canAccess()">
+          <tbody>
+            <tbody data-bind="visible : !App.game.zMoves.isActive(), foreach : GameHelper.chunk(6, GameConstants.zCrystalItemType)">
+              <tr data-bind="foreach : $data">
+                <td class="p-0" data-bind="attr: {
+                                            disabled: !ItemHandler.hasItem($data) || App.game.zMoves.isActive()
+                                          },
+                                          style: {
+                                            'opacity': ItemHandler.hasItem($data) && !App.game.zMoves.isActive() ? '1' : '0.1'
+                                          },
+                                          css: {
+                                            'bg-primary' : App.game.zMoves.isActive() && App.game.zMoves.type() === ItemList[$data].type,
+                                            'bg-secondary': !App.game.zMoves.isActive() || App.game.zMoves.type() !== ItemList[$data].type
+                                          },
+                                          event: {
+                                            click: function(){ItemHandler.useItem($data)}
+                                          },
+                                          tooltip: {
+                                            title: '<strong>' + ItemList[$data].displayName + '</strong>' + '<br/>' + ItemList[$data].getDescription(),
+                                            trigger: 'hover',
+                                            placement: $(window).innerWidth() < 768 ? 'bottom' : 'left',
+                                            html: true
+                                          }">
+                  <img src="" class="clickable" data-bind="attr: { src: ItemList[$data].image }" width="26px">
                 </td>
-            </tr>
+              </tr>
+            </tbody>
+            <tbody data-bind="visible: App.game.zMoves.isActive()">
+              <tr>
+                <td class="p-0 bg-primary" colspan="2" rowspan="3" data-bind="tooltip: { title: ItemList[GameConstants.zCrystalItemType[App.game.zMoves.type()]].displayName + '<br/>' + ItemList[GameConstants.zCrystalItemType[App.game.zMoves.type()]].getDescription(), trigger: 'hover', placement: 'bottom', html: true }">
+                  <img src="" data-bind="attr: { src: ItemList[GameConstants.zCrystalItemType[App.game.zMoves.type()]].image,  }">
+                </td>
+                <td class="p-0 bg-secondary" colspan="4" rowspan="2">
+                  <p class="mb-0" data-bind="text: `${App.game.zMoves.getMultiplier() < 1 ? '' : '+'}${(App.game.zMoves.getMultiplier() - 1).toLocaleString('en-US', { style: 'percent' })} Attack to all your ${PokemonType[App.game.zMoves.type()]}-type Pokémon`">bonus</p>
+                </td>
+              </tr>
+              <tr></tr>
+              <tr>
+                <td class="p-0" colspan="4" rowspan="1">
+                  <code data-bind="text: `${App.game.zMoves.formattedTime()} left`">00:00 left</code>
+                </td>
+              </tr>
+            </tbody>
           </tbody>
-        </tbody>
-      </table>
-    </div>
-    <div class="card-header p-0" data-toggle="collapse" href="#zCrystalItemContainerBody" data-bind="visible: App.game.zMoves.canAccess()">
-      <span>Z-Crystals</span>
-    </div>
-    <div id="zCrystalItemContainerBody" class="card-body p-0 show">
-      <p data-bind="visible: App.game.challenges.list.disableBattleItems.active() && App.game.zMoves.canAccess()" class="bg-danger my-0">
-        Z-Moves are disabled.
-      </p>
-      <table class="table table-bordered m-0" data-bind="visible: App.game.zMoves.canAccess()">
-        <tbody>
-          <tbody data-bind="visible : !App.game.zMoves.isActive(), foreach : GameHelper.chunk(6, GameConstants.zCrystalItemType)">
-            <tr data-bind="foreach : $data">
-              <td class="p-0" data-bind="attr: {
-                                          disabled: !ItemHandler.hasItem($data) || App.game.zMoves.isActive()
-                                        },
-                                        style: {
-                                          'opacity': ItemHandler.hasItem($data) && !App.game.zMoves.isActive() ? '1' : '0.1'
-                                        },
-                                        css: {
-                                          'bg-primary' : App.game.zMoves.isActive() && App.game.zMoves.type() === ItemList[$data].type,
-                                          'bg-secondary': !App.game.zMoves.isActive() || App.game.zMoves.type() !== ItemList[$data].type
-                                        },
-                                        event: {
-                                          click: function(){ItemHandler.useItem($data)}
-                                        },
-                                        tooltip: {
-                                          title: ItemList[$data].displayName + '<br/>' + ItemList[$data].getDescription(),
-                                          trigger: 'hover',
-                                          placement: $(window).innerWidth() < 768 ? 'bottom' : 'left',
-                                          html: true
-                                        }">
-                <img src="" class="clickable" data-bind="attr: { src: ItemList[$data].image }" width="26px">
-              </td>
-            </tr>
-          </tbody>
-          <tbody data-bind="visible: App.game.zMoves.isActive()">
-            <tr>
-              <td class="p-0 bg-primary" colspan="2" rowspan="3" data-bind="tooltip: { title: ItemList[GameConstants.zCrystalItemType[App.game.zMoves.type()]].displayName + '<br/>' + ItemList[GameConstants.zCrystalItemType[App.game.zMoves.type()]].getDescription(), trigger: 'hover', placement: 'bottom', html: true }">
-                <img src="" data-bind="attr: { src: ItemList[GameConstants.zCrystalItemType[App.game.zMoves.type()]].image,  }">
-              </td>
-              <td class="p-0 bg-secondary" colspan="4" rowspan="2">
-                <p class="mb-0" data-bind="text: `${App.game.zMoves.getMultiplier() < 1 ? '' : '+'}${(App.game.zMoves.getMultiplier() - 1).toLocaleString('en-US', { style: 'percent' })} Attack to all your ${PokemonType[App.game.zMoves.type()]}-type Pokémon`">bonus</p>
-              </td>
-            </tr>
-            <tr></tr>
-            <tr>
-              <td class="p-0" colspan="4" rowspan="1">
-                <code data-bind="text: `${App.game.zMoves.formattedTime()} left`">00:00 left</code>
-              </td>
-            </tr>
-          </tbody>
-        </tbody>
-      </table>
-    </div>
+        </table>
+      </div>
+  </div>
 </div>
 
 
@@ -57253,7 +57292,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
             <span class="text-muted">EVs can be gained in a variety of ways, but are primarily gained by capturing (not breeding) Pokémon.</span></p>
             <p class="text-muted">You can use the Contagious Poké Ball selector (unlocked after getting Pokérus) to focus catching Pokémon with less than 50 EVs. Note that setting this selector to "Do not catch" will prevent you from catching any Contagious Pokémon, even if your Caught selector has a Poké Ball set.</p>
             <span class="text-muted">Base Yield: <code>0.1EV</code><br/>
-            Base Wanderer Yield: <code>0EV</code><br/>
+            Base Wanderer Yield: <code>0.1EV</code><br/>
             Wanderer Yield: <code>0.5EV</code><br/>
             Evolution Item / Shopmon / Safari Yield: <code>1EV</code><br/>
             Shadow Modifier: <code>2×</code><br/>
@@ -57266,8 +57305,6 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
             Power Bracer Modifier: <code>2×</code><br/>
             Rowap Aura Modifier: <code>Multiplier</code> based off Farm Setup<br/>
             Blue Flute Modifier: <code>%</code> based off Achievement Bonus</span></p>
-            <p><strong>Why aren't some of my wanderers getting EVs?</strong><br/>
-            <span class="text-muted">The wanderers that are attracted by any berry (base wanderers) don't get EVs</span></p>
             <p><strong>What is the EV Attack Bonus?</strong><br/>
             <span class="text-muted">The EV Damage Multiplier is multiplicative, and scales linearly until 1.5x (50EVs). The bonus thereafter has diminishing returns relative to the number of EVs gained, but has no limit.</span></p>
 
@@ -57939,7 +57976,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
             </div>
             <div class="modal-body p-0">
                 <div class="tab-content p-3 h-100">
-                    <!-- ko let: { categoryModeEnabled: ko.observable(false), categoryModeSelected: ko.observable(0) } -->
+                    <!-- ko let: { categoryModeEnabled: PokemonCategories.categoryAssignEnabled, categoryModeSelected: PokemonCategories.categoryAssignSelected } -->
                     <div class="tab-pane fade in active show" id="breeding-pokemon">
                         <div class="row">
                             <div class="col-12 d-lg-none d-block">
@@ -58174,6 +58211,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                     placement: 'bottom',
                                                     trigger: 'hover'
                                                 },
+                                                disable: categoryModeSelected() === 0,
                                                 click: () => PartyController.removeCategory(BreedingController.hatcheryFilteredList().filter(p => p.isHatchable()), categoryModeSelected())">Remove All</button>
                                             </div>
                                             <!-- /ko -->
@@ -58966,7 +59004,7 @@ aria-labelledby="pokedexModalLabel">
                 <button type="button" class="btn btn-danger position-absolute" data-dismiss="modal" style="right:0; top:0; font-size: 18px; font-weight: 700;">×</button>
             </div>
 
-            <!-- ko let: { categoryModeEnabled: ko.observable(false), categoryModeSelected: ko.observable(0) } -->
+            <!-- ko let: { categoryModeEnabled: PokemonCategories.categoryAssignEnabled, categoryModeSelected: PokemonCategories.categoryAssignSelected } -->
             <div class="modal-body pt-0 overflow-hidden" style="background-color: inherit;">
                 <div class="row">
                     <div class="col-12 d-lg-none d-block">
@@ -59191,6 +59229,7 @@ aria-labelledby="pokedexModalLabel">
                                             placement: 'bottom',
                                             trigger: 'hover'
                                         },
+                                        disable: categoryModeSelected() === 0,
                                         click: () => PartyController.removeCategory(PokedexHelper.filteredListPartyPokemon(), categoryModeSelected())">Remove All</button>
                                     </div>
                                     <!-- /ko -->
@@ -61172,7 +61211,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <span data-bind="template: { name: 'shopBodyTemplate' }"></span>
                 </div>
                 <div id="berryMasterTrade" class="tab-pane fade">
-                    <div class="table-responsive" id="dailyDealsBody">
+                    <div class="table-responsive" id="dailyDealsBody" style="min-height: 250px;">
                         <table class="table table-sm table-striped m-0 text-left">
                             <thead>
                                 <tr>
@@ -61185,12 +61224,18 @@ aria-labelledby="badgeCaseModalLabel">
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody data-bind='foreach: BerryDeal.getDeals(ShopHandler.shopObservable().location)'>
+
+                            <!-- ko foreach: BerryDeal.getDeals(ShopHandler.shopObservable().location) -->
+                            <tbody data-bind="let: { tradeAmount: ko.observable(1) }">
                                 <!-- ko foreach: berries -->
                                 <tr>
                                     <td class="align-middle" data-bind="text: App.game.farming.berryList[$data.berryType]().toLocaleString('en-US')"></td>
                                     <td class="align-middle"><img height="28px" data-bind="attr: {src: FarmController.getBerryImage($data.berryType) }, css: {'berryLocked': !App.game.farming.unlockedBerries[$data.berryType]() }"></img></td>
-                                    <td class="align-middle" data-bind="text: amount.toLocaleString('en-US') + ' x ' + (App.game.farming.unlockedBerries[$data.berryType]() ? BerryType[$data.berryType] : '???')"></td>
+                                    <td class="align-middle">
+                                        <span data-bind="text: amount.toLocaleString('en-US') + ' '"></span>
+                                        <span data-bind="text: '(' + (amount * tradeAmount()).toLocaleString('en-US') + ')', css: { 'text-danger': amount * tradeAmount() > App.game.farming.berryList[$data.berryType]() }"></span>
+                                        <span data-bind="text: ' x ' + (App.game.farming.unlockedBerries[$data.berryType]() ? BerryType[$data.berryType] : '???')"></span>
+                                    </td>
                                     <!-- ko if: $index() === 0 -->
                                     <td class="align-middle" data-bind="attr: { rowspan: $parent.berries.length }">→</td>
                                     <td class="align-middle" data-bind="attr: { rowspan: $parent.berries.length }">
@@ -61204,7 +61249,7 @@ aria-labelledby="badgeCaseModalLabel">
                                               }">
                                     </td>
                                     <td class="align-middle" data-bind='attr: { rowspan: $parent.berries.length }'>
-                                        <span data-bind='text: $parent.item.amount + " × " + $parent.item.itemType.displayName'></span>
+                                        <span data-bind='text: ($parent.item.amount).toLocaleString("en-US") + " (" + ($parent.item.amount * tradeAmount()).toLocaleString("en-US") + ") × " + $parent.item.itemType.displayName'></span>
                                         <span style="float: right; margin-right: 5px">
                                             <knockout data-bind="if: ($parent.item.itemType instanceof CaughtIndicatingItem)">
                                                 <span data-bind="template: { name: 'caughtStatusTemplate', data: {'status': $parent.item.itemType.getCaughtStatus()}}"></span>
@@ -61219,13 +61264,13 @@ aria-labelledby="badgeCaseModalLabel">
                                         </span>
                                     </td>
                                     <td class="align-middle" data-bind="attr: { rowspan: $parent.berries.length }">
-                                        <div class="btn-group btn-block" data-bind="let: { tradeAmount: ko.observable(1) }">
-                                            <button class='btn btn-success btn-block' data-bind='click: function(){BerryDeal.use(ShopHandler.shopObservable()?.location, $parentContext.$index(), tradeAmount())}, css: { disabled: !BerryDeal.canUse(ShopHandler.shopObservable()?.location, $parentContext.$index()) }'>
+                                        <div class="btn-group btn-block">
+                                            <button class='btn btn-success btn-block' data-bind='attr:{ disabled: (tradeAmount() > $parent.calculateMaxTrades() || !BerryDeal.canUse(ShopHandler.shopObservable()?.location, $parentContext.$index())) }, click: function(){BerryDeal.use(ShopHandler.shopObservable()?.location, $parentContext.$index(), tradeAmount())}, css: { disabled: (tradeAmount() > $parent.calculateMaxTrades() || !BerryDeal.canUse(ShopHandler.shopObservable()?.location, $parentContext.$index())) }'>
                                                 Trade
                                             </button>
-                                            <button type="button" data-bind="text: tradeAmount() + '&nbsp;', css: { disabled: !BerryDeal.canUse(ShopHandler.shopObservable()?.location, $parentContext.$index()) }" class="btn btn-success dropdown-toggle dropdown-toggle-split active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <button type="button" data-bind="text: tradeAmount().toLocaleString('en-US') + '&nbsp;'" class="btn btn-success dropdown-toggle dropdown-toggle-split active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             </button>
-                                            <div class="dropdown-menu" data-bind="foreach: [1, 10, 100, 1000, Infinity]">
+                                            <div class="dropdown-menu" data-bind="foreach: [1, 10, 100, 1000, $parent.calculateMaxTrades()]">
                                                 <button class="dropdown-item" type="button" data-bind="click: function(){tradeAmount($data)}, text: $data.toLocaleString('en-US')"></button>
                                             </div>
                                         </div>
@@ -61234,6 +61279,7 @@ aria-labelledby="badgeCaseModalLabel">
                                 </tr>
                                 <!-- /ko -->
                             </tbody>
+                            <!-- /ko -->
                         </table>
                     </div>
                 </div>
@@ -61522,7 +61568,7 @@ aria-labelledby="badgeCaseModalLabel">
                             <div class="btn-group w-100 my-1">
                                 <button style="position: relative;" class='btn btn-block btn-success ship-modal-region-button'
                                     data-dismiss='modal'
-                                    data-bind='click: () => { MapHelper.moveToTown(GameConstants.DockTowns[GameConstants.Region[$data]]); player.region = GameConstants.Region[$data]; player.subregion = 0; $("#ShipModal").modal("hide");  },
+                                    data-bind='click: () => { player.region = GameConstants.Region[$data]; player.subregion = 0; MapHelper.moveToTown(GameConstants.DockTowns[GameConstants.Region[$data]]); $("#ShipModal").modal("hide"); },
                                     attr: { disabled: player.region == GameConstants.Region[$data] }'>
                                     <img style="position:absolute; left: 10px;" data-bind="visible: player.region == GameConstants.Region[$data], attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` }"/> <knockout data-bind="text: GameConstants.camelCaseToString($data)">Region</knockout>
                                 </button>
@@ -62366,7 +62412,7 @@ aria-labelledby="damageCalculatorModalLabel" aria-hidden="true">
                                         aria-expanded="false" title="Move Pokémon from this category to another category."></button>
                                     <div class="dropdown-menu pt-0">
                                         <p class="small text-center p-2 mb-0">Move Pokémon To:</p>
-                                        <div data-bind="foreach: PokemonCategories.categories()">
+                                        <div data-bind="foreach: PokemonCategories.categories">
                                             <!-- ko if: $data.id !== $parent.id -->
                                             <button class="dropdown-item small" type="button"
                                                 data-bind="text: $data.name,
