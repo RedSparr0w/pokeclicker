@@ -1094,6 +1094,22 @@
 <!-- Example usage -->
 <!-- <knockout data-bind="template: { name: 'pokemonAttackTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon sprite</knockout> -->
 
+<script type="text/html" id="pokemonContestAppealTemplate">
+  <span style="display: inline;">
+      Pokémon Appeal:
+      <span data-bind="
+         text: ContestHelper.pokemonContestAppealObservable().toLocaleString('en-US'),
+         tooltip: {
+            title: ContestBattle.pokemonContestAppealTooltip,
+            trigger: 'hover',
+         }
+         "></span>
+  </span>
+</script>
+
+<!-- Example usage -->
+<!-- <knockout data-bind="template: { name: 'pokemonContestAppealTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }">Pokémon sprite</knockout> -->
+
 <script type="text/html" id="pokemonGenderStatisticTemplate">
     <div class="overlay" data-bind="tooltip: { 
         title: `♂: ${$data.maleStat.toLocaleString('en-US')}
@@ -2216,19 +2232,19 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
           </div>
       </div>
       <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
-        <!-- TODO: organize these better and use appeal instead of attack -->
+        <!-- TODO: organize these better -->
         <table width="100%">
           <tr>
             <td with="50%">
               <knockout data-bind="text: ContestBattle.trainer().name.replace(/\d/g,'')"></knockout>
             </td>
             <td width="50%">
-              <knockout data-bind="text: `Trainer Streak: ${ContestBattle.trainersDefeatedComputable()}`"></knockout>
+              <knockout data-bind="text: `Extra Trainers Defeated: ${ContestBattle.trainersDefeatedComputable()}`"></knockout>
             </td>
           </tr>
           <tr>
             <td width="50%">
-                <knockout data-bind="template: { name: 'pokemonAttackTemplate', data: { 'pokemon': Battle.enemyPokemon() } }"></knockout>
+                <knockout data-bind="template: { name: 'pokemonContestAppealTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }"></knockout>
             </td>
             <td width="50%" data-bind="css: { 'text-muted': App.game.challenges.list.disableClickAttack.active() }">
                 <span style="display: inline;">Click Attack:
@@ -2654,7 +2670,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <button data-bind="click: () => {ContestRunner.startContest(rank, type)}">
                     <h5 data-bind="text: `${ContestType[type]}`"></h5>
                     <img data-bind="attr:{ src: ContestHall.getRibbonImage(rank, type)}">
-                    <!-- TODO: add stat for max streak/trainers defeated -->
                     <!-- TODO: flex spacing -->
                   </button>
             </div>
