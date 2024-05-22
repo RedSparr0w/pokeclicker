@@ -1096,7 +1096,6 @@
 
 <script type="text/html" id="pokemonContestAppealTemplate">
   <span style="display: inline;">
-      Pokémon Appeal:
       <span data-bind="
          text: ContestHelper.pokemonContestAppealObservable().toLocaleString('en-US'),
          tooltip: {
@@ -2239,17 +2238,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
               <knockout data-bind="text: ContestBattle.trainer().name.replace(/\d/g,'')"></knockout>
             </td>
             <td width="50%">
-              <knockout data-bind="text: `Extra Trainers Defeated: ${ContestBattle.trainersDefeatedComputable()}`"></knockout>
+              <knockout data-bind="text: `Trainer Streak: ${ContestBattle.trainersDefeatedComputable()}`"></knockout>
             </td>
           </tr>
           <tr>
             <td width="50%">
                 <knockout data-bind="template: { name: 'pokemonContestAppealTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }"></knockout>
             </td>
-            <td width="50%" data-bind="css: { 'text-muted': App.game.challenges.list.disableClickAttack.active() }">
-                <span style="display: inline;">Click Attack:
-                    <span data-bind="text: App.game.party.calculateClickAttack().toLocaleString('en-US')"></span>
-                </span>
+            <td width="50%">
+              <knockout data-bind="text: `Bonus Round: ${ContestRunner.encoreRoundsComputable()}`"></knockout>
             </td>
           </tr>
       </table>
@@ -2670,11 +2667,12 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <button data-bind="click: () => {ContestRunner.startContest(rank, type)}">
                     <h5 data-bind="text: `${ContestType[type]}`"></h5>
                     <img data-bind="attr:{ src: ContestHall.getRibbonImage(rank, type)}">
+                    <p data-bind="text: `Appeal: ${ContestHelper.calculatePokemonContestAppeal(type).toLocaleString('en-US')}`"></p>
                     <!-- TODO: flex spacing -->
                   </button>
             </div>
         </div>
-        <a class="btn btn-block btn-danger text-light" onclick="App.game.battleFrontier.leave()">Leave</a>
+        <a class="btn btn-block btn-danger text-light" onclick="ContestHall.leave()">Leave</a>
     </div>
 </div>
 <!-- /ko -->
