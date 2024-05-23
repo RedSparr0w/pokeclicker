@@ -36626,7 +36626,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-town="Hoppy Town"
     x="768"
     y="416"
-    height="128"
+    height="64"
     width="144"
     data-bind="
         click:function(){MapHelper.moveToTown('Hoppy Town')},
@@ -36637,7 +36637,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <image width="48" height="48"
         x="816"
-        y="456"
+        y="424"
         class="iconLocation hide"
         data-bind="visible: MapHelper.isTownCurrentLocation('Hoppy Town'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
@@ -36881,6 +36881,32 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         event: { mouseenter: () => GameController.showMapTooltip('Hoppy Town'), mouseleave: GameController.hideMapTooltip },
         ">
 </rect>
+
+
+        <!--Hoppy Town Fishing Pond-->
+        
+
+<rect class="city"
+    data-town="Hoppy Town Fishing Pond"
+    x="768"
+    y="480"
+    height="64"
+    width="144"
+    data-bind="
+        click:function(){MapHelper.moveToTown('Hoppy Town Fishing Pond')},
+        attr: { class: MapHelper.calculateTownCssClass('Hoppy Town Fishing Pond') },
+        event: { mouseenter: () => GameController.showMapTooltip('Hoppy Town Fishing Pond'), mouseleave: GameController.hideMapTooltip },
+        ">
+</rect>
+
+    <image width="48" height="48"
+        x="816"
+        y="488"
+        class="iconLocation hide"
+        data-bind="visible: MapHelper.isTownCurrentLocation('Hoppy Town Fishing Pond'),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
 
 
 
