@@ -1084,6 +1084,7 @@
       <span data-bind="
          text: App.game.party.pokemonAttackObservable().toLocaleString('en-US'),
          tooltip: {
+            html: true,
             title: Battle.pokemonAttackTooltip,
             trigger: 'hover',
          }
@@ -2221,7 +2222,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                         false,
                                         false, 
                                         WeatherType.Clear,
-                                    ).toLocaleString('en-US')} against ${Battle.enemyPokemon().name}`
+                                    ).toLocaleString('en-US')} against ${pokemonMap[Battle.enemyPokemon().name].type.map(t => PokemonType[t]).join('&nbsp;/&nbsp;')}`
                                     : '',
                                 trigger: 'hover'}">
                             </span>
@@ -61074,6 +61075,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <tr>
                                 <th>Upgrade</th>
                                 <th>Amount</th>
+                                <th>Level</th>
                                 <th>Cost</th>
                                 <th></th>
                             </tr>
@@ -61264,7 +61266,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
     <script type="text/html" id="undergroundUpgradeTemplate">
         <td class='vertical-middle' data-bind='text: upgrade.displayName + ": " + totalBonus'></td>
         <td class='vertical-middle'
-            data-bind='text: upgrade.isMaxLevel() ? "" : "(" + (upgrade.increasing ? "+" : "-") + upgrade.upgradeBonus() + ")"'></td>
+            data-bind='text: upgrade.isMaxLevel() ? "" : (upgrade.increasing ? "+" : "-") + upgrade.upgradeBonus()'></td>
+        <td class='vertical-middle'
+            data-bind='text: upgrade.isMaxLevel() ? "" : upgrade.level + "/" + upgrade.maxLevel'></td>
         <td class='vertical-middle'
             data-bind="text: upgrade.isMaxLevel() ? '' : upgrade.calculateCost().amount.toLocaleString('en-US') + ' Diamonds'"></td>
         <td class='vertical-middle'>
@@ -61278,6 +61282,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
 
     <script type="text/html" id="undergroundUpgradeToggleTemplate">
         <td class='vertical-middle' data-bind='text: upgrade.displayName'></td>
+        <td class='vertical-middle'></td>
         <td class='vertical-middle'></td>
         <td class='vertical-middle'
             data-bind="text: upgrade.isMaxLevel() ? '' : upgrade.calculateCost().amount.toLocaleString('en-US') + ' Diamonds'"></td>
