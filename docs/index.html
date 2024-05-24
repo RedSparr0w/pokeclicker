@@ -1084,6 +1084,7 @@
       <span data-bind="
          text: App.game.party.pokemonAttackObservable().toLocaleString('en-US'),
          tooltip: {
+            html: true,
             title: Battle.pokemonAttackTooltip,
             trigger: 'hover',
          }
@@ -2221,7 +2222,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                         false,
                                         false, 
                                         WeatherType.Clear,
-                                    ).toLocaleString('en-US')} against ${Battle.enemyPokemon().name}`
+                                    ).toLocaleString('en-US')} against ${pokemonMap[Battle.enemyPokemon().name].type.map(t => PokemonType[t]).join('&nbsp;/&nbsp;')}`
                                     : '',
                                 trigger: 'hover'}">
                             </span>
