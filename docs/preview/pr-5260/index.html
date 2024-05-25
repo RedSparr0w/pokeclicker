@@ -1844,6 +1844,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                             <span data-bind="text: App.game.party.calculateClickAttack().toLocaleString('en-US'), tooltip: {
                                                 title : Battle.clickAttackTooltip(),
                                                 trigger: 'hover',
+                                                html: true,
                                             }"></span>
                                             <img src="" width= "20" data-bind="visible: Battle.calculateClickType() !== PokemonType.None, attr: { src: App.game.zMoves.crystalImage(Battle.calculateClickType())}"/>
                                         </span>
@@ -1996,6 +1997,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         <span data-bind="text: App.game.party.calculateClickAttack().toLocaleString('en-US'), tooltip: {
                             title : DungeonBattle.clickAttackTooltip(),
                             trigger: 'hover',
+                            html: true,
                         }"></span>
                         <img src="" width= "20" data-bind="visible: DungeonBattle.calculateClickType() !== PokemonType.None, attr: { src: App.game.zMoves.crystalImage(Battle.calculateClickType())}"/>
                     </span>
@@ -2082,6 +2084,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         <span data-bind="text: App.game.party.calculateClickAttack().toLocaleString('en-US'), tooltip: {
                             title : GymBattle.clickAttackTooltip(),
                             trigger: 'hover',
+                            html: true,
                         }"></span>
                         <img src="" width= "20" data-bind="visible: GymBattle.calculateClickType() !== PokemonType.None, attr: { src: App.game.zMoves.crystalImage(Battle.calculateClickType())}"/>
                     </span>
@@ -2166,6 +2169,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                             <span data-bind="text: App.game.party.calculateClickAttack().toLocaleString('en-US'), tooltip: {
                                 title : TemporaryBattleBattle.clickAttackTooltip(),
                                 trigger: 'hover',
+                                html: true,
                             }"></span>
                             <img src="" width= "20" data-bind="visible: TemporaryBattleBattle.calculateClickType() !== PokemonType.None, attr: { src: App.game.zMoves.crystalImage(Battle.calculateClickType())}"/>
                         </span>
