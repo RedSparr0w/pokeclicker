@@ -57792,6 +57792,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     title: BreedingController.getEggPokemonName($data) || '???',
                     trigger: 'hover',
                     placement: 'bottom',
+                    class: 'no-click',
                 }">
                 <!-- ko if: $data.type == EggType.Fossil -->
                 <img class="egg" data-bind="attr: {src: BreedingController.getEggImage($data)}, class: BreedingController.getEggCssClass($data)"/>
