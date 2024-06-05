@@ -2266,7 +2266,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <knockout data-bind="template: { name: 'pokemonContestAppealTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }"></knockout>
             </td>
             <td width="50%">
-              <knockout data-bind="text: `Bonus Round: ${ContestRunner.encoreRoundsComputable()}`"></knockout>
+              <knockout data-bind="text: `Bonus Round: ${ContestRunner.encoreRoundsComputable()}/${ContestRunner.rank()}`"></knockout>
             </td>
           </tr>
       </table>
@@ -65077,7 +65077,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
             </div>
             <div class="modal-body p-0" style="background-color: inherit;">
                 <!-- ko if: HeldItem.heldItemSelected() -->
-                <img data-bind="attr: { src: HeldItem.heldItemSelected().image }" width="40%"/>
+                <img data-bind="attr: { src: HeldItem.heldItemSelected().image }, style: { 'image-rendering': HeldItem.heldItemSelected().pixelated ? 'pixelated' : '' }" width="40%"/>
                 <br/>
                 <div class="sticky-top" style="background-color: inherit;">
                   <div class="btn-group btn-block m-0" role="group" aria-label="Basic example">
