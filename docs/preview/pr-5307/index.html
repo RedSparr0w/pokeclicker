@@ -23365,6 +23365,34 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+    <!--Disguised Shop-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="80"
+    y="464"
+    height="16"
+    width="16"
+    data-bind="visible: App.game.statistics.routeKills[&#39;kalos&#39;][10]() &gt;= 10"/>
+<rect class="city"
+    data-town="Disguised Shop"
+    x="80"
+    y="464"
+    height="16"
+    width="16"
+    data-bind="visible: App.game.statistics.routeKills[&#39;kalos&#39;][10]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Disguised Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Disguised Shop&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Disguised Shop'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+<image width="48" height="48"
+    x="64"
+    y="448"
+    class="iconLocation hide"
+    data-bind="
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+</image>
+
+
     <!--Geosenge Town-->
     
 
