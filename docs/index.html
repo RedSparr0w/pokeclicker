@@ -4798,13 +4798,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: player.highestRegion() &gt;= 1, click:function(){MapHelper.openShipModal()}, attr:{ class: player.highestRegion() &gt;= 1 ? &#39;completed&#39; : &#39;locked&#39;},
         event: { mouseenter: () => GameController.showMapTooltip('S. S. Anne'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="968"
-    y="560"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -4825,13 +4819,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Oak\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="456"
-    y="592"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -4852,13 +4840,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Oak\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="456"
-    y="592"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -4879,13 +4861,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.routeKills[&#39;kanto&#39;][3]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Route 3 Pokémon Center&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Route 3 Pokémon Center&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Route 3 Pokémon Center'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="624"
-    y="144"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -4906,13 +4882,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: !MapHelper.ableToTravel() &amp;&amp; player.highestRegion() == 0 &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Champion Blue&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Oak'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="440"
-    y="600"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -4933,13 +4903,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Blue 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Blue 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Blue 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rival Blue'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="280"
-    y="392"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -4960,13 +4924,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Blue 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Blue 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Blue 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rival Blue'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1056"
-    y="88"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -4987,13 +4945,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Blue 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Blue 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Blue 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rival Blue'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1000"
-    y="552"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5014,13 +4966,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Blue 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Blue 6&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Blue 6&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rival Blue'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="280"
-    y="392"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5041,13 +4987,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Kanto&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Kanto&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Kanto&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="296"
-    y="536"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5068,13 +5008,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Suicune 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Suicune 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Suicune 3&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Suicune 3&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Suicune'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1056"
-    y="552"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5095,13 +5029,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Suicune 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Suicune 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Suicune 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Suicune'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1200"
-    y="696"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5122,13 +5050,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Suicune 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Suicune 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Suicune 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Suicune'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1280"
-    y="24"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5149,13 +5071,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Anomaly Mewtwo 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Anomaly Mewtwo 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Anomaly Mewtwo 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Anomaly Mewtwo'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="904"
-    y="72"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5176,13 +5092,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Suicune 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Suicune 6&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Suicune 6&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Suicune'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1280"
-    y="24"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5203,13 +5113,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Snorlax route 16&#39;] &amp;&amp; TemporaryBattleList[&#39;Snorlax route 16&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Snorlax route 16&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Snorlax route 16&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Snorlax'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="584"
-    y="312"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5230,13 +5134,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Snorlax route 12&#39;] &amp;&amp; TemporaryBattleList[&#39;Snorlax route 12&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Snorlax route 12&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Snorlax route 12&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Snorlax'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1400"
-    y="520"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5258,13 +5156,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TownList[&#39;New Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;New Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('New Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1288"
-    y="800"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -5286,15 +5178,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TownList[&#39;New Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;New Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('New Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="1288"
     y="800"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('New Island') && TownList[&#39;New Island&#39;].isUnlocked(),
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('New Island') && TownList[&#39;New Island&#39;].isUnlocked(),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -5640,13 +5532,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.isUsingClient &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Cinnabar Island&#39;)]() &gt;= 1, style: {&#39;pointer-events&#39;: &#39;none&#39;},
         event: { mouseenter: () => GameController.showMapTooltip('Client Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1256"
-    y="200"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         <!--Client Island extension-->
@@ -5667,15 +5553,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.isUsingClient &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Cinnabar Island&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Client Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Client Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Client Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="1248"
     y="200"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Client Island') && App.isUsingClient &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Cinnabar Island&#39;)]() &gt;= 1,
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Client Island') && App.isUsingClient &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Cinnabar Island&#39;)]() &gt;= 1,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
         <!--Client Island extension-->
@@ -5696,13 +5582,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.isUsingClient &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Cinnabar Island&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Client Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Client Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Client Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1248"
-    y="240"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         <!--Client Island extension-->
@@ -5723,13 +5603,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.isUsingClient &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Cinnabar Island&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Client Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Client Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Client Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1256"
-    y="160"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         <!--Client Island extension-->
@@ -5750,13 +5624,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.isUsingClient &amp;&amp; App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Cinnabar Island&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Client Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Client Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Client Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1248"
-    y="144"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -7543,13 +7411,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Pinkan&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Pinkan&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Pinkan&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="616"
-    y="56"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -9927,13 +9789,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Elm\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1208"
-    y="720"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -9954,13 +9810,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Elm\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1208"
-    y="720"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -9981,13 +9831,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Sudowoodo&#39;] &amp;&amp; TemporaryBattleList[&#39;Sudowoodo&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Sudowoodo&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Sudowoodo&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Sudowoodo'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="528"
-    y="280"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10008,13 +9852,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Suicune 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Suicune 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Suicune 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Suicune'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="128"
-    y="632"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10035,13 +9873,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Eusine&#39;] &amp;&amp; TemporaryBattleList[&#39;Eusine&#39;].isVisible(), click: () =&gt; TemporaryBattleList.Eusine.protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Eusine'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="128"
-    y="632"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10062,13 +9894,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Suicune 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Suicune 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Suicune 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Suicune'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="704"
-    y="152"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10089,13 +9915,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Red Gyarados&#39;] &amp;&amp; TemporaryBattleList[&#39;Red Gyarados&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Red Gyarados&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Red Gyarados&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Red Gyarados'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="904"
-    y="8"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10116,13 +9936,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Silver 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Silver 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Silver 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rival Silver'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="872"
-    y="664"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10143,13 +9957,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Silver 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Silver 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Silver 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rival Silver'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="424"
-    y="872"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10170,13 +9978,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Silver 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Silver 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Silver 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rival Silver'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1488"
-    y="232"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10199,13 +10001,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         },
         event: { mouseenter: () => GameController.showMapTooltip('Red'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1272"
-    y="320"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10226,13 +10022,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Red&#39;] &amp;&amp; TemporaryBattleList[&#39;Red&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Red&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Red'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1272"
-    y="320"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10253,13 +10043,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Johto&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Johto&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Johto&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="8"
-    y="344"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -10280,13 +10064,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Anomaly Mewtwo 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Anomaly Mewtwo 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Anomaly Mewtwo 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Anomaly Mewtwo'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1352"
-    y="568"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 </g>
@@ -13421,13 +13199,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Birch\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="328"
-    y="688"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13448,13 +13220,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Birch\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="328"
-    y="688"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13475,13 +13241,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][118]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Fish Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Fish Shop&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Fish Shop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="576"
-    y="448"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13502,13 +13262,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.routeKills[&#39;hoenn&#39;][119]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Wind Chime Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Wind Chime Shop&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Wind Chime Shop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="656"
-    y="32"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13529,13 +13283,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Kecleon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="744"
-    y="56"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13556,13 +13304,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Kecleon 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Kecleon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="664"
-    y="168"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13583,13 +13325,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Kecleon 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Kecleon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="776"
-    y="136"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13610,13 +13346,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: (App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).curQuest() &lt; 5 &amp;&amp; App.game.quests.getQuestLine(&#39;The Weather Trio&#39;).state() == 1), ,
         event: { mouseenter: () => GameController.showMapTooltip('A Raging Maelstrom'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1024"
-    y="528"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13637,13 +13367,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;May 1&#39;] &amp;&amp; TemporaryBattleList[&#39;May 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer May'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="240"
-    y="504"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13664,13 +13388,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;May 2&#39;] &amp;&amp; TemporaryBattleList[&#39;May 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer May'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="8"
-    y="408"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13691,13 +13409,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer May'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="464"
-    y="488"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13718,13 +13430,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Wally 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Wally 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Wally 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Wally'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="456"
-    y="408"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13745,13 +13451,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;May 4&#39;] &amp;&amp; TemporaryBattleList[&#39;May 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer May'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="648"
-    y="104"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13772,13 +13472,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;May 5&#39;] &amp;&amp; TemporaryBattleList[&#39;May 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer May'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1128"
-    y="216"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13799,13 +13493,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Meta Groudon&#39;] &amp;&amp; TemporaryBattleList[&#39;Meta Groudon&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Meta Groudon&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Meta Groudon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="240"
-    y="208"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13826,13 +13514,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Primal Groudon&#39;] &amp;&amp; TemporaryBattleList[&#39;Primal Groudon&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Primal Groudon&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Primal Groudon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1032"
-    y="296"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13853,13 +13535,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Primal Kyogre&#39;] &amp;&amp; TemporaryBattleList[&#39;Primal Kyogre&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Primal Kyogre&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Primal Kyogre'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1104"
-    y="368"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13880,13 +13556,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Hoenn&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Hoenn&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Hoenn&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="808"
-    y="168"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -13907,13 +13577,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Anomaly Mewtwo 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Anomaly Mewtwo 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Anomaly Mewtwo 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Anomaly Mewtwo'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1064"
-    y="408"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -15292,13 +14956,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Miror B. 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Miror B. 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Miror B. 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Miror B.'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="904"
-    y="296"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -15319,13 +14977,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Zook&#39;] &amp;&amp; TemporaryBattleList[&#39;Zook&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Zook&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Zook'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1176"
-    y="312"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18206,15 +17858,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;A New World&#39;)?.curQuest() === 10, click:function(){MapHelper.moveToTown(&#39;Distortion World&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Distortion World&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Distortion World'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="640"
     y="432"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Distortion World') && App.game.quests.getQuestLine(&#39;A New World&#39;)?.curQuest() === 10,
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Distortion World') && App.game.quests.getQuestLine(&#39;A New World&#39;)?.curQuest() === 10,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -18235,15 +17887,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Zero&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Distortion World&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Distortion World&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Distortion World'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="1200"
     y="576"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Distortion World') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Zero&#39;)]() &gt;= 1,
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Distortion World') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Zero&#39;)]() &gt;= 1,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -18264,13 +17916,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.routeKills[&#39;sinnoh&#39;][217]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Secret Berry Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Secret Berry Shop&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Secret Berry Shop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="448"
-    y="96"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18291,13 +17937,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Rowan\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="216"
-    y="848"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18318,13 +17958,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Rowan\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="216"
-    y="848"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18345,13 +17979,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Barry 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Barry 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Barry 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Barry'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="120"
-    y="776"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18372,13 +18000,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Barry 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Barry 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Barry 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Barry'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="368"
-    y="664"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18399,13 +18021,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Barry 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Barry 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Barry 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Barry'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="848"
-    y="648"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18426,13 +18042,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Barry 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Barry 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Barry 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Barry'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1000"
-    y="840"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18453,13 +18063,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Barry 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Barry 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Barry 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Barry'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="120"
-    y="664"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18480,13 +18084,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Barry 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Barry 6&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Barry 6&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Barry'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1344"
-    y="440"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18507,13 +18105,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Sinnoh&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Sinnoh&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Sinnoh&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1128"
-    y="56"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -18534,13 +18126,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Anomaly Mewtwo 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Anomaly Mewtwo 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Anomaly Mewtwo 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Anomaly Mewtwo'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="632"
-    y="424"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -19920,15 +19506,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 1 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 2&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 3&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 4 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)), click:function(){MapHelper.moveToTown(&#39;A Perfectly Ordinary Frigate&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;A Perfectly Ordinary Frigate&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('A Perfectly Ordinary Frigate'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="632"
     y="880"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('A Perfectly Ordinary Frigate') && (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 1 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 2&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 3&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 4 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)),
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('A Perfectly Ordinary Frigate') && (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 1 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 2&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 3&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 4 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -20038,15 +19624,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 2&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 3&#39;)]() &gt;= 1 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 5 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 4&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 5&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunts 1&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunts 2&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 7 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)), click:function(){MapHelper.moveToTown(&#39;A Totally Unsuspicious Frigate&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;A Totally Unsuspicious Frigate&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('A Totally Unsuspicious Frigate'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="584"
     y="608"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('A Totally Unsuspicious Frigate') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 2&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 3&#39;)]() &gt;= 1 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 5 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 4&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 5&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunts 1&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunts 2&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 7 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)),
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('A Totally Unsuspicious Frigate') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 2&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 3&#39;)]() &gt;= 1 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 5 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 4&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunt 5&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunts 1&#39;)]() == 0 || App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Team Plasma Grunts 2&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 7 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -20200,15 +19786,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Opelucid City&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Zinzolin 1&#39;)]() &gt;= 1 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 12 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 14 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)), click:function(){MapHelper.moveToTown(&#39;Team Plasma Assault&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Team Plasma Assault&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Team Plasma Assault'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="800"
     y="108"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Team Plasma Assault') && App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Opelucid City&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Zinzolin 1&#39;)]() &gt;= 1 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 12 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 14 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)),
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Team Plasma Assault') && App.game.statistics.gymsDefeated[GameConstants.getGymIndex(&#39;Opelucid City&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Zinzolin 1&#39;)]() &gt;= 1 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 12 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2) &amp;&amp; (App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 14 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -20951,15 +20537,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() &gt;= 1 &amp;&amp; (App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Plasma Frigate&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 15 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)) &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 15 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2), click:function(){MapHelper.moveToTown(&#39;Plasma Frigate&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Plasma Frigate&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Plasma Frigate'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="1528"
     y="304"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Plasma Frigate') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() &gt;= 1 &amp;&amp; (App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Plasma Frigate&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 15 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)) &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 15 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2),
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Plasma Frigate') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() &gt;= 1 &amp;&amp; (App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Plasma Frigate&#39;)]() == 0 || (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &lt;= 15 &amp;&amp; App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 1)) &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 15 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -20981,15 +20567,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Ghetsis 2&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Plasma Frigate&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Plasma Frigate&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Plasma Frigate'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="1528"
     y="304"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Plasma Frigate') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Ghetsis 2&#39;)]() &gt;= 1,
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Plasma Frigate') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Ghetsis 2&#39;)]() &gt;= 1,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -21037,15 +20623,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Plasma Frigate&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Ghetsis 2&#39;)]() == 0 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 16 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2), click:function(){MapHelper.moveToTown(&#39;Plasma Frigate&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Plasma Frigate&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Plasma Frigate'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="1280"
     y="36"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Plasma Frigate') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Plasma Frigate&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Ghetsis 2&#39;)]() == 0 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 16 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2),
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Plasma Frigate') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Plasma Shadow 1&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(&#39;Plasma Frigate&#39;)]() &gt;= 1 &amp;&amp; App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Ghetsis 2&#39;)]() == 0 &amp;&amp; (App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).curQuest() &gt;= 16 || App.game.quests.getQuestLine(&#39;Hollow Truth and Ideals&#39;).state() == 2),
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -21417,13 +21003,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Juniper\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="184"
-    y="768"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21444,13 +21024,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Juniper\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="184"
-    y="768"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21471,13 +21045,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hugh 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Hugh 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hugh 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hugh'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="88"
-    y="792"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21498,13 +21066,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hugh 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Hugh 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hugh 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hugh'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="296"
-    y="648"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21525,13 +21087,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Colress 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Colress 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Colress 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Colress'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="816"
-    y="616"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21552,13 +21108,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hugh 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Hugh 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hugh 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hugh'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="472"
-    y="568"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21579,13 +21129,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Cheren&#39;] &amp;&amp; TemporaryBattleList[&#39;Cheren&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Cheren&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Cheren'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="472"
-    y="568"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21606,13 +21150,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Colress 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Colress 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Colress 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Colress'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="472"
-    y="568"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21633,13 +21171,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hugh 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Hugh 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hugh 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hugh'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1352"
-    y="328"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21660,13 +21192,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hugh 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Hugh 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hugh 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hugh'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="944"
-    y="40"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21687,13 +21213,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hugh 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Hugh 6&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hugh 6&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hugh'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1352"
-    y="328"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21714,13 +21234,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Unova&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Unova&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Unova&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="136"
-    y="440"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21741,13 +21255,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Anomaly Mewtwo 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Anomaly Mewtwo 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Anomaly Mewtwo 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Anomaly Mewtwo'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="944"
-    y="712"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21768,13 +21276,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Genesect Burn&#39;] &amp;&amp; TemporaryBattleList[&#39;Genesect Burn&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Genesect Burn&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Genesect Burn'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="728"
-    y="728"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21796,13 +21298,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Genesect Chill&#39;] &amp;&amp; TemporaryBattleList[&#39;Genesect Chill&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Genesect Chill&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Genesect Chill'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="872"
-    y="824"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21823,13 +21319,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Genesect Douse&#39;] &amp;&amp; TemporaryBattleList[&#39;Genesect Douse&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Genesect Douse&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Genesect Douse'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="728"
-    y="824"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -21850,13 +21340,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Genesect Shock&#39;] &amp;&amp; TemporaryBattleList[&#39;Genesect Shock&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Genesect Shock&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Genesect Shock'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="872"
-    y="728"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -23383,13 +22867,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.routeKills[&#39;kalos&#39;][10]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Disguised Shop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Disguised Shop&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Disguised Shop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="64"
-    y="448"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24175,13 +23653,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Sycamore\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="936"
-    y="832"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24202,13 +23674,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Sycamore\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="936"
-    y="832"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24229,13 +23695,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Calem 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Calem 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Calem 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Calem'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="232"
-    y="248"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24256,13 +23716,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Calem 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Calem 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Calem 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Calem'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="520"
-    y="328"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24283,13 +23737,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Calem 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Calem 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Calem 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Calem'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="832"
-    y="296"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24310,13 +23758,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Calem 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Calem 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Calem 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Calem'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1208"
-    y="360"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24337,13 +23779,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Calem 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Calem 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Calem 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Calem'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1024"
-    y="424"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24364,13 +23800,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Kalos&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Kalos&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Kalos&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1240"
-    y="824"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24391,13 +23821,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Wild Electrike Horde&#39;] &amp;&amp; TemporaryBattleList[&#39;Wild Electrike Horde&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Wild Electrike Horde&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Wild Electrike Horde'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="936"
-    y="232"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -24418,13 +23842,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Wild Houndour Horde&#39;] &amp;&amp; TemporaryBattleList[&#39;Wild Houndour Horde&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Wild Houndour Horde&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Wild Houndour Horde'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="936"
-    y="232"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
      
@@ -24444,13 +23862,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Rampaging Yveltal&#39;] &amp;&amp; TemporaryBattleList[&#39;Rampaging Yveltal&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Rampaging Yveltal&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rampaging Yveltal'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="208"
-    y="256"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
      
@@ -24470,13 +23882,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hoopa 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Hoopa 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hoopa 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Hoopa Hoop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1104"
-    y="720"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
      
@@ -24496,13 +23902,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hoopa 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Hoopa 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hoopa 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Hoopa Hoop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="144"
-    y="240"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
      
@@ -24522,13 +23922,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hoopa 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Hoopa 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hoopa 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Hoopa Hoop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="752"
-    y="288"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
      
@@ -24548,13 +23942,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hoopa 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Hoopa 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hoopa 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Hoopa Hoop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1312"
-    y="288"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
      
@@ -24574,13 +23962,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hoopa 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Hoopa 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hoopa 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Hoopa Hoop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="752"
-    y="56"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
      
@@ -24600,13 +23982,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hoopa 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Hoopa 6&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hoopa 6&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Hoopa Hoop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1104"
-    y="720"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -27456,13 +26832,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() &gt;= 1, click:function(){MapHelper.moveToTown(&#39;Melemele Woods&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Melemele Woods&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Melemele Woods'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="584"
-    y="208"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -27651,15 +27021,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0, click:function(){MapHelper.moveToTown(&#39;Ruins of Conflict&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Ruins of Conflict&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Ruins of Conflict'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="576"
     y="208"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Ruins of Conflict') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0,
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Ruins of Conflict') && App.game.statistics.temporaryBattleDefeated[GameConstants.getTemporaryBattlesIndex(&#39;Skull 2&#39;)]() == 0,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
 
@@ -28104,13 +27474,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Kukui\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1176"
-    y="480"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -28131,13 +27495,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Kukui\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1176"
-    y="480"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -28158,13 +27516,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hau 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hau 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hau'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="664"
-    y="392"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -28185,13 +27537,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hau 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 2&#39;].isVisible(), click : () =&gt; TemporaryBattleList[&#39;Hau 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hau'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="568"
-    y="264"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -28212,13 +27558,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hau 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hau 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hau'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="696"
-    y="120"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -28239,13 +27579,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Skull 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Grunts'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="472"
-    y="744"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -28266,13 +27600,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Skull 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Grunts'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="184"
-    y="200"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -30354,13 +29682,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Defeat Rainbow Rocket&#39;).state() == QuestLineState.started, style: {&#39;pointer-events&#39;: &#39;none&#39;},
         event: { mouseenter: () => GameController.showMapTooltip('Aether Foundation'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="184"
-    y="628"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -30458,13 +29780,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Rainbow Rocket Grunt 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Rainbow Rocket Grunt 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Rainbow Rocket Grunt 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rainbow Rocket Grunt'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="120"
-    y="648"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -30485,13 +29801,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Rainbow Rocket Grunt 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Rainbow Rocket Grunt 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Rainbow Rocket Grunt 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Rainbow Rocket Grunt'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="248"
-    y="648"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -30577,13 +29887,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hau 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hau 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hau'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="944"
-    y="408"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -30604,13 +29908,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Gladion 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Gladion 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Gladion 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Gladion'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1000"
-    y="296"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -30631,13 +29929,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Recon Squad 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Recon Squad 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Recon Squad 2&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Recon Squad 2&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Is this a Johto reference?'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1032"
-    y="296"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -30658,13 +29950,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Skull 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Grunts'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1096"
-    y="488"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -30685,13 +29971,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Plumeria 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Plumeria 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Plumeria 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Admin Plumeria'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="952"
-    y="840"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -30712,13 +29992,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="872"
-    y="440"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -33520,13 +32794,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hau 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Hau 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hau 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hau'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1304"
-    y="328"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -33547,13 +32815,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Skull 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Grunts'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="760"
-    y="248"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -33574,13 +32836,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Psychium Z Trial&#39;] &amp;&amp; TemporaryBattleList[&#39;Psychium Z Trial&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Psychium Z Trial&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Trial Site of Haina Desert'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1040"
-    y="480"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -33601,13 +32857,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Plumeria 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Plumeria 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Plumeria 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Admin Plumeria'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="744"
-    y="696"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -33628,13 +32878,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Gladion 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Gladion 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Gladion 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Gladion'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="744"
-    y="696"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -33655,13 +32899,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Gladion 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Gladion 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Gladion 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Gladion'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="872"
-    y="680"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -35040,15 +34278,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="216"
     y="728"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Exeggutor Island') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Exeggutor Island') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
         <!--Exeggutor Island extension-->
@@ -35069,13 +34307,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="176"
-    y="728"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         <!--Exeggutor Island extension-->
@@ -35096,13 +34328,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="256"
-    y="712"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         <!--Exeggutor Island extension-->
@@ -35123,13 +34349,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="272"
-    y="696"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         <!--Exeggutor Island extension-->
@@ -35150,13 +34370,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="312"
-    y="688"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         <!--Exeggutor Island extension-->
@@ -35177,13 +34391,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="208"
-    y="672"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -35467,15 +34675,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island Hill'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="312"
     y="640"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Exeggutor Island Hill') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Exeggutor Island Hill') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
         
@@ -35495,13 +34703,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() === QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island Hill'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="312"
-    y="592"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -35523,13 +34725,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="312"
-    y="640"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -35549,13 +34745,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="312"
-    y="592"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -35575,15 +34765,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
 <image width="48" height="48"
     x="216"
     y="728"
     class="iconLocation hide"
-    data-bind="
-        visible: MapHelper.isTownCurrentLocation('Exeggutor Island Hill') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
-    
+    data-bind="visible: MapHelper.isTownCurrentLocation('Exeggutor Island Hill') && App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended,
         attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
         playerSpriteMove">
+
 </image>
 
         
@@ -35603,13 +34793,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="176"
-    y="728"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -35629,13 +34813,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="256"
-    y="712"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -35655,13 +34833,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="272"
-    y="696"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -35681,13 +34853,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="312"
-    y="688"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -35707,13 +34873,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: App.game.quests.getQuestLine(&#39;Emissary of Light&#39;).state() != QuestLineState.ended, click:function(){MapHelper.moveToTown(&#39;Exeggutor Island Hill&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Exeggutor Island Hill&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Exeggutor Island'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="208"
-    y="672"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -36141,13 +35301,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="728"
-    y="168"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -36168,13 +35322,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Skull 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Skull 6&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Skull 6&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Team Skull Gang'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="808"
-    y="536"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -40476,13 +39624,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Magnolia\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="808"
-    y="864"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40503,13 +39645,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Magnolia\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="808"
-    y="864"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40530,13 +39666,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hop 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Hop 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hop 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="824"
-    y="888"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40557,13 +39687,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hop 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Hop 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hop 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="952"
-    y="768"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40584,13 +39708,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hop 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Hop 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hop 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="584"
-    y="264"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40611,13 +39729,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hop 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Hop 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hop 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="840"
-    y="104"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40638,13 +39750,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Zapdos 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Zapdos 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Zapdos 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Zapdos'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="744"
-    y="384"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40665,13 +39771,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Zapdos 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Zapdos 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Zapdos 2&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Galarian Zapdos 2&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Zapdos'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="888"
-    y="32"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40692,13 +39792,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Zapdos 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Zapdos 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Zapdos 3&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Galarian Zapdos 3&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Zapdos'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="912"
-    y="616"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40719,13 +39813,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Charizard&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Charizard&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Charizard&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="816"
-    y="192"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40746,13 +39834,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Machamp&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Machamp&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Machamp&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="880"
-    y="240"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40773,13 +39855,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Gengar&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Gengar&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Gengar&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="576"
-    y="464"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40800,13 +39876,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Kingler&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Kingler&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Kingler&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="656"
-    y="464"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40827,13 +39897,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Corviknight&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Corviknight&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Corviknight&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="784"
-    y="560"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40854,13 +39918,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Orbeetle&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Orbeetle&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Orbeetle&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="736"
-    y="64"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40881,13 +39939,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Drednaw&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Drednaw&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Drednaw&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="832"
-    y="560"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40908,13 +39960,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Coalossal&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Coalossal&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Coalossal&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="752"
-    y="416"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40935,13 +39981,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Centiskorch&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Centiskorch&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Centiskorch&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="864"
-    y="368"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40962,13 +40002,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Alcremie&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Alcremie&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Alcremie&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="832"
-    y="0"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -40989,13 +40023,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Duraludon&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Duraludon&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Duraludon&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="912"
-    y="576"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -42013,13 +41041,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hop 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Hop 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hop 5&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="584"
-    y="792"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -42040,13 +41062,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Bede 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Bede 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Bede 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Bede'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="408"
-    y="696"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -42067,13 +41083,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hop 6&#39;] &amp;&amp; TemporaryBattleList[&#39;Hop 6&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hop 6&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="904"
-    y="872"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -42094,13 +41104,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Hop 7&#39;] &amp;&amp; TemporaryBattleList[&#39;Hop 7&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Hop 7&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Hop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1064"
-    y="712"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -42121,13 +41125,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Marnie 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Marnie 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Marnie 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Marnie'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1144"
-    y="904"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -44712,13 +43710,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Klara 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Klara 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Klara 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Klara'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="840"
-    y="712"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44739,13 +43731,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Avery 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Avery 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Avery 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Avery'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="904"
-    y="712"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44766,13 +43752,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Klara 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Klara 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Klara 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Klara'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="920"
-    y="568"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44793,13 +43773,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Avery 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Avery 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Avery 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Avery'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="984"
-    y="568"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44820,13 +43794,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Galar&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Galar&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Galar&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="904"
-    y="696"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44847,13 +43815,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Moltres 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Moltres 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Moltres 1&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Galarian Moltres 1&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Moltres'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="648"
-    y="688"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44874,13 +43836,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Moltres 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Moltres 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Moltres 2&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Galarian Moltres 2&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Moltres'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1152"
-    y="608"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44901,13 +43857,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Moltres 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Moltres 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Moltres 3&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Galarian Moltres 3&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Moltres'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="840"
-    y="560"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44928,13 +43878,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Venusaur&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Venusaur&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Venusaur&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="832"
-    y="720"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44955,13 +43899,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Blastoise&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Blastoise&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Blastoise&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1152"
-    y="624"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -44982,13 +43920,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Butterfree&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Butterfree&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Butterfree&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="832"
-    y="576"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -45009,13 +43941,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Garbodor&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Garbodor&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Garbodor&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="896"
-    y="288"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -45036,13 +43962,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Rillaboom&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Rillaboom&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Rillaboom&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="736"
-    y="384"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -45063,13 +43983,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Cinderace&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Cinderace&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Cinderace&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1040"
-    y="320"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -45090,13 +44004,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Inteleon&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Inteleon&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Inteleon&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="448"
-    y="192"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -45117,13 +44025,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Sandaconda&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Sandaconda&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Sandaconda&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="976"
-    y="96"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -45144,13 +44046,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Toxtricity&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Toxtricity&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Toxtricity&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="688"
-    y="560"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -46832,13 +45728,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Dyna Tree Birds&#39;] &amp;&amp; TemporaryBattleList[&#39;Dyna Tree Birds&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Dyna Tree Birds&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Dyna Tree Birds'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="744"
-    y="880"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -46858,13 +45748,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Dyna Tree Birds&#39;] &amp;&amp; TemporaryBattleList[&#39;Dyna Tree Birds&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Dyna Tree Birds&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Dyna Tree Birds'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="808"
-    y="880"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
         
@@ -46884,13 +45768,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Dyna Tree Birds&#39;] &amp;&amp; TemporaryBattleList[&#39;Dyna Tree Birds&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Dyna Tree Birds&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Dyna Tree Birds'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="776"
-    y="832"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -46911,13 +45789,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Articuno 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Articuno 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Articuno 1&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Galarian Articuno 1&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Articuno'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="992"
-    y="256"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -46938,13 +45810,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Articuno 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Articuno 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Articuno 2&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Galarian Articuno 2&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Articuno'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1272"
-    y="320"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -46965,13 +45831,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Galarian Articuno 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Galarian Articuno 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Galarian Articuno 3&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Galarian Articuno 3&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Galarian Articuno'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="760"
-    y="48"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -46992,13 +45852,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Regigigas&#39;] &amp;&amp; TemporaryBattleList[&#39;Regigigas&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Regigigas&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Regigigas'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="680"
-    y="464"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47019,13 +45873,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Pikachu&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Pikachu&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Pikachu&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="528"
-    y="480"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47046,13 +45894,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Meowth&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Meowth&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Meowth&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="736"
-    y="224"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47073,13 +45915,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Lapras&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Lapras&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Lapras&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1264"
-    y="304"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47100,13 +45936,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Eevee&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Eevee&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Eevee&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="544"
-    y="240"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47127,13 +45957,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Snorlax&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Snorlax&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Snorlax&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="832"
-    y="848"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47154,13 +45978,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Flapple&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Flapple&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Flapple&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="832"
-    y="496"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47181,13 +45999,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Appletun&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Appletun&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Appletun&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="992"
-    y="624"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47208,13 +46020,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Hatterene&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Hatterene&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Hatterene&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="992"
-    y="464"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47235,13 +46041,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Grimmsnarl&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Grimmsnarl&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Grimmsnarl&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1168"
-    y="432"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -47262,13 +46062,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Max Raid Copperajah&#39;] &amp;&amp; TemporaryBattleList[&#39;Max Raid Copperajah&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Max Raid Copperajah&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Max Raid'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="688"
-    y="624"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
     </g>
@@ -56111,13 +54905,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Laventon\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="56"
-    y="592"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56138,13 +54926,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Professor Laventon\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="56"
-    y="592"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56165,13 +54947,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Tornadus 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Tornadus 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Tornadus 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Tornadus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="344"
-    y="120"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56192,13 +54968,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Tornadus 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Tornadus 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Tornadus 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Tornadus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="168"
-    y="24"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56219,13 +54989,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Tornadus 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Tornadus 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Tornadus 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Tornadus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="232"
-    y="168"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56246,13 +55010,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Thundurus 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Thundurus 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Thundurus 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Thundurus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1320"
-    y="392"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56273,13 +55031,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Thundurus 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Thundurus 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Thundurus 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Thundurus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1320"
-    y="136"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56300,13 +55052,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Thundurus 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Thundurus 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Thundurus 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Thundurus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1448"
-    y="344"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56327,13 +55073,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Landorus 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Landorus 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Landorus 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Landorus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="568"
-    y="504"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56354,13 +55094,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Landorus 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Landorus 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Landorus 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Landorus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="888"
-    y="744"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56381,13 +55115,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Landorus 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Landorus 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Landorus 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Landorus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="504"
-    y="856"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56408,13 +55136,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Enamorus 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Enamorus 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Enamorus 1&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Enamorus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1016"
-    y="808"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56435,13 +55157,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Enamorus 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Enamorus 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Enamorus 2&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Enamorus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1080"
-    y="376"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -56462,13 +55178,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: TemporaryBattleList[&#39;Enamorus 3&#39;] &amp;&amp; TemporaryBattleList[&#39;Enamorus 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Enamorus 3&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Enamorus'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1016"
-    y="552"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -57529,13 +56239,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Instructor Jacq\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1528"
-    y="912"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 
@@ -57556,13 +56260,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Instructor Jacq\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
 </rect>
-<image width="48" height="48"
-    x="1528"
-    y="912"
-    class="iconLocation hide"
-    data-bind="
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+
 </image>
 
 </g>
