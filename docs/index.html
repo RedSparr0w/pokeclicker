@@ -1282,7 +1282,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <!-- /ko -->
     <button type="button" class="btn btn-info"
             style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px; padding: 4px;"
-            data-bind="tooltip: { title: 'Select which Poké Ball to use on Pokémon depending on their status', trigger: 'hover', placement:'left' }">
+            data-bind="tooltip: { title: 'Select which Poké Ball to use on Pokémon depending on their status. Right click (or long press on mobile) can be used to toggle filter enabled/disabled.', trigger: 'hover', placement:'left' }">
         ?
     </button>
     <div id="pokeballSelectorBody" class="card-body p-0 show">
@@ -1297,7 +1297,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         </tr>
                     </thead>
                     <tbody id="pokeballFilters" data-bind="foreach: App.game.pokeballFilters.displayList">
-                        <tr data-bind="css: { 'pokeballFilterDisabled': !$data.enabled() }, attr: { 'data-name': $data.name }">
+                        <tr data-bind="css: { 'pokeballFilterDisabled': !$data.enabled() }, attr: { 'data-name': $data.name }, event: { contextmenu: () => $data.enabled(!$data.enabled()) }">
                             <td><span data-bind="
                                 text: $data.name,
                                 tooltip: {
@@ -1738,8 +1738,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <div class="card-header p-0" data-toggle="collapse" href="#currencyBody">
         <span>Currency</span>
     </div>
-    <div id="currencyBody" class="card-body p-1 show">
-        <div class="currency-wrapper" data-bind="css: { 'short-currencies': Settings.getSetting('currencyMainDisplayReduced').observableValue() }">
+    <div id="currencyBody" class="card-body p-0 show">
+        <div class="currency-wrapper p-1" data-bind="css: { 'short-currencies': Settings.getSetting('currencyMainDisplayReduced').observableValue() }">
             <div class="currency-line">
                 <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.money, tooltip: 'Pokédollars<br /><br />Gained by defeating Pokémon and trainers in battle.' } }"></div>
                 <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.dungeonToken, tooltip: 'Dungeon Tokens<br /><br />Gained by catching wild Pokémon.' } }"></div>
@@ -56892,31 +56892,38 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Shortcuts Menu -->
-                    <div id="shortcutsContainer" class="card sortable border-secondary mb-3" data-bind="visible: player.highestRegion">
+                    <div id="shortcutsContainer" class="card sortable border-secondary mb-3"
+    data-bind="visible: Underground.shortcutVisible() || FarmController.shortcutVisible() || ShopHandler.shortcutVisible()">
     <div class="card-header p-0" data-toggle="collapse" href="#shortcutsBody">
         <span style="text-align:center">Shortcuts</span>
     </div>
     <div id="shortcutsBody" class="card-body show p-0">
       <table class="table table-sm m-0">
         <tbody>
-          <tr data-bind="visible: App.game.underground.canAccess() && !Settings.getSetting('showUndergroundModule').observableValue()">
+          <tr data-bind="visible: Underground.shortcutVisible">
             <td class="p-0">
               <button class="btn btn-block btn-primary m-0" onclick="App.game.underground.openUndergroundModal()">
                   Underground
+                  <knockout data-bind="text: `[${Settings.getSetting('hotkey.underground').observableValue()}]`,
+                    visible: Settings.getSetting('hotkey.underground').observableValue() != 'None'"></knockout>
               </button>
             </td>
           </tr>
-          <tr data-bind="visible: App.game.farming.canAccess() && !Settings.getSetting('showFarmModule').observableValue()">
+          <tr data-bind="visible: FarmController.shortcutVisible">
             <td class="p-0">
               <button class="btn btn-block btn-primary m-0" onclick="FarmController.openFarmModal()">
                   Farm
+                  <knockout data-bind="text: `[${Settings.getSetting('hotkey.farm').observableValue()}]`,
+                    visible: Settings.getSetting('hotkey.farm').observableValue() != 'None'"></knockout>
               </button>
             </td>
           </tr>
-          <tr data-bind="visible: App.game.statistics.gymsDefeated[GameConstants.getGymIndex('Champion Lance')]">
+          <tr data-bind="visible: ShopHandler.shortcutVisible">
             <td class="p-0">
               <button class="btn btn-block btn-primary m-0" onclick="ShopHandler.showShop(pokeMartShop);" href="#shopModal" data-toggle="modal">
                   Poké Mart
+                  <knockout data-bind="text: `[${Settings.getSetting('hotkey.shop').observableValue()}]`,
+                    visible: Settings.getSetting('hotkey.shop').observableValue() != 'None'"></knockout>
               </button>
             </td>
           </tr>
@@ -63005,13 +63012,13 @@ aria-labelledby="badgeCaseModalLabel">
                 <div class="message" data-bind='html: SafariBattle.text'></div>
                 <div class="row" style="width: 100%;">
                     <button type="button" class="btn btn-primary btn-block col-6 m-0" onclick="this.blur();SafariBattle.throwBall()" data-bind="disable: SafariBattle.busy()">
-                        <span class="position-absolute small" style="left: 5px;" data-bind="text: `[${Settings.getSetting('hotkey.safari.ball').value}]`"></span>
+                        <span class="position-absolute small" style="left: 5px;" data-bind="text: `[${Settings.getSetting('hotkey.safari.ball').observableValue()}]`"></span>
                         <knockout data-bind="text: `Ball (${Safari.balls()})`">Ball (30)</knockout>
                     </button>
                     <div class="btn-group btn-block col-6 m-0 dropup" style="padding:0px;">
                         <button type="button" class='btn btn-primary btn-block' onclick="this.blur();"
                             data-bind='{ click: function(){SafariBattle.throwBait();}, disable: SafariBattle.selectedBait().amount() <= 0 || SafariBattle.busy() }'>
-                            <span class="position-absolute small" style="left: 5px;" data-bind="text: `[${Settings.getSetting('hotkey.safari.bait').value}]`"></span>
+                            <span class="position-absolute small" style="left: 5px;" data-bind="text: `[${Settings.getSetting('hotkey.safari.bait').observableValue()}]`"></span>
                             <div style="display:inline"><img width=16px data-bind="attr: { src: SafariBattle.selectedBait().image }"></div>
                             <span data-bind="text: SafariBattle.selectedBait().btnName">Bait (∞)</span>
                         </button>
@@ -63022,11 +63029,11 @@ aria-labelledby="badgeCaseModalLabel">
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary btn-block col-6 m-0" onclick="this.blur();SafariBattle.throwRock()" data-bind="disable: SafariBattle.busy()">
-                        <span class="position-absolute small" style="left: 5px;" data-bind="text: `[${Settings.getSetting('hotkey.safari.rock').value}]`"></span>
+                        <span class="position-absolute small" style="left: 5px;" data-bind="text: `[${Settings.getSetting('hotkey.safari.rock').observableValue()}]`"></span>
                         Rock (∞)
                     </button>
                     <button type="button" class="btn btn-primary btn-block col-6 m-0" onclick="this.blur();SafariBattle.run()" data-bind="disable: SafariBattle.busy()">
-                        <span class="position-absolute small" style="left: 5px;" data-bind="text: `[${Settings.getSetting('hotkey.safari.run').value}]`"></span>
+                        <span class="position-absolute small" style="left: 5px;" data-bind="text: `[${Settings.getSetting('hotkey.safari.run').observableValue()}]`"></span>
                         Run
                     </button>
                 </div>
@@ -63361,6 +63368,9 @@ aria-labelledby="badgeCaseModalLabel">
                         </p>
                         <p>
                             You can hover (or tap) the <button class="btn-circle btn-info float-none">&#8505;</button> icon for a description of what the filter will catch.
+                        </p>
+                        <p>
+                            Right click (or long press on mobile) can be used to enable/disable filters from the main screen without opening this menu.
                         </p>
 
                         <h2>Test Filters</h2>
