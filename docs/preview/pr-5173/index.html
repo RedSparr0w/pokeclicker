@@ -1115,21 +1115,6 @@
 <!-- Example usage -->
 <!-- <knockout data-bind="template: { name: 'pokemonAttackTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon sprite</knockout> -->
 
-<script type="text/html" id="pokemonContestAppealTemplate">
-  <span style="display: inline;">
-      <span data-bind="
-         text: ContestHelper.pokemonContestAppealObservable().toLocaleString('en-US'),
-         tooltip: {
-            title: ContestBattle.pokemonContestAppealTooltip,
-            trigger: 'hover',
-         }
-         "></span>
-  </span>
-</script>
-
-<!-- Example usage -->
-<!-- <knockout data-bind="template: { name: 'pokemonContestAppealTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }">Pokémon sprite</knockout> -->
-
 <script type="text/html" id="pokemonGenderStatisticTemplate">
     <div class="overlay" data-bind="tooltip: { 
         title: `♂: ${$data.maleStat.toLocaleString('en-US')}
@@ -2208,8 +2193,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <div class="col no-gutters clickable" data-bind="if: ContestBattle.enemyPokemon, click: function() {ContestBattle.clickAttack()}" style="height: 280px; display: block;">
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
             <knockout>
+                <knockout data-bind="text: ContestBattle.trainer().name.replace(/\d/g,'') + '\'s'"></knockout>
                 <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }">Pokémon name</knockout>
-                <!-- TODO: <knockout data-bind="text: ContestBattle.enemyPokemon().nickname()"></knockout> -->
+                <!-- TODO: Trainer name and Pokemon nickname instead -->
             </knockout>
 
             <div class="progress timer">
@@ -2237,7 +2223,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <div>
             <knockout data-bind="template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }">Pokémon sprite</knockout>
         </div>
-        <div class="progress hitpoints trainerhitpoints" style="bottom: 100px;">
+        <div class="progress contestpoints trainerhitpoints">
             <div class="progress-bar bg-danger" role="progressbar"
                     data-bind="attr:{ style: 'width:' + ContestBattle.enemyPokemon().healthPercentage() + '%' }"
                     aria-valuemin="0" aria-valuemax="100">
@@ -2248,23 +2234,26 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
           <div class="progress-bar bg-success" role="progressbar"
                   data-bind="attr:{ style: 'width:' + ContestRunner.audienceAppealPercentage() + '%' }, css: {'progress-bar-striped progress-bar-animated': ContestRunner.encoreStatus() } "
                   aria-valuemin="0" aria-valuemax="100">
-              <span data-bind="text: ContestRunner.audienceStatus()" style="font-size: 12px;"></span>
+              <span data-bind="html: ContestRunner.audienceStatus()" style="font-size: 12px;"></span>
           </div>
       </div>
       <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
-        <!-- TODO: organize these better -->
         <table width="100%">
           <tr>
-            <td with="50%">
-              <knockout data-bind="text: ContestBattle.trainer().name.replace(/\d/g,'')"></knockout>
+            <td width="50%">
+              <knockout data-bind="html: ContestBattle.pokemonContestAppealTooltip"></knockout>
             </td>
             <td width="50%">
-              <knockout data-bind="text: `Trainer Streak: ${ContestBattle.trainersDefeatedComputable()}`"></knockout>
+              <knockout data-bind="html: TextMerger.mergeText(ContestBattle.trainerBonusComputable())"></knockout>
             </td>
           </tr>
           <tr>
-            <td width="50%">
-                <knockout data-bind="template: { name: 'pokemonContestAppealTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }"></knockout>
+            <td width="50%" data-bind="foreach: pokemonMap[ContestBattle.enemyPokemon().name].contestType">
+              <span class="badge text-light px-1" data-bind="if: $data >= 0,
+                          style: { 'background-color': GameConstants.ContestColor[$data]}">
+                <small><strong
+                  data-bind="text: ContestType[$data].toUpperCase()" style="color: white"></strong></small>
+              </span>
             </td>
             <td width="50%">
               <knockout data-bind="text: `Bonus Round: ${ContestRunner.encoreRoundsComputable()}/${ContestRunner.rank()}`"></knockout>
@@ -2683,20 +2672,26 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             Max out the audience bar to win. Defeat more trainers for a higher reward. Higher ranks offer more Contest Tokens.</br>
             <i>This feature is still in development</i><br/>
         </p>
-        <div class="modal-body">
+        <div class="p-0 modal-body">
             <div class="justify-content-center" data-bind="foreach: { data: ContestRunner.contestRankObservable(), as: 'rank' }">
                 <h4 class="card-header mb-1 p-1" data-toggle="collapse" data-bind="attr : {href : '#rankCard_' + $index()}, text: `${ContestRank[rank]} Rank`"></h4>
-                <div class="card-body mb-1 p-0 show row justify-content-center"  data-bind="attr : {id : 'rankCard_' + $index()}, foreach: { data: ContestRunner.contestTypeObservable(), as: 'type' }">
-                    <div class="col-4 d-flex flex-column">
-                    <button class="shopItem clickable btn btn-block btn-secondary"
+                <div class="card-body mb-1 p-0 show row" style="justify-content: space-evenly;"  data-bind="attr : {id : 'rankCard_' + $index()}, foreach: { data: ContestRunner.contestTypeObservable(), as: 'type' }">
+                    <button class="d-flex flex-column align-items-center p-0 btn btn-secondary"
                         data-bind="click: () => {ContestRunner.startContest(rank, type)},
-                        css: { active: ContestRunner.running() && ContestRunner.type() == type && ContestRunner.rank() == rank },
+                        css: { active: ContestRunner.running() && ContestRunner.type() == type && ContestRunner.rank() == rank,
+                            contestButton3: Settings.getSetting('gameDisplayStyle').observableValue() != 'fullWidth5',
+                            contestButton5: Settings.getSetting('gameDisplayStyle').observableValue() === 'fullWidth5' },
+                        tooltip: {
+                            html: true,
+                            title: `Audience Appeal: ${ContestHelper.calculatePokemonContestAppeal(type).toLocaleString('en-US')}`,
+                            trigger: 'hover',
+                        },
+                        attr:{'aria-label': `${ContestRank[rank]} Rank ${ContestType[type]} Contest. Audience Appeal: ${ContestHelper.calculatePokemonContestAppeal(type).toLocaleString('en-US')}.`}
                         ">
-                        <h5 data-bind="text: `${ContestType[type]}`"></h5>
+                        <p class="m-0" style="font-weight: bolder;" data-bind="text: `${ContestType[type]}`"></p>
                         <img data-bind="attr:{ src: ContestHall.getRibbonImage(rank, type)}">
-                        <p data-bind="html: 'Appeal' + '<br/>' + `${ContestHelper.calculatePokemonContestAppeal(type).toLocaleString('en-US')}`"></p>
-                        </button>
-                    </div>
+                        <p class="mb-0" data-bind="html: 'Appeal' + '<br/>' + `${GameHelper.formatAmount(ContestHelper.calculatePokemonContestAppeal(type))}`"></p>
+                    </button>
                 </div>
             </div>
         </div>
