@@ -56520,7 +56520,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <div style="margin-top: 20px;" class="clickable" data-bind="
                 click: function(){ if (progress() >= 100) App.game.breeding.hatchPokemonEgg($index()) },
                 tooltip: {
-                    title: BreedingController.getEggPokemonName($data) || '???',
+                    title: BreedingController.getEggPokemonName($data) ? PokemonHelper.displayName(BreedingController.getEggPokemonName($data))() : '???',
                     trigger: 'hover',
                     placement: 'bottom',
                     class: 'no-click',
@@ -64218,7 +64218,7 @@ aria-labelledby="purifyChamberModalLabel">
                 <!-- ko if: App.game.party.caughtPokemon.some((p) => p.shadow == GameConstants.ShadowStatus.Shadow) -->
                 <select id="purify-chamber-selector" class="custom-select" style="margin-right: 8px"
                         data-bind="options: App.game.party.caughtPokemon.filter((p) => p.shadow == GameConstants.ShadowStatus.Shadow),
-                               optionsText: 'name',
+                               optionsText: (p) => PokemonHelper.displayName(p.name),
                                value: App.game.purifyChamber.selectedPokemon"
                 >
                 </select>
