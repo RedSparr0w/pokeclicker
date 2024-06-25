@@ -59406,7 +59406,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 <!-- /ko -->
                                             </div>
                                             <!-- Mega Evolution -->
-                                            <!-- ko if: player.highestRegion() >= GameConstants.Region.kalos -->
+                                            <!-- ko if: Settings.getSetting('breedingUniqueTransformationFilter').isUnlocked() -->
                                             <div class="form-group col-lg-12 col-12">
                                                 <!-- ko let: { breedingUniqueTransformationFilter: Settings.getSetting('breedingUniqueTransformationFilter') } -->
                                                 <label for="breeding-filter-unique-transformation" data-bind="text: breedingUniqueTransformationFilter.displayName">Unique Transformations</label>
@@ -60482,7 +60482,7 @@ aria-labelledby="pokedexModalLabel">
                                     </div>
 
                                     <!-- Mega Evolution -->
-                                    <!-- ko if: player.highestRegion() >= GameConstants.Region.kalos -->
+                                    <!-- ko if: Settings.getSetting('pokedexUniqueTransformationFilter').isUnlocked() -->
                                     <div class="form-group col-lg-12 col-12">
                                         <!-- ko let: { pokedexUniqueTransformationFilter: Settings.getSetting('pokedexUniqueTransformationFilter') } -->
                                         <label for="pokedex-filter-unique-transformation" data-bind="text: pokedexUniqueTransformationFilter.displayName">Unique Transformations</label>
