@@ -3830,7 +3830,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Pallet Town') },
         event: { mouseenter: () => GameController.showMapTooltip('Pallet Town'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -4858,13 +4858,13 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     width="16"
     data-bind="visible: App.game.statistics.routeKills[&#39;kanto&#39;][3]() &gt;= 10"/>
 <rect class="city"
-    data-town="Route 3 Pokémon Center"
+    data-town="Route 4 Pokémon Center"
     x="640"
     y="160"
     height="16"
     width="16"
-    data-bind="visible: App.game.statistics.routeKills[&#39;kanto&#39;][3]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Route 3 Pokémon Center&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Route 3 Pokémon Center&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Route 3 Pokémon Center'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: App.game.statistics.routeKills[&#39;kanto&#39;][3]() &gt;= 10, click:function(){MapHelper.moveToTown(&#39;Route 4 Pokémon Center&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Route 4 Pokémon Center&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Route 4 Pokémon Center'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
 </image>
@@ -8582,7 +8582,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('New Bark Town') },
         event: { mouseenter: () => GameController.showMapTooltip('New Bark Town'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -11754,7 +11754,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Littleroot Town') },
         event: { mouseenter: () => GameController.showMapTooltip('Littleroot Town'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -16442,7 +16442,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Twinleaf Town') },
         event: { mouseenter: () => GameController.showMapTooltip('Twinleaf Town'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -20013,7 +20013,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Aspertia City') },
         event: { mouseenter: () => GameController.showMapTooltip('Aspertia City'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -22634,7 +22634,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Vaniville Town') },
         event: { mouseenter: () => GameController.showMapTooltip('Vaniville Town'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -26264,7 +26264,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Iki Town Outskirts') },
         event: { mouseenter: () => GameController.showMapTooltip('Iki Town Outskirts'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -39239,7 +39239,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Postwick') },
         event: { mouseenter: () => GameController.showMapTooltip('Postwick'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -51942,7 +51942,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -51970,7 +51970,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -51989,7 +51989,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -52008,7 +52008,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -52027,7 +52027,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -52046,7 +52046,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -52065,7 +52065,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -52084,7 +52084,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -52103,7 +52103,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Prelude Beach') },
         event: { mouseenter: () => GameController.showMapTooltip('Prelude Beach'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -55365,7 +55365,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         attr: { class: MapHelper.calculateTownCssClass('Cabo Poco') },
         event: { mouseenter: () => GameController.showMapTooltip('Cabo Poco'), mouseleave: GameController.hideMapTooltip },
         
-            css: { flash: MapHelper.ableToTravel() }
+            css: { flash: MapHelper.ableToTravel() && !Settings.getSetting('disableBlinking').observableValue() }
         ">
 </rect>
 
@@ -57758,6 +57758,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('breedingEfficiencyAllModifiers')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('useWebWorkerForGameTicks')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('disableOfflineProgress')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('disableBlinking')}"></tr>
                                 <tr data-bind="with: Settings.getSetting('disableAutoSave')">
                                     <td class="p-2">
                                         <label class="m-0" data-bind="attr: { for: 'checkbox-' + $data.name }, text: `${$data.displayName}:`"></label>
@@ -59396,7 +59397,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             <div class="form-group col-lg-6 col-6">
                                                 <!-- ko let: { breedingPokerusFilter: Settings.getSetting('breedingPokerusFilter') } -->
                                                 <label for="breeding-filter-pokerus-status" data-bind="text: breedingPokerusFilter.displayName">Pokérus Status</label>
-                                                <select id="breeding-filter-pokerus-status" autocomplete="off" class="custom-select" 
+                                                <select id="breeding-filter-pokerus-status" autocomplete="off" class="custom-select"
                                                     data-bind="options: breedingPokerusFilter.options,
                                                         optionsValue: 'value',
                                                         optionsText: 'text',
@@ -59439,7 +59440,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             <div class="form-group col-lg-6 col-6">
                                                 <!-- ko let: { breedingDisplayTextSetting: Settings.getSetting('breedingDisplayTextSetting') } -->
                                                 <label for="breeding-setting-display-text" data-bind="text: breedingDisplayTextSetting.displayName">Display Value</label>
-                                                <select id="breeding-setting-display-text" autocomplete="off" class="custom-select" 
+                                                <select id="breeding-setting-display-text" autocomplete="off" class="custom-select"
                                                     data-bind="options: breedingDisplayTextSetting.options,
                                                         optionsValue: 'value',
                                                         optionsText: 'text',
@@ -59451,7 +59452,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             <div class="form-group col-lg-6 col-6">
                                                 <!-- ko let: { breedingRegionalAttackDebuffSetting: Settings.getSetting('breedingRegionalAttackDebuffSetting') } -->
                                                 <label for="breeding-setting-regional-attack-debuff" data-bind="text: breedingRegionalAttackDebuffSetting.displayName">Regional Debuff</label>
-                                                <select id="breeding-setting-regional-attack-debuff" autocomplete="off" class="custom-select" 
+                                                <select id="breeding-setting-regional-attack-debuff" autocomplete="off" class="custom-select"
                                                     data-bind="options: breedingRegionalAttackDebuffSetting.getValidOptions(),
                                                         optionsValue: 'value',
                                                         optionsText: 'text',
@@ -59474,10 +59475,10 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                         <!-- ko let: { hatcherySortDirection: Settings.getSetting('hatcherySortDirection') } -->
                                                         <label for="hatchery-setting-sort-direction" class="clickable m-0 pl-2 pr-2" style="font-size: 22px;"
                                                             data-bind="text: hatcherySortDirection.observableValue() ? '⥄' : '⥂',
-                                                                tooltip: { 
+                                                                tooltip: {
                                                                     title: hatcherySortDirection.observableValue() ? 'Descending (highest value first)' : 'Ascending (lowest value first)',
                                                                     trigger: 'hover',
-                                                                    placement:'top' 
+                                                                    placement:'top'
                                                                 }">
                                                             ⥂
                                                         </label>
@@ -59596,7 +59597,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                             <button data-bind="class: `category-${$data + 1}`"></button>
                                                         </div>
                                                     </div>
-                                                    <div class="border-secondary dropdown-menu multiselect-dropdown category-dropdown px-2">
+                                                    <div class="border-secondary dropdown-menu multiselect-dropdown category-dropdown px-1">
                                                         <div class="form-check d-flex align-items-center", data-bind="with: PokemonCategories.categories().find(c => c.id === 0), as: 'pokemonCategory'">
                                                             <input type="checkbox" class="form-check-input mt-0" style="cursor: pointer;"
                                                                 data-bind="attr: { id: `${$parent.id}-category0` },
@@ -60721,7 +60722,7 @@ aria-labelledby="pokedexModalLabel">
                                                         <button data-bind="class: `category-${$data + 1}`"></button>
                                                     </div>
                                                 </div>
-                                                <div class="border-secondary dropdown-menu multiselect-dropdown category-dropdown px-2">
+                                                <div class="border-secondary dropdown-menu multiselect-dropdown category-dropdown px-1">
                                                     <div class="form-check d-flex align-items-center", data-bind="with: PokemonCategories.categories().find(c => c.id === 0), as: 'pokemonCategory'">
                                                         <input type="checkbox" class="form-check-input mt-0" style="cursor: pointer;"
                                                             data-bind="attr: { id: `${$parent.id}-category0` },
