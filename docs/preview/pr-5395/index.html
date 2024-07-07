@@ -1954,7 +1954,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <button class="btn btn-warning dungeon-button">Go to next floor</button>
         </div>
         <!-- /ko -->
-        <!-- ko if: DungeonRunner.map.currentTile().type() === GameConstants.DungeonTileType.entrance && DungeonRunner.map.playerMoved() -->
+        <!-- ko if: DungeonRunner.map.currentTile().type() === GameConstants.DungeonTileType.entrance && DungeonRunner.map.playerMoved() && !DungeonGuides.hired() -->
         <div>
             <button class="btn btn-warning dungeon-button">Leave Dungeon</button>
         </div>
@@ -59406,7 +59406,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 <!-- /ko -->
                                             </div>
                                             <!-- Mega Evolution -->
-                                            <!-- ko if: player.highestRegion() >= GameConstants.Region.kalos -->
+                                            <!-- ko if: Settings.getSetting('breedingUniqueTransformationFilter').isUnlocked() -->
                                             <div class="form-group col-lg-12 col-12">
                                                 <!-- ko let: { breedingUniqueTransformationFilter: Settings.getSetting('breedingUniqueTransformationFilter') } -->
                                                 <label for="breeding-filter-unique-transformation" data-bind="text: breedingUniqueTransformationFilter.displayName">Unique Transformations</label>
@@ -60482,7 +60482,7 @@ aria-labelledby="pokedexModalLabel">
                                     </div>
 
                                     <!-- Mega Evolution -->
-                                    <!-- ko if: player.highestRegion() >= GameConstants.Region.kalos -->
+                                    <!-- ko if: Settings.getSetting('pokedexUniqueTransformationFilter').isUnlocked() -->
                                     <div class="form-group col-lg-12 col-12">
                                         <!-- ko let: { pokedexUniqueTransformationFilter: Settings.getSetting('pokedexUniqueTransformationFilter') } -->
                                         <label for="pokedex-filter-unique-transformation" data-bind="text: pokedexUniqueTransformationFilter.displayName">Unique Transformations</label>
