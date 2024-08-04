@@ -60590,26 +60590,6 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
             </div>
         </div>
     </div>
-
-    <script type="text/html" id="treasureListTemplate">
-        <tr>
-        </tr>
-    </script>
-</div>
-
-<div aria-labelledby="mineSellAllTreasuresModalLabel" class="modal fade noselect" id="mineSellAllTreasuresModal" role="dialog"
-     style="cursor:default" tabindex="-1">
-    <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document" data-bind="let: { filteredMineInventory: UndergroundItems.list.filter(item => item.hasSellValue() && player.itemList[item.itemName]()) }">
-        <div class="modal-content">
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/html" id="cumulativeValueListTemplate">
-        <tr></tr>
-    </script>
 </div>
 
 <div aria-labelledby="findNewMineModalLabel" class="modal fade no-select" id="findNewMineModal" role="dialog" style="cursor: default;" tabindex="-1">
@@ -60690,7 +60670,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                 <!-- /ko -->
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body" style="min-height: 300px;">
                 <!-- ko if: UndergroundTrading.selectedTradeFromItem?.hasSellValue() -->
                 <div class="card mb-2">
                     <div class="card-header d-flex align-items-center p-0">
