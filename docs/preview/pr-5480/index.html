@@ -60145,7 +60145,10 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                         <!-- ko if: App.game.underground.mine -->
                         <div style="position: relative;">
                             <div id="mineBody" style="margin:auto; background-image: url('../assets/images/underground/rock0.png');"
-                                 data-bind="css: { 'disabled': App.game.underground.mine.timeUntilDiscovery > 0 || App.game.underground.mine.completed },
+                                 data-bind="css: {
+                                    'disabled': App.game.underground.mine.timeUntilDiscovery > 0 || App.game.underground.mine.completed,
+                                    'tool-cooldown': App.game.undergroundTools.getTool(App.game.undergroundTools.selectedToolType).cooldownForDisplay() > 0
+                                 },
                                  class: `${UndergroundToolType[App.game.undergroundTools.selectedToolType]}Selected`,
                                  style: {
                                     backgroundSize: `calc(100% / ${App.game.underground.mine?.columnCount})`,
@@ -60376,10 +60379,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             </p>
 
                             <h4>Discovery Time Calculation</h4>
-                            <p>When searching for a new specific mine or if you have not found all items in your current mine, the discovery time is calculated as follows:</p>
-                            <p>
-                                <code>Discovery Time = <knockout data-bind="text: GameConstants.formatTimeFullLetters(GameConstants.DISCOVER_MINE_TIMEOUT_BASE)"></knockout> - <knockout data-bind="text: GameConstants.formatTimeFullLetters(GameConstants.DISCOVER_MINE_TIMEOUT_REDUCTION_PER_LEVEL)"></knockout> x (LEVEL - <knockout data-bind="text: GameConstants.DISCOVER_MINE_TIMEOUT_LEVEL_START"></knockout>)</code>
-                            </p>
+                            <p>When searching for a new specific mine or if you have not found all items in your current mine, the discovery time starts at <knockout data-bind="text: GameConstants.formatTimeFullLetters(GameConstants.DISCOVER_MINE_TIMEOUT_BASE)"></knockout> and is reduced by <knockout data-bind="text: GameConstants.formatTimeFullLetters(GameConstants.DISCOVER_MINE_TIMEOUT_REDUCTION_PER_LEVEL)"></knockout> for every level past level <knockout data-bind="text: GameConstants.DISCOVER_MINE_TIMEOUT_LEVEL_START"></knockout>.</p>
 
                             <h4>Amount of Treasure</h4>
                             <p>The amount of treasure a player can find is random, between the minimum (inclusive) and maximum (inclusive), and increases as their Underground Level increases:</p>
@@ -60637,10 +60637,6 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                     </div>
 
                     <div class="card-body">
-                        <div class="mb-3">
-                            Discovery time: <knockout data-bind="text: GameConstants.formatTime(UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType))"></knockout>
-                        </div>
-
                         <h6>Potential treasures</h6>
                         <div>
                             <!-- ko foreach: UndergroundController.getMineConfig(App.game.underground.autoSearchMineType).getAvailableItems() -->
@@ -60650,6 +60646,10 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                     </div>
 
                     <div class="card-footer">
+                        <div class="small">
+                            Discovery time: <knockout data-bind="text: GameConstants.formatTime(UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType))"></knockout>
+                        </div>
+
                         <button class="btn btn-primary" data-bind="click: () => App.game.underground.generateMine(App.game.underground.autoSearchMineType);" data-dismiss="modal">Search for mine</button>
                     </div>
                 </div>
