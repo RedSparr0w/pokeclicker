@@ -56999,11 +56999,11 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <div class="container">
             <div class="row d-flex justify-content-center flex-wrap" style="gap: 2px;">
                 <!-- ko foreach: [UndergroundToolType.Chisel, UndergroundToolType.Hammer, UndergroundToolType.Bomb, UndergroundToolType.Survey] -->
-                <!-- ko let: { tool: App.game.undergroundTools.getTool($data) } -->
+                <!-- ko let: { tool: App.game.underground.tools.getTool($data) } -->
                 <div class="tool-ui" style="flex: 1; min-width: 50px;" data-bind="class: `${UndergroundToolType[$data]}-tool-ui`">
                     <div class="p-0 d-flex justify-content-center" data-bind="css: { 'clickable': [UndergroundToolType.Bomb, UndergroundToolType.Survey].includes($data) && Settings.getSetting('enableUndergroundModuleMineControls').observableValue() }, click: () => {
                         if ([UndergroundToolType.Bomb, UndergroundToolType.Survey].includes($data) && Settings.getSetting('enableUndergroundModuleMineControls').observableValue()) {
-                            App.game.undergroundTools.useTool($data, 0, 0);
+                            App.game.underground.tools.useTool($data, 0, 0);
                         }
                     }">
                         <div style="position: relative; width: 100%; max-width: 50px; aspect-ratio: 1; padding: 2px; border-radius: 10px;" data-bind="style: { background: `conic-gradient(transparent ${(1 - (tool.cooldownForDisplay() / tool.cooldownTime)).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 })}, var(--tool-color) 0)` }">
@@ -60147,9 +60147,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <div id="mineBody" style="margin:auto; background-image: url('../assets/images/underground/rock0.png');"
                                  data-bind="css: {
                                     'disabled': App.game.underground.mine.timeUntilDiscovery > 0 || App.game.underground.mine.completed,
-                                    'tool-cooldown': App.game.undergroundTools.getTool(App.game.undergroundTools.selectedToolType).cooldownForDisplay() > 0
+                                    'tool-cooldown': App.game.underground.tools.getTool(App.game.underground.tools.selectedToolType).cooldownForDisplay() > 0
                                  },
-                                 class: `${UndergroundToolType[App.game.undergroundTools.selectedToolType]}Selected`,
+                                 class: `${UndergroundToolType[App.game.underground.tools.selectedToolType]}Selected`,
                                  style: {
                                     backgroundSize: `calc(100% / ${App.game.underground.mine?.columnCount})`,
                                  }">
@@ -60181,9 +60181,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                         <div class='row no-gutters'>
                             <div class="col-12 row no-gutters">
                                 <!-- ko foreach: [UndergroundToolType.Chisel, UndergroundToolType.Hammer, UndergroundToolType.Bomb, UndergroundToolType.Survey] -->
-                                <!-- ko let: { tool: App.game.undergroundTools.getTool($data) } -->
-                                <div class="tool-ui col card clickable" data-bind="class: `${UndergroundToolType[$data]}-tool-ui`, css: { 'border-info': App.game.undergroundTools.selectedToolType === $data }, click: () => App.game.undergroundTools.selectedToolType = $data">
-                                    <div class="card-header p-1" data-bind="css: { 'bg-info': App.game.undergroundTools.selectedToolType === $data }">
+                                <!-- ko let: { tool: App.game.underground.tools.getTool($data) } -->
+                                <div class="tool-ui col card clickable" data-bind="class: `${UndergroundToolType[$data]}-tool-ui`, css: { 'border-info': App.game.underground.tools.selectedToolType === $data }, click: () => App.game.underground.tools.selectedToolType = $data">
+                                    <div class="card-header p-1" data-bind="css: { 'bg-info': App.game.underground.tools.selectedToolType === $data }">
                                         <div data-bind="text: tool.displayName"></div>
                                     </div>
                                     <div class="card-body d-flex flex-column p-0 rounded text-center">
@@ -60348,6 +60348,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <p>
                                 There are six different types of mines you can search for in the Underground.
                                 Understanding their unique properties and the discovery times involved is crucial for efficient mining.
+                                The Underground lexicon can be found at the bottom of this page.
                             </p>
 
                             <h4>Mine Types</h4>
@@ -60379,7 +60380,18 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             </p>
 
                             <h4>Discovery Time Calculation</h4>
-                            <p>When searching for a new specific mine or if you have not found all items in your current mine, the discovery time starts at <knockout data-bind="text: GameConstants.formatTimeFullLetters(GameConstants.DISCOVER_MINE_TIMEOUT_BASE)"></knockout> and is reduced by <knockout data-bind="text: GameConstants.formatTimeFullLetters(GameConstants.DISCOVER_MINE_TIMEOUT_REDUCTION_PER_LEVEL)"></knockout> for every level past level <knockout data-bind="text: GameConstants.DISCOVER_MINE_TIMEOUT_LEVEL_START"></knockout>.</p>
+                            <p>There is a discovery time when:</p>
+                            <ul>
+                                <li>
+                                    Random Mine Type
+                                    <ul>
+                                        <li>Current mine complete - Discovery time: No</li>
+                                        <li>Current mine incomplete - Discovery time: Yes</li>
+                                    </ul>
+                                </li>
+                                <li>Other Mine Type - Discovery time: Yes</li>
+                            </ul>
+                            <p>The discovery time starts at <knockout data-bind="text: GameConstants.formatTimeFullLetters(GameConstants.DISCOVER_MINE_TIMEOUT_BASE)"></knockout> and is reduced by <knockout data-bind="text: GameConstants.formatTimeFullLetters(GameConstants.DISCOVER_MINE_TIMEOUT_REDUCTION_PER_LEVEL)"></knockout> for every level past level <knockout data-bind="text: GameConstants.DISCOVER_MINE_TIMEOUT_LEVEL_START"></knockout>.</p>
 
                             <h4>Amount of Treasure</h4>
                             <p>The amount of treasure a player can find is random, between the minimum (inclusive) and maximum (inclusive), and increases as their Underground Level increases:</p>
@@ -60396,7 +60408,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                         </div>
 
                         <div class="card-body">
-                            <p>The Underground offers <knockout data-bind="text: App.game.undergroundTools.tools.length"></knockout> powerful tools to aid in your mining and exploration. Each tool has a unique function, and understanding how to use them effectively is crucial for maximizing your mining efficiency.</p>
+                            <p>The Underground offers <knockout data-bind="text: App.game.underground.tools.tools.length"></knockout> powerful tools to aid in your mining and exploration. Each tool has a unique function, and understanding how to use them effectively is crucial for maximizing your mining efficiency.</p>
 
                             <h4>Cooldown systems</h4>
                             <ul>
@@ -60420,18 +60432,18 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <p>A tool only counts as used if its action is successful, meaning it accomplishes its intended task (e.g., mining layers or indicating tiles).</p>
 
                             <h4>Tools Overview</h4>
-                            <p>There are <knockout data-bind="text: App.game.undergroundTools.tools.length"></knockout> different tools available, each with unique functions and properties:</p>
-                            <!-- ko let: { tool: App.game.undergroundTools.getTool(UndergroundToolType.Chisel) } -->
+                            <p>There are <knockout data-bind="text: App.game.underground.tools.tools.length"></knockout> different tools available, each with unique functions and properties:</p>
+                            <!-- ko let: { tool: App.game.underground.tools.getTool(UndergroundToolType.Chisel) } -->
                             <div data-bind="template: { name: 'helpToolTemplate', data: { tool, action: 'Mines 2 layers on the selected spot.' } }"></div>
                             <!-- /ko -->
-                            <!-- ko let: { tool: App.game.undergroundTools.getTool(UndergroundToolType.Hammer) } -->
+                            <!-- ko let: { tool: App.game.underground.tools.getTool(UndergroundToolType.Hammer) } -->
                             <div data-bind="template: { name: 'helpToolTemplate', data: { tool, action: 'Mines 1 layer on all 9 tiles in a 3x3 grid.' } }"></div>
                             <!-- /ko -->
-                            <!-- ko let: { tool: App.game.undergroundTools.getTool(UndergroundToolType.Bomb) } -->
+                            <!-- ko let: { tool: App.game.underground.tools.getTool(UndergroundToolType.Bomb) } -->
                             <div data-bind="template: { name: 'helpToolTemplate', data: { tool, action: 'Mines a maximum of 2 layers on each of 10 random tiles (both mined and cleared). The number of tiles increases when equipped with the Explosive Charge Oak Item.' } }"></div>
                             <!-- /ko -->
-                            <!-- ko let: { tool: App.game.undergroundTools.getTool(UndergroundToolType.Survey) } -->
-                            <div data-bind="template: { name: 'helpToolTemplate', data: { tool, action: `Indicates a ${GameConstants.SURVEY_RANGE_BASE}x${GameConstants.SURVEY_RANGE_BASE} grid where at least one tile contains an item. The grid shrinks by two tiles on each side every ${GameConstants.SURVEY_RANGE_REDUCTION_LEVELS} levels.` } }"></div>
+                            <!-- ko let: { tool: App.game.underground.tools.getTool(UndergroundToolType.Survey) } -->
+                            <div data-bind="template: { name: 'helpToolTemplate', data: { tool, action: `Indicates a ${GameConstants.SURVEY_RANGE_BASE}x${GameConstants.SURVEY_RANGE_BASE} grid where at least one tile contains an item. The grid shrinks by two tiles in each direction every ${GameConstants.SURVEY_RANGE_REDUCTION_LEVELS} levels.` } }"></div>
                             <!-- /ko -->
                         </div>
                     </div>
@@ -60500,9 +60512,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <ul>
                                 <li><strong>Tools:</strong> Each tool grants a certain amount of experience each time it is used successfully.
                                     <ul>
-                                        <li><strong>Chisel:</strong> <knockout data-bind="text: App.game.undergroundTools.getTool(UndergroundToolType.Chisel).experiencePerUse"></knockout> experience</li>
-                                        <li><strong>Hammer:</strong> <knockout data-bind="text: App.game.undergroundTools.getTool(UndergroundToolType.Hammer).experiencePerUse"></knockout> experience</li>
-                                        <li><strong>Bomb:</strong> <knockout data-bind="text: App.game.undergroundTools.getTool(UndergroundToolType.Bomb).experiencePerUse"></knockout> experience</li>
+                                        <li><strong>Chisel:</strong> <knockout data-bind="text: App.game.underground.tools.getTool(UndergroundToolType.Chisel).experiencePerUse"></knockout> experience</li>
+                                        <li><strong>Hammer:</strong> <knockout data-bind="text: App.game.underground.tools.getTool(UndergroundToolType.Hammer).experiencePerUse"></knockout> experience</li>
+                                        <li><strong>Bomb:</strong> <knockout data-bind="text: App.game.underground.tools.getTool(UndergroundToolType.Bomb).experiencePerUse"></knockout> experience</li>
                                     </ul>
                                 </li>
                                 <li>
@@ -60537,7 +60549,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card mb-2">
                         <div class="card-header d-flex align-items-center p-0">
                             <span class="flex-grow-1 text-center font-weight-bold">Oak Items</span>
                         </div>
@@ -60559,6 +60571,20 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <ul>
                                 <li><strong>Progress:</strong> Gains progress to level up when finding an item in a mine</li>
                                 <li><strong>Effect:</strong> Has a chance to duplicate a found item. Keeps attempting to duplicate until it fails a chance</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header d-flex align-items-center p-0">
+                            <span class="flex-grow-1 text-center font-weight-bold">Lexicon</span>
+                        </div>
+
+                        <div class="card-body">
+                            <ul>
+                                <li><strong>Seen Item:</strong> At least 1 part of the item is visible to the player</li>
+                                <li><strong>Found Item:</strong> All parts of the item are visible to the player, the item has been claimed</li>
+                                <li><strong>Completed Mine:</strong> All buried items have been found</li>
                             </ul>
                         </div>
                     </div>
