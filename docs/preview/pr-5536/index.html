@@ -4921,45 +4921,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
         
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+<image
     x="432"
     y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Oak&#39;s Blimp"
     x="432"
     y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Oak\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Pallet Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Pallet Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Oak').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-        
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="432"
-    y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Oak&#39;s Blimp"
-    x="432"
-    y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Oak\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
         
@@ -9890,46 +9867,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+    
+<image
     x="1184"
     y="720"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Elm&#39;s Blimp"
     x="1184"
     y="720"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Elm\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('New Bark Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('New Bark Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Elm').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="1184"
-    y="720"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Elm&#39;s Blimp"
-    x="1184"
-    y="720"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Elm\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
      
@@ -13301,45 +13255,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+<image
     x="304"
-    y="688"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    y="736"
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Birch&#39;s Blimp"
     x="304"
-    y="688"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Birch\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    y="736"
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Littleroot Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Littleroot Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Birch').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-    
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="304"
-    y="688"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Birch&#39;s Blimp"
-    x="304"
-    y="688"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Birch\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
         
@@ -18038,46 +17969,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+    
+<image
     x="192"
     y="848"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Rowan&#39;s Blimp"
     x="192"
     y="848"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Rowan\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Twinleaf Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Twinleaf Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Rowan').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="192"
-    y="848"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Rowan&#39;s Blimp"
-    x="192"
-    y="848"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Rowan\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
      
@@ -21105,45 +21013,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
-    x="160"
+<image
+    x="176"
     y="768"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Juniper&#39;s Blimp"
-    x="160"
+    x="176"
     y="768"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Juniper\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Aspertia City') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Aspertia City'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Juniper').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-    
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="160"
-    y="768"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Juniper&#39;s Blimp"
-    x="160"
-    y="768"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Juniper\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
     
@@ -23754,46 +23639,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+    
+<image
     x="912"
     y="832"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Sycamore&#39;s Blimp"
     x="912"
     y="832"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Sycamore\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Vaniville Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Vaniville Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Sycamore').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="912"
-    y="832"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Sycamore&#39;s Blimp"
-    x="912"
-    y="832"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Sycamore\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
      
@@ -27576,46 +27438,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
         
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+<image
     x="1152"
-    y="480"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    y="464"
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Kukui&#39;s Blimp"
     x="1152"
-    y="480"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Kukui\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    y="464"
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Iki Town Outskirts') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Iki Town Outskirts'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Kukui').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-        
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="1152"
-    y="480"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Kukui&#39;s Blimp"
-    x="1152"
-    y="480"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Kukui\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
-
 
         
 
@@ -39726,45 +39564,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
         
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+<image
     x="784"
-    y="864"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    y="848"
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Magnolia&#39;s Blimp"
     x="784"
-    y="864"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Magnolia\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    y="848"
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Postwick') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Postwick'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Magnolia').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-        
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="784"
-    y="864"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Magnolia&#39;s Blimp"
-    x="784"
-    y="864"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Magnolia\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
         
@@ -55006,46 +54821,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+      
+<image
     x="32"
     y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Laventon&#39;s Blimp"
     x="32"
     y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Laventon\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Prelude Beach') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Prelude Beach'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Laventon').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="32"
-    y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Laventon&#39;s Blimp"
-    x="32"
-    y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Laventon\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
      
@@ -56340,46 +56132,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+    
+<image
     x="1504"
     y="912"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Instructor Jacq&#39;s Blimp"
     x="1504"
     y="912"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Instructor Jacq\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Cabo Poco') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Cabo Poco'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Instructor Jacq').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="1504"
-    y="912"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Instructor Jacq&#39;s Blimp"
-    x="1504"
-    y="912"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Instructor Jacq\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 </g>
 
@@ -59249,7 +59018,9 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
            </div>
            <div class="modal-body">
                <p>
+                   <!-- ko if: App.game.challenges.list.requireCompletePokedex.active() -->
                    <strong>Congratulations on completing the <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion()])"></span> Pokédex!</strong><br/>
+                   <!-- /ko -->
                    You can now travel on to <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span>!<br/>
                    <br/>
                    <strong>There are a few things you should know before you depart:</strong><br/>
@@ -59258,7 +59029,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
                    When Pokémon are in a Region they're not native to, they will only retain <strong data-bind="text: App.game.party.getRegionAttackMultiplier(player.highestRegion() + 1).toLocaleString('en-US',{style: 'percent'})"></strong> of their total attack.<br/><br/>
                    <!-- /ko -->
                    <!-- ko if: player.highestRegion() - 2 >= GameConstants.Region.kanto -->
-                   Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br /><br/>
+                   Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br/><br/>
                    <!-- /ko -->
                    You will also have to progress to the Dock in <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span> before you are able to travel between regions again.
                </p>
