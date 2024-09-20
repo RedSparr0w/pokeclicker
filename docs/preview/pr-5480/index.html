@@ -60286,8 +60286,6 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                 <div data-bind="text: GameConstants.formatTime(App.game.underground.mine.timeUntilDiscovery)"></div>
                             </div>
                             <!-- /ko -->
-
-                            <div data-bind="text: App.game.underground.mine && App.game.underground.mine.timeUntilDiscovery < 0 ? GameConstants.formatTime(-App.game.underground.mine.timeUntilDiscovery) : 'xx:xx:xx'"></div>
                         </div>
 
                         <div class='row no-gutters'>
@@ -60340,12 +60338,13 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             </div>
                         </div>
 
-                        <!-- ko if: App.game.oakItems.isActive(OakItemType.Cell_Battery) -->
                         <div class="card">
                             <div class="card-header p-2 font-weight-bold position-relative">
                                 Battery
                                 <button class="btn btn-primary" style="position: absolute; right: 0px; top: 0px; width: auto; height: 100%;" data-bind="click: () => $('#undergroundBatteryModal').modal('show');">?</button>
                             </div>
+
+                            <!-- ko if: App.game.oakItems.isActive(OakItemType.Cell_Battery) -->
                             <div class="card-body p-2">
                                 <div class="progress mb-2" style='height: 15px; min-height: 15px;'>
                                     <div class="progress-bar" role="progressbar"
@@ -60357,8 +60356,13 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
 
                                 <button class="btn btn-primary" data-bind="click: () => App.game.underground.battery.discharge(), attr: { disabled: App.game.underground.battery.charges < App.game.underground.battery.maxCharges }">Discharge</button>
                             </div>
+                            <!-- /ko -->
+                            <!-- ko ifnot: App.game.oakItems.isActive(OakItemType.Cell_Battery) -->
+                            <div class="card-body p-2">
+                                <p>Equip your Cell Battery Oak Item to use the Battery.</p>
+                            </div>
+                            <!-- /ko -->
                         </div>
-                        <!-- /ko -->
                         <!-- /ko -->
                     </div>
                 </div>
@@ -60374,7 +60378,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <div class="row">
                                 <!-- ko foreach: UndergroundItems.list.filter(item => item.valueType === $data) -->
                                 <div class="col-6 col-lg-3 mb-2" data-bind="visible: $data.isUnlocked()">
-                                    <div class="btn btn-secondary text-left w-100 px-1" style="cursor: default; padding-top: 1px; padding-bottom: 2px;"
+                                    <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
                                          data-bind="
                                             css: { 'bg-info': UndergroundTrading.selectedTradeFromItem === $data },
                                             template: { name: 'otherItemTemplate', data: $data.itemName },
@@ -60947,7 +60951,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                         <div class="row">
                             <!-- ko foreach: UndergroundTrading.tradeToItemList -->
                             <div class="col-6 col-lg-3 mb-2" data-bind="visible: $data.isUnlocked()">
-                                <div class="btn btn-secondary text-left w-100 px-1" style="cursor: default; padding-top: 1px; padding-bottom: 2px;"
+                                <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
                                      data-bind="
                                         css: { 'bg-info': UndergroundTrading.selectedTradeToItem === $data },
                                         template: { name: 'otherItemTemplate', data: $data.itemName },
@@ -61064,8 +61068,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <thead>
                             <tr>
                                 <th>Tier</th>
-                                <th colspan="2">Name</th>
-                                <th>Requirements</th>
+                                <th></th>
+                                <th class="text-left">Name</th>
+                                <th class="text-left">Requirements</th>
                                 <th>Chance</th>
                             </tr>
                             </thead>
@@ -61082,7 +61087,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             }, visible: !$data.canAccess()" />
                                 </td>
                                 <td class="vertical-middle text-left" data-bind="text: $data.name"></td>
-                                <td class="vertical-middle" data-bind="text: !$data.canAccess() ? $data.hint : ''"></td>
+                                <td class="vertical-middle text-left" data-bind="text: !$data.canAccess() ? $data.hint : ''"></td>
                                 <td class="vertical-middle" data-bind="text: $data.canAccess() ? ($data.weight / App.game.underground.battery.patterns.filter(p => p.canAccess()).reduce((prev, cur) => prev + cur.weight, 0)).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '-'"></td>
                             </tr>
                             <!-- /ko -->
