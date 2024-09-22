@@ -487,19 +487,21 @@
                                 <h4>Evolution Items</h4>
                                 <div class="scrolling-div" data-bind="foreach: Object.keys(GameConstants.StoneType).filter(stone => isNaN(stone) && stone !== 'None')">
                                     <div class="col-12 evolutionListItem">
-                                        <button class="btn btn-secondary smallButton list-group-item-action" style="cursor: pointer; padding-right:15px"
+                                        <button class="btn btn-secondary smallButton list-group-item-action pl-2"
                                                 data-bind="css:{'item-selected': ItemHandler.stoneSelected() === $data},
                                                     click: function(){ ItemHandler.stoneSelected($data); ItemHandler.pokemonSelected('')},
                                                     visible: ItemList[$data].unlockedRegion <= player.highestRegion() || player.amountOfItem($data) > 0">
-                                            <img data-bind="attr: {src: ItemList[$data].image }" style="max-width: 32px; margin: -10px; padding: 12px 0px;">
-                                            <div class="d-inline-block" data-bind="text: ItemList[$data].displayName" style="margin-left: 20px; margin-top:8px;"></div>
-                                            <div class="float-right" style="margin-top: 8px" data-bind="template: { name: 'pokerusStatusTemplate', data: {
+                                            <div class="d-flex align-items-center">
+                                                <img class="mr-3" data-bind="attr: {src: ItemList[$data].image }" style="max-width: 32px;">
+                                                <div class="flex-grow-1 mr-1" data-bind="text: ItemList[$data].displayName"></div>
+                                                <div class="mr-1" data-bind="text: player.itemList[$data]().toLocaleString('en-US')"></div>
+                                                <!-- ko if: ItemList[$data] instanceof CaughtIndicatingItem -->
+                                                <div class="mr-1" data-bind="template: { name: 'caughtStatusTemplate', data: {'status': ItemList[$data].getCaughtStatus()}}"></div>
+                                                <!-- /ko -->
+                                                <div data-bind="template: { name: 'pokerusStatusTemplate', data: {
                                                     'pokerus': ItemList[$data].getPokerusStatus(),
                                                     'evsProgress': ItemList[$data].getPokerusProgress() }}"></div>
-                                            <!-- ko if: ItemList[$data] instanceof CaughtIndicatingItem -->
-                                            <div class="float-right mr-1" style="margin-top: 8px;" data-bind="template: { name: 'caughtStatusTemplate', data: {'status': ItemList[$data].getCaughtStatus()}}"></div>
-                                            <!-- /ko -->
-                                            <div class="float-right mr-1" style="margin-top: 8px;" data-bind="text: player.itemList[$data]().toLocaleString('en-US')"></div>
+                                            </div>
                                         </button>
                                     </div>
                                 </div>
@@ -516,19 +518,19 @@
                                 <h4>Pokémon</h4>
                                 <div class="scrolling-div"
                                     data-bind="foreach: PartyController.getPokemonsWithEvolution(GameConstants.StoneType[ItemHandler.stoneSelected()])">
-                                    <div class="col-12 evolutionListItem"> <!--offset-sm-1 offset-md-0 offset-md-0 -->
-                                        <button class="btn btn-secondary smallButton list-group-item-action" style="padding-right:15px"
-                                                data-bind="click: function() {ItemHandler.pokemonSelected(name)}, css:{ 'pokemon-selected': ItemHandler.pokemonSelected() === name}">
-                                            <img class="smallImage" data-bind="attr:{src: 'assets/images/' + (App.game.party.alreadyCaughtPokemon($data.id, true) ? 'shiny' : '') + 'pokemon/' + id +'.png' }"/>
-                                            <div class="d-inline-block" data-bind="text: displayName" style="margin-left: 20px; margin-top: 8px;">Name</div>
-                                            <span class="mr-1" style="float: right; margin-top: 8px"  data-bind="using: { statuses: PartyController.getStoneEvolutionsPokerusData($data.id, GameConstants.StoneType[ItemHandler.stoneSelected()]) }">
-                                                <span class="stoneEvolutionStatuses" data-bind="foreach: statuses">
-                                                    <span class="" data-bind="template: { name: 'pokerusStatusTemplate', data: { pokerus: $data.status, evs: $data.evs } }"></span>
-                                                </span>
-                                            </span>
-                                            <span class="mr-1" style="float: right; margin-top: 8px"  data-bind="using: { statuses: PartyController.getStoneEvolutionsCaughtData($data.id, GameConstants.StoneType[ItemHandler.stoneSelected()]) }">
+                                    <div class="col-12 evolutionListItem">
+                                        <button class="btn btn-secondary smallButton list-group-item-action d-flex align-items-center"
+                                            data-bind="click: function() {ItemHandler.pokemonSelected(name)}, css:{ 'pokemon-selected': ItemHandler.pokemonSelected() === name}">
+                                            <img class="smallImage pr-0 mr-3" data-bind="attr:{src: 'assets/images/' + (App.game.party.alreadyCaughtPokemon($data.id, true) ? 'shiny' : '') + 'pokemon/' + id +'.png' }"/>
+                                            <span class="flex-grow-1 mr-1" data-bind="text: displayName"></span>
+                                            <span class="mr-1" data-bind="using: { statuses: PartyController.getStoneEvolutionsCaughtData($data.id, GameConstants.StoneType[ItemHandler.stoneSelected()]) }">
                                                 <span class="stoneEvolutionStatuses" data-bind="foreach: statuses">
                                                     <span class="" data-bind="template: { name: 'caughtStatusTemplate', data: $data }"></span>
+                                                </span>
+                                            </span>
+                                            <span data-bind="using: { statuses: PartyController.getStoneEvolutionsPokerusData($data.id, GameConstants.StoneType[ItemHandler.stoneSelected()]) }">
+                                                <span class="stoneEvolutionStatuses" data-bind="foreach: statuses">
+                                                    <span class="" data-bind="template: { name: 'pokerusStatusTemplate', data: { pokerus: $data.status, evs: $data.evs } }"></span>
                                                 </span>
                                             </span>
                                         </button>
@@ -1077,19 +1079,19 @@
 <script type="text/html" id="caughtStatusTemplate">
     <knockout style="display: inline;">
         <!-- ko if: $data.status == CaughtStatus.NotCaught -->
-        <img title="You have not captured this Pokémon yet!"
+        <img data-bind="tooltip: {trigger: 'hover', title: 'You have not captured this Pokémon yet!', placement: 'top'}"
              class="pokeball-smallest"
              src="assets/images/pokeball/None.svg"
         />
         <!-- /ko -->
         <!-- ko if: $data.status == CaughtStatus.Caught -->
-        <img title="You have captured this Pokémon!"
+        <img data-bind="tooltip: {trigger: 'hover', title: 'You have captured this Pokémon!', placement: 'top'}"
              class="pokeball-smallest"
              src="assets/images/pokeball/Pokeball.svg"
         />
         <!-- /ko -->
         <!-- ko if: $data.status == CaughtStatus.CaughtShiny -->
-        <img title="You have captured this Pokémon shiny!"
+        <img data-bind="tooltip: {trigger: 'hover', title: 'You have captured this Pokémon shiny!', placement: 'top'}"
              class="pokeball-smallest"
              src="assets/images/pokeball/Pokeball-shiny.svg"
         />
@@ -1874,24 +1876,27 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         class: MapHelper.calculateBattleCssClass()">
 
                     <!-- Route Battles -->
-                    <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.fighting">
+                    <div id="routeBattleContainer" class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.fighting">
                         <div class="col no-gutters clickable" data-bind="click: function() {Battle.clickAttack()}" style="height: 280px; display: block;">
-                            <h2 class="pageItemTitle" style="display: block;">
-                                <knockout>
-                                    <knockout class="right">
-                                        <div class="px-1 clickable" data-bind="tooltip: { title: 'Check the Pokémon available here', trigger: 'hover' }, click: function() { $('#routeInfoModal').modal('show') }" data-original-title="" title="">
-                                            <img src="assets/images/encountersInfo/encountersInfo.png">
-                                        </div>
-                                    </knockout>
-                                    <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon name</knockout>
-                                    <knockout data-bind="template: { name: 'caughtStatusTemplate', data: {'status': PartyController.getCaughtStatus(Battle.enemyPokemon().id)}}"></knockout>
-                                    <knockout style="position: relative; top: -1px;"
+                            <div class="pageItemTitle d-flex justify-content-center">
+                                <div class="title-left"></div>
+                                <div class="d-flex align-items-center px-2">
+                                    <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': Battle.enemyPokemon() } }" style="font-size: 1.6rem;">Pokémon name</knockout>
+                                    <knockout class="ml-2" data-bind="template: { name: 'caughtStatusTemplate', data: {'status': PartyController.getCaughtStatus(Battle.enemyPokemon().id)}}"></knockout>
+                                    <knockout class="ml-2" style="position: relative;"
                                         data-bind="template: { name: 'pokerusStatusTemplate', data: {
                                             'pokerus': PartyController.getPokerusStatus(Battle.enemyPokemon().id),
                                             'evs': App.game.party.getPokemon(Battle.enemyPokemon().id)?.evs() }}">
                                     </knockout>
-                                </knockout>
-                            </h2>
+                                </div>
+                                <div class="title-right">
+                                    <div class="d-flex align-items-center mr-1 ml-auto" data-bind="using: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(player.town.name)]()">
+                                        <div class="px-1 clickable" data-bind="tooltip: { title: 'See the Pokémon available on this route.', trigger: 'hover' }, click: function() { $('#routeInfoModal').modal('show') }" data-original-title="" title="">
+                                            <img src="assets/images/encountersInfo/encountersInfo.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div>
                                 <div data-bind="visible: !Battle.catching()">
                                     <knockout data-bind="template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon sprite</knockout>
@@ -1921,22 +1926,19 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                     <td width="50%">
                                       <span style="display: inline;">
                                         <knockout data-bind="text: Routes.getName(player.route, player.region)"></knockout>
-                                        <!--If all Pokémon on the route are caught-->
-                                        <knockout data-bind="if: (!RouteHelper.routeCompleted(player.route, player.region, true) && RouteHelper.routeCompleted(player.route, player.region, false))">
-                                            <img title="You have captured all Pokémon on this route!" class="pokeball-smallest"
-                                                 src="assets/images/pokeball/Pokeball.svg"/>
-                                        </knockout>
-
-                                        <!--If all Pokémon on the route are caught shiny-->
-                                        <knockout data-bind="if: RouteHelper.routeCompleted(player.route, player.region, true)">
-                                            <img title="You have captured all Pokémon shiny on this route!" class="pokeball-smallest"
-                                                 src="assets/images/pokeball/Pokeball-shiny.svg"/>
+                                        <!--If all Pokémon in the dungeon are caught or caught shiny-->
+                                        <knockout data-bind="if: RouteHelper.routeCompleted(player.route, player.region, false)">
+                                            <img class="pokeball-smallest"
+                                                 data-bind="attr: { src: `assets/images/pokeball/Pokeball${RouteHelper.routeCompleted(player.route, player.region, true) ? '-shiny' : ''}.svg`},
+                                                 tooltip: {
+                                                trigger: 'hover', placement: 'bottom', title: `You have captured all Pokémon${RouteHelper.routeCompleted(player.route, player.region, true) ? ' shiny' : ''} on this route!`
+                                              }"/>
                                         </knockout>
 
                                         <!--Pokérus image-->
                                         <knockout data-bind="if: RouteHelper.minPokerusCheck(RouteHelper.getAvailablePokemonList(player.route, player.region, true))">
-                                            <img data-bind="attr:{ src: 'assets/images/breeding/pokerus/' + GameConstants.Pokerus[RouteHelper.minPokerus(RouteHelper.getAvailablePokemonList(player.route, player.region, true))] + '.png',
-                                                title: RouteHelper.routePokerusEVs(player.route, player.region)}"
+                                            <img data-bind="attr:{ src: 'assets/images/breeding/pokerus/' + GameConstants.Pokerus[RouteHelper.minPokerus(RouteHelper.getAvailablePokemonList(player.route, player.region, true))] + '.png' },
+                                            tooltip: { title: RouteHelper.routePokerusEVs(player.route, player.region), trigger: 'hover', placement: 'bottom', html: true }"
                                           src=""/>
                                         </knockout>
                                       </span>
@@ -2074,25 +2076,26 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
               <tr>
                 <td width="50%">
                   <knockout data-bind="text: DungeonRunner.dungeon.name">Dungeon name</knockout>
-                  <!--If all Pokémon in the dungeon are caught-->
-                  <knockout data-bind="if: (!DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, true) && DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, false))">
-                      <img title="You have captured all Pokémon in this dungeon!" class="pokeball-smallest"
-                           src="assets/images/pokeball/Pokeball.svg"/>
-                  </knockout>
-
-                  <!--If all Pokémon in the dungeon are caught shiny-->
-                  <knockout data-bind="if: DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, true)">
-                      <img title="You have captured all Pokémon shiny in this dungeon!"
-                           class="pokeball-smallest"
-                           src="assets/images/pokeball/Pokeball-shiny.svg"/>
+                  <!--If all Pokémon in the dungeon are caught or caught shiny-->
+                  <knockout data-bind="if: DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, false)">
+                      <img class="pokeball-smallest"
+                           data-bind="attr: { src: `assets/images/pokeball/Pokeball${DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, true) ? '-shiny' : ''}.svg`},
+                           tooltip: {
+                            trigger: 'hover', placement: 'bottom', title: `You have captured all Pokémon${DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, true) ? ' shiny' : ''} in this dungeon!`
+                        }"/>
                   </knockout>
 
                   <!--Pokérus image-->
                   <knockout data-bind="if: RouteHelper.minPokerusCheck(DungeonRunner.dungeon.allAvailablePokemon())">
-                      <img data-bind="attr:{ src: 'assets/images/breeding/pokerus/' + GameConstants.Pokerus[RouteHelper.minPokerus(DungeonRunner.dungeon.allAvailablePokemon())] + '.png',
-                            title: RouteHelper.dungeonPokerusEVs(DungeonRunner.dungeon)}"
+                      <img data-bind="attr:{ src: 'assets/images/breeding/pokerus/' + GameConstants.Pokerus[RouteHelper.minPokerus(DungeonRunner.dungeon.allAvailablePokemon())] + '.png' },
+                      tooltip: { title: RouteHelper.dungeonPokerusEVs(DungeonRunner.dungeon), trigger: 'hover', placement: 'bottom', html: true }"
                     src=""/>
                   </knockout>
+
+                  <!-- ko if: player.town.dungeon.allAvailableShadowPokemon().length -->
+                  <img height="19" src="assets/images/status/shadow.svg" data-bind="
+                    css: { 'dungeon-pokemon-locked': player.town.dungeon.allAvailableShadowPokemon().some(p => (App.game.party.getPokemonByName(p)?.shadow ?? GameConstants.ShadowStatus.None) < GameConstants.ShadowStatus.Shadow) },"/>
+                  <!-- /ko -->
                 </td>
                 <td width="50%">
                   <knockout data-bind="text: `${App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(DungeonRunner.dungeon.name)]().toLocaleString('en-US')} Clears`"></knockout>
@@ -2360,14 +2363,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <div class="title-left" data-bind="if: isDungeon">
                     <div class="d-flex align-items-center ml-1 mr-auto">
                         <div class="d-flex flex-column">
-                            <!--If all Pokémon in the dungeon are caught-->
-                            <div data-bind="if: (!DungeonRunner.dungeonCompleted(player.town.dungeon, true) && DungeonRunner.dungeonCompleted(player.town.dungeon, false))" style="font-size: 0;">
-                                <img title="You have captured all Pokémon in this dungeon!" class="pokeball-smallest ml-0" src="assets/images/pokeball/Pokeball.svg" />
-                            </div>
-
-                            <!--If all Pokémon in the dungeon are caught shiny-->
-                            <div data-bind="if: DungeonRunner.dungeonCompleted(player.town.dungeon, true)" style="font-size: 0;">
-                                <img title="You have captured all Pokémon shiny in this dungeon!" class="pokeball-smallest ml-0" src="assets/images/pokeball/Pokeball-shiny.svg"/>
+                            <!--If all Pokémon in the dungeon are caught or caught shiny-->
+                            <div data-bind="if: DungeonRunner.dungeonCompleted(player.town.dungeon, false)" style="font-size: 0;">
+                                <img class="pokeball-smallest ml-0" data-bind="attr: { src: `assets/images/pokeball/Pokeball${DungeonRunner.dungeonCompleted(player.town.dungeon, true) ? '-shiny' : ''}.svg` },
+                                tooltip: { trigger: 'hover', placement: 'bottom', title: `You have captured all Pokémon${DungeonRunner.dungeonCompleted(player.town.dungeon, true) ? ' shiny' : ''} in this dungeon!`}"/>
                             </div>
 
                             <!--Pokérus image-->
@@ -2377,7 +2376,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 tooltip: {
                                     title: RouteHelper.dungeonPokerusEVs(player.town.dungeon),
                                     placement: 'bottom',
-                                    trigger: 'hover'
+                                    trigger: 'hover',
+                                    html: true
                                 }" />
                             </div>
                         </div>
@@ -2396,15 +2396,25 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center px-2" style="font-size: 1.8rem;" data-bind="text: player.town.name">Town Name</div>
+                <div class="d-flex justify-content-center px-2" style="font-size: 1.8rem;">
+                    <knockout data-bind="text: player.town.name">Town Name</knockout>
+                </div>
 
                 <div class="title-right" data-bind="if: isDungeon && QuestLineHelper.isQuestLineCompleted('Tutorial Quests')">
-                    <div class="d-flex flex-column justify-content-center small mr-1 ml-auto" data-bind="using: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(player.town.name)]()">
-                        <div style="line-height: normal;" data-bind="text: $data.toLocaleString('en-US')">0</div>
-                        <div style="line-height: normal;">clears</div>
-                    </div>
-                    <div class="px-1 clickable d-inline-block ml-1" style="align-self: center;" data-bind="tooltip: { title: 'Check the Loot available here', trigger: 'hover' }, click: function() { $('#dungeonInfoModal').modal('show') }" data-original-title="" title="">
-                        <img src="assets/images/encountersInfo/encountersInfo.png">
+                    <div class="d-flex ml-auto">
+                        <knockout class="h4 text-danger no-emoji-font mr-2 mb-0 align-self-center" data-bind="
+                            visible: player.highestRegion() - 2 > player.region,
+                            tooltip: {
+                                title: 'This dungeon is debuffed and will be significantly less likely to drop Epic, Legendary, and Mythic loot.',
+                                trigger: 'hover',
+                            }">⚠</knockout>
+                        <div class="d-flex flex-column justify-content-center small mr-1" data-bind="using: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(player.town.name)]()">
+                            <div style="line-height: normal;" data-bind="text: $data.toLocaleString('en-US')">0</div>
+                            <div style="line-height: normal;">clears</div>
+                        </div>
+                        <div class="px-1 clickable d-inline-block ml-1 align-self-center" data-bind="tooltip: { title: 'See the Loot available in this dungeon.', trigger: 'hover' }, click: function() { $('#dungeonInfoModal').modal('show') }" data-original-title="" title="">
+                            <img src="assets/images/encountersInfo/encountersInfo.png">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2576,13 +2586,13 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <!-- ko if: App.game.gameState === GameConstants.GameState.dungeon -->
                 <div id="dungeonMap" class="card sortable-disabled border-secondary mb-3 dungeon no-select">
                     <div class="card-header p-0">
-                        <div style="position: absolute; left: 2px">
-                            <img title="Chests opened in current dungeon" src="assets/images/dungeons/chest.png" height="25px" />
+                        <div style="position: absolute; left: 2px" data-bind="tooltip: { trigger: 'hover', title: 'Chests opened in current dungeon' }">
+                            <img src="assets/images/dungeons/chest.png" height="25px" />
                             <span data-bind="text: `${DungeonRunner.chestsOpened()}/${DungeonRunner.map.totalChests()}`"></span>
                         </div>
-                        
-                        <div style="position: absolute; right: 4px">
-                            <img title="Encounters won in current dungeon" src="assets/images/dungeons/encounter.png" height="25px" />
+
+                        <div style="position: absolute; right: 4px" data-bind="tooltip: { trigger: 'hover', title: 'Encounters won in current dungeon' }">
+                            <img src="assets/images/dungeons/encounter.png" height="25px" />
                             <span data-bind="text: `${DungeonRunner.encountersWon()}/${DungeonRunner.map.totalFights()}`"></span>
                         </div>
                         <span data-bind="text: `${DungeonRunner.dungeon.name}`"></span>
@@ -23660,6 +23670,69 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
      
 
+<image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
+    x="896"
+    y="688"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Shauna 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Shauna 1&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Shauna"
+    x="896"
+    y="688"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Shauna 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Shauna 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Shauna 1&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Shauna'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/tierno.png" xlink:href="assets/images/map/tierno.png"
+    x="608"
+    y="448"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Tierno 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Tierno 1&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Tierno"
+    x="608"
+    y="448"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Tierno 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Tierno 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Tierno 1&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Tierno'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/trevortierno.png" xlink:href="assets/images/map/trevortierno.png"
+    x="448"
+    y="464"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;] &amp;&amp; TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Trevor &amp; Pokémon Trainer Tierno"
+    x="448"
+    y="464"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;] &amp;&amp; TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Trevor &amp; Pokémon Trainer Tierno'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="224"
     y="240"
@@ -23737,6 +23810,69 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;Calem 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Calem 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Calem 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Calem'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Shauna 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Shauna 2&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Shauna"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Shauna 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Shauna 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Shauna 2&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Shauna'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/tierno.png" xlink:href="assets/images/map/tierno.png"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Tierno 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Tierno 2&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Tierno"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Tierno 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Tierno 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Tierno 2&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Tierno'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Trevor&#39;] &amp;&amp; TemporaryBattleList[&#39;Trevor&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Trevor"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Trevor&#39;] &amp;&amp; TemporaryBattleList[&#39;Trevor&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Trevor&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Trevor'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
 </image>
@@ -59102,7 +59238,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
                         <div class="d-flex align-items-center">
                             <img width="32px" height="32px" data-bind='attr: { src: Gems.image(gemIndex()) }'/>
                             <div class="flex-grow-1 text-center">
-                                <div class="badge text-light px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="style: { 'background-color': TypeColor[gemIndex()] }">
+                                <div class="badge text-light px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="style: { 'background-color': GameConstants.TypeColor[gemIndex()] }">
                                   <strong data-bind="text: PokemonType[gemIndex()]"></strong>
                                 </div>
                                 <div data-bind="text: App.game.gems.gemWallet[gemIndex()]()?.toLocaleString('en-US')"></div>
@@ -59126,7 +59262,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
 
                                         <div>
                                             <!-- ko foreach: TypeHelper.typeMatrix[gemIndex()].map((value, index) => value === TypeHelper.typeToValue($index()) ? index : -1).filter(value => value >= 0) -->
-                                            <span class="badge text-light px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="style: { 'background-color': TypeColor[$data] }">
+                                            <span class="badge text-light px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="style: { 'background-color': GameConstants.TypeColor[$data] }">
                                               <small><strong data-bind="text: PokemonType[$data]"></strong></small>
                                             </span>
                                             <!-- /ko -->
@@ -59142,7 +59278,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
                                     <div class="p-0">
                                         <div class="d-flex" style="gap: 1px">
                                             <!-- ko foreach: [...Array(10).keys()] -->
-                                            <div class="flex-grow-1" style="height: 5px" data-bind="style: { 'background-color': TypeColor[gemIndex()], filter: `brightness(${App.game.gems.getGemUpgrade(gemIndex(), $parentContext.$index()) > $index() ? 1 : 0.5})` }"></div>
+                                            <div class="flex-grow-1" style="height: 5px" data-bind="style: { 'background-color': GameConstants.TypeColor[gemIndex()], filter: `brightness(${App.game.gems.getGemUpgrade(gemIndex(), $parentContext.$index()) > $index() ? 1 : 0.5})` }"></div>
                                             <!-- /ko -->
                                         </div>
                                     </div>
