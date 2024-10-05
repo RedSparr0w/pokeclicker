@@ -64719,7 +64719,7 @@ aria-labelledby="purifyChamberModalLabel">
             </div>
 
             <div data-bind="if: BlendingController.blendingModalTabSelected() === 'blendingRecipeView'">
-                <div class="modal-header text-center">                        
+                <div class="modal-header text-center">
                     <table style="width: 100%; table-layout:fixed; font-size: larger;">
                         <tr class="text-light">
                         <th class="bg-dark" colspan="5">Flavor Bank</th>
@@ -64887,11 +64887,11 @@ aria-labelledby="purifyChamberModalLabel">
 
                     <div class="modal-body">
                         <div>
-                            <div class="row justify-content-center" data-bind="foreach: BlendingController.getPokeblockList()">
+                            <div class="row justify-content-center" data-bind="foreach: BlendingRecipes.getFullBlendingRecipeList()">
                                 <div class="col-6 col-sm-4 col-lg-3">
                                 <button class="shopItem clickable btn btn-block btn-secondary"
-                                    data-bind="click: function() {BlendingController.selectedPokeBlock($data);},
-                                    css: { active: BlendingController.selectedPokeBlock() == $data },
+                                    data-bind="click: function() {BlendingController.selectedRecipe($data);},
+                                    css: { active: BlendingController.selectedRecipe() == $data },
                                     tooltip: {
                                         title: $data.description ? `<u>${$data.displayName}:</u><br/>${$data.description}` : '',
                                         trigger: 'hover',
@@ -64899,7 +64899,7 @@ aria-labelledby="purifyChamberModalLabel">
                                         boundary: 'viewport',
                                         html: true
                                         }">
-                                    <img src="" height="48px" style="image-rendering: pixelated;" data-bind="attr:{ src: $data.image }">
+                                    <img src="" height="48px" style="image-rendering: pixelated;" data-bind="attr:{ src: ItemList[$data.item].image }">
                                     <p data-bind="text: $data.displayName">Item Name</p>
                                         <div style="display: flex; flex-direction:column; align-items: center; justify-content: center;">
                                             <table style="width: 100%;">
@@ -64908,19 +64908,19 @@ aria-labelledby="purifyChamberModalLabel">
                                                             <th class="align-middle" colspan="5" style="text-decoration: underline; font-weight: normal;">Flavor Cost</th>
                                                         </tr>
                                                         <tr class="text-dark" style="font-weight: bold;">
-                                                            <!-- ko foreach: $data.flavors.filter(f => f.value > 0) -->
+                                                            <!-- ko foreach: $data.flavorPrice.filter(f => f.value > 0) -->
                                                                 <td data-bind="text: FlavorType[$data.type]">Flavor</td>
                                                             <!-- /ko -->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <!-- ko foreach: $data.flavors.filter(f => f.value > 0) -->
+                                                            <!-- ko foreach: $data.flavorPrice.filter(f => f.value > 0) -->
                                                                 <td data-bind="text: $data.value">Value</td>
                                                             <!-- /ko -->
                                                         </tr>
                                                         <tr>
-                                                            <td class="align-middle" colspan="5" data-bind="text: `Amount: ${player.itemList[$data.name]().toLocaleString('en-US')}`"></td>
+                                                            <td class="align-middle" colspan="5" data-bind="text: `Amount: ${player.itemList[$data.item]().toLocaleString('en-US')}`"></td>
                                                         </tr>
                                                     </tbody>
                                             </table>
@@ -64990,7 +64990,7 @@ aria-labelledby="purifyChamberModalLabel">
                             <button class="btn btn-primary smallButton smallFont" type="button" onclick="BlendingController.maxAmount()">
                                 Max
                             </button>
-                            <button class="btn-outline-dark" data-bind="attr: {class: BlendingController.calculateButtonCss()}" onclick="App.game.blending.buyPokeblock(BlendingController.selectedPokeBlock(), BlendingController.amount())">
+                            <button class="btn-outline-dark" data-bind="attr: {class: BlendingController.calculateButtonCss()}" onclick="App.game.blending.buyPokeblock(BlendingController.selectedRecipe(), BlendingController.amount())">
                                 Buy
                             </button>
                         </div>
