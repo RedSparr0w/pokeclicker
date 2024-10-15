@@ -56923,7 +56923,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                     <!-- Shortcuts Menu -->
                     <div id="shortcutsContainer" class="card sortable border-secondary mb-3"
-    data-bind="visible: Underground.shortcutVisible() || FarmController.shortcutVisible() || ShopHandler.shortcutVisible()">
+    data-bind="visible: Underground.shortcutVisible() || FarmController.shortcutVisible() || ShopHandler.shortcutVisible() || BlendingController.shortcutVisible()">
     <div class="card-header p-0" data-toggle="collapse" href="#shortcutsBody">
         <span style="text-align:center">Shortcuts</span>
     </div>
@@ -56953,6 +56953,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
               <button class="btn btn-block btn-primary m-0" onclick="ShopHandler.showShop(pokeMartShop);" href="#shopModal" data-toggle="modal">
                   Poké Mart
                   <knockout data-bind="text: `[${Settings.getSetting('hotkey.shop').observableValue()}]`,
+                    visible: Settings.getSetting('hotkey.shop').observableValue() != 'None'"></knockout>
+              </button>
+            </td>
+          </tr>
+          <tr data-bind="visible: BlendingController.shortcutVisible">
+            <td class="p-0">
+              <button class="btn btn-block btn-primary m-0" data-bind="click: () => { $('#berryBlenderModal').modal('show') }">
+                  Berry Blender
+                  <knockout data-bind="text: `[${Settings.getSetting('hotkey.blending').observableValue()}]`,
                     visible: Settings.getSetting('hotkey.shop').observableValue() != 'None'"></knockout>
               </button>
             </td>
@@ -64833,11 +64842,11 @@ aria-labelledby="purifyChamberModalLabel">
                                                 <div style="display: flex; flex-direction: row; justify-content: space-evenly;" data-bind="foreach: $data.blendSlots">
                                                     <!-- ko if: $data.isUnlocked -->
                                                     <div>
-                                                        <div class="bg-secondary"
-                                                        style="margin: 5px; width: 40px; height: 40px;"
+                                                        <div id="blendSlots" class="blendSlotsAnimated" data-bind="visible: !$data.isEmpty()"></div>
+                                                        <div id="blendSlots" class="bg-secondary"
                                                             data-bind="ifnot: $data.isEmpty(),
-                                                            click: function(data, event){App.game.blending.insertBerry($index(), BlendingController.selectedBerry(), $parentContext.$index())},
-                                                            event: { contextmenu: function(data, event){App.game.blending.insertBerry($index(), BerryType.None, $parentContext.$index())} },">
+                                                                click: function(data, event){App.game.blending.insertBerry($index(), BlendingController.selectedBerry(), $parentContext.$index())},
+                                                                event: { contextmenu: function(data, event){App.game.blending.insertBerry($index(), BerryType.None, $parentContext.$index())} },">
                                                             <img width="100%" height="100%" src=""
                                                                 data-bind="attr:{ src: FarmController.getBerryImage($parent.blendSlots[$index()].berry)}">
                                                         </div>
@@ -64922,7 +64931,7 @@ aria-labelledby="purifyChamberModalLabel">
                                 <div class="col-6 col-sm-4 col-lg-3">
                                 <button class="shopItem clickable btn btn-block btn-secondary"
                                     data-bind="click: function() {BlendingController.selectedRecipe($data);},
-                                    css: { active: BlendingController.selectedRecipe() == $data },
+                                    css: { active: BlendingController.selectedRecipe() == $data, disabled: BlendingController.calculateSelectionCss($data), },
                                     tooltip: {
                                         title: ItemList[$data.item].description ? `<u>${ItemList[$data.item].displayName}:</u><br/>${ItemList[$data.item].description}` : '',
                                         trigger: 'hover',
