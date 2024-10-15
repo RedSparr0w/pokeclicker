@@ -17,10 +17,10 @@
     <script src="libs/Sortable.min.js"></script>
 
     <!-- New module-based code from './modules' -->
-    <script src="scripts/modules.min.js?v=0.10.21"></script>
+    <script src="scripts/modules.min.js?v=0.10.22"></script>
 
     <!--Minified scripts-->
-    <script src="scripts/script.min.js?v=0.10.21"></script>
+    <script src="scripts/script.min.js?v=0.10.22"></script>
 
     <!--Popper.js-->
     <script src="libs/popper.min.js"></script>
@@ -38,7 +38,7 @@
     <link href="libs/introjs-modern.css" rel="stylesheet">
 
     <!--Minified styles-->
-    <link href="styles/styles.min.css?v=0.10.21" rel="stylesheet">
+    <link href="styles/styles.min.css?v=0.10.22" rel="stylesheet">
 
     <style>
         #game.loading {
@@ -487,19 +487,21 @@
                                 <h4>Evolution Items</h4>
                                 <div class="scrolling-div" data-bind="foreach: Object.keys(GameConstants.StoneType).filter(stone => isNaN(stone) && stone !== 'None')">
                                     <div class="col-12 evolutionListItem">
-                                        <button class="btn btn-secondary smallButton list-group-item-action" style="cursor: pointer; padding-right:15px"
+                                        <button class="btn btn-secondary smallButton list-group-item-action pl-2"
                                                 data-bind="css:{'item-selected': ItemHandler.stoneSelected() === $data},
                                                     click: function(){ ItemHandler.stoneSelected($data); ItemHandler.pokemonSelected('')},
                                                     visible: ItemList[$data].unlockedRegion <= player.highestRegion() || player.amountOfItem($data) > 0">
-                                            <img data-bind="attr: {src: ItemList[$data].image }" style="max-width: 32px; margin: -10px; padding: 12px 0px;">
-                                            <div class="d-inline-block" data-bind="text: ItemList[$data].displayName" style="margin-left: 20px; margin-top:8px;"></div>
-                                            <div class="float-right" style="margin-top: 8px" data-bind="template: { name: 'pokerusStatusTemplate', data: {
+                                            <div class="d-flex align-items-center">
+                                                <img class="mr-3" data-bind="attr: {src: ItemList[$data].image }" style="max-width: 32px;">
+                                                <div class="flex-grow-1 mr-1" data-bind="text: ItemList[$data].displayName"></div>
+                                                <div class="mr-1" data-bind="text: player.itemList[$data]().toLocaleString('en-US')"></div>
+                                                <!-- ko if: ItemList[$data] instanceof CaughtIndicatingItem -->
+                                                <div class="mr-1" data-bind="template: { name: 'caughtStatusTemplate', data: {'status': ItemList[$data].getCaughtStatus()}}"></div>
+                                                <!-- /ko -->
+                                                <div data-bind="template: { name: 'pokerusStatusTemplate', data: {
                                                     'pokerus': ItemList[$data].getPokerusStatus(),
                                                     'evsProgress': ItemList[$data].getPokerusProgress() }}"></div>
-                                            <!-- ko if: ItemList[$data] instanceof CaughtIndicatingItem -->
-                                            <div class="float-right mr-1" style="margin-top: 8px;" data-bind="template: { name: 'caughtStatusTemplate', data: {'status': ItemList[$data].getCaughtStatus()}}"></div>
-                                            <!-- /ko -->
-                                            <div class="float-right mr-1" style="margin-top: 8px;" data-bind="text: player.itemList[$data]().toLocaleString('en-US')"></div>
+                                            </div>
                                         </button>
                                     </div>
                                 </div>
@@ -516,19 +518,19 @@
                                 <h4>Pokémon</h4>
                                 <div class="scrolling-div"
                                     data-bind="foreach: PartyController.getPokemonsWithEvolution(GameConstants.StoneType[ItemHandler.stoneSelected()])">
-                                    <div class="col-12 evolutionListItem"> <!--offset-sm-1 offset-md-0 offset-md-0 -->
-                                        <button class="btn btn-secondary smallButton list-group-item-action" style="padding-right:15px"
-                                                data-bind="click: function() {ItemHandler.pokemonSelected(name)}, css:{ 'pokemon-selected': ItemHandler.pokemonSelected() === name}">
-                                            <img class="smallImage" data-bind="attr:{src: 'assets/images/' + (App.game.party.alreadyCaughtPokemon($data.id, true) ? 'shiny' : '') + 'pokemon/' + id +'.png' }"/>
-                                            <div class="d-inline-block" data-bind="text: displayName" style="margin-left: 20px; margin-top: 8px;">Name</div>
-                                            <span class="mr-1" style="float: right; margin-top: 8px"  data-bind="using: { statuses: PartyController.getStoneEvolutionsPokerusData($data.id, GameConstants.StoneType[ItemHandler.stoneSelected()]) }">
-                                                <span class="stoneEvolutionStatuses" data-bind="foreach: statuses">
-                                                    <span class="" data-bind="template: { name: 'pokerusStatusTemplate', data: { pokerus: $data.status, evs: $data.evs } }"></span>
-                                                </span>
-                                            </span>
-                                            <span class="mr-1" style="float: right; margin-top: 8px"  data-bind="using: { statuses: PartyController.getStoneEvolutionsCaughtData($data.id, GameConstants.StoneType[ItemHandler.stoneSelected()]) }">
+                                    <div class="col-12 evolutionListItem">
+                                        <button class="btn btn-secondary smallButton list-group-item-action d-flex align-items-center"
+                                            data-bind="click: function() {ItemHandler.pokemonSelected(name)}, css:{ 'pokemon-selected': ItemHandler.pokemonSelected() === name}">
+                                            <img class="smallImage pr-0 mr-3" data-bind="attr:{src: 'assets/images/' + (App.game.party.alreadyCaughtPokemon($data.id, true) ? 'shiny' : '') + 'pokemon/' + id +'.png' }"/>
+                                            <span class="flex-grow-1 mr-1" data-bind="text: displayName"></span>
+                                            <span class="mr-1" data-bind="using: { statuses: PartyController.getStoneEvolutionsCaughtData($data.id, GameConstants.StoneType[ItemHandler.stoneSelected()]) }">
                                                 <span class="stoneEvolutionStatuses" data-bind="foreach: statuses">
                                                     <span class="" data-bind="template: { name: 'caughtStatusTemplate', data: $data }"></span>
+                                                </span>
+                                            </span>
+                                            <span data-bind="using: { statuses: PartyController.getStoneEvolutionsPokerusData($data.id, GameConstants.StoneType[ItemHandler.stoneSelected()]) }">
+                                                <span class="stoneEvolutionStatuses" data-bind="foreach: statuses">
+                                                    <span class="" data-bind="template: { name: 'pokerusStatusTemplate', data: { pokerus: $data.status, evs: $data.evs } }"></span>
                                                 </span>
                                             </span>
                                         </button>
@@ -962,36 +964,48 @@
                 <button type="button" class="btn btn-danger position-absolute" data-dismiss="modal" style="right:0; top:0; font-size: 18px; font-weight: 700;">×</button>
             </div>
             <div class="modal-body pt-0" style="background-color: inherit;">
-                <ul class="row justify-content-center w-100 p-0 m-0" data-bind="foreach: RouteInfo.pokemonList()">
-                    <li class="col-sm-4 col-md-3 col-lg-2 pokedexEntry" data-bind="style:{background: PokedexHelper.getBackgroundColors($data.name)}">
-                        <span class="id pokedex-top-text" data-bind="text: (($data.id > 0 && App.game.party.alreadyCaughtPokemon($data.id)) ? Math.floor($data.id) + '' : '???').padStart(3, 0)">number</span>
-                        <div data-bind="visible: App.game.party.alreadyCaughtPokemonByName(name)" style="position: absolute;right: 2px;top: -15px;">
-                            <img width="18px" src="" data-bind="attr: { src: `assets/images/pokeball/Pokeball${App.game.party.alreadyCaughtPokemon($data.id, true) ? '-shiny' : ''}.svg`}"/>
-                        </div>
-                        <!-- ko if: App.game.party.alreadyCaughtPokemonByName(name) -->
-                        <div data-bind="if: App.game.party.getPokemon($data.id)?.pokerus" style="position: absolute;left: 2px;top: -11px;">
-                            <img width="32px" src="" data-bind="attr: { src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[App.game.party.getPokemon($data.id)?.pokerus]}.png`},
+                <!-- ko foreach: { data: Object.entries(RouteInfo.pokemonList()), as: 'pokemons' } -->
+                <div class="bg-primary text-left rounded px-3 py-2 mb-1 d-flex align-items-center" data-toggle="collapse" data-bind="attr: { 'data-target': `#route-${pokemons[0]}` }">
+                    <h5 class="my-0 mx-1 text-light d-inline-block" data-bind="text: (pokemons[0] == 'roamers' ? 'Roamers' : 'Encounters')">Roamer Status</h5>
+                </div>
+                <div class="collapse show" data-bind="attr: { 'id': `route-${pokemons[0]}` }">
+                    <ul class="row justify-content-center w-100 p-0 m-0" data-bind="foreach: pokemons[1]">
+                        <li class="col-sm-4 col-md-3 col-lg-2 pokedexEntry" data-bind="style:{background: PokedexHelper.getBackgroundColors($data.name)}">
+                            <span class="id pokedex-top-text" data-bind="text: ($data.id > 0 ? Math.floor($data.id) + '' : '???').padStart(3, 0)">number</span>
+                            <div data-bind="visible: App.game.party.alreadyCaughtPokemonByName(name)" style="position: absolute;right: 2px;top: -15px;">
+                                <img width="18px" src="" data-bind="attr: { src: `assets/images/pokeball/Pokeball${App.game.party.alreadyCaughtPokemon($data.id, true) ? '-shiny' : ''}.svg`}"/>
+                            </div>
+                            <!-- ko if: App.game.party.alreadyCaughtPokemonByName(name) -->
+                            <div data-bind="if: App.game.party.getPokemon($data.id)?.pokerus" style="position: absolute;left: 2px;top: -11px;">
+                                <img width="32px" src="" data-bind="attr: { src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[App.game.party.getPokemon($data.id)?.pokerus]}.png`},
+                                tooltip: {
+                                    title: App.game.party.getPokemon($data.id)?.pokerus >= GameConstants.Pokerus.Contagious ? `EVs: ${App.game.party.getPokemon($data.id)?.evs().toLocaleString('en-US')}` : '',
+                                    placement: 'bottom',
+                                    trigger: 'hover'
+                                }"/>
+                            </div>
+                            <!-- /ko -->
+                            <!-- ko with: RouteInfo.getInformations($data) -->
+                            <div style="position: absolute;left: 2px;bottom: 5px;">
+                                <img width="24px" src="" data-bind="attr: { src: `assets/images/encountersInfo/route/${$data.image}` },
+                                tooltip: {
+                                    title: $data.tooltip,
+                                    placement: 'bottom',
+                                    trigger: 'hover'
+                                }"/>
+                            </div>
+                            <!-- /ko -->
+                            <img src="" class="pokedex-pokemon-sprite" data-bind="css: { 'pokemon-not-seen': !PokedexHelper.pokemonSeen($data.id)(), 'pokemon-seen-but-not-caught': !App.game.party.alreadyCaughtPokemonByName(name) && PokedexHelper.pokemonSeen($data.id)() }, attr:{ src: PokemonHelper.getImage($data.id, undefined, undefined, GameConstants.ShadowStatus.None)}">
+                            <span class="pokedex-bottom-text text-truncate px-1" data-bind="text: PokedexHelper.pokemonSeen($data.id)() ? PokemonHelper.displayName($data.name) : '???',
                             tooltip: {
-                                title: App.game.party.getPokemon($data.id)?.pokerus >= GameConstants.Pokerus.Contagious ? `EVs: ${App.game.party.getPokemon($data.id)?.evs().toLocaleString('en-US')}` : '',
-                                placement: 'bottom',
-                                trigger: 'hover'
-                            }"/>
-                        </div>
-                        <!-- /ko -->
-                        <!-- ko if: $data.roamer -->
-                        <div data-bind="if: $data.roamer" style="position: absolute;left: 2px;bottom: 5px;">
-                            <img width="24px" src="" data-bind="attr: { src: 'assets/images/encountersInfo/roaming.png' },
-                            tooltip: {
-                                title: 'Roaming Pokémon',
-                                placement: 'bottom',
-                                trigger: 'hover'
-                            }"/>
-                        </div>
-                        <!-- /ko -->
-                        <img src="" class="pokedex-pokemon-sprite" data-bind="css: { 'pokemon-not-seen': !App.game.party.alreadyCaughtPokemon($data.id) }, attr:{ src: PokemonHelper.getImage($data.id, undefined, undefined, GameConstants.ShadowStatus.None)}">
-                        <span class="pokedex-bottom-text text-truncate px-1" data-bind="text: (($data.id > 0 && App.game.party.alreadyCaughtPokemon($data.id)) ? PokemonHelper.displayName($data.name) : '???')">name</span>
-                    </li>
-                </ul>
+                                title: PokemonHelper.displayName($data.name),
+                                trigger: 'hover',
+                                placement: 'bottom'
+                            }">name</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /ko -->
             </div>
         </div>
     </div>
@@ -1083,19 +1097,19 @@
 <script type="text/html" id="caughtStatusTemplate">
     <knockout style="display: inline;">
         <!-- ko if: $data.status == CaughtStatus.NotCaught -->
-        <img title="You have not captured this Pokémon yet!"
+        <img data-bind="tooltip: {trigger: 'hover', title: 'You have not captured this Pokémon yet!', placement: 'top'}"
              class="pokeball-smallest"
              src="assets/images/pokeball/None.svg"
         />
         <!-- /ko -->
         <!-- ko if: $data.status == CaughtStatus.Caught -->
-        <img title="You have captured this Pokémon!"
+        <img data-bind="tooltip: {trigger: 'hover', title: 'You have captured this Pokémon!', placement: 'top'}"
              class="pokeball-smallest"
              src="assets/images/pokeball/Pokeball.svg"
         />
         <!-- /ko -->
         <!-- ko if: $data.status == CaughtStatus.CaughtShiny -->
-        <img title="You have captured this Pokémon shiny!"
+        <img data-bind="tooltip: {trigger: 'hover', title: 'You have captured this Pokémon shiny!', placement: 'top'}"
              class="pokeball-smallest"
              src="assets/images/pokeball/Pokeball-shiny.svg"
         />
@@ -1886,24 +1900,27 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         class: MapHelper.calculateBattleCssClass()">
 
                     <!-- Route Battles -->
-                    <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.fighting">
+                    <div id="routeBattleContainer" class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.fighting">
                         <div class="col no-gutters clickable" data-bind="click: function() {Battle.clickAttack()}" style="height: 280px; display: block;">
-                            <h2 class="pageItemTitle" style="display: block;">
-                                <knockout>
-                                    <knockout class="right">
-                                        <div class="px-1 clickable" data-bind="tooltip: { title: 'Check the Pokémon available here', trigger: 'hover' }, click: function() { $('#routeInfoModal').modal('show') }" data-original-title="" title="">
-                                            <img src="assets/images/encountersInfo/encountersInfo.png">
-                                        </div>
-                                    </knockout>
-                                    <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon name</knockout>
-                                    <knockout data-bind="template: { name: 'caughtStatusTemplate', data: {'status': PartyController.getCaughtStatus(Battle.enemyPokemon().id)}}"></knockout>
-                                    <knockout style="position: relative; top: -1px;"
+                            <div class="pageItemTitle d-flex justify-content-center">
+                                <div class="title-left"></div>
+                                <div class="d-flex align-items-center px-2">
+                                    <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': Battle.enemyPokemon() } }" style="font-size: 1.6rem;">Pokémon name</knockout>
+                                    <knockout class="ml-2" data-bind="template: { name: 'caughtStatusTemplate', data: {'status': PartyController.getCaughtStatus(Battle.enemyPokemon().id)}}"></knockout>
+                                    <knockout class="ml-2" style="position: relative;"
                                         data-bind="template: { name: 'pokerusStatusTemplate', data: {
                                             'pokerus': PartyController.getPokerusStatus(Battle.enemyPokemon().id),
                                             'evs': App.game.party.getPokemon(Battle.enemyPokemon().id)?.evs() }}">
                                     </knockout>
-                                </knockout>
-                            </h2>
+                                </div>
+                                <div class="title-right">
+                                    <div class="d-flex align-items-center mr-1 ml-auto" data-bind="using: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(player.town.name)]()">
+                                        <div class="px-1 clickable" data-bind="tooltip: { title: 'See the Pokémon available on this route.', trigger: 'hover' }, click: function() { $('#routeInfoModal').modal('show') }" data-original-title="" title="">
+                                            <img src="assets/images/encountersInfo/encountersInfo.png">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div>
                                 <div data-bind="visible: !Battle.catching()">
                                     <knockout data-bind="template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon sprite</knockout>
@@ -1933,22 +1950,19 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                     <td width="50%">
                                       <span style="display: inline;">
                                         <knockout data-bind="text: Routes.getName(player.route, player.region)"></knockout>
-                                        <!--If all Pokémon on the route are caught-->
-                                        <knockout data-bind="if: (!RouteHelper.routeCompleted(player.route, player.region, true) && RouteHelper.routeCompleted(player.route, player.region, false))">
-                                            <img title="You have captured all Pokémon on this route!" class="pokeball-smallest"
-                                                 src="assets/images/pokeball/Pokeball.svg"/>
-                                        </knockout>
-
-                                        <!--If all Pokémon on the route are caught shiny-->
-                                        <knockout data-bind="if: RouteHelper.routeCompleted(player.route, player.region, true)">
-                                            <img title="You have captured all Pokémon shiny on this route!" class="pokeball-smallest"
-                                                 src="assets/images/pokeball/Pokeball-shiny.svg"/>
+                                        <!--If all Pokémon in the dungeon are caught or caught shiny-->
+                                        <knockout data-bind="if: RouteHelper.routeCompleted(player.route, player.region, false)">
+                                            <img class="pokeball-smallest"
+                                                 data-bind="attr: { src: `assets/images/pokeball/Pokeball${RouteHelper.routeCompleted(player.route, player.region, true) ? '-shiny' : ''}.svg`},
+                                                 tooltip: {
+                                                trigger: 'hover', placement: 'bottom', title: `You have captured all Pokémon${RouteHelper.routeCompleted(player.route, player.region, true) ? ' shiny' : ''} on this route!`
+                                              }"/>
                                         </knockout>
 
                                         <!--Pokérus image-->
                                         <knockout data-bind="if: RouteHelper.minPokerusCheck(RouteHelper.getAvailablePokemonList(player.route, player.region, true))">
-                                            <img data-bind="attr:{ src: 'assets/images/breeding/pokerus/' + GameConstants.Pokerus[RouteHelper.minPokerus(RouteHelper.getAvailablePokemonList(player.route, player.region, true))] + '.png',
-                                                title: RouteHelper.routePokerusEVs(player.route, player.region)}"
+                                            <img data-bind="attr:{ src: 'assets/images/breeding/pokerus/' + GameConstants.Pokerus[RouteHelper.minPokerus(RouteHelper.getAvailablePokemonList(player.route, player.region, true))] + '.png' },
+                                            tooltip: { title: RouteHelper.routePokerusEVs(player.route, player.region), trigger: 'hover', placement: 'bottom', html: true }"
                                           src=""/>
                                         </knockout>
                                       </span>
@@ -2086,25 +2100,26 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
               <tr>
                 <td width="50%">
                   <knockout data-bind="text: DungeonRunner.dungeon.name">Dungeon name</knockout>
-                  <!--If all Pokémon in the dungeon are caught-->
-                  <knockout data-bind="if: (!DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, true) && DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, false))">
-                      <img title="You have captured all Pokémon in this dungeon!" class="pokeball-smallest"
-                           src="assets/images/pokeball/Pokeball.svg"/>
-                  </knockout>
-
-                  <!--If all Pokémon in the dungeon are caught shiny-->
-                  <knockout data-bind="if: DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, true)">
-                      <img title="You have captured all Pokémon shiny in this dungeon!"
-                           class="pokeball-smallest"
-                           src="assets/images/pokeball/Pokeball-shiny.svg"/>
+                  <!--If all Pokémon in the dungeon are caught or caught shiny-->
+                  <knockout data-bind="if: DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, false)">
+                      <img class="pokeball-smallest"
+                           data-bind="attr: { src: `assets/images/pokeball/Pokeball${DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, true) ? '-shiny' : ''}.svg`},
+                           tooltip: {
+                            trigger: 'hover', placement: 'bottom', title: `You have captured all Pokémon${DungeonRunner.dungeonCompleted(DungeonRunner.dungeon, true) ? ' shiny' : ''} in this dungeon!`
+                        }"/>
                   </knockout>
 
                   <!--Pokérus image-->
                   <knockout data-bind="if: RouteHelper.minPokerusCheck(DungeonRunner.dungeon.allAvailablePokemon())">
-                      <img data-bind="attr:{ src: 'assets/images/breeding/pokerus/' + GameConstants.Pokerus[RouteHelper.minPokerus(DungeonRunner.dungeon.allAvailablePokemon())] + '.png',
-                            title: RouteHelper.dungeonPokerusEVs(DungeonRunner.dungeon)}"
+                      <img data-bind="attr:{ src: 'assets/images/breeding/pokerus/' + GameConstants.Pokerus[RouteHelper.minPokerus(DungeonRunner.dungeon.allAvailablePokemon())] + '.png' },
+                      tooltip: { title: RouteHelper.dungeonPokerusEVs(DungeonRunner.dungeon), trigger: 'hover', placement: 'bottom', html: true }"
                     src=""/>
                   </knockout>
+
+                  <!-- ko if: player.town.dungeon.allAvailableShadowPokemon().length -->
+                  <img height="19" src="assets/images/status/shadow.svg" data-bind="
+                    css: { 'dungeon-pokemon-locked': player.town.dungeon.allAvailableShadowPokemon().some(p => (App.game.party.getPokemonByName(p)?.shadow ?? GameConstants.ShadowStatus.None) < GameConstants.ShadowStatus.Shadow) },"/>
+                  <!-- /ko -->
                 </td>
                 <td width="50%">
                   <knockout data-bind="text: `${App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(DungeonRunner.dungeon.name)]().toLocaleString('en-US')} Clears`"></knockout>
@@ -2455,14 +2470,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <div class="title-left" data-bind="if: isDungeon">
                     <div class="d-flex align-items-center ml-1 mr-auto">
                         <div class="d-flex flex-column">
-                            <!--If all Pokémon in the dungeon are caught-->
-                            <div data-bind="if: (!DungeonRunner.dungeonCompleted(player.town.dungeon, true) && DungeonRunner.dungeonCompleted(player.town.dungeon, false))" style="font-size: 0;">
-                                <img title="You have captured all Pokémon in this dungeon!" class="pokeball-smallest ml-0" src="assets/images/pokeball/Pokeball.svg" />
-                            </div>
-
-                            <!--If all Pokémon in the dungeon are caught shiny-->
-                            <div data-bind="if: DungeonRunner.dungeonCompleted(player.town.dungeon, true)" style="font-size: 0;">
-                                <img title="You have captured all Pokémon shiny in this dungeon!" class="pokeball-smallest ml-0" src="assets/images/pokeball/Pokeball-shiny.svg"/>
+                            <!--If all Pokémon in the dungeon are caught or caught shiny-->
+                            <div data-bind="if: DungeonRunner.dungeonCompleted(player.town.dungeon, false)" style="font-size: 0;">
+                                <img class="pokeball-smallest ml-0" data-bind="attr: { src: `assets/images/pokeball/Pokeball${DungeonRunner.dungeonCompleted(player.town.dungeon, true) ? '-shiny' : ''}.svg` },
+                                tooltip: { trigger: 'hover', placement: 'bottom', title: `You have captured all Pokémon${DungeonRunner.dungeonCompleted(player.town.dungeon, true) ? ' shiny' : ''} in this dungeon!`}"/>
                             </div>
 
                             <!--Pokérus image-->
@@ -2472,7 +2483,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 tooltip: {
                                     title: RouteHelper.dungeonPokerusEVs(player.town.dungeon),
                                     placement: 'bottom',
-                                    trigger: 'hover'
+                                    trigger: 'hover',
+                                    html: true
                                 }" />
                             </div>
                         </div>
@@ -2491,15 +2503,25 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center px-2" style="font-size: 1.8rem;" data-bind="text: player.town.name">Town Name</div>
+                <div class="d-flex justify-content-center px-2" style="font-size: 1.8rem;">
+                    <knockout data-bind="text: player.town.name">Town Name</knockout>
+                </div>
 
                 <div class="title-right" data-bind="if: isDungeon && QuestLineHelper.isQuestLineCompleted('Tutorial Quests')">
-                    <div class="d-flex flex-column justify-content-center small mr-1 ml-auto" data-bind="using: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(player.town.name)]()">
-                        <div style="line-height: normal;" data-bind="text: $data.toLocaleString('en-US')">0</div>
-                        <div style="line-height: normal;">clears</div>
-                    </div>
-                    <div class="px-1 clickable d-inline-block ml-1" style="align-self: center;" data-bind="tooltip: { title: 'Check the Loot available here', trigger: 'hover' }, click: function() { $('#dungeonInfoModal').modal('show') }" data-original-title="" title="">
-                        <img src="assets/images/encountersInfo/encountersInfo.png">
+                    <div class="d-flex ml-auto">
+                        <knockout class="h4 text-danger no-emoji-font mr-2 mb-0 align-self-center" data-bind="
+                            visible: player.highestRegion() - 2 > player.region,
+                            tooltip: {
+                                title: 'This dungeon is debuffed and will be significantly less likely to drop Epic, Legendary, and Mythic loot.',
+                                trigger: 'hover',
+                            }">⚠</knockout>
+                        <div class="d-flex flex-column justify-content-center small mr-1" data-bind="using: App.game.statistics.dungeonsCleared[GameConstants.getDungeonIndex(player.town.name)]()">
+                            <div style="line-height: normal;" data-bind="text: $data.toLocaleString('en-US')">0</div>
+                            <div style="line-height: normal;">clears</div>
+                        </div>
+                        <div class="px-1 clickable d-inline-block ml-1 align-self-center" data-bind="tooltip: { title: 'See the Loot available in this dungeon.', trigger: 'hover' }, click: function() { $('#dungeonInfoModal').modal('show') }" data-original-title="" title="">
+                            <img src="assets/images/encountersInfo/encountersInfo.png">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2671,13 +2693,13 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <!-- ko if: App.game.gameState === GameConstants.GameState.dungeon -->
                 <div id="dungeonMap" class="card sortable-disabled border-secondary mb-3 dungeon no-select">
                     <div class="card-header p-0">
-                        <div style="position: absolute; left: 2px">
-                            <img title="Chests opened in current dungeon" src="assets/images/dungeons/chest.png" height="25px" />
+                        <div style="position: absolute; left: 2px" data-bind="tooltip: { trigger: 'hover', title: 'Chests opened in current dungeon' }">
+                            <img src="assets/images/dungeons/chest.png" height="25px" />
                             <span data-bind="text: `${DungeonRunner.chestsOpened()}/${DungeonRunner.map.totalChests()}`"></span>
                         </div>
-                        
-                        <div style="position: absolute; right: 4px">
-                            <img title="Encounters won in current dungeon" src="assets/images/dungeons/encounter.png" height="25px" />
+
+                        <div style="position: absolute; right: 4px" data-bind="tooltip: { trigger: 'hover', title: 'Encounters won in current dungeon' }">
+                            <img src="assets/images/dungeons/encounter.png" height="25px" />
                             <span data-bind="text: `${DungeonRunner.encountersWon()}/${DungeonRunner.map.totalFights()}`"></span>
                         </div>
                         <span data-bind="text: `${DungeonRunner.dungeon.name}`"></span>
@@ -2896,8 +2918,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Kanto').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/kanto-kanto.png?v=0.10.21',
-            href:'assets/images/kanto-kanto.png?v=0.10.21'
+            'xlink:href':'assets/images/kanto-kanto.png?v=0.10.22',
+            href:'assets/images/kanto-kanto.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -5059,45 +5081,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
         
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+<image
     x="432"
     y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Oak&#39;s Blimp"
     x="432"
     y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Oak\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Pallet Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Pallet Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Oak').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-        
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="432"
-    y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Oak&#39;s Blimp"
-    x="432"
-    y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Pallet Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pallet Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Oak\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
         
@@ -5451,8 +5450,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Sevii Islands 123').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/kanto-sevii123.png?v=0.10.21',
-            href:'assets/images/kanto-sevii123.png?v=0.10.21'
+            'xlink:href':'assets/images/kanto-sevii123.png?v=0.10.22',
+            href:'assets/images/kanto-sevii123.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -6018,8 +6017,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Sevii Islands 4567').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/kanto-sevii4567.png?v=0.10.21',
-            href:'assets/images/kanto-sevii4567.png?v=0.10.21'
+            'xlink:href':'assets/images/kanto-sevii4567.png?v=0.10.22',
+            href:'assets/images/kanto-sevii4567.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -7676,8 +7675,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.johto'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/johto.png?v=0.10.21',
-        href:'assets/images/johto.png?v=0.10.21'
+        'xlink:href':'assets/images/johto.png?v=0.10.22',
+        href:'assets/images/johto.png?v=0.10.22'
     }"></image>
 
     <!-- ------ -->
@@ -10028,46 +10027,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+    
+<image
     x="1184"
     y="720"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Elm&#39;s Blimp"
     x="1184"
     y="720"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Elm\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('New Bark Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('New Bark Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Elm').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="1184"
-    y="720"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Elm&#39;s Blimp"
-    x="1184"
-    y="720"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;New Bark Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;New Bark Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Elm\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
      
@@ -10327,8 +10303,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.hoenn'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/hoenn.png?v=0.10.21',
-        href:'assets/images/hoenn.png?v=0.10.21'
+        'xlink:href':'assets/images/hoenn.png?v=0.10.22',
+        href:'assets/images/hoenn.png?v=0.10.22'
     }"></image>
 
     <!-- ------ -->
@@ -13439,45 +13415,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+<image
     x="304"
-    y="688"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    y="736"
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Birch&#39;s Blimp"
     x="304"
-    y="688"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Birch\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    y="736"
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Littleroot Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Littleroot Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Birch').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-    
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="304"
-    y="688"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Birch&#39;s Blimp"
-    x="304"
-    y="688"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Littleroot Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Littleroot Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Birch\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
         
@@ -13839,8 +13792,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
      <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.hoenn, 'Orre').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/orre.png?v=0.10.21',
-            href:'assets/images/orre.png?v=0.10.21'
+            'xlink:href':'assets/images/orre.png?v=0.10.22',
+            href:'assets/images/orre.png?v=0.10.22'
         }"></image>
 
     <!-- ------ -->
@@ -15242,8 +15195,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.sinnoh'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/sinnoh.png?v=0.10.21',
-        href:'assets/images/sinnoh.png?v=0.10.21'
+        'xlink:href':'assets/images/sinnoh.png?v=0.10.22',
+        href:'assets/images/sinnoh.png?v=0.10.22'
     }"></image>
 
     <!-- ------ -->
@@ -18176,46 +18129,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+    
+<image
     x="192"
     y="848"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Rowan&#39;s Blimp"
     x="192"
     y="848"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Rowan\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Twinleaf Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Twinleaf Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Rowan').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="192"
-    y="848"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Rowan&#39;s Blimp"
-    x="192"
-    y="848"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Twinleaf Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Twinleaf Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Rowan\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
      
@@ -18390,8 +18320,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.unova'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/unova.png?v=0.10.21',
-        href:'assets/images/unova.png?v=0.10.21'
+        'xlink:href':'assets/images/unova.png?v=0.10.22',
+        href:'assets/images/unova.png?v=0.10.22'
     }"></image>
 
     <!-- ------ -->
@@ -21243,45 +21173,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
-    x="160"
+<image
+    x="176"
     y="768"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Juniper&#39;s Blimp"
-    x="160"
+    x="176"
     y="768"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Juniper\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Aspertia City') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Aspertia City'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Juniper').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-    
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="160"
-    y="768"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Juniper&#39;s Blimp"
-    x="160"
-    y="768"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Aspertia City&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Aspertia City&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Juniper\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
     
@@ -21604,8 +21511,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.kalos'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/kalos.png?v=0.10.21',
-        href:'assets/images/kalos.png?v=0.10.21'
+        'xlink:href':'assets/images/kalos.png?v=0.10.22',
+        href:'assets/images/kalos.png?v=0.10.22'
     }"></image>
 
     <!-- ------ -->
@@ -23892,22 +23799,41 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
+    
+<image
+    x="912"
+    y="832"
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
+<rect class="city"
+    x="912"
+    y="832"
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Vaniville Town') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Vaniville Town'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Sycamore').name), 
+                                mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+
      
 
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
-    x="912"
-    y="832"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+<image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
+    x="896"
+    y="688"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Shauna 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Shauna 1&#39;].isVisible()"/>
 <rect class="city"
-    data-town="Professor Sycamore&#39;s Blimp"
-    x="912"
-    y="832"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Sycamore\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-town="Pokémon Trainer Shauna"
+    x="896"
+    y="688"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Shauna 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Shauna 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Shauna 1&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Shauna'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
 </image>
@@ -23915,20 +23841,41 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
      
 
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="912"
-    y="832"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
+<image href="assets/images/map/tierno.png" xlink:href="assets/images/map/tierno.png"
+    x="608"
+    y="448"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Tierno 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Tierno 1&#39;].isVisible()"/>
 <rect class="city"
-    data-town="Professor Sycamore&#39;s Blimp"
-    x="912"
-    y="832"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Vaniville Town&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Vaniville Town&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Sycamore\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-town="Pokémon Trainer Tierno"
+    x="608"
+    y="448"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Tierno 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Tierno 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Tierno 1&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Tierno'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/trevortierno.png" xlink:href="assets/images/map/trevortierno.png"
+    x="448"
+    y="464"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;] &amp;&amp; TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Trevor &amp; Pokémon Trainer Tierno"
+    x="448"
+    y="464"
+    height="64"
+    width="128"
+    data-bind="visible: TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;] &amp;&amp; TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Trevor &amp; Tierno&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Trevor &amp; Pokémon Trainer Tierno'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
 </image>
@@ -24013,6 +23960,69 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;Calem 4&#39;] &amp;&amp; TemporaryBattleList[&#39;Calem 4&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Calem 4&#39;].protectedOnclick(),
         event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Calem'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Shauna 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Shauna 2&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Shauna"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Shauna 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Shauna 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Shauna 2&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Shauna'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/tierno.png" xlink:href="assets/images/map/tierno.png"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Tierno 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Tierno 2&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Tierno"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Tierno 2&#39;] &amp;&amp; TemporaryBattleList[&#39;Tierno 2&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Tierno 2&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Tierno'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
+     
+
+<image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Trevor&#39;] &amp;&amp; TemporaryBattleList[&#39;Trevor&#39;].isVisible()"/>
+<rect class="city"
+    data-town="Pokémon Trainer Trevor"
+    x="1248"
+    y="464"
+    height="64"
+    width="64"
+    data-bind="visible: TemporaryBattleList[&#39;Trevor&#39;] &amp;&amp; TemporaryBattleList[&#39;Trevor&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Trevor&#39;].protectedOnclick(),
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon Trainer Trevor'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
 </image>
@@ -24248,8 +24258,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Melemele Island').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-melemele.png?v=0.10.21',
-            href:'assets/images/alola-melemele.png?v=0.10.21'
+            'xlink:href':'assets/images/alola-melemele.png?v=0.10.22',
+            href:'assets/images/alola-melemele.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -27714,46 +27724,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
         
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+<image
     x="1152"
-    y="480"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    y="464"
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Kukui&#39;s Blimp"
     x="1152"
-    y="480"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Kukui\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    y="464"
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Iki Town Outskirts') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Iki Town Outskirts'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Kukui').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-        
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="1152"
-    y="480"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Kukui&#39;s Blimp"
-    x="1152"
-    y="480"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Iki Town Outskirts&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Iki Town Outskirts&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Kukui\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
-
 
         
 
@@ -27863,8 +27849,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Akala Island').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-akala.png?v=0.10.21',
-            href:'assets/images/alola-akala.png?v=0.10.21'
+            'xlink:href':'assets/images/alola-akala.png?v=0.10.22',
+            href:'assets/images/alola-akala.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -30255,8 +30241,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Ula\'ula Island').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-ulaula.png?v=0.10.21',
-            href:'assets/images/alola-ulaula.png?v=0.10.21'
+            'xlink:href':'assets/images/alola-ulaula.png?v=0.10.22',
+            href:'assets/images/alola-ulaula.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -33162,8 +33148,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Poni Island').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-poni.png?v=0.10.21',
-            href:'assets/images/alola-poni.png?v=0.10.21'
+            'xlink:href':'assets/images/alola-poni.png?v=0.10.22',
+            href:'assets/images/alola-poni.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -35585,8 +35571,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Magikarp Jump').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/alola-magikarp-jump.png?v=0.10.21',
-            href:'assets/images/alola-magikarp-jump.png?v=0.10.21'
+            'xlink:href':'assets/images/alola-magikarp-jump.png?v=0.10.22',
+            href:'assets/images/alola-magikarp-jump.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -37820,8 +37806,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'South Galar').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/galar-south.png?v=0.10.21',
-            href:'assets/images/galar-south.png?v=0.10.21'
+            'xlink:href':'assets/images/galar-south.png?v=0.10.22',
+            href:'assets/images/galar-south.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -39864,45 +39850,22 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
         
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+<image
     x="784"
-    y="864"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    y="848"
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Magnolia&#39;s Blimp"
     x="784"
-    y="864"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Magnolia\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    y="848"
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Postwick') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Postwick'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Magnolia').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-        
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="784"
-    y="864"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Magnolia&#39;s Blimp"
-    x="784"
-    y="864"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Postwick&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Postwick&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Magnolia\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
         
@@ -40285,8 +40248,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'North Galar').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/galar-north.png?v=0.10.21',
-            href:'assets/images/galar-north.png?v=0.10.21'
+            'xlink:href':'assets/images/galar-north.png?v=0.10.22',
+            href:'assets/images/galar-north.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -41387,8 +41350,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'Isle of Armor').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/galar-isle-of-armor.png?v=0.10.21',
-            href:'assets/images/galar-isle-of-armor.png?v=0.10.21'
+            'xlink:href':'assets/images/galar-isle-of-armor.png?v=0.10.22',
+            href:'assets/images/galar-isle-of-armor.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -44308,8 +44271,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'Crown Tundra').id">
         <image width="1600" height="960" data-bind="attr: {
-            'xlink:href':'assets/images/galar-crown-tundra.png?v=0.10.21',
-            href:'assets/images/galar-crown-tundra.png?v=0.10.21'
+            'xlink:href':'assets/images/galar-crown-tundra.png?v=0.10.22',
+            href:'assets/images/galar-crown-tundra.png?v=0.10.22'
         }"></image>
 
         <!-- ------ -->
@@ -46326,8 +46289,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.hisui'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/hsiui.png?v=0.10.21',
-        href:'assets/images/hisui.png?v=0.10.21'
+        'xlink:href':'assets/images/hsiui.png?v=0.10.22',
+        href:'assets/images/hisui.png?v=0.10.22'
     }"></image>
 
     <!-- ------ -->
@@ -55144,46 +55107,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+      
+<image
     x="32"
     y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Professor Laventon&#39;s Blimp"
     x="32"
     y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Laventon\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Prelude Beach') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Prelude Beach'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Professor Laventon').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="32"
-    y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Professor Laventon&#39;s Blimp"
-    x="32"
-    y="592"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Prelude Beach&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Prelude Beach&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Professor Laventon\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 
      
@@ -55442,8 +55382,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                             <g data-bind='visible: player.region == GameConstants.Region.paldea'>
     <image width="1600" height="960" data-bind="attr: {
-        'xlink:href':'assets/images/paldea.png?v=0.10.21',
-        href:'assets/images/paldea.png?v=0.10.21'
+        'xlink:href':'assets/images/paldea.png?v=0.10.22',
+        href:'assets/images/paldea.png?v=0.10.22'
     }"></image>
 
     <!-- ------ -->
@@ -56478,46 +56418,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
-
-<image href="assets/images/map/blimp_empty.png" xlink:href="assets/images/map/blimp_empty.png"
+    
+<image
     x="1504"
     y="912"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special"/>
+    data-bind="visible: MapHelper.ableToTravel(), attr: {'xlink:href':MapHelper.getBlimpData().image, href:MapHelper.getBlimpData().image, width: MapHelper.getBlimpData().width, height: MapHelper.getBlimpData().height}"/>
 <rect class="city"
-    data-town="Instructor Jacq&#39;s Blimp"
     x="1504"
     y="912"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Instructor Jacq\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
+    data-bind="visible: MapHelper.ableToTravel(), 
+               click: function() { MapHelper.moveToTown('Cabo Poco') }, 
+               attr: { class: MapHelper.calculateTownCssClass('Cabo Poco'), 
+                       width: MapHelper.getBlimpData().width, 
+                       height: MapHelper.getBlimpData().height,
+                       },
+                       event: { mouseenter: () => GameController.showMapTooltip(MapHelper.getBlimpData('Instructor Jacq').name), 
+                                mouseleave: GameController.hideMapTooltip }">
 </rect>
-
-</image>
-
-
-     
-
-<image href="assets/images/map/blimp_pikachu.png" xlink:href="assets/images/map/blimp_pikachu.png"
-    x="1504"
-    y="912"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special"/>
-<rect class="city"
-    data-town="Instructor Jacq&#39;s Blimp"
-    x="1504"
-    y="912"
-    height="48"
-    width="96"
-    data-bind="visible: MapHelper.ableToTravel() &amp;&amp; player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.Special, click:function(){MapHelper.moveToTown(&#39;Cabo Poco&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Cabo Poco&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Instructor Jacq\&#39;s Blimp'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
 
 </g>
 
@@ -56834,14 +56751,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Farm -->
-                    <div id="farmDisplay" class="card sortable border-secondary mb-3 pokeclicker-optional-module" data-bind="visible: App.game.farming.canAccess() && Settings.getSetting('showFarmModule').observableValue(), if: Settings.getSetting('showFarmModule').observableValue()">
+                    <div id="farmDisplay" class="card sortable border-secondary mb-3 pokeclicker-optional-module" data-bind="visible: App.game.farming.canAccess() && Settings.getSetting('showFarmModule').observableValue() !== 'never', if: Settings.getSetting('showFarmModule').observableValue() !== 'never'">
     <div class="card-header p-0" data-toggle="collapse" href="#plotListCard">
         <span>Farm</span>
     </div>
     <button class='btn btn-sm btn-primary' style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px;" onclick="FarmController.openFarmModal()">
         View
     </button>
-    <!-- ko ifnot: Settings.getSetting('showFarmModuleControls').observableValue() -->
+    <!-- ko if: Settings.getSetting('showFarmModule').observableValue() === 'limited' -->
     <div class="dropdown" style="position: absolute; left: 0px; top: 0px;">
         <button class='btn btn-sm btn-primary dropdown-toggle dropdown-toggle-no-arrow' style="width: auto; height: 41px;" data-toggle="dropdown"
             data-bind="tooltip: {title: App.game.farming.unlockedBerries[FarmController.selectedBerry()]() ? BerryType[FarmController.selectedBerry()] : '???', trigger: 'hover', placement: 'right'}">
@@ -56861,7 +56778,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </div>
     <!-- /ko -->
     <div id="plotListCard" class="card-body p-0 px-2 show" data-bind="css: { ShiftPressed: GameController.keyHeld.Shift() }">
-      <!-- ko if: Settings.getSetting('showFarmModuleControls').observableValue() -->
+      <!-- ko if: Settings.getSetting('showFarmModule').observableValue() === 'extended' -->
       <div class="row py-0 mt-1">
         <div class="col-3 px-1">
             <div class="btn-group w-100">
@@ -57938,8 +57855,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr><th colspan="2">Farm</th></tr>
                             </thead>
                             <tbody>
-                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showFarmModule')}"></tr>
-                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showFarmModuleControls')}"></tr>
+                                <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('showFarmModule')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('farmDisplay')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('farmBoostDisplay')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('berryDexMode')}"></tr>
@@ -58712,7 +58628,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                 <div class="border-bottom border-dark font-weight-bold">How do I unlock the..</div>
                 <p class="small">
                     <code>Underground:</code> Buy the <strong>Explorer Kit</strong> from <strong>Cinnabar Island</strong>.<br/>
-                    <code>Daycare:</code> Will be unlocked after reaching <strong>Route 5</strong>.<br/>
+                    <code>Daycare:</code> Will be unlocked after reaching <strong>Route 3</strong>.<br/>
                     <code>Farm:</code> Will be unlocked after reaching <strong>route 11</strong> and obtaining <strong>Berries</strong>
                 </p>
 
@@ -59387,7 +59303,9 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
            </div>
            <div class="modal-body">
                <p>
+                   <!-- ko if: App.game.challenges.list.requireCompletePokedex.active() -->
                    <strong>Congratulations on completing the <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion()])"></span> Pokédex!</strong><br/>
+                   <!-- /ko -->
                    You can now travel on to <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span>!<br/>
                    <br/>
                    <strong>There are a few things you should know before you depart:</strong><br/>
@@ -59396,7 +59314,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
                    When Pokémon are in a Region they're not native to, they will only retain <strong data-bind="text: App.game.party.getRegionAttackMultiplier(player.highestRegion() + 1).toLocaleString('en-US',{style: 'percent'})"></strong> of their total attack.<br/><br/>
                    <!-- /ko -->
                    <!-- ko if: player.highestRegion() - 2 >= GameConstants.Region.kanto -->
-                   Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br /><br/>
+                   Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br/><br/>
                    <!-- /ko -->
                    You will also have to progress to the Dock in <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span> before you are able to travel between regions again.
                </p>
@@ -59413,62 +59331,137 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="mb-0">Gems</h5>
-                <button type="button" class="btn btn-info"
-                        style="position: absolute; right: 0px; top: 0px; width: auto; height: 55px; padding: 10px;"
-                        data-bind="tooltip: { title: 'Use gems to upgrade the type effectiveness of your Pokémon. When you defeat a Pokémon, you get gems based on its type.', trigger: 'hover', placement:'left' }">
-                    ?
-                </button>
 
+                <!-- ko if: App.game.challenges.list.disableGems.active() -->
+                <h5 class="mb-0 px-2 rounded bg-danger">
+                    Gem Bonuses are disabled.
+                </h5>
+                <!-- /ko -->
             </div>
-            <div class="modal-body p-0">
-                <p data-bind="visible: App.game.challenges.list.disableGems.active()" class="bg-danger my-0 sticky-top">
-                    Gem bonuses are disabled.
+
+            <div class="modal-body">
+                <p>
+                    Use gems to upgrade the type effectiveness of your Pokémon.
+                    When you defeat a Pokémon, you get gems based on its type.
+                    Each upgrade increases your effectiveness by <knockout data-bind="text: GameConstants.GEM_UPGRADE_STEP.toLocaleString('en-US', { style: 'percent', signDisplay: 'exceptZero' })"></knockout>.
                 </p>
-                <table class='table table-sm m-0'>
-                    <!-- ko foreach: Array(Gems.nTypes) -->
-                        <tbody>
-                            <tr>
-                                <td colspan="4" class="clickable text-left h5" data-toggle="collapse"
-                                    data-bind="attr: { 'href': '#collapse-gem-' + $index() }, click: function() { App.game.gems.gemCollapsed[$index()] = !App.game.gems.gemCollapsed[$index()]; }">
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1 font-weight-bold" data-bind="text: PokemonType[$index()]"></div>
-                                        <img width="32px" data-bind='attr: { src: Gems.image($index()) }'/>
-                                        <knockout data-bind="text: App.game.gems.gemWallet[$index()]().toLocaleString('en-US')"></knockout>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tbody data-bind="class: 'collapse' + (App.game.gems.gemCollapsed[$index()] ? '' : ' show'), attr: { id: 'collapse-gem-' + $index()}">
+
+                <h4>Select a Gem</h4>
+
+                <!-- ko let: { gemIndex: ko.observable(-1) } -->
+                <div class="container my-3">
+                    <div class="row">
+                        <!-- ko foreach: Array(Gems.nTypes) -->
+                        <div class="col-6 col-lg-3 p-0 card clickable" data-bind="
+                            click: () => { gemIndex($index()); }
+                        ">
+                            <div class="card-body bg-secondary rounded p-1" data-bind="tooltip: {
+                                title: App.game.gems.gemWallet[$index()]().toLocaleString('en-US'),
+                                trigger: 'hover',
+                                placement: 'bottom'
+                            },
+                            css: { 'bg-info': gemIndex() === $index() }">
+                                <div class="d-flex align-items-center">
+                                    <img width="32px" data-bind='attr: { src: Gems.image($index()) }'/>
+                                    <div class="flex-grow-1 text-left" data-bind="text: PokemonType[$index()]"></div>
+                                    <knockout data-bind="text: App.game.gems.gemWallet[$index()]() > 1e6 ? GameHelper.formatAmount(App.game.gems.gemWallet[$index()]()) : App.game.gems.gemWallet[$index()]().toLocaleString('en-US')"></knockout>
+                                </div>
+
+                                <div class="d-flex" style="gap: 0.25rem">
+                                    <!-- ko foreach: Array(Gems.nEffects) -->
+                                    <div class="flex-grow-1" style="height: 2px;" data-bind="
+                                        class: App.game.gems.isValidUpgrade($parentContext.$index(), $index()) ? (App.game.gems.hasMaxUpgrade($parentContext.$index(), $index()) ? 'bg-success' : 'bg-warning') : 'bg-success',
+                                        style: { opacity: App.game.gems.isValidUpgrade($parentContext.$index(), $index()) ? 1 : 0.25 }
+                                    "></div>
+                                    <!-- /ko -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+
+                <!-- ko if: gemIndex() >= 0 -->
+                <div class="card my-3">
+                    <div class="card-header p-1">
+                        <div class="d-flex align-items-center">
+                            <img width="32px" height="32px" data-bind='attr: { src: Gems.image(gemIndex()) }'/>
+                            <div class="flex-grow-1 text-center">
+                                <div class="badge text-light px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="style: { 'background-color': GameConstants.TypeColor[gemIndex()] }">
+                                  <strong data-bind="text: PokemonType[gemIndex()]"></strong>
+                                </div>
+                                <div data-bind="text: App.game.gems.gemWallet[gemIndex()]()?.toLocaleString('en-US')"></div>
+                            </div>
+                            <img width="32px" height="32px" data-bind='attr: { src: Gems.image(gemIndex()) }'/>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-deck">
                             <!-- ko foreach: Array(Gems.nEffects) -->
-                                <tr data-bind='if: App.game.gems.isValidUpgrade($parentContext.$index(), $index())'>
-                                    <td data-bind='text: GameConstants.TypeEffectiveness[$index()]'></td>
-                                    <td width='50%'>
-                                        <div class="progress"
-                                            data-bind="style: { 'background-color': '#' + TypeHelper.typeColorsLocked[$parentContext.$index()] }">
-                                            <div class='progress-bar' role="progressbar"
-                                                data-bind="style: { width: (App.game.gems.getGemUpgrade($parentContext.$index(), $index()) * 10) + '%',
-                                                                        'background-color': '#' + TypeHelper.typeColors[$parentContext.$index()] }"
-                                                aria-valuemin="0" aria-valuemax="100">
-                                            </div>
-                                            <div class='cell-container' data-bind='foreach: new Array(9)'>
-                                                <div class='progress-cell' style='width: 10%'></div>
-                                            </div>
+                                <div class="card" data-bind="style: { opacity: App.game.gems.isValidUpgrade(gemIndex(), $index()) ? 1 : 0.25 }">
+                                    <div class="card-header" data-bind="text: GameConstants.camelCaseToString(GameConstants.TypeEffectiveness[$index()])"></div>
+
+                                    <div class="card-body p-2">
+                                        <!-- ko if: App.game.gems.isValidUpgrade(gemIndex(), $index()) -->
+                                        <div class="font-weight-bold" data-bind="text: (GameConstants.TypeEffectivenessValue[GameConstants.TypeEffectiveness[$index()]]
+                                            + (App.game.gems.getGemUpgrade(gemIndex(), $index()) * GameConstants.GEM_UPGRADE_STEP)).toLocaleString('en-US', { style: 'percent' })"></div>
+
+                                        <div class="text-center m-0 p-1 small">Versus</div>
+
+                                        <div>
+                                            <!-- ko foreach: TypeHelper.typeMatrix[gemIndex()].map((value, index) => value === TypeHelper.typeToValue($index()) ? index : -1).filter(value => value >= 0) -->
+                                            <span class="badge text-light px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="style: { 'background-color': GameConstants.TypeColor[$data] }">
+                                              <small><strong data-bind="text: PokemonType[$data]"></strong></small>
+                                            </span>
+                                            <!-- /ko -->
                                         </div>
-                                    </td>
-                                    <td data-bind='text: (GameConstants.TypeEffectivenessValue[GameConstants.TypeEffectiveness[$index()]]
-                                        + (App.game.gems.getGemUpgrade($parentContext.$index(), $index()) * GameConstants.GEM_UPGRADE_STEP)).toFixed(1) + "x"'></td>
-                                    <td>
-                                        <button class='btn btn-block btn-primary'
-                                                data-bind='click: function(){App.game.gems.buyGemUpgrade($parentContext.$index(), $index())},
-                                                    css: {disabled: !App.game.gems.canBuyGemUpgrade($parentContext.$index(), $index())},
-                                                    text: (App.game.gems.hasMaxUpgrade($parentContext.$index(), $index()) ?  "MAXED" : "Buy (" + App.game.gems.getGemUpgradeCost($parentContext.$index(), $index()).toLocaleString("en-US") + ")")'>
-                                        </button>
-                                    </td>
-                                </tr>
+                                        <!-- /ko -->
+
+                                        <!-- ko ifnot: App.game.gems.isValidUpgrade(gemIndex(), $index()) -->
+                                        <div>N / A</div>
+                                        <!-- /ko -->
+                                    </div>
+
+                                    <!-- ko if: App.game.gems.isValidUpgrade(gemIndex(), $index()) -->
+                                    <div class="p-0">
+                                        <div class="d-flex" style="gap: 1px">
+                                            <!-- ko foreach: [...Array(10).keys()] -->
+                                            <div class="flex-grow-1" style="height: 5px" data-bind="style: { 'background-color': GameConstants.TypeColor[gemIndex()], filter: `brightness(${App.game.gems.getGemUpgrade(gemIndex(), $parentContext.$index()) > $index() ? 1 : 0.5})` }"></div>
+                                            <!-- /ko -->
+                                        </div>
+                                    </div>
+                                    <!-- /ko -->
+
+                                    <!-- ko ifnot: App.game.challenges.list.disableGems.active() -->
+                                    <div class="card-footer p-0">
+                                        <!-- ko if: App.game.gems.isValidUpgrade(gemIndex(), $index()) -->
+                                            <!-- ko if: App.game.gems.hasMaxUpgrade(gemIndex(), $index()) -->
+                                            <div class="btn btn-block no-click">MAXED</div>
+                                            <!-- /ko -->
+
+                                            <!-- ko ifnot: App.game.gems.hasMaxUpgrade(gemIndex(), $index()) -->
+                                            <button class="btn btn-block btn-primary" data-bind="
+                                                enable: App.game.gems.canBuyGemUpgrade(gemIndex(), $index()),
+                                                click: () => { App.game.gems.buyGemUpgrade(gemIndex(), $index()); }">
+                                                Buy (<knockout data-bind="text: App.game.gems.getGemUpgradeCost(gemIndex(), $index()).toLocaleString('en-US')"></knockout><img width="18px" height="18px" data-bind='attr: { src: Gems.image(gemIndex()) }'/>)
+                                                <!-- text: `Buy ()` -->
+                                            </button>
+                                            <!-- /ko -->
+                                        <!-- /ko -->
+
+                                        <!-- ko ifnot: App.game.gems.isValidUpgrade(gemIndex(), $index()) -->
+                                            <div class="btn btn-block no-click">N / A</div>
+                                        <!-- /ko -->
+                                    </div>
+                                    <!-- /ko -->
+                                </div>
                             <!-- /ko -->
-                        </tbody>
-                    <!-- /ko -->
-                </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /ko -->
+                <!-- /ko -->
             </div>
 
             <div class="modal-footer">
@@ -61071,12 +61064,12 @@ aria-labelledby="pokedexModalLabel">
                   <td class="text-left">Type</td>
                   <td class="text-left tight">
                     <span class="badge text-light px-1" data-bind="visible: pokemonMap[$data].type[0] >= 0,
-                                style: { 'background-color': TypeColor[pokemonMap[$data].type[0]] }">
+                                style: { 'background-color': GameConstants.TypeColor[pokemonMap[$data].type[0]] }">
                       <small><strong
                           data-bind="text: PokemonType[pokemonMap[$data].type[0]].toUpperCase()"></strong></small>
                     </span>
                     <span class="badge text-light px-1" data-bind="if: pokemonMap[$data].type[1] >= 0,
-                                style: { 'background-color': TypeColor[pokemonMap[$data].type[1]] }">
+                                style: { 'background-color': GameConstants.TypeColor[pokemonMap[$data].type[1]] }">
                       <small><strong
                           data-bind="text: PokemonType[pokemonMap[$data].type[1]].toUpperCase()"></strong></small>
                     </span>
@@ -63952,88 +63945,97 @@ aria-labelledby="damageCalculatorModalLabel" aria-hidden="true">
             ?
             </button>
         </div>
-        <div class="modal-body p-0">
-            <div class="p-1">
-                <div class="form-row m-0">
-                    <div class="form-group col-3 text-left">
-                        <div class="form-check">
-                            <input id="damage-calc-include-breeding" class="form-check-input" type="checkbox" autocomplete="off" data-bind="checked: DamageCalculator.includeBreeding"></input>
-                            <label for="damage-calc-include-breeding" class="form-check-label">Include Breeding</label>
-                        </div>
-                        <div class="form-check">
-                            <input id="damage-calc-ignore-level" class="form-check-input" type="checkbox" autocomplete="off" data-bind="checked: DamageCalculator.ignoreLevel"></input>
-                            <label for="damage-calc-ignore-level" class="form-check-label">Ignore Level</label>
-                        </div>
-                        <div class="form-check">
-                            <input id="damage-calc-use-base" class="form-check-input" type="checkbox" autocomplete="off" data-bind="checked: DamageCalculator.baseAttackOnly"></input>
-                            <label for="damage-calc-use-base" class="form-check-label">Base Attack Only</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-row col">
-                        <!-- ko if: App.game.challenges.list.regionalAttackDebuff.active() -->
-                        <div class="form-group col-lg-3 col-6">
-                            <label>Region</label>
-                            <select autocomplete="off" class="custom-select" data-bind="value: DamageCalculator.region">
-                                <!-- ko foreach: GameHelper.enumStrings(GameConstants.Region).filter(r => r != 'none' && GameConstants.Region[r] <= player.highestRegion()) -->
-                                <option data-bind="attr: { value: GameConstants.Region[$data] }, text: GameConstants.camelCaseToString($data)">Region</option>
-                                <!-- /ko -->
-                                <option value="-1">None</option>
-                            </select>
-                        </div>
+        <div class="modal-body p-2">
+            <div class="form-row m-0">
+                <div class="form-group col-4 col-lg">
+                    <label>Region</label>
+                    <select autocomplete="off" class="custom-select" data-bind="value: DamageCalculator.region">
+                        <!-- ko foreach: GameHelper.enumStrings(GameConstants.Region).filter(r => GameConstants.Region[r] <= player.highestRegion()) -->
+                        <option data-bind="value: GameConstants.Region[$data], text: GameConstants.camelCaseToString($data)">Region</option>
                         <!-- /ko -->
-                        <div class="form-group col-lg-3 col-6">
-                            <label>Weather</label>
-                            <select autocomplete="off" class="custom-select" data-bind="value: DamageCalculator.weather">
-                                <!-- ko foreach: GameHelper.enumStrings(WeatherType) -->
-                                <option data-bind="attr: { value: WeatherType[$data] }, text: GameConstants.camelCaseToString($data)">Weather</option>
-                                <!-- /ko -->
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3 col-6">
-                            <label>Type 1</label>
-                            <select autocomplete="off" class="custom-select" data-bind="value: DamageCalculator.type1">
-                                <!-- ko foreach: GameHelper.enumStrings(PokemonType) -->
-                                <option data-bind="attr: { value: PokemonType[$data] }, text: $data">Type</option>
-                                <!-- /ko -->
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3 col-6">
-                            <label>Type 2</label>
-                            <select autocomplete="off" class="custom-select" data-bind="value: DamageCalculator.type2">
-                                <!-- ko foreach: GameHelper.enumStrings(PokemonType) -->
-                                <option data-bind="attr: { value: PokemonType[$data] }, text: $data">Type</option>
-                                <!-- /ko -->
-                            </select>
-                        </div>
-                    </div>
+                    </select>
                 </div>
-                <div data-bind="text: `Total Damage: ${Math.round(DamageCalculator.observableTotalDamage()).toLocaleString('en-US')}`"> </div>
-                <div class="d-flex">
-                    <!-- ko foreach: DamageCalculator.observableTypeDamageArray -->
-                    <div class="type-damage-bar"
-                        data-bind="style: {'flex-grow': $data,
-                                            'background-color': '#' + TypeHelper.typeColorsLocked[$index()]
-                                          },
-                                    visible: $data > 0,
-                                    tooltip: {title: `${PokemonType[$index()]}: ${Math.round($data).toLocaleString('en-US')}`,
-                                              trigger: 'hover',
-                                              placement:'bottom'
-                                            },
-                                    click: () => {DamageCalculator.detailType($index())}"
-                    ></div>
+                <div class="form-group col-4 col-lg">
+                    <label>Subregion</label>
+                    <!-- ko if: DamageCalculator.region() != GameConstants.Region.none -->
+                    <select autocomplete="off" class="custom-select" data-bind="
+                        options: SubRegions.getSubRegions(DamageCalculator.region()),
+                        optionsText: 'name',
+                        optionsValue: 'id',
+                        value: DamageCalculator.subregion"></select>
+                    <!-- /ko -->
+                    <!-- ko if: DamageCalculator.region() == GameConstants.Region.none -->
+                    <select autocomplete="off" class="custom-select">
+                        <option value="-1">None</option>
+                    </select>
                     <!-- /ko -->
                 </div>
-                <div class="form-group text-left mt-3">
-                    <label>Type Detail</label>
-                    <select autocomplete="off" data-bind="value: DamageCalculator.detailType">
+                <div class="form-group col-4 col-lg">
+                    <label>Weather</label>
+                    <select autocomplete="off" class="custom-select" data-bind="value: DamageCalculator.weather">
+                        <!-- ko foreach: GameHelper.enumStrings(WeatherType) -->
+                        <option data-bind="attr: { value: WeatherType[$data] }, text: GameConstants.camelCaseToString($data)">Weather</option>
+                        <!-- /ko -->
+                    </select>
+                </div>
+                <div class="form-group col-4 col-lg">
+                    <label>Type 1</label>
+                    <select autocomplete="off" class="custom-select" data-bind="value: DamageCalculator.type1">
                         <!-- ko foreach: GameHelper.enumStrings(PokemonType) -->
                         <option data-bind="attr: { value: PokemonType[$data] }, text: $data">Type</option>
                         <!-- /ko -->
                     </select>
-                    <!-- ko if: DamageCalculator.detailType() != PokemonType.None -->
-                    <span class="float-right" data-bind="text: `${PokemonType[DamageCalculator.detailType()]} Damage: ${Math.round(DamageCalculator.observableTypeDamageArray()[DamageCalculator.detailType()]).toLocaleString('en-US')}`"></span>
-                    <!-- /ko -->
                 </div>
+                <div class="form-group col-4 col-lg">
+                    <label>Type 2</label>
+                    <select autocomplete="off" class="custom-select" data-bind="value: DamageCalculator.type2">
+                        <!-- ko foreach: GameHelper.enumStrings(PokemonType) -->
+                        <option data-bind="attr: { value: PokemonType[$data] }, text: $data">Type</option>
+                        <!-- /ko -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-row justify-content-center m-0 mb-2">
+                <div class="form-check form-check-inline">
+                    <input id="damage-calc-include-breeding" class="form-check-input" type="checkbox" autocomplete="off" data-bind="checked: DamageCalculator.includeBreeding"></input>
+                    <label for="damage-calc-include-breeding" class="form-check-label">Include Breeding</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="damage-calc-ignore-level" class="form-check-input" type="checkbox" autocomplete="off" data-bind="checked: DamageCalculator.ignoreLevel"></input>
+                    <label for="damage-calc-ignore-level" class="form-check-label">Ignore Level</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="damage-calc-use-base" class="form-check-input" type="checkbox" autocomplete="off" data-bind="checked: DamageCalculator.baseAttackOnly"></input>
+                    <label for="damage-calc-use-base" class="form-check-label">Base Attack Only</label>
+                </div>
+            </div>
+            <hr />
+            <div data-bind="text: `Total Damage: ${Math.round(DamageCalculator.observableTotalDamage()).toLocaleString('en-US')}`"> </div>
+            <div class="d-flex">
+                <!-- ko foreach: DamageCalculator.observableTypeDamageArray -->
+                <div class="type-damage-bar"
+                    data-bind="style: {'flex-grow': $data,
+                                        'background-color': '#' + TypeHelper.typeColorsLocked[$index()]
+                                      },
+                                visible: $data > 0,
+                                tooltip: {title: `${PokemonType[$index()]}: ${Math.round($data).toLocaleString('en-US')}`,
+                                          trigger: 'hover',
+                                          placement:'bottom'
+                                        },
+                                click: () => {DamageCalculator.detailType($index())}"
+                ></div>
+                <!-- /ko -->
+            </div>
+            <div class="form-group text-left mt-3">
+                <label>Type Detail</label>
+                <select autocomplete="off" data-bind="value: DamageCalculator.detailType">
+                    <!-- ko foreach: GameHelper.enumStrings(PokemonType) -->
+                    <option data-bind="attr: { value: PokemonType[$data] }, text: $data">Type</option>
+                    <!-- /ko -->
+                </select>
+                <!-- ko if: DamageCalculator.detailType() != PokemonType.None -->
+                <span class="float-right" data-bind="text: `${PokemonType[DamageCalculator.detailType()]} Damage: ${Math.round(DamageCalculator.observableTypeDamageArray()[DamageCalculator.detailType()]).toLocaleString('en-US')}`"></span>
+                <!-- /ko -->
             </div>
             <div data-bind="if: DamageCalculator.detailType() != PokemonType.None">
                 <table id="damageCalcTypeDetailTable" class="table table-striped table-hover table-sm m-0">
@@ -64201,7 +64203,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
 
 
 <div class="modal noselect fade" id="heldItemModal" tabindex="-1" role="dialog" aria-labelledby="heldItemModal">
-    <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-light" style='justify-content: space-around;'>
                 <h5 class="modal-title text-light">Select a Pokémon</h5>&nbsp;
@@ -64209,14 +64211,15 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body p-0" style="background-color: inherit;">
+            <div class="modal-body p-0" style="background-color: inherit; overflow-x: hidden;">
                 <!-- ko if: HeldItem.heldItemSelected() -->
-                <img data-bind="attr: { src: HeldItem.heldItemSelected().image }, style: { 'image-rendering': HeldItem.heldItemSelected().pixelated ? 'pixelated' : '' }" width="40%"/>
+                <img data-bind="attr: { src: HeldItem.heldItemSelected().image }, style: { 'image-rendering': HeldItem.heldItemSelected().pixelated ? 'pixelated' : '' }" width="25%"/>
                 <br/>
                 <div class="sticky-top" style="background-color: inherit;">
                   <div class="btn-group btn-block m-0" role="group" aria-label="Basic example">
                     <button class="btn btn-block btn-secondary btn-static" data-bind="text: HeldItem.heldItemSelected().displayName + ': ' + player.amountOfItem(HeldItem.heldItemSelected().name)"></button>
                   </div>
+                  <!-- Sort field -->
                   <div class="input-group px-1 mt-1">
                       <!-- ko let: { heldItemSort: Settings.getSetting('heldItemSort') } -->
                       <select id="held-item-sort" autocomplete="off" class="custom-select"
@@ -64240,16 +64243,28 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                       </div>
                       <!-- /ko -->
                   </div>
-                  <div class="form-group px-1 mt-1 mb-0">
+                  <!-- Search field -->
+                  <div class="input-group px-1 mt-1 mb-0">
+                    <div class="input-group-prepend">
+                        <!-- ko let: { heldItemDropdownPokemonOrItem: Settings.getSetting('heldItemDropdownPokemonOrItem') } -->
+                        <select id="held-item-sort" autocomplete="off" class="custom-select"
+                            data-bind="options: heldItemDropdownPokemonOrItem.options,
+                                optionsValue: 'value',
+                                optionsText: 'text',
+                                value: heldItemDropdownPokemonOrItem.observableValue">
+                        </select>
+                        <!-- /ko -->
+                    </div>
                     <input id="held-item-search" autocomplete="off" class="form-control" placeholder="Search"
                         data-bind="textInput: Settings.getSetting('heldItemSearchFilter').observableValue" />
                   </div>
                   <div class="small px-1 pb-2 my-1" style="overflow-x: hidden;">
+                    <!-- Region and Type selects -->
                     <div class="form-row px-1">
                         <div class="form-group col-6 m-0 px-1 py-0">
                             <!-- ko let: { heldItemRegionFilter: Settings.getSetting('heldItemRegionFilter') } -->
                             <label class="mb-1" for="held-item-region-filter">Region</label>
-                            <select id="held-item-region-filter" autocomplete="off" class="custom-select custom-select-sm" 
+                            <select id="held-item-region-filter" autocomplete="off" class="custom-select custom-select-sm"
                                 data-bind="options: heldItemRegionFilter.getValidOptions(),
                                     optionsValue: 'value',
                                     optionsText: 'text',
@@ -64260,7 +64275,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                         <div class="form-group col-6 m-0 px-1 py-0">
                             <!-- ko let: { heldItemTypeFilter: Settings.getSetting('heldItemTypeFilter') } -->
                             <label class="mb-1" for="held-item-type-filter">Type</label>
-                            <select id="held-item-type-filter" name="heldItemTypeFilter" autocomplete="off" class="custom-select custom-select-sm" 
+                            <select id="held-item-type-filter" name="heldItemTypeFilter" autocomplete="off" class="custom-select custom-select-sm"
                                 data-bind="options: heldItemTypeFilter.options,
                                     optionsValue: 'value',
                                     optionsText: 'text',
@@ -64269,6 +64284,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                             <!-- /ko -->
                         </div>
                     </div>
+                    <!-- Hide/Show checkboxes -->
                     <div class="form-check align-middle mt-1">
                         <input type="checkbox" id="hide-holding-item-pokemon" class="form-check-input"
                             data-bind="checked: Settings.getSetting('heldItemHideHoldingPokemon').observableValue" />
@@ -64276,8 +64292,8 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                     </div>
                     <div class="form-check align-middle mt-1">
                         <input type="checkbox" id="show-this-item-pokemon" class="form-check-input"
-                            data-bind="checked: Settings.getSetting('heldItemShowHoldingThisItem').observableValue" />
-                        <label for="show-this-item-pokemon" class="form-check-label">Show <u>only</u> Pokémon holding this item</label>
+                            data-bind="checked: Settings.getSetting('heldItemHideHoldingThisItem').observableValue" />
+                        <label for="show-this-item-pokemon" class="form-check-label">Hide Pokémon holding <u>this</u> item</label>
                     </div>
                   </div>
                 </div>
@@ -64291,11 +64307,12 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                   </thead>
                   <tbody data-bind="foreach: lazyLoad('lazyHeldItemList', $element, PartyController.getHeldItemSortedList, { reset: () => (DisplayObservables.modalState.heldItemModal === 'hidden') }), childrenComplete: () => { lazyLoadCallback('lazyHeldItemList'); }">
                     <tr class="clickable" data-bind="click: () => $data.giveHeldItem(HeldItem.heldItemSelected())">
-                      <td class="text-left"><knockout data-bind="text: $data.displayName"></knockout><sup data-bind="visible: $data.shiny">✨</sup></td>
-                      <td class="text-center tight" data-bind="
-                        text: $data.heldItem() == undefined ? '' : $data.heldItem().displayName,
-                        tooltip: $data.heldItem() != undefined ? { title: $data.heldItem().description, placement: 'bottom', trigger: 'hover'} : undefined
-                      "></td>
+                      <td class="text-left align-middle"><knockout data-bind="text: $data.displayName"></knockout><sup data-bind="visible: $data.shiny">✨</sup></td>
+                      <td class="text-left tight align-middle" data-bind="if: $data.heldItem(),
+                        tooltip: { title: $data.heldItem()?.description ?? '', trigger: 'hover', placement: 'bottom' }">
+                            <img width="20" data-bind="attr: { src: $data.heldItem().image }" />
+                            <knockout data-bind="text: $data.heldItem().displayName"></knockout>
+                        </td>
                     </tr>
                   </tbody>
                 </table>
