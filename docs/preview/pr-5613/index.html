@@ -58403,6 +58403,11 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                     The Start Menu also has a button to open the Wiki.
                 </p>
 
+                <div class="border-bottom border-dark font-weight-bold">Where can I view more information about my save file?</div>
+                <p class="small">
+                    <a href="https://companion.pokeclicker.com/" target="_blank">https://companion.pokeclicker.com/</a><br/>
+                </p>
+
                 <div class="border-bottom border-dark font-weight-bold">My game isn&#39;t running at full speed when the window isn&#39;t active.</div>
                 <p class="small">
                     This is a setting on browsers that slows down inactive windows.<br />
@@ -58965,6 +58970,9 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
                 <p><h5 class="text-primary"><strong>Wiki:</strong></h5></p>
                 <span class="text-muted">Check out the community wiki to learn more information about PokéClicker: <a href="https://wiki.pokeclicker.com/" target="_blank">https://wiki.pokeclicker.com/</a></span>
+
+                <p><h5 class="text-primary"><strong>Companion Tool:</strong></h5></p>
+                <span class="text-muted">Check out the Companion Tool for more information about your save file: <a href="https://companion.pokeclicker.com/" target="_blank">https://companion.pokeclicker.com/</a></span>
             </div>
             
             <div class="modal-footer">
@@ -59120,7 +59128,7 @@ data-backdrop="static" data-keyboard="false">
                            <input class="image-starter" type="image"
                                   data-bind="
                                     attr: { src: 'assets/images/pokemon/' + $data + '.png' },
-                                    click: () => { App.game.party.gainPokemonById($data); player.regionStarters[player.region]($index()); $('#pickStarterModal').modal('hide'); }
+                                    click: () => { player.pickStarter($index()); $('#pickStarterModal').modal('hide'); }
                                     ">
                        </div>
                    </div>
