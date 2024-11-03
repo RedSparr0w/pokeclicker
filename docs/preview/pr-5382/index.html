@@ -56525,9 +56525,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <!-- List of quest line quests -->
 	<!-- ko let: { activeQuestLines: App.game.quests.questLines().filter((ql) => ql.state() == QuestLineState.started) } -->
         <!-- ko if: activeQuestLines.length -->
-            <div class="card-header" style="margin-top: 1px;" data-toggle="collapse" href="#questLineDisplayBody">
-                Questlines
-            </div>
+        <div class="card-header p-0" data-toggle="collapse" href="#questLineDisplayBody">
+            <span>Quest Lines</span>
+        </div>
         <!-- /ko -->
         <div id="questLineDisplayBody" class="card-body p-0 show" data-bind="foreach: activeQuestLines">
     		<div class="questDisplayBlock questLine">
