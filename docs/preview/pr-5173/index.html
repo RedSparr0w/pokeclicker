@@ -2309,8 +2309,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
             <knockout>
                 <knockout data-bind="text: ContestBattle.trainer().name.replace(/\d/g,'') + '\'s'"></knockout>
-                <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': ContestBattle.enemyPokemon() } }">Pokémon name</knockout>
-                <!-- TODO: Trainer name and Pokemon nickname instead -->
+                <knockout data-bind="text: ContestBattle.enemyPokemon().nickname">Pokémon name</knockout>
             </knockout>
 
             <div class="progress timer">
@@ -2359,29 +2358,70 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         Stop Contest
       </button>
       <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
+        <!-- ko if: ContestRunner.rank() === 5 || ContestRunner.rank() === 6 || ContestRunner.rank() === 7 || ContestRunner.rank() === 8 || ContestRunner.rank() === 10 -->
         <table width="100%">
           <tr>
-            <td width="50%">
-              <knockout data-bind="html: ContestBattle.pokemonContestAppealTooltip"></knockout>
+            <td colspan="2">
+              <span>Current Click Types:</span>
             </td>
-            <td width="50%">
-              <knockout data-bind="html: TextMerger.mergeText(ContestBattle.trainerBonusComputable())"></knockout>
-            </td>
-          </tr>
-          <tr>
-            <td width="50%" data-bind="foreach: pokemonMap[ContestBattle.enemyPokemon().name].contestTypes">
-              <span class="badge text-light px-1" data-bind="if: $data >= 0,
-                          style: { 'background-color': GameConstants.ContestColor[$data]}">
+            <td colspan="4" data-bind="foreach: GameHelper.enumNumbers(ContestType).filter(e => e != ContestType.Balanced)">
+              <span class="badge text-light px-1" data-bind="
+                          attr:{ style: 'background-color:' + ContestHelper.getBackgroundContestColors($data, ContestBattle.clickTypes()) }">
                 <small><strong
                   data-bind="text: ContestType[$data].toUpperCase()" style="color: white"></strong></small>
               </span>
             </td>
-            <td width="50%">
-              <knockout data-bind="text: `Bonus Round: ${ContestRunner.encoreRoundsComputable()}/${ContestRunner.rank()}`"></knockout>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <span>Enemy Contest Types:</span>
+            </td>
+            <td colspan="4" data-bind="foreach: GameHelper.enumNumbers(ContestType).filter(e => e != ContestType.Balanced)">
+              <span class="badge text-light px-1" data-bind="
+                          attr:{ style: 'background-color:' + ContestHelper.getBackgroundContestColors($data, ContestBattle.enemyPokemon().contestTypes) }">
+                <small><strong
+                  data-bind="text: ContestType[$data].toUpperCase()" style="color: white"></strong></small>
+              </span>
             </td>
           </tr>
-      </table>
-    </h2>
+          <tr>
+            <td colspan="2" width="33%">
+              <knockout data-bind="html: TextMerger.mergeText(ContestBattle.encoreBonusComputable())"></knockout>
+            </td>
+            <td colspan="2">
+              <knockout data-bind="html: TextMerger.mergeText(ContestBattle.trainerBonusComputable())"></knockout>
+            </td>
+            <td colspan="2" width="33%">
+              <knockout data-bind="html: TextMerger.mergeText(ContestBattle.clickBonusComputable())"></knockout>
+            </td>
+          </tr>
+        </table>
+        <!-- /ko -->
+        <!-- ko if: ContestRunner.rank() === 1 || ContestRunner.rank() === 2 || ContestRunner.rank() === 3 || ContestRunner.rank() === 4 || ContestRunner.rank() === 9 -->
+        <table width="100%">
+          <tr>
+            <td width="40%">
+              <knockout data-bind="html: ContestBattle.pokemonContestAppealTooltip"></knockout>
+            </td>
+            <td width="60%">
+              <knockout data-bind="html: TextMerger.mergeText(ContestBattle.encoreBonusComputable())"></knockout>
+            </td>
+          </tr>
+          <tr>
+            <td width="60%" data-bind="foreach: GameHelper.enumNumbers(ContestType).filter(e => e != ContestType.Balanced)">
+              <span class="badge text-light px-1" style="font-size: x-small" data-bind="
+                          attr:{ style: 'background-color:' + ContestHelper.getBackgroundContestColors($data, ContestBattle.enemyPokemon().contestTypes) }">
+                <small><strong
+                  data-bind="text: ContestType[$data].toUpperCase()" style="color: white"></strong></small>
+              </span>
+            </td>
+            <td width="40%">
+              <knockout data-bind="html: TextMerger.mergeText(ContestBattle.trainerBonusComputable())"></knockout>
+            </td>
+          </tr>
+        </table>
+        <!-- /ko -->
+      </h2>
     </div>
 </div>
 
@@ -2823,7 +2863,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         <svg class="ribbon" xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 1280 1280" xmlns:v="https://vecta.io/nano" data-bind="attr: {'contest-type': ContestType[type]}">
                             <g data-bind="html: ContestHelper.getRibbonImage(rank, type)"></g>
                         </svg>
-                        <p class="mb-0" data-bind="html: 'Appeal' + '<br/>' + `${GameHelper.formatAmount(ContestHelper.calculatePokemonContestAppeal(rank, type, type))}`"></p>
+                        <p class="mb-0" data-bind="html: 'Appeal' + '<br/>' + `${GameHelper.formatAmount(ContestHelper.calculatePokemonContestAppeal(rank, type, [type]))}`"></p>
                     </button>
                 </div>
             </div>
@@ -61094,6 +61134,7 @@ aria-labelledby="pokedexModalLabel">
                   </td>
                 </tr>
                 <!-- /ko -->
+                <!-- TODO: fix overlap when too many contest types -->
                 <tr>
                   <td class="text-left">Contest Type</td>
                   <td class="text-left tight" data-bind="foreach: ContestHelper.getPokemonContestTypes($data)">
