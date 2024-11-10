@@ -322,18 +322,20 @@
                     <h5 class="modal-title" id="keyItemModalLabel">New key item!</h5>
                 </div>
             </div>
+            <!-- ko with: App.game.keyItems.itemList.find(k=> k.id == KeyItemController.latestGainedItem()) -->
             <div class="modal-body">
                 <h5><strong>Congratulations!</strong></h5>
                 <span>You have gained a</span><br>
-                <img class="key-item" src="" data-bind="attr:{ title: App.game.keyItems.itemList[KeyItemController.latestGainedItem()].displayName,  src: 'assets/images/keyitems/' + KeyItemType[KeyItemController.latestGainedItem()] + '.png'}"/><br>
+                <img class="key-item" src="" data-bind="attr:{ title: $data.displayName,  src: 'assets/images/keyitems/' + KeyItemType[KeyItemController.latestGainedItem()] + '.png'}"/><br>
                 <span>
-                    <strong data-bind="text: App.game.keyItems.itemList[KeyItemController.latestGainedItem()].displayName">Name</strong>
+                    <strong data-bind="text: $data.displayName">Name</strong>
                 </span><br>
-                <span data-bind="html:  App.game.keyItems.itemList[KeyItemController.latestGainedItem()].description">Description</span>
+                <span data-bind="html: $data.description">Description</span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: App.game.keyItems.itemList[KeyItemController.latestGainedItem()].unlockRewardOnClose">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: $data.unlockRewardOnClose">Close</button>
             </div>
+            <!-- /ko -->
         </div>
     </div>
 </div>
@@ -801,21 +803,23 @@
                             </div>
 
                             <div class="oak-item-info">
+                                <!-- ko with: App.game.keyItems.itemList.find(k=> k.id == KeyItemController.inspectedItem()) -->
                                 <div class="row justify-content-sm-center">
                                     <div class="col-xs-10">
-                                        <b><span data-bind="text: App.game.keyItems.itemList[KeyItemController.inspectedItem()].displayName"></span></b>
+                                        <b><span data-bind="text: $data.displayName"></span></b>
                                     </div>
                                 </div>
                                 <div class="row justify-content-sm-center">
                                     <div class="col-xs-10">
                                         <knockout data-bind="if: App.game.keyItems.hasKeyItem(KeyItemController.inspectedItem())">
-                                            <p data-bind="html: App.game.keyItems.itemList[KeyItemController.inspectedItem()].description"></p>
+                                            <p data-bind="html: $data.description"></p>
                                         </knockout>
                                         <knockout data-bind="ifnot: App.game.keyItems.hasKeyItem(KeyItemController.inspectedItem())">
                                             <p>?????</p>
                                         </knockout>
                                     </div>
                                 </div>
+                                <!-- /ko -->
                             </div>
                         </div>
                     </div>
@@ -14170,24 +14174,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
-
-
-
-        <!--Gateon Port extension-->
-        
-
-<rect class="city"
-    data-town="Gateon Port"
-    x="48"
-    y="384"
-    height="16"
-    width="48"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Gateon Port')},
-        attr: { class: MapHelper.calculateTownCssClass('Gateon Port') },
-        event: { mouseenter: () => GameController.showMapTooltip('Gateon Port'), mouseleave: GameController.hideMapTooltip },
-        ">
-</rect>
 
 
 
