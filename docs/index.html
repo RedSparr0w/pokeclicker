@@ -322,18 +322,20 @@
                     <h5 class="modal-title" id="keyItemModalLabel">New key item!</h5>
                 </div>
             </div>
+            <!-- ko with: App.game.keyItems.itemList.find(k=> k.id == KeyItemController.latestGainedItem()) -->
             <div class="modal-body">
                 <h5><strong>Congratulations!</strong></h5>
                 <span>You have gained a</span><br>
-                <img class="key-item" src="" data-bind="attr:{ title: App.game.keyItems.itemList[KeyItemController.latestGainedItem()].displayName,  src: 'assets/images/keyitems/' + KeyItemType[KeyItemController.latestGainedItem()] + '.png'}"/><br>
+                <img class="key-item" src="" data-bind="attr:{ title: $data.displayName,  src: 'assets/images/keyitems/' + KeyItemType[KeyItemController.latestGainedItem()] + '.png'}"/><br>
                 <span>
-                    <strong data-bind="text: App.game.keyItems.itemList[KeyItemController.latestGainedItem()].displayName">Name</strong>
+                    <strong data-bind="text: $data.displayName">Name</strong>
                 </span><br>
-                <span data-bind="html:  App.game.keyItems.itemList[KeyItemController.latestGainedItem()].description">Description</span>
+                <span data-bind="html: $data.description">Description</span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: App.game.keyItems.itemList[KeyItemController.latestGainedItem()].unlockRewardOnClose">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: $data.unlockRewardOnClose">Close</button>
             </div>
+            <!-- /ko -->
         </div>
     </div>
 </div>
@@ -351,20 +353,41 @@
             </div>
             <div class="modal-body text-left p-2">
                 <div class="form-row p-0" id="profileEdit">
-                    <div class="form-group col-6">
+                    <div class="form-group col-5">
                         <label>Name</label>
                         <input autocomplete="off" class="form-control" oninput="App.game.profile.name(this.value)" placeholder="name" data-bind="value: App.game.profile.name()"/>
                     </div>
-                    <div class="form-group col-6">
+                    <div class="form-group col-7">
                         <label>Pokémon</label>
-                        <select autocomplete="off" class="custom-select" onchange="App.game.profile.pokemon(+this.value), App.game.profile.pokemonShiny(false), App.game.profile.pokemonFemale(false)">
-                            <!-- ko foreach: App.game.party.caughtPokemon.sort((a, b) => a.id - b.id) -->
-                            <option data-bind="attr: { value: $data.id, selected: App.game.profile.pokemon() === $data.id }, text: '#'+($data.id > 0 ? Math.floor($data.id) + '' : '???').padStart(3, 0)+' '+$data.displayName + ($data.shiny ? ' ✨' : '')">Pokemon</option>
-                            <!-- /ko -->
-                        </select>
+                        <div class="dropdown">
+                            <button class="btn btn-dropdown custom-select text-left" type="button" data-toggle="dropdown" data-display="static">
+                                <div class="text-truncate btn-text" data-bind="with: App.game.party.getPokemon(App.game.profile.pokemon())">
+                                    <span data-bind="text: `#${($data.id > 0 ? Math.floor($data.id).toString() : '???').padStart(3, 0)} ${$data.displayName}`"></span>
+                                    <span data-bind="visible: $data.shiny">✨</span>
+                                    <span data-bind="visible: $data.shadow !== GameConstants.ShadowStatus.None">
+                                        <img style="width: 18px;" src="assets/images/status/shadow.svg"/>
+                                    </span>
+                                </div>
+                            </button>
+                            <div class="dropdown-menu px-2 w-100" style="max-height: 280px; overflow-y: auto;">
+                                <input type="text" class="form-control form-control-sm" placeholder="Search" data-bind="textInput: App.game.profile.pokemonSearch" />
+                                <div class="dropdown-divider"></div>
+                                <!-- ko if: DisplayObservables.modalState.profileModal === 'show' -->
+                                <div data-bind="foreach: App.game.profile.getCaughtPokemonList()">
+                                    <button class="dropdown-item small px-1" type="button" data-bind="click: () => { App.game.profile.pokemon($data.id); App.game.profile.pokemonShiny(false); App.game.profile.pokemonFemale(false); App.game.profile.pokemonShadow(false); }">
+                                        <span data-bind="text: `#${($data.id > 0 ? Math.floor($data.id).toString() : '???').padStart(3, 0)} ${$data.displayName}`"></span>
+                                        <span data-bind="visible: $data.shiny">✨</span>
+                                        <span data-bind="visible: $data.shadow !== GameConstants.ShadowStatus.None">
+                                            <img style="width: 16px;" src="assets/images/status/shadow.svg"/>
+                                        </span>
+                                    </button>
+                                </div>
+                                <!-- /ko -->
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="form-group col-6">
+
+                    <div class="form-group col-4">
                         <label>Shiny</label>
                         <label class="form-check-label toggler-wrapper style-1 float-right">
                             <input class="form-check-input" type="checkbox" id="profile-shiny-toggle"
@@ -374,8 +397,20 @@
                             </div>
                         </label>
                     </div>
+                    <!-- ko if: SubRegions.isSubRegionUnlocked(GameConstants.Region.hoenn, GameConstants.HoennSubRegions.Orre) -->
+                    <div class="form-group col-4">
+                        <label>Shadow</label>
+                        <label class="form-check-label toggler-wrapper style-1 float-right">
+                            <input class="form-check-input" type="checkbox" id="profile-shadow-toggle"
+                                data-bind="checked: App.game.profile.pokemonShadow, enable: App.game.party.alreadyCaughtPokemon(App.game.profile.pokemon(), false, true)">
+                            <div class="toggler-slider" data-bind="tooltip: { title: !App.game.party.alreadyCaughtPokemon(App.game.profile.pokemon(), false, true) ? `Shadow ${PokemonHelper.getPokemonById(App.game.profile.pokemon()).name} is not unlocked yet or does not exist` : '', trigger: 'hover' }">
+                                <div class="toggler-knob" data-bind="css: { 'checkbox-disabled': !App.game.party.alreadyCaughtPokemon(App.game.profile.pokemon(), false, true) }"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <!-- /ko -->
                     <!-- ko if: PokemonHelper.getPokemonById(App.game.profile.pokemon()).gender.visualDifference -->
-                    <div class="form-group col-6">
+                    <div class="form-group col-4">
                         <label>Gender</label>
                         <label class="form-check-label toggler-wrapper style-1 float-right"
                             data-bind="css: { 'gender-toggle': PokemonHelper.getPokemonById(App.game.profile.pokemon()).gender.visualDifference }">
@@ -768,21 +803,23 @@
                             </div>
 
                             <div class="oak-item-info">
+                                <!-- ko with: App.game.keyItems.itemList.find(k=> k.id == KeyItemController.inspectedItem()) -->
                                 <div class="row justify-content-sm-center">
                                     <div class="col-xs-10">
-                                        <b><span data-bind="text: App.game.keyItems.itemList[KeyItemController.inspectedItem()].displayName"></span></b>
+                                        <b><span data-bind="text: $data.displayName"></span></b>
                                     </div>
                                 </div>
                                 <div class="row justify-content-sm-center">
                                     <div class="col-xs-10">
                                         <knockout data-bind="if: App.game.keyItems.hasKeyItem(KeyItemController.inspectedItem())">
-                                            <p data-bind="html: App.game.keyItems.itemList[KeyItemController.inspectedItem()].description"></p>
+                                            <p data-bind="html: $data.description"></p>
                                         </knockout>
                                         <knockout data-bind="ifnot: App.game.keyItems.hasKeyItem(KeyItemController.inspectedItem())">
                                             <p>?????</p>
                                         </knockout>
                                     </div>
                                 </div>
+                                <!-- /ko -->
                             </div>
                         </div>
                     </div>
@@ -802,7 +839,7 @@
         trigger: 'hover',
         placement:'top',
         html: true,
-        boundary: document.getElementById('showItemsModal'),
+        boundary: 'scrollParent',
     }">
         <img width="42px" data-bind="attr: { src: ItemList[$data].image }">
         <div class="flex-grow-1 small align-self-end ml-2" style="min-width: 0;">
@@ -14164,24 +14201,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 <rect class="city"
     data-town="Gateon Port"
     x="48"
-    y="384"
-    height="16"
-    width="48"
-    data-bind="
-        click:function(){MapHelper.moveToTown('Gateon Port')},
-        attr: { class: MapHelper.calculateTownCssClass('Gateon Port') },
-        event: { mouseenter: () => GameController.showMapTooltip('Gateon Port'), mouseleave: GameController.hideMapTooltip },
-        ">
-</rect>
-
-
-
-        <!--Gateon Port extension-->
-        
-
-<rect class="city"
-    data-town="Gateon Port"
-    x="48"
     y="496"
     height="16"
     width="48"
@@ -14230,19 +14249,19 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
-        <!--Pokemon HQ Lab-->
+        <!--Pokémon HQ Lab-->
         
 
 <rect class="city"
-    data-town="Pokemon HQ Lab"
+    data-town="Pokémon HQ Lab"
     x="96"
     y="192"
     height="112"
     width="176"
     data-bind="
-        click:function(){MapHelper.moveToTown('Pokemon HQ Lab')},
-        attr: { class: MapHelper.calculateTownCssClass('Pokemon HQ Lab') },
-        event: { mouseenter: () => GameController.showMapTooltip('Pokemon HQ Lab'), mouseleave: GameController.hideMapTooltip },
+        click:function(){MapHelper.moveToTown('Pokémon HQ Lab')},
+        attr: { class: MapHelper.calculateTownCssClass('Pokémon HQ Lab') },
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon HQ Lab'), mouseleave: GameController.hideMapTooltip },
         ">
 </rect>
 
@@ -14250,26 +14269,26 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="160"
         y="224"
         class="iconLocation hide"
-        data-bind="visible: MapHelper.isTownCurrentLocation('Pokemon HQ Lab'),
+        data-bind="visible: MapHelper.isTownCurrentLocation('Pokémon HQ Lab'),
             attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
             playerSpriteMove">
     </image>
 
 
 
-        <!--Pokemon HQ Lab extension-->
+        <!--Pokémon HQ Lab extension-->
         
 
 <rect class="city"
-    data-town="Pokemon HQ Lab"
+    data-town="Pokémon HQ Lab"
     x="144"
     y="304"
     height="16"
     width="80"
     data-bind="
-        click:function(){MapHelper.moveToTown('Pokemon HQ Lab')},
-        attr: { class: MapHelper.calculateTownCssClass('Pokemon HQ Lab') },
-        event: { mouseenter: () => GameController.showMapTooltip('Pokemon HQ Lab'), mouseleave: GameController.hideMapTooltip },
+        click:function(){MapHelper.moveToTown('Pokémon HQ Lab')},
+        attr: { class: MapHelper.calculateTownCssClass('Pokémon HQ Lab') },
+        event: { mouseenter: () => GameController.showMapTooltip('Pokémon HQ Lab'), mouseleave: GameController.hideMapTooltip },
         ">
 </rect>
 
@@ -57995,21 +58014,10 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr><th colspan="2">Underground</th></tr>
                             </thead>
                             <tbody>
-                                <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.underground.hammer')}"></tr>
                                 <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.underground.chisel')}"></tr>
+                                <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.underground.hammer')}"></tr>
                                 <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.underground.bomb')}"></tr>
                                 <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.underground.survey')}"></tr>
-                                <tr>
-                                    <td class="p-2">
-                                        <knockout data-bind="text: App.translation.get('hotkey.underground.useRestore', 'settings', { defaultValue: 'Use Restore'})"></knockout><span>:</span>
-                                    </td>
-                                    <td class="p-0" data-bind="tooltip: {
-                                        title: 'Each number refers to a specific Restore',
-                                        trigger: 'hover',
-                                    }">
-                                        <kbd class="btn-block" style="padding: 10px 0;" ><code>Number Keys</code></kbd>
-                                    </td>
-                                </tr>
                             </tbody>
                             <thead>
                                 <tr><th colspan="2">Oak Items</th></tr>
@@ -59385,7 +59393,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
 
                                         <div>
                                             <!-- ko foreach: TypeHelper.typeMatrix[gemIndex()].map((value, index) => value === TypeHelper.typeToValue($index()) ? index : -1).filter(value => value >= 0) -->
-                                            <span class="badge text-light px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="style: { 'background-color': GameConstants.TypeColor[$data] }">
+                                            <span class="badge text-light text-uppercase px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="style: { 'background-color': GameConstants.TypeColor[$data] }">
                                               <small><strong data-bind="text: PokemonType[$data]"></strong></small>
                                             </span>
                                             <!-- /ko -->
@@ -60314,7 +60322,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                         </div>
 
                         <div class="card-body">
-                            <div class="row">
+                            <div class="row justify-content-center">
                                 <!-- ko foreach: UndergroundItems.list.filter(item => item.valueType === $data) -->
                                 <div class="col-6 col-lg-3 mb-2" data-bind="visible: $data.isUnlocked()">
                                     <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
@@ -60448,6 +60456,19 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                 The Underground lexicon can be found at the bottom of this page.
                             </p>
 
+                            <h4>Finding a new mine</h4>
+                            <p>
+                                A new mine can be manually found by clicking the Find mine button in the Dig tab.<br/>
+                                Automatically starting a new mine happens in the following cases:
+                            </p>
+                            <ul>
+                                <li>A <strong>player</strong> digs up the last item: When the 'Auto restart selected mine' toggle is enabled, the game will automatically try to find a new mine of your selected type.</li>
+                                <li>A <strong>helper</strong> digs up the last item: If your helper has the 'Look for favorite' setting enabled, it will try and start it's favorite mine. If this setting is disabled it will start a Random mine.</li>
+                            </ul>
+                            <p>
+                                <u>Note that this does NOT ignore the discovery time needed.</u>
+                            </p>
+
                             <h4>Mine Types</h4>
                             <ul>
                                 <li>
@@ -60569,7 +60590,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                         </div>
 
                         <div class="card-body">
-                            <p>Helpers are characters you can hire to assist with mining tasks. They perform actions at certain timing intervals and become more efficient as they level up.</p>
+                            <p>Helpers are characters you can hire to assist with mining tasks. They perform actions at certain timing intervals and become more efficient as they level up. Each of them bring their own powerful tools, so their actions will not affect the durability of your tools.</p>
 
                             <h4>Helper Mechanics</h4>
                             <ul>
@@ -61573,16 +61594,12 @@ aria-labelledby="pokedexModalLabel">
                 <tr>
                   <td class="text-left">Type</td>
                   <td class="text-left tight">
-                    <span class="badge text-light px-1" data-bind="visible: pokemonMap[$data].type[0] >= 0,
-                                style: { 'background-color': GameConstants.TypeColor[pokemonMap[$data].type[0]] }">
-                      <small><strong
-                          data-bind="text: PokemonType[pokemonMap[$data].type[0]].toUpperCase()"></strong></small>
-                    </span>
-                    <span class="badge text-light px-1" data-bind="if: pokemonMap[$data].type[1] >= 0,
-                                style: { 'background-color': GameConstants.TypeColor[pokemonMap[$data].type[1]] }">
-                      <small><strong
-                          data-bind="text: PokemonType[pokemonMap[$data].type[1]].toUpperCase()"></strong></small>
-                    </span>
+                      <span class="badge text-light text-uppercase px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="visible: pokemonMap[$data].type[0] >= 0, style: { 'background-color': GameConstants.TypeColor[pokemonMap[$data].type[0]] }">
+                          <small><strong data-bind="text: PokemonType[pokemonMap[$data].type[0]]"></strong></small>
+                      </span>
+                      <span class="badge text-light text-uppercase px-1" style="line-height: normal; text-shadow: 0px 0px 1px black, 0px 0px 1px black, 0px 0px 1px black, 0px 0px 2px black, 0px 0px 2px black, 0px 0px 3px black;" data-bind="visible: pokemonMap[$data].type[1] >= 0, style: { 'background-color': GameConstants.TypeColor[pokemonMap[$data].type[1]] }">
+                          <small><strong data-bind="text: PokemonType[pokemonMap[$data].type[1]]"></strong></small>
+                      </span>
                   </td>
                 </tr>
                 <tr>
@@ -63712,14 +63729,14 @@ aria-labelledby="badgeCaseModalLabel">
                 <div id="genericTraderTrade" class="tab-pane fade in active show" style="min-height: 250px;">
                     <div style="display: grid; column-gap: 0.5rem; grid-template-columns: auto auto 1fr auto auto auto 1fr auto;">
                         <div class="font-weight-bold" style="grid-column: 1 / 3">Cost</div>
-                        <div class="font-weight-bold">Inv</div>
+                        <div class="font-weight-bold">Inventory</div>
                         <div class="font-weight-bold"></div>
                         <div class="font-weight-bold" style="grid-column: 5 / 7">Profit</div>
-                        <div class="font-weight-bold">Inv</div>
+                        <div class="font-weight-bold">Inventory</div>
                         <div class="font-weight-bold"></div>
 
                         <!-- ko foreach: { data: GenericDeal.getDeals(ShopHandler.shopObservable().traderID), as: 'deal' } -->
-                        <div class="align-items-center" style="display: grid; grid-column: 1 / 9; grid-template-columns: subgrid" data-bind="let: { tradeAmount: ko.observable(1) }">
+                        <div class="align-items-center mt-1" style="display: grid; grid-column: 1 / 9; grid-template-columns: subgrid" data-bind="let: { tradeAmount: ko.observable(1) }">
                             <div class="align-items-center" style="display: grid; grid-column: 1 / 4; grid-template-columns: subgrid">
                                 <!-- ko foreach: deal.costs -->
                                 <!-- ko template: { name: 'traderCostProfitItemTemplate', data: { model: $data, tradeAmount: tradeAmount(), type: 'cost' } } -->
@@ -63748,7 +63765,7 @@ aria-labelledby="badgeCaseModalLabel">
                         </div>
 
                         <div style="grid-column: 1 / 9;">
-                            <hr>
+                            <hr class="my-2">
                         </div>
                         <!-- /ko -->
                     </div>
@@ -63765,31 +63782,31 @@ aria-labelledby="badgeCaseModalLabel">
     <!-- ko if: model.type === 'Gem' -->
     <div><img height="24px" data-bind="attr: {src: Gems.image(model.gemType) }"/></div>
     <div class="text-left" data-bind="text: `${(tradeAmount * model.amount).toLocaleString('en-US')} × ${PokemonType[model.gemType]}`, css: { 'text-danger': type === 'cost' && tradeAmount * model.amount > App.game.gems.gemWallet[model.gemType]() }"></div>
-    <div class="text-right" data-bind="text: model.hidePlayerInventory ? '' : App.game.gems.gemWallet[model.gemType]().toLocaleString('en-US')"></div>
+    <div class="text-center" data-bind="text: model.hidePlayerInventory ? '' : App.game.gems.gemWallet[model.gemType]().toLocaleString('en-US')"></div>
     <!-- /ko -->
 
     <!-- ko if: model.type === 'Shard' -->
     <div><img height="24px" data-bind="attr: {src: model.shardItem.image }"/></div>
     <div class="text-left" data-bind="text: `${(tradeAmount * model.amount).toLocaleString('en-US')} × ${model.shardItem.displayName}`, css: { 'text-danger': type === 'cost' && tradeAmount * model.amount > player.itemList[model.shardItem.name]() }"></div>
-    <div class="text-right" data-bind="text: model.hidePlayerInventory ? '' : player.itemList[model.shardItem.name]().toLocaleString('en-US')"></div>
+    <div class="text-center" data-bind="text: model.hidePlayerInventory ? '' : player.itemList[model.shardItem.name]().toLocaleString('en-US')"></div>
     <!-- /ko -->
 
     <!-- ko if: model.type === 'Berry' -->
     <div><img height="24px" data-bind="attr: {src: FarmController.getBerryImage(model.berryType) }, css: {'berryLocked': !App.game.farming.unlockedBerries[model.berryType]() }"/></div>
     <div class="text-left" data-bind="text: `${(tradeAmount * model.amount).toLocaleString('en-US')} × ${App.game.farming.unlockedBerries[model.berryType]() ? BerryType[model.berryType] : '???'}`, css: { 'text-danger': type === 'cost' && tradeAmount * model.amount > App.game.farming.berryList[model.berryType]() }"></div>
-    <div class="text-right" data-bind="text: model.hidePlayerInventory ? '' : App.game.farming.berryList[model.berryType]().toLocaleString('en-US')"></div>
+    <div class="text-center" data-bind="text: model.hidePlayerInventory ? '' : App.game.farming.berryList[model.berryType]().toLocaleString('en-US')"></div>
     <!-- /ko -->
 
     <!-- ko if: model.type === 'Item' -->
     <div><img height="24px" data-bind="attr: {src: model.item.image }"/></div>
     <div class="text-left" data-bind="text: `${(tradeAmount * model.amount).toLocaleString('en-US')} × ${model.item.displayName}`, css: { 'text-danger': type === 'cost' && tradeAmount * model.amount > player.itemList[model.item.name]() }"></div>
-    <div class="text-right" data-bind="text: model.hidePlayerInventory ? '' : player.itemList[model.item.name]().toLocaleString('en-US')"></div>
+    <div class="text-center" data-bind="text: model.hidePlayerInventory ? '' : player.itemList[model.item.name]().toLocaleString('en-US')"></div>
     <!-- /ko -->
 
     <!-- ko if: model.type === 'Amount' -->
     <div><img height="24px" data-bind="attr: {src: `assets/images/currency/${GameConstants.Currency[model.currency.currency]}.svg` }"/></div>
     <div class="text-left" data-bind="text: `${(tradeAmount * model.currency.amount * model.amount).toLocaleString('en-US')} × ${GameConstants.camelCaseToString(GameConstants.Currency[model.currency.currency])}`, css: { 'text-danger': type === 'cost' && tradeAmount * model.currency.amount * model.amount > App.game.wallet.currencies[model.currency.currency]() }"></div>
-    <div class="text-right" data-bind="text: model.hidePlayerInventory ? '' : App.game.wallet.currencies[model.currency.currency]().toLocaleString('en-US')"></div>
+    <div class="text-center" data-bind="text: model.hidePlayerInventory ? '' : App.game.wallet.currencies[model.currency.currency]().toLocaleString('en-US')"></div>
     <!-- /ko -->
 </script>
 
