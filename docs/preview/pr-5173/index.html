@@ -340,6 +340,7 @@
     </div>
 </div>
 
+
 <!-- Show profile modal -->
 <div class="modal noselect fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
@@ -2445,10 +2446,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     <td data-bind="text: `${ContestType[ContestRunner.type()]} Audience Appeal: ${ContestHelper.calculatePokemonContestAppeal(ContestRunner.rank(), ContestRunner.type(), [ContestRunner.type()]).toLocaleString('en-US')}`"></td>
                     <td data-bind="text: `Click Appeal: ${App.game.statistics.clickAppeal().toLocaleString('en-US')}`"></td>
                   </tr>
-                  <!-- <tr>
-                    <td colspan="6">Total trainers defeated: 5 also click here for breakdown include stats somehow</td> -->
-                    <!-- note: befriended trainers can give berries? how would i do that though.... ugh npcs -->
-                  <!-- </tr> -->
                   <tr>
                     <td data-bind="text: `Total Rounds Won: ${App.game.statistics.contestRoundsWon[ContestRunner.rank()][ContestRunner.type()]().toLocaleString('en-US') ?? 0}`"></td>
                     <td data-bind="text: `Total Trainers Defeated: ${App.game.statistics.contestTrainersDefeated[ContestRunner.rank()][ContestRunner.type()]().toLocaleString('en-US') ?? 0}`"></td>
@@ -3006,7 +3003,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <button class="btn btn-success" style="min-width: 30%;" onclick="ContestRunner.startContest(ContestRunner.rank(), ContestRunner.type())" data-bind="text: !ContestRunner.running() ? 'Start Contest' : 'Restart Contest'">Start Contest</button>
             <button class="btn btn-danger" style="min-width: 30%;" onclick="ContestHall.leave();" data-bind="visible: !ContestRunner.running()">Leave</button>
             <button class="btn btn-danger" style="min-width: 30%;" onclick="ContestRunner.running(false); ContestBattle.endContest();" data-bind="visible: ContestRunner.running()">Stop Contest</button>
-            <!-- <button class="btn btn-warning" style="min-width: 30%;">Dressing Room</button> -->
         </div>
         <div>
             <p data-bind="text: ContestHelper.getClickTestInfo()"></p>
