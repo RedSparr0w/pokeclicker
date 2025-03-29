@@ -2466,7 +2466,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
           <div class="mr-3">
               <img class="contestTrainer" data-bind="attr:{ src: ContestBattle.trainers()[$data].image }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
           </div>
-            <knockout class="clickable enemy-contest" data-bind="click: () => {ContestBattle.clickAppeal($data)}, template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': ContestBattle.pokemons()[$data] } },
+            <knockout class="clickable enemy-contest" data-bind="click: () => { ContestBattle.clickAppeal($data); ContestBattle.selectedEnemy($data); }, template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': ContestBattle.pokemons()[$data] } },
               event:{mouseover:function(){ContestBattle.selectedEnemy($data)}, mouseout:function() {ContestBattle.selectedEnemy(-1)}}">Pokémon sprite</knockout>
             <div class="progress contestpoints trainerhitpoints">
               <div class="progress-bar bg-danger" role="progressbar"
@@ -3042,7 +3042,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     <button class="btn btn-warning smallButton smallFont" data-bind="
                         tooltip: {
                             title: 'Use Gold Pokéblocks to increase your Click Appeal',
-                            trigger: 'hover',
+                            trigger: 'hover focus',
                         }">
                         Gold Pokéblocks
                     </button>
@@ -3051,7 +3051,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     value="0" min="0" required
                     data-bind="textInput: ContestRunner.clickPokeblocks, attr: { max: player.itemList.PokeBlock_Gold(), disabled: ContestRunner.running() }"
                 title=""/>
-                <div class="d-none d-md-flex input-group-append">
+                <div class="d-md-flex input-group-append">
                     <button class="btn btn-warning smallButton smallFont" data-bind="text: `In Bag: ${player.itemList.PokeBlock_Gold().toLocaleString('en-US')}`"></button>
                 </div>
             </div>
@@ -3078,7 +3078,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         tooltip: {
                             html: true,
                             title: ContestHelper.contestButtonTooltip(rank, type),
-                            trigger: 'hover',
+                            trigger: 'hover focus',
                         },
                         attr:{'aria-label': `${ContestRank[rank]} Rank ${ContestType[type]} Contest. ${ContestHelper.contestButtonTooltip(rank, type)}.`}
                         ">
