@@ -3039,7 +3039,11 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <div class="modal-footer">
             <div class="input-group m-0">
                 <div class="input-group-prepend">
-                    <button class="btn btn-warning smallButton smallFont">
+                    <button class="btn btn-warning smallButton smallFont" data-bind="
+                        tooltip: {
+                            title: 'Use Gold Pokéblocks to increase your Click Appeal',
+                            trigger: 'hover',
+                        }">
                         Gold Pokéblocks
                     </button>
                 </div>
@@ -65961,6 +65965,7 @@ aria-labelledby="contestWonModalLabel" aria-hidden="true">
             </div>
             <div class="modal-body">
                 <p data-bind="text: `Congratulations! You have been awarded a ${ContestRank[ContestRunner.rank()]} ${ContestRunner.type() != ContestType.Balanced ? ContestType[ContestRunner.type()] : 'Star'} Ribbon!`"></p>
+                <p><i>Your Click Appeal has increased by 1.</i></p>
             </div>
             <div class="modal-footer" style="justify-content: center;">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
