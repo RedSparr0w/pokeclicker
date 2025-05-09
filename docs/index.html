@@ -62509,7 +62509,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <hr>
                     <!-- ko if: App.game.discord.enabled -->
                     <button class="btn btn-primary btn-block" onClick="App.game.discord.login()" data-bind="visible: !App.game.discord.ID()">Link Discord</button>
-                    <button class="btn btn-warning btn-block" onClick="App.game.discord.logout()" data-bind="visible: App.game.discord.ID()">Unlink Discord</button>
+                    <button class="btn btn-warning btn-block" onClick="App.game.discord.logout(true)" data-bind="visible: App.game.discord.ID()">Unlink Discord</button>
                     <i class="text-warning"><strong>Note:</strong> This is <strong>not</strong> used for cloud saves;<br/>it just allows you to enter codes received from the Discord bot.</i>
                     <hr>
                     <!-- /ko -->
@@ -62752,9 +62752,21 @@ aria-labelledby="badgeCaseModalLabel">
 
                             <div class="tab-content">
                                 <div id="seeds" class="tab-pane active">
+                                    <div class="input-group input-group-sm mt-1">
+                                        <input type="text" class="form-control" placeholder="Search" data-bind="textInput: FarmController.berryListSearch" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text justify-content-center" style="min-width: 32px; cursor: pointer;"
+                                                data-bind="visible: FarmController.berryListSearch().length, click: () =>  FarmController.berryListSearch('')">✕</span>
+                                            <span class="input-group-text justify-content-center" style="min-width: 32px;" data-bind="tooltip: {
+                                                title: 'Search for berries by name. Use a space to search for multiple berries.',
+                                                trigger: 'hover',
+                                                placement: 'right',
+                                            }">ⓘ</span>
+                                        </div>
+                                    </div>
                                     <ul id="seedList" class="list-group p-0">
                                         <!-- ko foreach: FarmController.getUnlockedBerryListWithIndex() -->
-                                        <li class="list-group-item list-group-item-action seed-list-item p-2"
+                                        <li class="list-group-item list-group-item-action seed-list-item p-2 d-flex align-items-center"
                                             data-bind="click: function() {
                                                 FarmController.selectedBerry($data);
                                                 FarmController.selectedFarmTool(FarmingTool.Berry);
@@ -62763,12 +62775,12 @@ aria-labelledby="badgeCaseModalLabel">
                                                 data-bind="attr:{ src: FarmController.getBerryImage($data) },
                                                 css: {'berryLocked': !App.game.farming.unlockedBerries[$data]() }">
                                             <span data-bind="text: App.game.farming.unlockedBerries[$data]() ? BerryType[$data] : '???'"></span>
-                                            <span class="float-right" data-bind="text: App.game.farming.berryList[$data]().toLocaleString('en-US')"></span>
+                                            <span class="flex-grow-1 text-right" data-bind="text: App.game.farming.berryList[$data]().toLocaleString('en-US')"></span>
                                         </li>
                                         <!-- /ko -->
                                     </ul>
 
-                                    <div class="row justify-content-center align-items-center py-1">
+                                    <div class="row justify-content-center align-items-center">
                                         <div class="col-4 pr-0">
                                             <button class="btn btn-block btn-secondary"
                                                 onclick="FarmController.navigateLeft()"
@@ -62777,12 +62789,12 @@ aria-labelledby="badgeCaseModalLabel">
                                                 <img src="assets/images/arrow.svg" style="transform: scaleX(-1);" height="20">
                                             </button>
                                         </div>
-                                        <div class="col-4" data-bind="text: FarmController.navigateIndex()+1 + '/' + (FarmController.numberOfTabs()+1)"></div>
+                                        <div class="col-4" data-bind="text: FarmController.navigateIndex()+1 + '/' + (FarmController.numberOfTabs())"></div>
                                         <div class="col-4 pl-0">
                                             <button class="btn btn-block btn-secondary"
                                                 onclick="FarmController.navigateRight()"
-                                                data-bind="disable: FarmController.navigateIndex() ===  FarmController.numberOfTabs(),
-                                                    css: { disabled: FarmController.navigateIndex() ===  FarmController.numberOfTabs() }">
+                                                data-bind="disable: FarmController.navigateIndex() === FarmController.numberOfTabs() - 1,
+                                                    css: { disabled: FarmController.navigateIndex() === FarmController.numberOfTabs() - 1 }">
                                                 <img src="assets/images/arrow.svg" height="20">
                                             </button>
                                         </div>
@@ -62843,7 +62855,7 @@ aria-labelledby="badgeCaseModalLabel">
 
                             <ul id="shovelList" class="list-group">
                                 <!-- ko if: FarmController.berryListVisible() -->
-                                <li class="list-group-item list-group-item-action seed-list-item p-2"
+                                <li class="list-group-item list-group-item-action seed-list-item p-2 mb-1"
                                     data-bind="click: function() {
                                         FarmController.selectedFarmTool(FarmingTool.Shovel);
                                     },
@@ -62858,7 +62870,7 @@ aria-labelledby="badgeCaseModalLabel">
                             </ul>
                             <ul id="shovelMulch" class="list-group p-0">
                                 <!-- ko ifnot: FarmController.berryListVisible() -->
-                                <li class="list-group-item list-group-item-action seed-list-item p-3"
+                                <li class="list-group-item list-group-item-action seed-list-item p-2"
                                     data-bind="click: function() {
                                         FarmController.selectedFarmTool(FarmingTool.MulchShovel);
                                     },
