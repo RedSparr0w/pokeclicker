@@ -1431,8 +1431,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 -->
 
 <script type="text/html" id="currency-display-template">
-    <div class="currency-display d-flex flex-wrap mx-1 my-2 justify-content-center">
-        <img src="" class="mx-1" height="25px" data-bind="attr: { src: `assets/images/currency/${GameConstants.Currency[$data.currency]}.svg` },
+    <div class="d-flex flex-column mx-1 my-2 justify-content-center">
+        <img src="" height="25px" data-bind="attr: { src: `assets/images/currency/${GameConstants.Currency[$data.currency]}.svg` },
             tooltip: {
                 html: true,
                 title: $data.tooltip,
@@ -1970,22 +1970,18 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <span>Currency</span>
     </div>
     <div id="currencyBody" class="card-body p-0 show">
-        <div class="currency-wrapper p-1" data-bind="css: { 'short-currencies': Settings.getSetting('currencyMainDisplayReduced').observableValue() }">
-            <div class="currency-line">
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.money, tooltip: 'Pokédollars<br /><br />Gained by defeating Pokémon and trainers in battle.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.dungeonToken, tooltip: 'Dungeon Tokens<br /><br />Gained by catching wild Pokémon.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.questPoint, tooltip: 'Quest Points<br /><br />Gained by completing Quests.' } }"></div>
-            </div>
-
-            <!-- ko if: Settings.getSetting('currencyMainDisplayExtended').observableValue() -->
-            <div class="currency-line">
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.farmPoint, tooltip: 'Farm Points<br /><br />Gained by harvesting berries on the Farm.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.diamond, tooltip: 'Diamonds<br /><br />Gained by selling treasure found in the Underground.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.battlePoint, tooltip: 'Battle Points<br /><br />Gained at the Battle Frontier.' } }"></div>
-                <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.contestToken, tooltip: 'Contest Tokens<br /><br />Gained by competing in Contests.' } },
-                    visible: App.game.wallet.currencies[GameConstants.Currency.contestToken]() > 0"></div>
-            </div>
-            <!-- /ko -->
+        <div class="currency-wrapper d-flex flex-wrap justify-content-around p-1" data-bind="css: { 'short-currencies': Settings.getSetting('currencyMainDisplayReduced').observableValue() }">
+            <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.money, tooltip: 'Pokédollars<br /><br />Gained by defeating Pokémon and trainers in battle.' } }"></div>
+            <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.dungeonToken, tooltip: 'Dungeon Tokens<br /><br />Gained by catching wild Pokémon.' } }"></div>
+            <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.questPoint, tooltip: 'Quest Points<br /><br />Gained by completing Quests.' } }"></div>
+            <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.farmPoint, tooltip: 'Farm Points<br /><br />Gained by harvesting berries on the Farm.' } },
+                visible: App.game.farming.canAccess() || App.game.wallet.currencies[GameConstants.Currency.farmPoint]() > 0"></div>
+            <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.diamond, tooltip: 'Diamonds<br /><br />Gained by selling treasure found in the Underground.' } },
+                visible: App.game.underground.canAccess() || App.game.wallet.currencies[GameConstants.Currency.diamond]() > 0"></div>
+            <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.battlePoint, tooltip: 'Battle Points<br /><br />Gained at the Battle Frontier.' } },
+                visible: TownList['Battle Frontier'].isUnlocked() || App.game.wallet.currencies[GameConstants.Currency.battlePoint]() > 0"></div>
+            <div data-bind="template: { name: 'currency-display-template', data: { currency: GameConstants.Currency.contestToken, tooltip: 'Contest Tokens<br /><br />Gained by competing in Contests.' } },
+                visible: TownList['National Park'].isUnlocked() || App.game.wallet.currencies[GameConstants.Currency.contestToken]() > 0"></div>
         </div>
     </div>
 </div>
@@ -57096,6 +57092,25 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
               </button>
             </td>
           </tr>
+          <tr data-bind="visible: WeatherApp.shortcutVisible">
+            <td class="p-0">
+              <button class="btn btn-block btn-primary m-0" onclick="WeatherApp.openWeatherAppModal()">
+                Castform App
+                <knockout data-bind="text: `[${Settings.getSetting('hotkey.castformApp').observableValue()}]`,
+                    visible: Settings.getSetting('hotkey.castformApp').observableValue() != 'None'"></knockout>
+              </button>
+            </td>
+          </tr>
+          <tr data-bind="visible: PurifyChamber.shortcutVisible">
+            <td class="p-0">
+              <button class="btn btn-block btn-primary m-0" onclick="PurifyChamber.openPurifyChamberModal()">
+                Purify Chamber
+                <knockout data-bind="text: `(${(Math.min(1, Math.trunc((App.game.purifyChamber.currentFlow() / App.game.purifyChamber.flowNeeded()) * 10 ** 4) / 10 ** 4)).toLocaleString('en-US', { style: 'percent', maximumFractionDigits: 4 })})`"></knockout>
+                <knockout data-bind="text: `[${Settings.getSetting('hotkey.purifyChamber').observableValue()}]`,
+                    visible: Settings.getSetting('hotkey.purifyChamber').observableValue() != 'None'"></knockout>
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -57929,7 +57944,6 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showCurrencyGainedAnimation')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showCurrencyLostAnimation')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('currencyMainDisplayReduced')}"></tr>
-                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('currencyMainDisplayExtended')}"></tr>
                             </tbody>
                             <thead>
                                 <tr><th colspan="2">Hatchery</th></tr>
@@ -58105,6 +58119,12 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.oakItems')}"></tr>
                                 <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.pokeballSelection')}"></tr>
                                 <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.dailyQuests')}"></tr>
+                                <!-- ko if: Settings.getSetting('hotkey.castformApp').isUnlocked() -->
+                                <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.castformApp')}"></tr>
+                                <!-- /ko -->
+                                <!-- ko if: Settings.getSetting('hotkey.purifyChamber').isUnlocked() -->
+                                <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.purifyChamber')}"></tr>
+                                <!-- /ko -->
                             </tbody>
                             <thead>
                                 <tr><th colspan="2">Farm</th></tr>
@@ -65281,7 +65301,7 @@ aria-labelledby="purifyChamberModalLabel">
             </div>
             <div class="modal-body">
                 <!-- ko if: App.game.party.caughtPokemon.some((p) => p.shadow == GameConstants.ShadowStatus.Shadow) -->
-                <select id="purify-chamber-selector" class="custom-select" style="margin-right: 8px"
+                <select id="purify-chamber-selector" class="custom-select"
                         data-bind="options: App.game.party.caughtPokemon.filter((p) => p.shadow == GameConstants.ShadowStatus.Shadow),
                                optionsText: (p) => PokemonHelper.displayName(p.name),
                                value: App.game.purifyChamber.selectedPokemon"
