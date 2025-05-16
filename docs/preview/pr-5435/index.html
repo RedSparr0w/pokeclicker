@@ -77,6 +77,7 @@
     </style>
 </head>
 <body class="no-select" data-bind="class: 'no-select ' + Settings.getSetting('theme').observableValue() + ' ' + Settings.getSetting('backgroundImage').observableValue(), attr : {'oncontextmenu' : 'return !' + Settings.getSetting('disableRightClickMenu').observableValue().toString() + ';'}">
+<!-- imported from src/components/dynamicBackground.html -->
 <div id="dynamic-background">
     <!-- Sky -->
     <div id="sky1" class="sky sky-0" style="opacity: 1;"></div>
@@ -104,6 +105,7 @@
 <link id="theme-link" href="https://bootswatch.com/4/yeti/bootstrap.min.css" rel="stylesheet" data-bind="attr: {href: 'https://bootswatch.com/4/' + Settings.getSetting('theme').observableValue() + '/bootstrap.min.css'}">
 
 <!--$DEV_BANNER-->
+<!-- imported from src/components/developmentBanner.html -->
 <div class="modal" data-keyboard="false" data-backdrop="static" id="developmentModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -134,6 +136,7 @@
 
 
 <!-- Splash Screen -->
+<!-- imported from src/components/saveSelector.html -->
 <div class="d-flex align-items-center justify-content-center background-night py-4" id="saveSelector">
     <div class="justify-content-center container row">
         <div class="col-6">
@@ -204,6 +207,7 @@
     </div>
 </template>
 
+<!-- imported from src/components/splash.html -->
 <div class="loader background-night" id="loader">
     <br>
     <div class="loader-wrapper">
@@ -228,6 +232,7 @@
 
 
 <!-- Game menu-->
+<!-- imported from src/components/gameMenu.html -->
 <div id="startMenu" class="dropdown clearfix" style="position:absolute; right:0; top:0; z-index: 100;">
     <button class="btn btn-secondary mr-1 float-left" style="display: none;"
         data-bind="visible: Settings.getSetting('disableAutoSave').observableValue,
@@ -313,6 +318,7 @@
 
 
 <!-- Get Keyitem modal-->
+<!-- imported from src/components/getKeyItem.html -->
 <div class="modal" id="keyItemModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content" style="text-align: center">
@@ -342,6 +348,7 @@
 
 
 <!-- Show profile modal -->
+<!-- imported from src/components/profileModal.html -->
 <div class="modal noselect fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
@@ -441,6 +448,7 @@
     </div>
 </div>
 
+<!-- imported from src/components/profileTrainerModal.html -->
 <div class="modal noselect fade" id="profileTrainerModal" tabindex="-1" role="dialog" aria-labelledby="profileTrainerModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
@@ -466,6 +474,7 @@
     </div>
 </div>
 
+<!-- imported from src/components/profileBackgroundModal.html -->
 <div class="modal noselect fade" id="profileBackgroundModal" tabindex="-1" role="dialog" aria-labelledby="profileBackgroundModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
@@ -493,6 +502,7 @@
 
 
 <!-- Show keyitems modal-->
+<!-- imported from src/components/itemModal.html -->
 <!-- Show Items modal-->
 <div class="modal fade" id="showItemsModal" tabindex="-1" role="dialog"
      aria-labelledby="showItemModalLabel" aria-hidden="true">
@@ -848,6 +858,7 @@
 
 
 <!-- Dungeon guides modal-->
+<!-- imported from src/components/dungeonGuidesModal.html -->
 <div class="modal noselect fade" id="dungeonGuidesModal" tabindex="-1" role="dialog" aria-labelledby="dungeonGuidesModal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -1100,6 +1111,7 @@
 
 
 <!-- Encounters Info modal-->
+<!-- imported from src/components/routeInfoModal.html -->
 <div class="modal fade noselect" id="routeInfoModal" tabindex="-1" role="dialog" aria-labelledby="routeInfoModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -1163,6 +1175,7 @@
     </div>
 </div>
 
+<!-- imported from src/components/dungeonInfoModal.html -->
 <div class="modal fade noselect" id="dungeonInfoModal" tabindex="-1" role="dialog" aria-labelledby="dungeonInfoLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -1213,6 +1226,7 @@
 
 
 <!--Templates -->
+<!-- imported from src/components/templates/currencyTemplate.html -->
 <script type="text/html" id="currencyTemplate">
     <span style="display: inline;">
         <!-- ko if: $data.currency == GameConstants.Currency.money -->
@@ -1248,6 +1262,7 @@
 <!-- Example usage -->
 <!-- <span data-bind="template: { name: 'currencyTemplate', data: {'amount': FarmController.plotPrice(), 'currency': GameConstants.Currency.farmPoint}}"></span> -->
 
+<!-- imported from src/components/templates/caughtStatusTemplate.html -->
 <script type="text/html" id="caughtStatusTemplate">
     <knockout style="display: inline;">
         <!-- ko if: $data.status == CaughtStatus.NotCaught -->
@@ -1283,6 +1298,7 @@
 <!-- Example usage -->
 <!-- <span data-bind="template: { name: 'caughtStatusTemplate', data: {'status': PartyController.getCaughtStatus(id)}}"></span> -->
 
+<!-- imported from src/components/templates/pokerusStatusTemplate.html -->
 <script type="text/html" id="pokerusStatusTemplate">
     <knockout style="display: inline;">
         <!-- ko if: $data.pokerus -->
@@ -1296,6 +1312,7 @@
     </knockout>
 </script>
 
+<!-- imported from src/components/templates/eggSVGTemplate.html -->
 <script type="text/html" id="eggSVGTemplate">
   <svg class="egg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126.7 126.7" data-bind="attr: {'data-type1': PokemonType[$data.pokemonType1], 'data-type2': PokemonType[$data.pokemonType2]}">
     <defs>
@@ -1314,6 +1331,7 @@
   </svg>
 </script>
 
+<!-- imported from src/components/templates/multiOptionTemplate.html -->
 <script type="text/html" id="multiOptionTemplate">
     <div class="btn-group" data-bind="foreach: $data.optionValues">
         <button class="btn btn-secondary amount-button list-group-item-action"
@@ -1324,6 +1342,7 @@
     </div>
 </script>
 
+<!-- imported from src/components/templates/pokemonNameTemplate.html -->
 <script type="text/html" id="pokemonNameTemplate">
     <knockout data-bind="text: $data.pokemon.displayName"></knockout>
     <knockout data-bind="template: { name: 'pokemonGenderTemplate', data: { 'pokemon': $data.pokemon } }">Pokémon gender</knockout>
@@ -1332,6 +1351,7 @@
 <!-- Example usage -->
 <!-- <knockout data-bind="template: { name: 'pokemonNameTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon name</knockout> -->
 
+<!-- imported from src/components/templates/pokemonSpriteTemplate.html -->
 <script type="text/html" id="pokemonSpriteTemplate">
     <img class="enemy"
         data-bind="attr:{ src: PokemonHelper.getImage($data.pokemon.id, $data.pokemon.shiny, $data.pokemon.gender, $data.pokemon.shadow) }"
@@ -1341,6 +1361,7 @@
 <!-- Example usage -->
 <!-- <knockout data-bind="template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon sprite</knockout> -->
 
+<!-- imported from src/components/templates/pokemonGenderTemplate.html -->
 <script type="text/html" id="pokemonGenderTemplate">
     <!-- ko ifnot: $data.pokemon.displayName.includes('♂') || $data.pokemon.displayName.includes('♀') -->
         <!-- ko if: $data.pokemon.gender == GameConstants.BattlePokemonGender.Male -->
@@ -1356,6 +1377,7 @@
 <!-- Example usage -->
 <!-- <knockout data-bind="template: { name: 'pokemonGenderTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon gender</knockout> -->
 
+<!-- imported from src/components/templates/pokemonAttackTemplate.html -->
 <script type="text/html" id="pokemonAttackTemplate">
   <span style="display: inline;">
       Pokémon Attack:
@@ -1373,6 +1395,7 @@
 <!-- Example usage -->
 <!-- <knockout data-bind="template: { name: 'pokemonAttackTemplate', data: { 'pokemon': Battle.enemyPokemon() } }">Pokémon sprite</knockout> -->
 
+<!-- imported from src/components/templates/pokemonGenderStatisticTemplate.html -->
 <script type="text/html" id="pokemonGenderStatisticTemplate">
     <div class="overlay" data-bind="tooltip: { 
         title: `♂: ${$data.maleStat.toLocaleString('en-US')}
@@ -1396,6 +1419,7 @@
 }">Pokémon gender statistic</knockout> 
 -->
 
+<!-- imported from src/components/templates/multiSelectDropdownTemplate.html -->
 <script type="text/html" id="multiSelectDropdownTemplate">
     <div class="dropdown">
         <button class="btn btn-dropdown custom-select btn-multiselect-dropdown text-left" type="button" data-toggle="dropdown" data-bind="class: $data.buttonClass">
@@ -1477,6 +1501,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 -->
 
+<!-- imported from src/components/templates/currencyContainerCurrencyTemplate.html -->
 <script type="text/html" id="currency-display-template">
     <div class="d-flex flex-column mx-1 my-2 justify-content-center">
         <img src="" height="25px" data-bind="attr: { src: `assets/images/currency/${GameConstants.Currency[$data.currency]}.svg` },
@@ -1498,6 +1523,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </div>
 </script>
 
+<!-- imported from src/components/templates/wanderingPokemonDisplay.html -->
 <script type="text/html" id="wanderingPokémonDisplay">
     <!-- ko if: App.game.party.getPokemon(pokemonMap[$data].id)?.pokerus -->
     <img class="dungeon-pokemon-pkrs" src="" data-bind="
@@ -1547,7 +1573,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 }">
 
                     <!-- pokeball selector -->
-                    <div id="pokeballSelector" class="card sortable border-secondary mb-3" data-bind="visible: player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.None">
+                    <!-- imported from src/components/pokeballSelector.html -->
+<div id="pokeballSelector" class="card sortable border-secondary mb-3" data-bind="visible: player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.None">
     <div class="card-header p-0" data-toggle="collapse" href="#pokeballSelectorBody">
         <span>Poké Balls</span>
     </div>
@@ -1627,7 +1654,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Battle Item container-->
-                    <div id="battleItemContainer" class="card sortable border-secondary mb-3" data-bind="hidden: Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableBattleItems.active() && !App.game.badgeCase.hasBadge(BadgeEnums.Heat)">
+                    <!-- imported from src/components/battleItemContainer.html -->
+<div id="battleItemContainer" class="card sortable border-secondary mb-3" data-bind="hidden: Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableBattleItems.active() && !App.game.badgeCase.hasBadge(BadgeEnums.Heat)">
   <div data-bind="hidden: Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableBattleItems.active()">
     <div class="card-header p-0" data-toggle="collapse" href="#battleItemContainerBody">
       <span>Battle Items</span>
@@ -1837,7 +1865,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Pokémon List container-->
-                    <script type="text/html" id="PartySortSettingTemplate">
+                    <!-- imported from src/components/pokemonListContainer.html -->
+<script type="text/html" id="PartySortSettingTemplate">
     <div class="row no-gutters" style="align-items: center">
         <div class="input-group">
             <select
@@ -1948,7 +1977,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         }">
             <div id="middle-top-sort-column">
                 <!-- Achievement Tracker -->
-                <div
+                <!-- imported from src/components/achievementTrackerContainer.html -->
+<div
   id="achivementTrackerContainer"
   class="card sortable border-secondary mb-3"
   data-bind="visible: App.game.achievementTracker.canAccess()"
@@ -2012,7 +2042,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                 <!-- Currency container -->
-                <div id="currencyContainer" class="card sortable border-secondary mb-3" data-bind="visible: player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.None">
+                <!-- imported from src/components/currencyContainer.html -->
+<div id="currencyContainer" class="card sortable border-secondary mb-3" data-bind="visible: player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.None">
     <div class="card-header p-0" data-toggle="collapse" href="#currencyBody">
         <span>Currency</span>
     </div>
@@ -2140,7 +2171,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     </div>
 
                     <!-- Dungeon Battles -->
-                    <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.dungeon">
+                    <!-- imported from src/components/dungeonView.html -->
+<div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.dungeon">
     <div class="col no-gutters clickable" style="height: 280px; display: block;"
         data-bind="click: function() { DungeonRunner.handleInteraction() }">
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
@@ -2290,7 +2322,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Gym Battles -->
-                    
+                    <!-- imported from src/components/gymView.html -->
+
 <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.gym">
     <div class="col no-gutters clickable" data-bind="click: function() {GymBattle.clickAttack()}" style="height: 280px; display: block;">
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
@@ -2372,7 +2405,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- One Time Battles -->
-                    <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.temporaryBattle">
+                    <!-- imported from src/components/temporaryBattleView.html -->
+<div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.temporaryBattle">
     <div class="col no-gutters clickable" data-bind="click: function() {TemporaryBattleBattle.clickAttack()}" style="height: 280px; display: block;">
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
             <knockout>
@@ -2452,7 +2486,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Battle Frontier Battles -->
-                    <div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState == GameConstants.GameState.battleFrontier">
+                    <!-- imported from src/components/battleFrontierView.html -->
+<div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState == GameConstants.GameState.battleFrontier">
     <div class="col no-gutters" data-bind="if: BattleFrontierBattle.enemyPokemon" style="height: 280px; display: block;">
         <h2 class="pageItemTitle mobileBattleTitle" style="display: block;">
             <knockout>
@@ -2526,7 +2561,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!--TownView-->
-                    <knockout data-bind="if: App.game.gameState === GameConstants.GameState.town">
+                    <!-- imported from src/components/townView.html -->
+<knockout data-bind="if: App.game.gameState === GameConstants.GameState.town">
 <div id="townView" data-bind="style: { backgroundImage: `url('assets/images/towns/${player.town.name.replace(/'/, `\\'`)}.png')` }"
      class="justify-content-center no-gutters no-select">
     <div class="row justify-content-center no-gutters">
@@ -2792,7 +2828,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <!-- /ko -->
 
             <!-- Battle Frontier Information Container  -->
-            
+            <!-- imported from src/components/battleFrontierInfo.html -->
+
 <!-- ko if: App.game.gameState === GameConstants.GameState.battleFrontier -->
 <div id="battleFrontierInformation" class="card sortable-disabled border-secondary mb-3 battle-frontier no-select">
     <div class="card-header p-0" data-toggle="collapse" href="#battleFrontierRewards">
@@ -2858,87 +2895,89 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
             <!-- Town Map  -->
-                        <div id="middle-bottom-sort-column">
-                <div id="townMap" class="card sortable border-secondary mb-3" data-bind="visible: App.game.keyItems.hasKeyItem(KeyItemType.Town_map) && (App.game.gameState === GameConstants.GameState.fighting || App.game.gameState === GameConstants.GameState.gym || App.game.gameState === GameConstants.GameState.town||
-                    App.game.gameState === GameConstants.GameState.shop || App.game.gameState === GameConstants.GameState.farm || App.game.gameState === GameConstants.GameState.temporaryBattle || App.game.gameState === GameConstants.GameState.paused)">
-                    <div class="card-header p-0" data-toggle="collapse" href="#mapBody">
-                        <span data-bind="text: `Town Map (${GameConstants.camelCaseToString(GameConstants.Region[player.region])})`">Town Map</span>
+            <!-- imported from src/components/townMap.html -->
+<div id="middle-bottom-sort-column">
+    <div id="townMap" class="card sortable border-secondary mb-3" data-bind="visible: App.game.keyItems.hasKeyItem(KeyItemType.Town_map) && (App.game.gameState === GameConstants.GameState.fighting || App.game.gameState === GameConstants.GameState.gym || App.game.gameState === GameConstants.GameState.town||
+        App.game.gameState === GameConstants.GameState.shop || App.game.gameState === GameConstants.GameState.farm || App.game.gameState === GameConstants.GameState.temporaryBattle || App.game.gameState === GameConstants.GameState.paused)">
+        <div class="card-header p-0" data-toggle="collapse" href="#mapBody">
+            <span data-bind="text: `Town Map (${GameConstants.camelCaseToString(GameConstants.Region[player.region])})`">Town Map</span>
+        </div>
+        <button class='btn btn-sm' style="position: absolute; left: 0px; top: 0px; width: auto; height: 41px;" data-toggle="popover" data-trigger="hover" data-html="true" data-title="Map Legend:"
+        data-content=""
+        data-placement="bottom" data-bind="attr: {'data-content': `<div class='row map-legend'>
+                <div class='col-12'>
+                    Map locations will be coloured based on the following:
+                </div>
+                ${MapHelper.getUsableFilters().map(setting => {
+                    return `<div class='col-10 legend-item ${setting.name}'>
+                        <span>${setting.displayName}:</span>
                     </div>
-                    <button class='btn btn-sm' style="position: absolute; left: 0px; top: 0px; width: auto; height: 41px;" data-toggle="popover" data-trigger="hover" data-html="true" data-title="Map Legend:"
-                    data-content=""
-                    data-placement="bottom" data-bind="attr: {'data-content': `<div class='row map-legend'>
-                            <div class='col-12'>
-                                Map locations will be coloured based on the following:
-                            </div>
-                            ${MapHelper.getUsableFilters().map(setting => {
-                                return `<div class='col-10 legend-item ${setting.name}'>
-                                    <span>${setting.displayName}:</span>
-                                </div>
-                                <div class='col-2'>
-                                    <span class='float-right px-4 bg-${setting.name.substring(2)}'>&nbsp;</span>
-                                </div>`
-                            }).join('\n')}
-                            <div class='col-12'>
-                                <i>NOTE: Colors and priority can be customized in the settings menu</i>
-                            </div>
-                        </div>`}">ⓘ</button>
-                    <button class='btn btn-sm' style="position: absolute; right: 96px; top: 0px; width: auto; height: 41px;"
-                    data-bind='style: { background: DayCycle.color() },
-                        tooltip: {
-                            title: DayCycle.tooltip(),
-                            html: true,
-                            placement: "bottom",
-                            trigger: "hover"
-                        }'>
-                        <img width=30px src="" data-bind="attr: { src: DayCycle.image() }"/>
-                    </button>
-                    <button class='btn btn-sm' style="position: absolute; right: 48px; top: 0px; width: auto; height: 41px;"
-                    data-bind='style: { background: Weather.color() },
-                        tooltip: {
-                            title: Weather.tooltip(),
-                            html: true,
-                            placement: "bottom",
-                            trigger: "hover"
-                        }'>
-                        <img width=30px src="" data-bind="attr: { src: Weather.image() }"/>
-                    </button>
-                    <button class='btn btn-sm' style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px;"
-                    data-bind='style: { background: MoonCycle.color() },
-                        tooltip: {
-                            title: MoonCycle.tooltip(),
-                            html: true,
-                            placement: "bottom",
-                            trigger: "hover"
-                        }'>
-                        <img width=30px src="" data-bind="attr: { src: MoonCycle.image() }"/>
-                    </button>
-                    <div id="mapBody" class="card-body p-0 show">
-                        <div id="subregion-travel-buttons" class="btn-group mr-2" role="group" style="width: 100%;" data-bind="
-                            visible: SubRegions.getSubRegions(player.region).filter(sr => sr.unlocked()).length > 1,
-                            css: { 'slow-flash': player.highestRegion() == player.region && SubRegions.getSubRegions(player.region).filter(sr => sr.unlocked()).length > player.highestSubRegion() + 1 }">
-                            <button class="btn btn-sm btn-secondary" data-bind="click: () => player.subregion = player.subregion - 1">&lt;</button>
-                            <button class="btn btn-sm btn-primary" style="width: 70%;" data-bind="
-                                click: () => SubRegions.openModal(),
-                                text: 'Subregional Travel (' + player.subregionObject()?.name + ')'"
-                                >Subregional Travel</button>
-                            <button class="btn btn-sm btn-secondary" data-bind="click: () => player.subregion = player.subregion + 1">&gt;</button>
-                        </div>
-                        <p id="mapTooltip" class="btn btn-secondary" style="visibility: hidden;"></p>
-                        <svg id="map" viewBox="0 0 1600 960" preserveAspectRatio="xMaxYMax meet">
-                            <defs>
-                                <lineargradient id="mx-gradient-f8cecc-1-ea583b-1-s-0" x1="0%" x2="0%" y1="0%"
-                                                y2="100%">
-                                    <stop offset="0%" style="stop-color:#909090"></stop>
-                                    <stop offset="100%" style="stop-color:#c1c1c1"></stop>
-                                </lineargradient>
-                                <lineargradient id="mx-gradient-dae8fc-1-7ea6e0-1-s-0" x1="0%" x2="0%" y1="0%"
-                                                y2="100%">
-                                    <stop offset="0%" style="stop-color:#DAE8FC"></stop>
-                                    <stop offset="100%" style="stop-color:#7EA6E0"></stop>
-                                </lineargradient>
-                            </defs>
+                    <div class='col-2'>
+                        <span class='float-right px-4 bg-${setting.name.substring(2)}'>&nbsp;</span>
+                    </div>`
+                }).join('\n')}
+                <div class='col-12'>
+                    <i>NOTE: Colors and priority can be customized in the settings menu</i>
+                </div>
+            </div>`}">ⓘ</button>
+        <button class='btn btn-sm' style="position: absolute; right: 96px; top: 0px; width: auto; height: 41px;"
+        data-bind='style: { background: DayCycle.color() },
+            tooltip: {
+                title: DayCycle.tooltip(),
+                html: true,
+                placement: "bottom",
+                trigger: "hover"
+            }'>
+            <img width=30px src="" data-bind="attr: { src: DayCycle.image() }"/>
+        </button>
+        <button class='btn btn-sm' style="position: absolute; right: 48px; top: 0px; width: auto; height: 41px;"
+        data-bind='style: { background: Weather.color() },
+            tooltip: {
+                title: Weather.tooltip(),
+                html: true,
+                placement: "bottom",
+                trigger: "hover"
+            }'>
+            <img width=30px src="" data-bind="attr: { src: Weather.image() }"/>
+        </button>
+        <button class='btn btn-sm' style="position: absolute; right: 0px; top: 0px; width: auto; height: 41px;"
+        data-bind='style: { background: MoonCycle.color() },
+            tooltip: {
+                title: MoonCycle.tooltip(),
+                html: true,
+                placement: "bottom",
+                trigger: "hover"
+            }'>
+            <img width=30px src="" data-bind="attr: { src: MoonCycle.image() }"/>
+        </button>
+        <div id="mapBody" class="card-body p-0 show">
+            <div id="subregion-travel-buttons" class="btn-group mr-2" role="group" style="width: 100%;" data-bind="
+                visible: SubRegions.getSubRegions(player.region).filter(sr => sr.unlocked()).length > 1,
+                css: { 'slow-flash': player.highestRegion() == player.region && SubRegions.getSubRegions(player.region).filter(sr => sr.unlocked()).length > player.highestSubRegion() + 1 }">
+                <button class="btn btn-sm btn-secondary" data-bind="click: () => player.subregion = player.subregion - 1">&lt;</button>
+                <button class="btn btn-sm btn-primary" style="width: 70%;" data-bind="
+                    click: () => SubRegions.openModal(),
+                    text: 'Subregional Travel (' + player.subregionObject()?.name + ')'"
+                    >Subregional Travel</button>
+                <button class="btn btn-sm btn-secondary" data-bind="click: () => player.subregion = player.subregion + 1">&gt;</button>
+            </div>
+            <p id="mapTooltip" class="btn btn-secondary" style="visibility: hidden;"></p>
+            <svg id="map" viewBox="0 0 1600 960" preserveAspectRatio="xMaxYMax meet">
+                <defs>
+                    <lineargradient id="mx-gradient-f8cecc-1-ea583b-1-s-0" x1="0%" x2="0%" y1="0%"
+                                    y2="100%">
+                        <stop offset="0%" style="stop-color:#909090"></stop>
+                        <stop offset="100%" style="stop-color:#c1c1c1"></stop>
+                    </lineargradient>
+                    <lineargradient id="mx-gradient-dae8fc-1-7ea6e0-1-s-0" x1="0%" x2="0%" y1="0%"
+                                    y2="100%">
+                        <stop offset="0%" style="stop-color:#DAE8FC"></stop>
+                        <stop offset="100%" style="stop-color:#7EA6E0"></stop>
+                    </lineargradient>
+                </defs>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.kanto'>
+                <!-- imported from src/components/regionMaps/KantoSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.kanto'>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Kanto').id">
         <image width="1600" height="960" data-bind="attr: {
@@ -7697,7 +7736,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.johto'>
+                <!-- imported from src/components/regionMaps/JohtoSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.johto'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/johto.png?v=0.10.24',
         href:'assets/images/johto.png?v=0.10.24'
@@ -10325,7 +10365,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.hoenn'>
+                <!-- imported from src/components/regionMaps/HoennSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.hoenn'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/hoenn.png?v=0.10.24',
         href:'assets/images/hoenn.png?v=0.10.24'
@@ -15199,7 +15240,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.sinnoh'>
+                <!-- imported from src/components/regionMaps/SinnohSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.sinnoh'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/sinnoh.png?v=0.10.24',
         href:'assets/images/sinnoh.png?v=0.10.24'
@@ -18324,7 +18366,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.unova'>
+                <!-- imported from src/components/regionMaps/UnovaSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.unova'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/unova.png?v=0.10.24',
         href:'assets/images/unova.png?v=0.10.24'
@@ -21515,7 +21558,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.kalos'>
+                <!-- imported from src/components/regionMaps/KalosSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.kalos'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/kalos.png?v=0.10.24',
         href:'assets/images/kalos.png?v=0.10.24'
@@ -24260,7 +24304,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.alola'>
+                <!-- imported from src/components/regionMaps/AlolaSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.alola'>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.alola, 'Melemele Island').id">
         <image width="1600" height="960" data-bind="attr: {
@@ -37808,7 +37853,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.galar'>
+                <!-- imported from src/components/regionMaps/GalarSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.galar'>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.galar, 'South Galar').id">
         <image width="1600" height="960" data-bind="attr: {
@@ -46293,7 +46339,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </g>
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.hisui'>
+                <!-- imported from src/components/regionMaps/HisuiSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.hisui'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/hsiui.png?v=0.10.24',
         href:'assets/images/hisui.png?v=0.10.24'
@@ -55386,7 +55433,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </g>
 
-                            <g data-bind='visible: player.region == GameConstants.Region.paldea'>
+                <!-- imported from src/components/regionMaps/PaldeaSVG.html -->
+<g data-bind='visible: player.region == GameConstants.Region.paldea'>
     <image width="1600" height="960" data-bind="attr: {
         'xlink:href':'assets/images/paldea.png?v=0.10.24',
         href:'assets/images/paldea.png?v=0.10.24'
@@ -56445,14 +56493,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
-                            <g id="playerSprite">
-                                <!-- This group is cleared actively via koExtenders.ts added to fix #3358 -->
-                                <!-- TODO: Replace current PlayerSprite rendering logic so a singular SVG is used / updated like so:-->
-                            </g>
-                        </svg>
-                    </div>
-                </div>
-            </div>
+                <g id="playerSprite">
+                    <!-- This group is cleared actively via koExtenders.ts added to fix #3358 -->
+                    <!-- TODO: Replace current PlayerSprite rendering logic so a singular SVG is used / updated like so:-->
+                </g>
+            </svg>
+        </div>
+    </div>
+</div>
         </div>
 
         <!--Right column-->
@@ -56467,7 +56515,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 }">
 
                     <!-- Oak Items -->
-                    <div id="oakItemsContainer" class="card sortable border-secondary mb-3" data-bind="visible: App.game.oakItems.canAccess() && !(Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableOakItems.active())">
+                    <!-- imported from src/components/oakItemsContainer.html -->
+<div id="oakItemsContainer" class="card sortable border-secondary mb-3" data-bind="visible: App.game.oakItems.canAccess() && !(Settings.getSetting('hideChallengeRelatedModules').observableValue() && App.game.challenges.list.disableOakItems.active())">
     <div class="card-header p-0" data-toggle="collapse" href="#oakItemsBody">
         <span style="text-align:center">Oak Items</span>
     </div>
@@ -56554,7 +56603,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Current Quest -->
-                    <div id="questDisplayContainer" class="card sortable border-secondary mb-3">
+                    <!-- imported from src/components/questDisplay.html -->
+<div id="questDisplayContainer" class="card sortable border-secondary mb-3">
     <!-- ko if: App.game.quests.isDailyQuestsUnlocked() -->
         <div class="card-header p-0" data-toggle="collapse" href="#dailyQuestDisplayBody">
             <span data-bind='text: "Quests (" + App.game.quests.currentQuests().length + "/" + App.game.quests.questSlots() + ")"'></span>
@@ -56663,7 +56713,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Egg Slots/Breeding-->
-                    <div id="breedingDisplay" class="card sortable border-secondary mb-3" data-bind="visible: App.game.breeding.canAccess()">
+                    <!-- imported from src/components/breedingDisplay.html -->
+<div id="breedingDisplay" class="card sortable border-secondary mb-3" data-bind="visible: App.game.breeding.canAccess()">
     <div class="card-header p-0" data-toggle="collapse" href="#eggList">
         <span>Hatchery</span>
     </div>
@@ -56764,7 +56815,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Farm -->
-                    <div id="farmDisplay" class="card sortable border-secondary mb-3 pokeclicker-optional-module" data-bind="visible: App.game.farming.canAccess() && Settings.getSetting('showFarmModule').observableValue() !== 'never', if: Settings.getSetting('showFarmModule').observableValue() !== 'never'">
+                    <!-- imported from src/components/farmDisplay.html -->
+<div id="farmDisplay" class="card sortable border-secondary mb-3 pokeclicker-optional-module" data-bind="visible: App.game.farming.canAccess() && Settings.getSetting('showFarmModule').observableValue() !== 'never', if: Settings.getSetting('showFarmModule').observableValue() !== 'never'">
     <div class="card-header p-0" data-toggle="collapse" href="#plotListCard">
         <span>Farm</span>
     </div>
@@ -56970,7 +57022,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Underground -->
-                    <div id="undergroundDisplay" class="card sortable border-secondary mb-3 pokeclicker-optional-module" data-bind="visible: App.game.underground.canAccess() && Settings.getSetting('showUndergroundModule').observableValue(), if: Settings.getSetting('showUndergroundModule').observableValue()">
+                    <!-- imported from src/components/undergroundDisplay.html -->
+<div id="undergroundDisplay" class="card sortable border-secondary mb-3 pokeclicker-optional-module" data-bind="visible: App.game.underground.canAccess() && Settings.getSetting('showUndergroundModule').observableValue(), if: Settings.getSetting('showUndergroundModule').observableValue()">
     <div class="card-header p-0" data-toggle="collapse" href="#undergroundCard">
         <span>Underground</span>
     </div>
@@ -57108,7 +57161,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
                     <!-- Shortcuts Menu -->
-                    <div id="shortcutsContainer" class="card sortable border-secondary mb-3"
+                    <!-- imported from src/components/shortcutsContainer.html -->
+<div id="shortcutsContainer" class="card sortable border-secondary mb-3"
     data-bind="visible: UndergroundController.shortcutVisible() || FarmController.shortcutVisible() || ShopHandler.shortcutVisible()">
     <div class="card-header p-0" data-toggle="collapse" href="#shortcutsBody">
         <span style="text-align:center">Shortcuts</span>
@@ -57179,6 +57233,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </div>
 
 <!-- Challenge Mode Modal -->
+<!-- imported from src/components/challengeModeModal.html -->
 <div class="modal noselect fade" id="challengeModeModal" tabindex="-1" role="dialog" aria-labelledby="challengeModeModal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
@@ -57219,6 +57274,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 <!--ShopModal-->
+<!-- imported from src/components/shopModal.html -->
 <div class="modal fade noselect" id="shopModal" tabindex="-1" role="dialog"
      aria-labelledby="shopModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -57339,6 +57395,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 <!-- Receive gym badge Modal -->
+<!-- imported from src/components/receiveGymBadge.html -->
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="receiveBadgeModal" tabindex="-1" role="dialog"
 aria-labelledby="receiveBadgeModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -57379,6 +57436,7 @@ aria-labelledby="receiveBadgeModalLabel" aria-hidden="true">
 
 
 <!-- One time battle won Modal -->
+<!-- imported from src/components/temporaryBattleWonModal.html -->
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="temporaryBattleWonModal" tabindex="-1" role="dialog"
 aria-labelledby="temporaryBattleWonModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -57407,6 +57465,7 @@ aria-labelledby="temporaryBattleWonModalLabel" aria-hidden="true">
 
 
 <!-- Quest Step Cleared -->
+<!-- imported from src/components/questStepClearedModal.html -->
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="questStepClearedModal" tabindex="-1" role="dialog"
 aria-labelledby="questStepClearedModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -57435,6 +57494,7 @@ aria-labelledby="questStepClearedModalLabel" aria-hidden="true">
 
 
 <!-- Achievements Modal -->
+<!-- imported from src/components/achievementsModal.html -->
 <div class="modal  fade" id="achievementsModal" tabindex="-1" role="dialog"
 aria-labelledby="AchievementsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -57569,6 +57629,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- Oak Items Modal-->
+<!-- imported from src/components/oakItemsModal.html -->
 <div class="modal fade noselect" id="oakItemsModal" tabindex="-1" role="dialog" aria-badgeledby="oakItemsModal">
   <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
     <div class="modal-content">
@@ -57719,6 +57780,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- Statistics Modal-->
+<!-- imported from src/components/statisticsModal.html -->
 <div class="modal noselect fade" id="statisticsModal" tabindex="-1" role="dialog" aria-labelledby="statisticsModal">
     <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
         <div class="modal-content">
@@ -57882,6 +57944,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- Log Book Modal-->
+<!-- imported from src/components/logBookModal.html -->
 <div class="modal noselect fade" id="logBookModal" tabindex="-1" role="dialog" aria-labelledby="logBookModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -57947,6 +58010,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- Settings Modal-->
+<!-- imported from src/components/settingsModal.html -->
 <div class="modal noselect fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -58565,6 +58629,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- FAQ Modal -->
+<!-- imported from src/components/FAQModal.html -->
 <div class="modal fade noselect" id="FAQModal" tabindex="-1" role="dialog" aria-badgeledby="FAQModal">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
      <div class="modal-content">
@@ -59041,6 +59106,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- Changelog Modal -->
+<!-- imported from src/components/changelog.html -->
 <div class="modal fade noselect" id="changelogModal" tabindex="-1" role="dialog" aria-badgeledby="changelogModal">
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -59083,6 +59149,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- Credits Modal -->
+<!-- imported from src/components/creditsModal.html -->
 <div class="modal noselect fade" id="creditsModal" tabindex="-1" role="dialog" aria-labelledby="creditsModal">
     <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
         <div class="modal-content">
@@ -59138,6 +59205,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- External Links Modal -->
+<!-- imported from src/components/externalLinksModal.html -->
 <div class="modal fade noselect" id="externalLinksModal" tabindex="-1" role="dialog" aria-bageledby="externalLinksModal">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -59174,6 +59242,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- Events Modal -->
+<!-- imported from src/components/eventsModal.html -->
 <div class="modal fade noselect" id="eventsModal" tabindex="-1" role="dialog" aria-badgeledby="eventsModal">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
        <div class="modal-content">
@@ -59225,6 +59294,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
 
 
 <!-- Start Sequence Modal-->
+<!-- imported from src/components/startSequence.html -->
 <div class="modal" id="startSequenceModal" tabindex="-1" role="dialog"
 aria-labelledby="startSequenceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -59256,6 +59326,7 @@ aria-labelledby="startSequenceModalLabel" aria-hidden="true">
 
 
 <!-- Pick Starter Tutorial Modal-->
+<!-- imported from src/components/pickStarterTutorialModal.html -->
 <div class="modal" id="pickStarterTutorialModal" tabindex="-1" role="dialog"
 aria-labelledby="pickStarterTutorialModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -59298,6 +59369,7 @@ aria-labelledby="pickStarterTutorialModalLabel" aria-hidden="true">
 
 
 <!-- Pick Starter Modal-->
+<!-- imported from src/components/pickStarterModal.html -->
 <div class="modal" id="pickStarterModal" tabindex="-1" role="dialog"
 aria-labelledby="pickStarterModalLabel" aria-hidden="true"
 data-backdrop="static" data-keyboard="false">
@@ -59331,6 +59403,7 @@ data-backdrop="static" data-keyboard="false">
 
 
 <!-- Starter Caught Modal-->
+<!-- imported from src/components/starterCaught.html -->
 <div class="modal" id="starterCaughtModal" tabindex="-1" role="dialog"
 aria-labelledby="starterCaughtModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -59387,6 +59460,7 @@ aria-labelledby="starterCaughtModalLabel" aria-hidden="true">
 
 
 <!-- Hall of Fame Modal -->
+<!-- imported from src/components/hallOfFame.html -->
 <div class="modal fade" data-keyboard="false" data-backdrop="static" id="hallOfFameModal" tabindex="-1" role="dialog"
 aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -59449,6 +59523,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
 
 
 <!-- Log Book Modal-->
+<!-- imported from src/components/nextRegionModal.html -->
 <div class="modal noselect fade" id="nextRegionModal" tabindex="-1" role="dialog" aria-labelledby="nextRegionModal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
@@ -59483,6 +59558,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
 
 
 <!-- Gems Modal -->
+<!-- imported from src/components/gemsModal.html -->
 <div class="modal fade noselect" id="gemModal" tabindex="-1" role="dialog" aria-badgeledby="gemModal">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
        <div class="modal-content">
@@ -59630,6 +59706,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
 
 
 <!-- Breeding Modal-->
+<!-- imported from src/components/breedingModal.html -->
 <div class="modal fade" id="breedingModal" tabindex="-1" role="dialog"
 aria-labelledby="breedingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl breeding-modal" role="document">
@@ -60400,6 +60477,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
 
 
 <!-- Underground Modal -->
+<!-- imported from src/components/underground.html -->
 <div aria-labelledby="myModalLabel" class="modal fade noselect" id="mineModal" role="dialog"
      style="cursor:default" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -61396,6 +61474,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
 
 
 <!-- Pokedex Modal-->
+<!-- imported from src/components/pokedex.html -->
 <div class="modal fade noselect" id="pokedexModal" tabindex="-1" role="dialog"
 aria-labelledby="pokedexModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-xl pokedex-modal" role="document">
@@ -61843,6 +61922,7 @@ aria-labelledby="pokedexModalLabel">
 
 
 <!-- Statistics Modal-->
+<!-- imported from src/components/pokemonStatisticsModal.html -->
 <div class="modal noselect fade" id="pokemonStatisticsModal" tabindex="-1" role="dialog" aria-labelledby="pokemonStatisticsModal">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal modal-sm" role="document">
     <div class="modal-content" data-bind="with: App.game.statistics.selectedPokemonID()">
@@ -62227,6 +62307,7 @@ aria-labelledby="pokedexModalLabel">
 
 
 <!-- Expanded Vitamin Modal -->
+<!-- imported from src/components/pokemonVitaminExpandedModal.html -->
 <div class="modal noselect fade" id="pokemonVitaminExpandedModal" tabindex="-1" role="dialog" aria-labelledby="pokemonVitaminExpandedModal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -62384,6 +62465,7 @@ aria-labelledby="pokedexModalLabel">
 
 
 <!-- Badge Case Modal-->
+<!-- imported from src/components/badgeCase.html -->
 <div class="modal fade noselect" id="badgeCaseModal" tabindex="-1" role="dialog"
 aria-labelledby="badgeCaseModalLabel">
 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -62429,6 +62511,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Save Modal-->
+<!-- imported from src/components/saveModal.html -->
 <div class="modal fade noselect" id="saveModal" tabindex="-1" role="dialog"
      aria-labelledby="saveModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
@@ -62479,6 +62562,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Quests Modal-->
+<!-- imported from src/components/questModal.html -->
 <div class="modal noselect fade" id="QuestModal" tabindex="-1" role="dialog" aria-labelledby="QuestModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -62663,6 +62747,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Farm Modal-->
+<!-- imported from src/components/farmModal.html -->
 <div class="modal fade noselect" id="farmModal" tabindex="-1" role="dialog"
      aria-labelledby="farmModalLabel"
      style="cursor:default">
@@ -63363,6 +63448,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Berrydex Modal-->
+<!-- imported from src/components/berryDexModal.html -->
 <div class="modal noselect fade" id="berryDexModal" tabindex="-1" role="dialog" aria-labelledby="berryDexModal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
         <div class="modal-content" data-bind="with: App.game.statistics.selectedBerryID()+''">
@@ -63602,6 +63688,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Berry Master Modal-->
+<!-- imported from src/components/berryMasterModal.html -->
 <div class="modal fade noselect" id="berryMasterModal" tabindex="-1" role="dialog"
      aria-labelledby="berryMasterModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -63752,6 +63839,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Gem Master Modal-->
+<!-- imported from src/components/gemMasterModal.html -->
 <div class="modal fade noselect" id="gemMasterModal" tabindex="-1" role="dialog"
      aria-labelledby="gemMasterModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -63845,6 +63933,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Shard Master Modal-->
+<!-- imported from src/components/shardTraderModal.html -->
 <div class="modal fade noselect" id="shardTraderModal" tabindex="-1" role="dialog"
      aria-labelledby="shardTraderModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -63928,6 +64017,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Generic Trader Modal-->
+<!-- imported from src/components/genericTraderModal.html -->
 <div class="modal fade noselect" id="genericTraderModal" tabindex="-1" role="dialog"
      aria-labelledby="genericTraderModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
@@ -64028,6 +64118,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Subregion Modal-->
+<!-- imported from src/components/subregionModal.html -->
 <div class="modal noselect fade" id="SubregionModal" tabindex="-1" role="dialog" aria-labelledby="SubregionModal">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
@@ -64058,6 +64149,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Ship Modal-->
+<!-- imported from src/components/shipModal.html -->
 <div class="modal noselect fade" id="ShipModal" tabindex="-1" role="dialog" aria-labelledby="ShipModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
@@ -64112,6 +64204,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Safari Modal -->
+<!-- imported from src/components/safariModal.html -->
 <div aria-labelledby="safariModal" class="modal fade noselect" id="safariModal" role="dialog" style="cursor:default" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -64263,6 +64356,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Safari Modal -->
+<!-- imported from src/components/safariBattleModal.html -->
 <div class="modal fade noselect" id="safariBattleModal" tabindex="-1" role="dialog" aria-badgeledby="safariBattleModal" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
        <div class="modal-content">
@@ -64342,6 +64436,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- NPC Modal-->
+<!-- imported from src/components/npcModal.html -->
 <div class="modal fade noselect" id="npc-modal" role="dialog" tabindex="-1">
   <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
     <div class="modal-content">
@@ -64367,6 +64462,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Pokeball Selector Modal -->
+<!-- imported from src/components/pokeballSelectorModal.html -->
 <div class="modal fade" id="pokeballSelectorModal" tabindex="-1" role="dialog"
   aria-labelledby="PokeballSelectorModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
@@ -64428,6 +64524,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Pokeball Selector Config Modal -->
+<!-- imported from src/components/pokeballSelectorAdvModal.html -->
 <div class="modal fade" id="pokeballSelectorAdvModal" tabindex="-1" role="dialog"
     aria-labelledby="PokeballSelectorAdvModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
@@ -64746,6 +64843,7 @@ aria-labelledby="badgeCaseModalLabel">
 
 
 <!-- Damage Calculator Modal -->
+<!-- imported from src/components/damageCalculatorModal.html -->
 <script type="text/html" id="damageDetailTemplate">
   <tr data-toggle="modal" href="#pokemonStatisticsModal" data-bind="click: () => { App.game.statistics.selectedPokemonID($data.id) }" >
       <td>
@@ -64890,6 +64988,7 @@ aria-labelledby="damageCalculatorModalLabel" aria-hidden="true">
 
 
 <!-- Category Modal -->
+<!-- imported from src/components/categoryModal.html -->
 <div class="modal fade noselect" id="categoryModal" tabindex="-1" role="dialog" aria-badgeledby="categoryModal">
     <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
         <div class="modal-content">
@@ -64970,6 +65069,7 @@ aria-labelledby="damageCalculatorModalLabel" aria-hidden="true">
 
 
 <!-- Bulletin board Modal -->
+<!-- imported from src/components/bulletinBoardModal.html -->
 <div class="modal fade" id="bulletinBoardModal" tabindex="-1" role="dialog"
 aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document" data-bind="if: BulletinBoard.selectedBulletinBoard()">
@@ -65029,6 +65129,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
 </div>
 
 
+<!-- imported from src/components/heldItemModal.html -->
 <div class="modal noselect fade" id="heldItemModal" tabindex="-1" role="dialog" aria-labelledby="heldItemModal">
     <div class="modal-dialog modal-dialog-scrollable modal-md" role="document">
         <div class="modal-content">
@@ -65177,6 +65278,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
 
 
 <!-- Battle Cafe Modal -->
+<!-- imported from src/components/battleCafeModal.html -->
 <div class="modal fade noselect" id="battleCafeModal" tabindex="-1" role="dialog" aria-labelledby="battleCafeModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
@@ -65306,6 +65408,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
 
 
 <!-- Dream Orbs Modal -->
+<!-- imported from src/components/dreamOrbsModal.html -->
 <div class="modal fade noselect" id="dreamOrbsModal" tabindex="-1" role="dialog"
 aria-labelledby="dreamOrbsModalLabel">
 <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -65347,6 +65450,7 @@ aria-labelledby="dreamOrbsModalLabel">
 
 
 <!-- Dream Orbs Opened Modal -->
+<!-- imported from src/components/dreamOrbsOpenedModal.html -->
 <div class="modal fade noselect" id="dreamOrbsOpenedModal" tabindex="-1" role="dialog" aria-labelledby="dreamOrbsOpenedModalLabel">
 <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
     <div class="modal-content">
@@ -65372,6 +65476,7 @@ aria-labelledby="dreamOrbsModalLabel">
 
 
 <!-- Purify Chamber Modal -->
+<!-- imported from src/components/purifyChamberModal.html -->
 <div class="modal fade noselect" id="purifyChamberModal" tabindex="-1" role="dialog"
 aria-labelledby="purifyChamberModalLabel">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -65414,6 +65519,7 @@ aria-labelledby="purifyChamberModalLabel">
 
 
 <!-- Weather App Modal -->
+<!-- imported from src/components/weatherAppModal.html -->
 <div class="modal fade" id="weatherAppModal" tabindex="-1" role="dialog" aria-labelledby="weatherAppModal">
     <div class="modal-dialog modal-dialog-scrollable modal-lg h-100" role="document">
         <div class="modal-content">
@@ -65495,6 +65601,7 @@ aria-labelledby="purifyChamberModalLabel">
 
 
 <!-- Consumable Modal -->
+<!-- imported from src/components/consumableModal.html -->
 <div class="modal noselect fade" id="consumableModal" tabindex="-1" role="dialog" aria-labelledby="consumableModal">
     <div class="modal-dialog modal-dialog-scrollable modal-sm" role="document">
         <div class="modal-content">
