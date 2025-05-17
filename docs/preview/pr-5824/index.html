@@ -2870,7 +2870,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 Map locations will be coloured based on the following:
                             </div>
                             ${MapHelper.getUsableFilters().map(setting => {
-                                return `<div class='col-10 legend-item'>
+                                return `<div class='col-10 legend-item ${setting.name}'>
                                     <span>${setting.displayName}:</span>
                                 </div>
                                 <div class='col-2'>
@@ -2878,7 +2878,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 </div>`
                             }).join('\n')}
                             <div class='col-12'>
-                                <i>NOTE: These colors can be customized in the settings menu</i>
+                                <i>NOTE: Colors and priority can be customized in the settings menu</i>
                             </div>
                         </div>`}">ⓘ</button>
                     <button class='btn btn-sm' style="position: absolute; right: 96px; top: 0px; width: auto; height: 41px;"
@@ -58031,21 +58031,22 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                             <thead>
                                 <tr><th colspan="2">Map Colors</th></tr>
                             </thead>
+                            <tbody
+                            data-bind="sortable: {
+                                foreach: Settings.getSetting('mapAreaStateOrder').observableValue,
+                                options: {
+                                    group: 'mapAreaStateOrder',
+                                    draggable: '.mapAreaStateWrapper',
+                                    handle: '.mapAreaStateWrapper td:first-of-type',
+                                    dataIdAttr: 'data-key',
+                                    getId: (state) => state,
+                                }
+                            }">
+                            <!-- ko with: Settings.getSetting(`--${areaStatus[$data]}`), as: 'setting' -->
+                                <tr class="mapAreaStateWrapper" data-bind="visible: setting.isUnlocked(), attr: { 'data-areastate': areaStatus[$parent] }, template: { name: 'ColorChoiceSettingTemplate', data: setting}"></tr>
+                            <!-- /ko -->
+                            </tbody>
                             <tbody>
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--locked')}"></tr>
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--incomplete')}"></tr>
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--questAtLocation')}"></tr>
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--uncaughtPokemon')}"></tr>
-                                <!-- ko if: Settings.getSetting('--uncaughtShadowPokemon').isUnlocked() -->
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--uncaughtShadowPokemon')}"></tr>
-                                <!-- /ko -->
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--uncaughtShinyPokemonAndMissingAchievement')}"></tr>
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--uncaughtShinyPokemon')}"></tr>
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--missingAchievement')}"></tr>
-                                <!-- ko if: Settings.getSetting('--missingResistant').isUnlocked() -->
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--missingResistant')}"></tr>
-                                <!-- /ko -->
-                                <tr data-bind="template: { name: 'ColorChoiceSettingTemplate', data: Settings.getSetting('--completed')}"></tr>
                                 <tr>
                                     <td colspan="2">
                                         <button type="button" class="btn btn-primary" data-bind="click: () => {
