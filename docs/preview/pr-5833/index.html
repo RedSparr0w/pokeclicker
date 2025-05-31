@@ -35510,27 +35510,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
         
 
-<image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
-    x="720"
-    y="160"
-    height="64"
-    width="64"
-    data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible()"/>
-<rect class="city"
-    data-town="Ash Ketchum"
-    x="720"
-    y="160"
-    height="64"
-    width="64"
-    data-bind="visible: TemporaryBattleList[&#39;Ash Ketchum Alola&#39;] &amp;&amp; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Ash Ketchum Alola&#39;].protectedOnclick(),
-        event: { mouseenter: () => GameController.showMapTooltip('Ash Ketchum'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-</image>
-
-
-        
-
 <image href="assets/images/map/skullgrunts.png" xlink:href="assets/images/map/skullgrunts.png"
     x="768"
     y="528"
@@ -61798,7 +61777,7 @@ aria-labelledby="pokedexModalLabel">
 <!-- Statistics Modal-->
 <div class="modal noselect fade" id="pokemonStatisticsModal" tabindex="-1" role="dialog" aria-labelledby="pokemonStatisticsModal">
   <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal modal-sm" role="document">
-    <div class="modal-content" data-bind="with: App.game.statistics.selectedPokemonID()">
+    <div class="modal-content" data-bind="using: App.game.statistics.selectedPokemonID()">
       <div class="modal-header bg-dark text-light" style='justify-content: space-around;'>
         <h5 class="modal-title text-muted"
           data-bind="text: `#${pokemonMap[$data].id <= 0 ? '???' : Math.floor(pokemonMap[$data].id).toString().padStart(3,0)}&nbsp;&nbsp;`">
@@ -61812,7 +61791,11 @@ aria-labelledby="pokedexModalLabel">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body p-0 pb-1">
+      <div class="modal-body bg-danger" data-bind="visible: $data <= 0">
+        <h4>This Pokémon should not be obtainable.</h4>
+        <h4>If you obtained it by accident, please report it as a bug.</h4>
+      </div>
+      <div class="modal-body p-0 pb-1" data-bind="visible: $data > 0">
         <div class="row m-0 mt-1">
           <div class="col">
             <img data-bind="attr:{ src: PokemonHelper.getImage(pokemonMap[$data].id) }" src=""/>
@@ -62414,7 +62397,7 @@ aria-labelledby="badgeCaseModalLabel">
                                         Claim
                                     </button>
                                     <span data-bind='visible: $data.inProgress() && !$data.isCompleted(), text: Math.floor(progress()*100) + "%"'></span>
-                                    <button class='btn btn-success btn-sm btn-block' disabled data-bind='visible: $data.claimed()'>Completed</button>
+                                    <button class='btn btn-secondary btn-sm btn-block' disabled data-bind='visible: $data.claimed()'>Completed</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -62504,24 +62487,30 @@ aria-labelledby="badgeCaseModalLabel">
                 </div>
             </div>
 
-            <div class="modal-footer">
-                <div id='refreshQuests'>
-                    <!-- ko if: App.game.quests.freeRefresh() -->
-                    <button class="btn btn-primary" onclick="App.game.quests.refreshQuests(false, true)">Free Refresh</button>
-                    <!-- /ko -->
-                    <!-- ko if: !App.game.quests.freeRefresh() -->
-                    <button class="btn btn-primary" onclick="App.game.quests.refreshQuests(false, true)"
-                        data-bind="enable: App.game.quests.canAffordRefresh(),
-                            tooltip: {
-                                title: App.game.quests.freeRefresh() ? '' : `Daily free refresh in: ${GameHelper.formattedLetterTimeUntilTomorrow()}`,
-                                trigger: 'hover', placement:'top'
-                            }">
-                        <span data-bind="template: { name: 'amountTemplate', data: App.game.quests.getRefreshCost() }"></span> - Refresh
-                    </button>
-                    <!-- /ko -->
-
+            <div class="modal-footer justify-content-start flex-nowrap">
+                <div id="refreshQuests">
+                    <div class="d-flex flex-wrap align-items-center" style="gap: 8px;">
+                        <!-- ko if: App.game.quests.isRefreshFree() -->
+                        <button class="btn btn-primary" onclick="App.game.quests.refreshQuests(true, true)">Free Refresh</button>
+                        <!-- /ko -->
+                        <!-- ko if: !App.game.quests.isRefreshFree() -->
+                        <button class="btn btn-primary" onclick="App.game.quests.refreshQuests(false, true)"
+                            data-bind="enable: App.game.quests.canAffordRefresh(),
+                                tooltip: {
+                                    title: App.game.quests.freeRefresh() ? '' : `Daily free refresh in: ${GameHelper.formattedLetterTimeUntilTomorrow()}`,
+                                    trigger: 'hover', placement:'top'
+                                }">
+                            <span data-bind="template: { name: 'amountTemplate', data: App.game.quests.getRefreshCost() }"></span> - Refresh
+                        </button>
+                        <!-- /ko -->
+                        <span>
+                            Or complete all quests for a bonus<knockout data-bind="template: { name: 'currencyTemplate', data: {'amount': App.game.quests.calcListBonus(), 'currency': GameConstants.Currency.questPoint}}"></knockout>
+                        </span>
+                    </div>
                 </div>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <div class="flex-grow-1 text-right">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
