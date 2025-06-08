@@ -2499,9 +2499,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                 PokemonType.None,
                                 true,
                                 GameConstants.Region.none,
-                                false,
+                                true,
                                 false, 
                                 WeatherType.Clear,
+                                true,
                             ).toLocaleString('en-US'),
                             tooltip: {
                                 title: Battle.enemyPokemon()
@@ -2510,9 +2511,10 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                                         Battle.enemyPokemon().type2,
                                         true,
                                         GameConstants.Region.none,
-                                        false,
+                                        true,
                                         false, 
                                         WeatherType.Clear,
+                                        true,
                                     ).toLocaleString('en-US')} against ${pokemonMap[Battle.enemyPokemon().name].type.map(t => PokemonType[t]).join('&nbsp;/&nbsp;')}`
                                     : '',
                                 trigger: 'hover'}">
