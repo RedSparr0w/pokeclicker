@@ -56749,7 +56749,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <!-- ko if: App.game.breeding.queueList().length -->
     <div id="hatcheryQueue" class="card-footer p-1" data-bind="foreach: App.game.breeding.queueList()">
       <div class="queuePokemon clickable bg-primary" data-bind="click: function(){ App.game.breeding.removeFromQueue($index()) }">
-        <img src="" data-bind="attr: { src: PokemonHelper.getImage(pokemonMap[$data].id) }">
+        <img src="" data-bind="attr: { src: BreedingController.getQueueImage($data) }">
       </div>
     </div>
     <div id="hatcheryQueueInfo" class="card-footer p-0 small">
@@ -57321,7 +57321,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                css: { active: ShopHandler.selected() == $index() },
                attr: { disabled: !$data.isAvailable() || $data.isSoldOut() },
                tooltip: {
-                  title: $data.description ? `<u>${$data.displayName}:</u><br/>${$data.description}` : '',
+                  title: $data.shopTooltip,
                   trigger: 'hover',
                   placement:'bottom',
                   boundary: 'viewport',
@@ -58148,10 +58148,15 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                                 trigger: 'hover'
                                             }"
                                             onchange="(() => {
-                                                const val = Number.isNaN(parseInt(this.value)) ? -1 : +this.value;
-                                                this.value = val < -1 ? -1 : Math.min(val, App.game.breeding.queueSlots());
-                                            })(), Settings.setSettingByName(this.name, +this.value)
-                                        ">
+                                                let val = Number.parseInt(this.value);
+                                                if (Number.isNaN(val)) {
+                                                    val = -1;
+                                                } else {
+                                                    val = Math.min(Math.max(val, -1), App.game.breeding.queueSlots());
+                                                }
+                                                this.value = val;
+                                                Settings.setSettingByName(this.name, val);
+                                            })()">
                                     </td>
                                 </tr>
                             </tbody>
@@ -59696,8 +59701,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                             <button type="button" class="btn btn-warning hatchery-warnings" style="pointer-events: none;" data-bind="visible: !App.game.breeding.hasFreeEggSlot()">
                                 You don't have any free egg slots.
                             </button>
-                            <button type="button" class="btn btn-danger hatchery-warnings" style="pointer-events: none;" data-bind="visible: !App.game.breeding.hasFreeQueueSlot() && App.game.breeding.queueSlots()">
-                                Your breeding queue is full or disabled.
+                            <button type="button" class="btn btn-danger hatchery-warnings" style="pointer-events: none;" data-bind="visible: !App.game.breeding.hasFreeQueueSlot() && App.game.breeding.queueSlots(), text: `Your breeding queue is ${Settings.getSetting('breedingQueueSizeSetting').observableValue() == 0 ? 'disabled' : 'full' }.`,">
                             </button>
                         </div>
                         <div class="float-right d-lg-block d-none">
@@ -60122,7 +60126,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                     <div style="margin: 1px 1px 0">
                                         <button type="button" class="btn btn-sm btn-block btn-primary" style="padding: .1rem 0;" data-bind="
                                             click: () => { ItemList[$data].use(); App.game.breeding.checkCloseModal(); },
-                                            enable: player.itemList[$data]() > 0 && App.game.breeding.hasFreeEggSlot()">Hatch</button>
+                                            enable: player.itemList[$data]() > 0 && (App.game.breeding.hasFreeEggSlot() || App.game.breeding.hasFreeQueueSlot())">Hatch</button>
                                     </div>
                                 </div>
                             </div>
@@ -60399,7 +60403,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                     <button type="button" class="btn btn-danger hatchery-warnings"
                         data-bind="visible: !App.game.breeding.hasFreeQueueSlot() && App.game.breeding.queueSlots(),
                         tooltip: {
-                            title: 'Your breeding queue is full or disabled.',
+                            title: `Your breeding queue is ${Settings.getSetting('breedingQueueSizeSetting').observableValue() == 0 ? 'disabled' : 'full' }.`,
                             trigger: 'hover',
                             placement: 'top',
                             boundary: 'window'
