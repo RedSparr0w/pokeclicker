@@ -2,6 +2,12 @@
 <html lang="en" translate="no">
     <head>
         <title>PokéClicker</title>
+<script>
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(reg=>{if(reg.waiting)reg.waiting.postMessage({type:"SKIP_WAITING"});});
+navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._reloading)return;window._reloading=true;window.location.reload();});
+}
+</script>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta charset="utf-8">
         <link
