@@ -64,7 +64,7 @@ jobs:
           # ---------------------------
           for HTML_FILE in build/*.html; do
             [ -f "$HTML_FILE" ] || continue
-            sed -i '/<\/head>/i \
+            sed -i '/<title[^>]*>/a \
 <script>\
 if("serviceWorker" in navigator){\
 navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(reg=>{if(reg.waiting)reg.waiting.postMessage({type:"SKIP_WAITING"});});\
