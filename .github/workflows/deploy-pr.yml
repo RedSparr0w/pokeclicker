@@ -2,7 +2,6 @@ name: 🔂 PR Preview
 
 on:
   pull_request_target:
-    # when using teardown: 'true', add default event types + closed event type
     types: [opened, synchronize, reopened, closed]
     paths:
       - 'src/**/*.ts'
@@ -12,10 +11,10 @@ on:
 
 jobs:
   preview:
-    environment: pokeclicker-development # link to the environment
+    environment: pokeclicker-development
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write # allow to create/update PR comments
+      pull-requests: write
     steps:
       - name: Get User Permission
         id: checkAccess
@@ -24,8 +23,6 @@ jobs:
           require: write
           username: ${{ github.triggering_actor }}
 
-      # if the user does not have the required permission, we should return exit code 1 to stop the workflow
-      # or add a condition to skip the next steps instead (if we don't want this to deploy to preview PR for everyone)
       - name: Check User Permission
         if: steps.checkAccess.outputs.require-result == 'false'
         run: |
@@ -37,21 +34,45 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v3
         with:
-          ref: ${{  github.event.pull_request.head.sha }}
+          ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Build PR
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - run: |
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Build PR
+        run: |
+          set -euo pipefail
           npm ci
           echo "module.exports={DEVELOPMENT:true,DEV_BANNER:true};" >> config.js
           npm run build
+
+          # ---------------------------
+          # Remove assets and libs folders; they will be redirected via SW
+          # ---------------------------
           rm -rf build/assets
-          ln -s ../../assets build/assets
           rm -rf build/libs
-          ln -s ../../libs build/libs
-      
+
+          # Remove any remaining symlinks just in case
+          find build -type l -exec rm -f {} +
+
+          # ---------------------------
+          # Inject SW registration + auto-refresh into HTML
+          # ---------------------------
+          for HTML_FILE in build/*.html; do
+            [ -f "$HTML_FILE" ] || continue
+            sed -i '/<\/head>/i \
+<script>\
+if("serviceWorker" in navigator){\
+navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(reg=>{if(reg.waiting)reg.waiting.postMessage({type:"SKIP_WAITING"});});\
+navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._reloading)return;window._reloading=true;window.location.reload();});\
+}\
+</script>' "$HTML_FILE"
+          done
+
       - name: Deploy to GH-Pages
         uses: redsparr0w/pr-preview-action@e42785b6369079700cfd810f51d14da466ea5cce
         id: preview_step
