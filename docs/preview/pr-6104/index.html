@@ -2,12 +2,6 @@
 <html lang="en" translate="no">
 <head>
     <title>PokéClicker</title>
-<script>
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(reg=>{if(reg.waiting)reg.waiting.postMessage({type:"SKIP_WAITING"});});
-navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._reloading)return;window._reloading=true;window.location.reload();});
-}
-</script>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="utf-8"/>
     <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -22209,20 +22203,20 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         event: { mouseenter: () => GameController.showMapTooltip(Routes.getName(11, 5)), mouseleave: GameController.hideMapTooltip }">
     <rect data-route='11'
         data-bind="attr: { class: MapHelper.calculateRouteCssClass(11, 5) }"
-        height="48"
+        height="32"
         width="96"
         x="208" y="448">
     </rect>
 
     <text style="font-size: 32px"
         x="240"
-        y="482"
+        y="474"
         data-bind="visible: !MapHelper.isRouteCurrentLocation(11, 5)">
         11
     </text>
     <image width="48" height="48"
         x="232"
-        y="448"
+        y="440"
         class="iconLocation hide"
         transform='rotate(0)'
         rotate=""
