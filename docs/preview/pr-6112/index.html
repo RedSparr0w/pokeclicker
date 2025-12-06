@@ -5501,36 +5501,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-        <!--Gyarados Galleon extension-->
-        
-
-<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
-    x="1520"
-    y="640"
-    height="144"
-    width="64"
-    data-bind="visible: TownList[&#39;Gyarados Galleon&#39;].isUnlocked()"/>
-<rect class="city"
-    data-town="Gyarados Galleon"
-    x="1520"
-    y="640"
-    height="144"
-    width="64"
-    data-bind="visible: TownList[&#39;Gyarados Galleon&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Gyarados Galleon&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Gyarados Galleon&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Gyarados Galleon'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-<image width="48" height="48"
-    x="1528"
-    y="688"
-    class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('Gyarados Galleon') && TownList[&#39;Gyarados Galleon&#39;].isUnlocked(),
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
-
-</image>
-
-
         
     </g>
 
@@ -27331,37 +27301,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 </image>
-
-
-        <!--Tsareena Sloop extension-->
-        
-
-<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
-    x="1104"
-    y="208"
-    height="144"
-    width="64"
-    data-bind="visible: TownList[&#39;Tsareena Sloop&#39;].isUnlocked()"/>
-<rect class="city"
-    data-town="Tsareena Sloop"
-    x="1104"
-    y="208"
-    height="144"
-    width="64"
-    data-bind="visible: TownList[&#39;Tsareena Sloop&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Tsareena Sloop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Tsareena Sloop&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Tsareena Sloop'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-<image width="48" height="48"
-    x="1112"
-    y="256"
-    class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('Tsareena Sloop') && TownList[&#39;Tsareena Sloop&#39;].isUnlocked(),
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
-
-</image>
-
 
 
         <!-- -------- -->
