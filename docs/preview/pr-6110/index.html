@@ -10372,15 +10372,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="208"
     height="32"
     width="32"
-    data-bind="visible: "/>
+    data-bind="visible: App.game.statistics.routeKills[GameConstants.Region.johto][39]() &gt;= 10"/>
 <rect class="city"
     data-town="Miltank"
     x="160"
     y="208"
     height="32"
     width="32"
-    data-bind="visible: , attr: { class: MapHelper.accessToRoute(39, GameConstants.Region.johto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
+    data-bind="visible: App.game.statistics.routeKills[GameConstants.Region.johto][39]() &gt;= 10, click: () =&gt; {
                 Notifier.notify({message: &#39;Moo.&#39;});
             },
         event: { mouseenter: () => GameController.showMapTooltip('Miltank'), mouseleave: GameController.hideMapTooltip }">
