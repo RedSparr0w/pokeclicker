@@ -2,12 +2,6 @@
 <html lang="en" translate="no">
 <head>
     <title>PokéClicker</title>
-<script>
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(reg=>{if(reg.waiting)reg.waiting.postMessage({type:"SKIP_WAITING"});});
-navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._reloading)return;window._reloading=true;window.location.reload();});
-}
-</script>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="utf-8"/>
     <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -2672,7 +2666,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!--Display all available Pokémon in this dungeon-->
         <ul class="list-inline mb-0">
           <!-- ko foreach: player.town.dungeon.normalEncounterList.filter(i => !i.hide) -->
-          <li class="list-inline-item">
+          <li class="list-inline-item" href="#pokemonStatisticsModal" data-toggle="modal" data-bind="
+                click: () => {
+                    if (!$data.uncaught && $data.pokemonName) {
+                        App.game.statistics.selectedPokemonID($data.id);
+                    } else {
+                        event.stopPropagation();
+                    }
+                },
+                css: { 'clickable': !$data.uncaught && $data.pokemonName }">
             <!-- ko if: $data.mimic -->
             <img class="boss" data-bind="attr: { src: `assets/images/dungeons/chest-${$data.mimicTier}.png` }, tooltip: {
                 title: GameConstants.camelCaseToString($data.mimicTier),
@@ -2705,7 +2707,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
           <!-- /ko -->
           <!--Display all available bosses in this dungeon-->
           <!-- ko foreach: player.town.dungeon.bossEncounterList.filter(i => !i.hide) -->
-          <li class="list-inline-item">
+          <li class="list-inline-item" href="#pokemonStatisticsModal" data-toggle="modal" data-bind="
+                click: () => {
+                    if (!$data.uncaught && $data.pokemonName) {
+                        App.game.statistics.selectedPokemonID($data.id);
+                    } else {
+                        event.stopPropagation();
+                    }
+                },
+                css: { 'clickable': !$data.uncaught && $data.pokemonName }">
             <!-- ko ifnot: $data.shadow -->
             <img class="boss" src="assets/images/dungeons/boss.svg"/>
             <!-- /ko -->
