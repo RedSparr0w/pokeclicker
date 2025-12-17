@@ -2,12 +2,6 @@
 <html lang="en" translate="no">
 <head>
     <title>PokéClicker</title>
-<script>
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(reg=>{if(reg.waiting)reg.waiting.postMessage({type:"SKIP_WAITING"});});
-navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._reloading)return;window._reloading=true;window.location.reload();});
-}
-</script>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="utf-8"/>
     <link href="assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -242,7 +236,7 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
 <div id="startMenu" class="dropdown clearfix" style="position:absolute; right:0; top:0; z-index: 100;">
     <button class="btn btn-secondary mr-1 float-left" style="display: none;"
         data-bind="visible: Settings.getSetting('disableAutoSave').observableValue,
-            click: () => { Save.store(player) },
+            click: () => { Save.store(player, true); },
             tooltip: {
                 html: true,
                 title: `Save the game.<br/>Shortcut: ${Settings.getSetting('hotkey.forceSave').prefix}${Settings.getSetting('hotkey.forceSave').observableValue()}`,
@@ -2672,7 +2666,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!--Display all available Pokémon in this dungeon-->
         <ul class="list-inline mb-0">
           <!-- ko foreach: player.town.dungeon.normalEncounterList.filter(i => !i.hide) -->
-          <li class="list-inline-item">
+          <li class="list-inline-item" href="#pokemonStatisticsModal" data-toggle="modal" data-bind="
+                click: () => {
+                    if (!$data.uncaught && $data.pokemonName) {
+                        App.game.statistics.selectedPokemonID($data.id);
+                    } else {
+                        event.stopPropagation();
+                    }
+                },
+                css: { 'clickable': !$data.uncaught && $data.pokemonName }">
             <!-- ko if: $data.mimic -->
             <img class="boss" data-bind="attr: { src: `assets/images/dungeons/chest-${$data.mimicTier}.png` }, tooltip: {
                 title: GameConstants.camelCaseToString($data.mimicTier),
@@ -2705,7 +2707,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
           <!-- /ko -->
           <!--Display all available bosses in this dungeon-->
           <!-- ko foreach: player.town.dungeon.bossEncounterList.filter(i => !i.hide) -->
-          <li class="list-inline-item">
+          <li class="list-inline-item" href="#pokemonStatisticsModal" data-toggle="modal" data-bind="
+                click: () => {
+                    if (!$data.uncaught && $data.pokemonName) {
+                        App.game.statistics.selectedPokemonID($data.id);
+                    } else {
+                        event.stopPropagation();
+                    }
+                },
+                css: { 'clickable': !$data.uncaught && $data.pokemonName }">
             <!-- ko ifnot: $data.shadow -->
             <img class="boss" src="assets/images/dungeons/boss.svg"/>
             <!-- /ko -->
@@ -56711,7 +56721,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <div style="margin-top: 20px;" class="clickable" data-bind="
                 click: function(){ if (progress() >= 100) App.game.breeding.hatchPokemonEgg($index()) },
                 tooltip: {
-                    title: BreedingController.getEggPokemonName($data) ? PokemonHelper.displayName(BreedingController.getEggPokemonName($data))() : '???',
+                    title: BreedingController.getEggPokemonName($data) ? PokemonHelper.displayName(BreedingController.getEggPokemonName($data)) : '???',
                     trigger: 'hover',
                     placement: 'bottom',
                     class: 'no-click',
@@ -59816,7 +59826,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 <input id="breeding-filter-nameID" autocomplete="off" class="form-control"
                                                     oninput="BreedingController.formatSearch(this.value)"
                                                     data-bind="value: BreedingController.getSearchString(),
-                                                        attr: { placeholder: `${PokemonHelper.displayName('Bulbasaur')()} or 1` }"/>
+                                                        attr: { placeholder: `${PokemonHelper.displayName('Bulbasaur')} or 1` }"/>
                                             </div>
 
                                             <div class="form-group col-lg-6 col-6">
@@ -61810,7 +61820,7 @@ aria-labelledby="pokedexModalLabel">
                                         <input id="pokedex-filter-nameID" class="form-control"
                                             oninput="PokedexHelper.formatSearch(this.value)"
                                             data-bind="value: PokedexHelper.getSearchString(),
-                                                attr: { placeholder: `${PokemonHelper.displayName('Bulbasaur')()} or 1` }">
+                                                attr: { placeholder: `${PokemonHelper.displayName('Bulbasaur')} or 1` }">
                                     </div>
 
                                     <!--Types-->
@@ -63011,7 +63021,16 @@ aria-labelledby="badgeCaseModalLabel">
                                             data-bind="click: function() {
                                                 FarmController.selectedBerry($data);
                                                 FarmController.selectedFarmTool(FarmingTool.Berry);
-                                            }, css: { 'active': FarmController.selectedBerry() === $data && FarmController.selectedFarmTool() == FarmingTool.Berry }">
+                                            }, css: { 'active': FarmController.selectedBerry() === $data && FarmController.selectedFarmTool() == FarmingTool.Berry },
+                                            tooltip: App.game.farming.unlockedBerries[$data]() ? {
+                                                html: true,
+                                                title: `<u>Growth Duration</u>: ${GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[3])}<br/>
+                                                    ${App.game.farming.berryData[$data].harvestAmount.toLocaleString('en-US')} <img width='12px' alt='${BerryType[$data]}' src='${FarmController.getBerryImage($data)}' /> per harvest<br/>
+                                                    ${App.game.farming.berryData[$data].farmValue.toLocaleString('en-US')} <img width='12px' alt='Farm Points' src='assets/images/currency/farmPoint.svg' /> per harvest`,
+                                                placement: 'right',
+                                                trigger: 'hover',
+                                                animation: false,
+                                            } : {}">
                                             <img src="" height="28px"
                                                 data-bind="attr:{ src: FarmController.getBerryImage($data) },
                                                 css: {'berryLocked': !App.game.farming.unlockedBerries[$data]() }">
