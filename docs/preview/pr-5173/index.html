@@ -2507,13 +2507,28 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         
     <div class="" data-bind="visible: !ContestRunner.running()">
       <div style="margin-top: 60px;">
-        <button class="btn w-25 btn-success" onclick="ContestRunner.startContest()" data-bind="disabled: !ContestHelper.contestIsUnlocked(rank, type)">Start Contest</button>
+        <button class="btn w-25 btn-success" onclick="ContestRunner.startContest()">Start Contest</button>
+        <!-- ko if: new DevelopmentRequirement().isCompleted() -->
+        <button class="btn w-25 btn-warning" onclick="ContestBattle.toggleTesting(!ContestBattle.toggleTesting())" data-bind="css: { active: ContestBattle.toggleTesting() }">Toggle Testing</button>
+        <!-- /ko -->
       </div>
       <div class="">
           <div class="justify-content-center">
             <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
                 <table width="100%">
-                  <th colspan="2" data-bind="text: `${ContestHelper.getContestEmoji(ContestRunner.type())}${ContestRank[ContestRunner.rank()]} Rank ${ContestType[ContestRunner.type()]} Contest Stats${ContestHelper.getContestEmoji(ContestRunner.type())}`"></th>
+                  <tr>
+                    <th colspan="100%" class="bg-warning" data-bind="visible: !ContestHelper.hasSheenForContest(ContestRunner.rank(), ContestRunner.type()) && !ContestBattle.toggleTesting()">
+                      Your Pokemon have no Sheen for this contest. Berry rewards are limited to 1 per combo.
+                    </th>
+                  </tr>
+                  <tr>
+                    <th colspan="100%" class="bg-danger" data-bind="visible: !ContestHelper.calculatePokemonContestAppeal(ContestRunner.rank(), ContestRunner.type(), [ContestRunner.type()]) && !ContestBattle.toggleTesting()">
+                      You have no eligible Pokemon for this contest. The audience bar will not increase.
+                    </th>
+                  </tr>
+                  <tr>
+                    <th colspan="2" data-bind="text: `${ContestHelper.getContestEmoji(ContestRunner.type())}${ContestRank[ContestRunner.rank()]} Rank ${ContestType[ContestRunner.type()]} Contest Stats${ContestHelper.getContestEmoji(ContestRunner.type())}`"></th>
+                  </tr>
                   <tr>
                     <!-- <td colspan="2" data-bind="text: `${ContestType[ContestRunner.type()]} Audience Appeal: ${ContestHelper.calculatePokemonContestAppeal(ContestRunner.rank(), ContestRunner.type(), [ContestRunner.type()]).toLocaleString('en-US')}`"></td> -->
                     <td colspan="2" data-bind="text: `Audience Appeal: ${ContestBattle.testAppeal().toLocaleString('en-US')}`"></td>
@@ -3240,7 +3255,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- /ko -->
     </div>
 
-    <!-- ko if: new DevelopmentRequirement().isCompleted() -->
+    <!-- ko if: ContestBattle.toggleTesting() -->
     <div class="modal-footer">
         <div class="input-group m-0">
             <div class="input-group-prepend">
