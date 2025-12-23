@@ -5937,7 +5937,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-        <!--Secret Cave-->
+        <!--Three Isle Cave-->
         
 
 <image href="assets/images/map/cave_entrance.png" xlink:href="assets/images/map/cave_entrance.png"
@@ -5945,24 +5945,58 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="736"
     height="16"
     width="16"
-    data-bind="visible: App.game.badgeCase.hasBadge(BadgeEnums.Elite_HoennChampion)"/>
+    data-bind="visible: TownList[&#39;Three Isle Cave&#39;].isUnlocked()"/>
 <rect class="city"
     data-town="Cave Entrance"
     x="1296"
     y="736"
     height="16"
     width="16"
-    data-bind="visible: App.game.badgeCase.hasBadge(BadgeEnums.Elite_HoennChampion), click:function(){MapHelper.moveToTown(&#39;Secret Cave&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Secret Cave&#39;) },
+    data-bind="visible: TownList[&#39;Three Isle Cave&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Three Isle Cave&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Three Isle Cave&#39;) },
         event: { mouseenter: () => GameController.showMapTooltip('Cave Entrance'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
-<image width="48" height="48"
-    x="1280"
-    y="720"
-    class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('Secret Cave') && App.game.badgeCase.hasBadge(BadgeEnums.Elite_HoennChampion),
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
+</image>
+
+        <!--Three Isle Path-->
+        
+
+<image href="assets/images/map/cave_entrance.png" xlink:href="assets/images/map/cave_entrance.png"
+    x="1296"
+    y="736"
+    height="16"
+    width="16"
+    data-bind="visible: TownList[&#39;Three Isle Path&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Cave Entrance"
+    x="1296"
+    y="736"
+    height="16"
+    width="16"
+    data-bind="visible: TownList[&#39;Three Isle Path&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Three Isle Path&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Three Isle Path&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Cave Entrance'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+        <!--Three Isle Path extension-->
+        
+
+<image href="assets/images/map/cave_entrance.png" xlink:href="assets/images/map/cave_entrance.png"
+    x="1344"
+    y="736"
+    height="16"
+    width="16"
+    data-bind="visible: TownList[&#39;Three Isle Path&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Cave Exit"
+    x="1344"
+    y="736"
+    height="16"
+    width="16"
+    data-bind="visible: TownList[&#39;Three Isle Path&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Three Isle Path&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Three Isle Path&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Cave Exit'), mouseleave: GameController.hideMapTooltip }">
+</rect>
 
 </image>
 
