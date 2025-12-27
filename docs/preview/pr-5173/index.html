@@ -236,7 +236,7 @@
 <div id="startMenu" class="dropdown clearfix" style="position:absolute; right:0; top:0; z-index: 100;">
     <button class="btn btn-secondary mr-1 float-left" style="display: none;"
         data-bind="visible: Settings.getSetting('disableAutoSave').observableValue,
-            click: () => { Save.store(player) },
+            click: () => { Save.store(player, true); },
             tooltip: {
                 html: true,
                 title: `Save the game.<br/>Shortcut: ${Settings.getSetting('hotkey.forceSave').prefix}${Settings.getSetting('hotkey.forceSave').observableValue()}`,
@@ -1211,17 +1211,20 @@
                         <div class="row justify-content-center">
                             <!-- ko foreach: { data: lootEntries[1], as: 'item' } -->
                             <div class="col-6 col-lg-4 mb-2">
-                                <div class="btn btn-secondary px-1 py-0 d-flex align-items-center text-left" style="cursor: default;">
+                                <div class="btn btn-secondary p-1 d-flex align-items-center text-left" style="cursor: default;">
                                     <img width="42px" data-bind="attr: { src: DungeonInfo.getLootImage(item.loot) }">
-                                    <div class="flex-grow-1 small ml-2" style="min-width: 0;">
+                                    <div class="flex-grow-1 d-flex flex-column ml-2 small text-truncate">
                                         <div class="text-truncate" data-bind="text: DungeonInfo.getLootName(item.loot)"></div>
+                                        <!-- ko if: item.requirement?.isCompleted() ?? true -->
+                                        <div class="small" data-bind="text: DungeonInfo.getLootChanceFormatted(item, lootEntries[0])"></div>
+                                        <!-- /ko -->
                                     </div>
                                     <img width="24px" class="lock" src="assets/images/breeding/lock.svg" data-bind="
-                                    tooltip: {
-                                        title: item.requirement?.hint() || '',
-                                        placement: 'bottom',
-                                        trigger: 'hover'
-                                    }, visible: item.requirement && !item.requirement.isCompleted()" />
+                                        tooltip: {
+                                            title: item.requirement?.hint() || '',
+                                            placement: 'bottom',
+                                            trigger: 'hover'
+                                        }, visible: item.requirement && !item.requirement.isCompleted()" />
                                     <knockout class="h4 text-success no-emoji-font mr-2 mb-0 align-self-center" data-bind="
                                         visible: DungeonRunner.isDungeonDebuffed(player.town.dungeon) && item.ignoreDebuff && (item.requirement?.isCompleted() ?? true),
                                         tooltip: {
@@ -1917,7 +1920,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     <tbody data-bind="let: { lazyPokemonList: lazyLoad('lazyPokemonList', $element, PartyController.getSortedList, { pageSize: 20, reset: () => (DisplayObservables.collapseState.pokemonListBody === 'hidden'), pause: () => DisplayObservables.collapseState.pokemonListBody !== 'show' }) }">
                     <!-- ko if: DisplayObservables.collapseState.pokemonListBody !== 'hidden' -->
                         <!-- ko foreach: lazyPokemonList, childrenComplete: () => { lazyLoadCallback('lazyPokemonList'); } -->
-                        <tr data-toggle="modal" href="#pokemonStatisticsModal" data-bind="hidden: $data.breeding, click: () => { App.game.statistics.selectedPokemonID($data.id) }">
+                        <tr data-toggle="modal" class="clickable" href="#pokemonStatisticsModal" data-bind="hidden: $data.breeding, click: () => { App.game.statistics.selectedPokemonID($data.id) }">
                             <td>
                                 <img
                                     class="smallImage"
@@ -2530,8 +2533,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     <th colspan="2" data-bind="text: `${ContestHelper.getContestEmoji(ContestRunner.type())}${ContestRank[ContestRunner.rank()]} Rank ${ContestType[ContestRunner.type()]} Contest Stats${ContestHelper.getContestEmoji(ContestRunner.type())}`"></th>
                   </tr>
                   <tr>
-                    <!-- <td colspan="2" data-bind="text: `${ContestType[ContestRunner.type()]} Audience Appeal: ${ContestHelper.calculatePokemonContestAppeal(ContestRunner.rank(), ContestRunner.type(), [ContestRunner.type()]).toLocaleString('en-US')}`"></td> -->
-                    <td colspan="2" data-bind="text: `Audience Appeal: ${ContestBattle.testAppeal().toLocaleString('en-US')}`"></td>
+                    <td colspan="2" data-bind="text: `Audience Appeal: ${ContestBattle.getActiveContestBattlePokemonAppeal().toLocaleString('en-US')}`"></td>
                   </tr>
                   <tr>
                     <td data-bind="text: `${ContestRunner.rank() != ContestRank.Practice ? 'Highest Score' : 'Last Practice Score'}: ${App.game.statistics.contestHighestScore[ContestRunner.rank()][ContestRunner.type()]().toLocaleString('en-US') ?? 0}`"></td>
@@ -2878,7 +2880,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!--Display all available Pokémon in this dungeon-->
         <ul class="list-inline mb-0">
           <!-- ko foreach: player.town.dungeon.normalEncounterList.filter(i => !i.hide) -->
-          <li class="list-inline-item">
+          <li class="list-inline-item" href="#pokemonStatisticsModal" data-toggle="modal" data-bind="
+                click: () => {
+                    if (!$data.uncaught && $data.pokemonName) {
+                        App.game.statistics.selectedPokemonID($data.id);
+                    } else {
+                        event.stopPropagation();
+                    }
+                },
+                css: { 'clickable': !$data.uncaught && $data.pokemonName }">
             <!-- ko if: $data.mimic -->
             <img class="boss" data-bind="attr: { src: `assets/images/dungeons/chest-${$data.mimicTier}.png` }, tooltip: {
                 title: GameConstants.camelCaseToString($data.mimicTier),
@@ -2911,7 +2921,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
           <!-- /ko -->
           <!--Display all available bosses in this dungeon-->
           <!-- ko foreach: player.town.dungeon.bossEncounterList.filter(i => !i.hide) -->
-          <li class="list-inline-item">
+          <li class="list-inline-item" href="#pokemonStatisticsModal" data-toggle="modal" data-bind="
+                click: () => {
+                    if (!$data.uncaught && $data.pokemonName) {
+                        App.game.statistics.selectedPokemonID($data.id);
+                    } else {
+                        event.stopPropagation();
+                    }
+                },
+                css: { 'clickable': !$data.uncaught && $data.pokemonName }">
             <!-- ko ifnot: $data.shadow -->
             <img class="boss" src="assets/images/dungeons/boss.svg"/>
             <!-- /ko -->
@@ -57136,7 +57154,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <div style="margin-top: 20px;" class="clickable" data-bind="
                 click: function(){ if (progress() >= 100) App.game.breeding.hatchPokemonEgg($index()) },
                 tooltip: {
-                    title: BreedingController.getEggPokemonName($data) ? PokemonHelper.displayName(BreedingController.getEggPokemonName($data))() : '???',
+                    title: BreedingController.getEggPokemonName($data) ? PokemonHelper.displayName(BreedingController.getEggPokemonName($data)) : '???',
                     trigger: 'hover',
                     placement: 'bottom',
                     class: 'no-click',
@@ -57755,7 +57773,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                   boundary: 'viewport',
                   html: true
                 }">
-               <knockout data-bind="if: ($data instanceof PokemonItem)">
+               <knockout data-bind="if: ($data instanceof PokemonItem) && !$data.ignoreEV">
                     <span style="position: absolute; top: 12px; left: 20px;"
                         data-bind="template: { name: 'pokerusStatusTemplate', data: {
                             'pokerus': $data.getPokerusStatus(), 'width': '32px',
@@ -57865,18 +57883,18 @@ aria-labelledby="temporaryBattleWonModalLabel" aria-hidden="true">
 aria-labelledby="questStepClearedModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable" role="document">
    <div class="modal-content">
-    <!-- ko if: Quest.questObservable()?.optionalArgs -->
+    <!-- ko if: QuestLineController.questStepObservable()?.optionalArgs -->
        <div class="modal-header">
            <div style="width: 100%;">
             <img src="" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png'"
-                data-bind="attr:{ src: Quest.questObservable().getNpcImage()}">
+                data-bind="attr:{ src: QuestLineController.questStepObservable().getNpcImage()}">
             <h5 class="modal-title" id="questStepClearedModalLabel"
-                data-bind="text: Quest.questObservable().getNpcDisplayName()">Modal title</h5>
+                data-bind="text: QuestLineController.questStepObservable().getNpcDisplayName()">Modal title</h5>
 
            </div>
         </div>
         <div class="modal-body">
-            <p data-bind="html: TextMerger.mergeText(Quest.questObservable()?.getClearedMessage())"></p>
+            <p data-bind="html: TextMerger.mergeText(QuestLineController.questStepObservable()?.getClearedMessage())"></p>
 
         </div>
         <div class="modal-footer">
@@ -60241,7 +60259,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 <input id="breeding-filter-nameID" autocomplete="off" class="form-control"
                                                     oninput="BreedingController.formatSearch(this.value)"
                                                     data-bind="value: BreedingController.getSearchString(),
-                                                        attr: { placeholder: `${PokemonHelper.displayName('Bulbasaur')()} or 1` }"/>
+                                                        attr: { placeholder: `${PokemonHelper.displayName('Bulbasaur')} or 1` }"/>
                                             </div>
 
                                             <div class="form-group col-lg-6 col-6">
@@ -62235,7 +62253,7 @@ aria-labelledby="pokedexModalLabel">
                                         <input id="pokedex-filter-nameID" class="form-control"
                                             oninput="PokedexHelper.formatSearch(this.value)"
                                             data-bind="value: PokedexHelper.getSearchString(),
-                                                attr: { placeholder: `${PokemonHelper.displayName('Bulbasaur')()} or 1` }">
+                                                attr: { placeholder: `${PokemonHelper.displayName('Bulbasaur')} or 1` }">
                                     </div>
 
                                     <!--Types-->
@@ -63416,11 +63434,13 @@ aria-labelledby="badgeCaseModalLabel">
                                 </thead>
                                 <tbody data-bind="foreach: $data.active">
                                     <tr>
-                                        <td>
+                                        <td class="clickable" data-bind="click: () => { QuestLineController.showQuestLineDetailsModal($data) }">
                                             <knockout class="font-weight-bold d-block" data-bind="text: $data.displayName"></knockout>
                                             <knockout class="small" data-bind="text: $data.description"></knockout>
                                         </td>
-                                        <td class="text-nowrap align-middle text-center" data-bind="text: `${$data.curQuest() + 1} / ${$data.totalQuests}`"></td>
+                                        <td class="clickable text-nowrap align-middle text-center" data-bind="
+                                            text: `${$data.curQuest() + 1} / ${$data.totalQuests}`,
+                                            click: () => { QuestLineController.showQuestLineDetailsModal($data) }"></td>
                                         <td class="align-middle text-center">
                                             <button type="button" class="btn btn-danger btn-sm" data-bind="click: () => { $data.suspendQuest() }, tooltip: {
                                                 title: $data.pauseTooltip,
@@ -63447,7 +63467,7 @@ aria-labelledby="badgeCaseModalLabel">
                                     </tr>
                                 </thead>
                                 <tbody data-bind="foreach: $data.available">
-                                    <tr>
+                                    <tr class="clickable" data-bind="click: () => { QuestLineController.showQuestLineDetailsModal($data) }">
                                         <td>
                                             <knockout class="font-weight-bold d-block" data-bind="text: $data.displayName"></knockout>
                                             <knockout class="small" data-bind="text: $data.description"></knockout>
@@ -63464,7 +63484,7 @@ aria-labelledby="badgeCaseModalLabel">
                             </div>
                             <table class="table table-striped table-bordered table-hover table-sm">
                                 <tbody data-bind="foreach: $data.complete">
-                                    <tr>
+                                    <tr class="clickable" data-bind="click: () => { QuestLineController.showQuestLineDetailsModal($data) }">
                                         <td>
                                             <knockout class="font-weight-bold d-block" data-bind="text: $data.displayName"></knockout>
                                             <knockout class="small" data-bind="text: $data.description"></knockout>
@@ -63559,7 +63579,16 @@ aria-labelledby="badgeCaseModalLabel">
                                             data-bind="click: function() {
                                                 FarmController.selectedBerry($data);
                                                 FarmController.selectedFarmTool(FarmingTool.Berry);
-                                            }, css: { 'active': FarmController.selectedBerry() === $data && FarmController.selectedFarmTool() == FarmingTool.Berry }">
+                                            }, css: { 'active': FarmController.selectedBerry() === $data && FarmController.selectedFarmTool() == FarmingTool.Berry },
+                                            tooltip: App.game.farming.unlockedBerries[$data]() ? {
+                                                html: true,
+                                                title: `<u>Growth Duration</u>: ${GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[3])}<br/>
+                                                    ${App.game.farming.berryData[$data].harvestAmount.toLocaleString('en-US')} <img width='12px' alt='${BerryType[$data]}' src='${FarmController.getBerryImage($data)}' /> per harvest<br/>
+                                                    ${App.game.farming.berryData[$data].farmValue.toLocaleString('en-US')} <img width='12px' alt='Farm Points' src='assets/images/currency/farmPoint.svg' /> per harvest`,
+                                                placement: 'right',
+                                                trigger: 'hover',
+                                                animation: false,
+                                            } : {}">
                                             <img src="" height="28px"
                                                 data-bind="attr:{ src: FarmController.getBerryImage($data) },
                                                 css: {'berryLocked': !App.game.farming.unlockedBerries[$data]() }">
@@ -65870,10 +65899,10 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                         <!-- ko foreach: $data -->
                         <td class="col-md-3">
                             <div class="text-left bulletin-paper card">
-                                <div class="card-footer">
+                                <div class="card-footer clickable" data-bind="click: () => { QuestLineController.showQuestLineDetailsModal($data) }">
                                     <h5 class="card-title m-0" data-bind="text: $data.displayName">Card title</h5>
                                 </div>
-                                <div class="card-body d-flex flex-column">
+                                <div class="card-body d-flex flex-column clickable" data-bind="click: () => { QuestLineController.showQuestLineDetailsModal($data) }">
                                     <p class="card-text flex-grow-1" data-bind="text: $data.description">Description</p>
                                     <!-- ko if: $data.state() == QuestLineState.suspended -->
                                     <div class="text-center text-muted small">
@@ -66163,7 +66192,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                 <div class="card">
                     <div class="card-header py-2 font-weight-bold">Spin!</div>
                     <div class="card-body col-lg-6 align-self-center p-2">
-                        <div>Remaining Spin Attempts: <span data-bind="text: BattleCafeController.spinsLeft()"></span></div>
+                        <div>Remaining Spin Attempts: <span data-bind="text: `${BattleCafeController.spinsLeft()} / ${BattleCafeController.maxTotalSpins()}`"></span></div>
                         <img style="width: 60px;" src="assets/images/profile/trainer-1.png" data-bind="
                             attr: { src: `assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png` },
                             class: BattleCafeController.isSpinning() ? 'player-animated' + (BattleCafeController.clockwise() ? '' : '-counter') : ''" />
@@ -66179,7 +66208,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                                 <button class="btn btn-primary btn-block" onclick="BattleCafeController.spin(false);">Counter-Clockwise</button>
                             </div>
                         </div>
-                        <div class="text-muted small mt-2">Spin Attempts Reset At Midnight</div>
+                        <div class="text-muted small mt-2">Spin Attempts Accumulate At Midnight</div>
                     </div>
                 </div>
                 <!-- /ko -->
@@ -66516,6 +66545,42 @@ aria-labelledby="purifyChamberModalLabel">
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- QuestLine Details Modal -->
+<!-- imported from src/components/questLineDetailsModal.html -->
+<div class="modal noselect fade" id="questLineDetailsModal" tabindex="-1" role="dialog" aria-labelledby="questLineDetailsModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content" data-bind="with: QuestLineController.questLineObservable(), as: 'questLine'">
+            <div class="modal-header align-items-center">
+                <h4 class="m-0" data-bind="text: questLine.displayName"></h4>
+            </div>
+            <div class="modal-body p-0 p-md-2 p-lg-3">
+                <table class="table table-striped table-bordered table-hover table-sm m-0">
+                    <tbody data-bind="foreach: questLine.quests()">
+                        <tr data-bind="css: { 'bg-info': (questLine.state() === QuestLineState.started || questLine.state() === QuestLineState.suspended) && $index() === questLine.curQuest() }">
+                            <td class="vertical-middle"><div class="px-2" data-bind="text: $index() + 1"></div></td>
+                            <td class="vertical-middle text-left">
+                                <div class="px-2" data-bind="text: ($index() <= questLine.curQuest() && questLine.state() !== QuestLineState.inactive) || questLine.state() === QuestLineState.ended ? $data.description : '???'"></div>
+                            </td>
+                            <td class="vertical-middle">
+                                <div class="px-2 text-nowrap">
+                                    <span class="text-success" data-bind="if: questLine.state() === QuestLineState.ended || $index() < questLine.curQuest()">Completed</span>
+                                    <span class="text-danger" data-bind="if: questLine.state() === QuestLineState.inactive || (questLine.state() !== QuestLineState.ended && $index() > questLine.curQuest())">Locked</span>
+                                    <span data-bind="if: questLine.state() === QuestLineState.started && $index() === questLine.curQuest()">In progress</span>
+                                    <span data-bind="if: questLine.state() === QuestLineState.suspended && $index() === questLine.curQuest()">Paused</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
