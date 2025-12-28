@@ -772,16 +772,26 @@
 
                         <!-- ko if: App.game.keyItems.hasKeyItem(KeyItemType.Pokeblock_kit) -->
                         <div class="bg-primary text-left rounded-0 px-3 py-2 mb-1" data-toggle="collapse" data-target="#itemBag-pokeblocks">
-                            <h5 class="m-0 text-light">Contest Treats</h5>
+                            <h5 class="m-0 text-light">Contest Items</h5>
                         </div>
                         <div id="itemBag-pokeblocks" class="collapse show">
                             <div class="card-body pt-2 p-1">
                                 <div class="row justify-content-center">
+                                    <h5 class="card-title col-12 mb-2">Pokéblocks</h5>
                                     <!-- ko foreach: Object.values(ItemList).filter((i) => i instanceof PokeBlock) -->
                                     <div class="col-6 col-lg-3 mb-2">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px; image-rendering: pixelated;"
                                         data-bind="template: { name: 'otherItemTemplate', data: $data.name },
                                         click: () => { PokeBlockController.currentlySelected($data.type); $('#pokeblockModal').modal('show'); }">
+                                        </div>
+                                    </div>
+                                    <!-- /ko -->
+                                    <h5 class="card-title col-12 mb-2">Contest Scarves</h5>
+                                    <!-- ko foreach: Object.values(ItemList).filter((i) => i instanceof ContestScarfHeldItem) -->
+                                    <div class="col-6 col-lg-3 mb-2">
+                                        <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
+                                            data-bind="template: { name: 'otherItemTemplate', data: $data.name },
+                                                click: () => { HeldItem.heldItemSelected($data); $('#heldItemModal').modal('show'); }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -60751,7 +60761,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 <td class="text-left align-middle">Sort:</td>
                                                 <td class="text-center align-middle">
                                                     <div class="input-group input-group-sm">
-                                                        <select autocomplete="off" class="custom-select" data-bind="options: GameHelper.enumSelectOption(SortOptions).filter(o => ![SortOptions.level, SortOptions.attack].includes(o.value)), optionsValue: 'value', optionsText: i => SortOptionConfigs[i.value].text, value: $data.sortOption"></select>
+                                                        <select autocomplete="off" class="custom-select" data-bind="options: GameHelper.enumSelectOption(SortOptions).filter(o => ![SortOptions.level, SortOptions.attack, SortOptions.contestAppeal, SortOptions.contestSheen].includes(o.value)), optionsValue: 'value', optionsText: i => SortOptionConfigs[i.value].text, value: $data.sortOption"></select>
                                                         <div class="input-group-append bg-primary text-light">
                                                             <label class="clickable m-0 px-2" style="font-size: 20px;" data-bind="
                                                                 attr: {for: 'hatcheryHelperSortDirection' + $index() },
@@ -66590,7 +66600,7 @@ aria-labelledby="purifyChamberModalLabel">
 <!-- PokeBlock Modal-->
 <!-- imported from src/components/pokeblockModal.html -->
 <div class="modal noselect fade" id="pokeblockModal" tabindex="-1" role="dialog" aria-labelledby="pokeblockModal">
-    <div class="modal-dialog modal-dialog-scrollable modal-sm" style="min-width: fit-content;" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-md" style="min-width: fit-content;" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-light" style='justify-content: space-around;'>
                 <h5 class="modal-title text-light">Select a Pokémon</h5>&nbsp;
@@ -66648,7 +66658,7 @@ aria-labelledby="purifyChamberModalLabel">
                         </div>
                         <div class="form-group col-6 m-0 px-1 py-0">
                             <!-- ko let: { pokeblockTypeFilter: Settings.getSetting('pokeblockTypeFilter') } -->
-                            <label class="mb-1" for="held-item-type-filter">Type</label>
+                            <label class="mb-1" for="held-item-type-filter">Contest Type</label>
                             <select id="held-item-type-filter" name="pokeblockTypeFilter" autocomplete="off" class="custom-select custom-select-sm" 
                                 data-bind="options: pokeblockTypeFilter.options,
                                     optionsValue: 'value',
@@ -66657,12 +66667,6 @@ aria-labelledby="purifyChamberModalLabel">
                             </select>
                             <!-- /ko -->
                         </div>
-                    </div>
-                    <div class="form-check align-middle mt-1">
-                        <input type="checkbox" id="pokeblock-shiny-filter" class="form-check-input"
-                            data-bind="checked: Settings.getSetting('pokeblockHideShinyPokemon').observableValue" />
-                        <label for="pokeblock-shiny-filter" class="form-check-label" 
-                            data-bind="text: Settings.getSetting('pokeblockHideShinyPokemon').displayName"></label>
                     </div>
                   </div>
                 </div>
