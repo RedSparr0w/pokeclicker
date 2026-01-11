@@ -15878,6 +15878,43 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </g>
 
 
+    <!--Trophy Garden-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(231, 3); },
+        event: { mouseenter: () => GameController.showMapTooltip(Routes.getName(231, 3)), mouseleave: GameController.hideMapTooltip }">
+    <rect data-route='231'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(231, 3) }"
+        height="64"
+        width="64"
+        x="800" y="704">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="816"
+        y="746"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(231, 3)">
+        TG
+    </text>
+    <image width="48" height="48"
+        x="808"
+        y="712"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="800"
+        localy="704"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(231, 3),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
+
+</g>
+
+
     <!--Route 213-->
     
 
