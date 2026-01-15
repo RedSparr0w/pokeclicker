@@ -13549,7 +13549,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="48"
     height="64"
     width="64"
-    data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(),
+    data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Kecleon 1&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Kecleon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
@@ -13665,14 +13665,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <image href="assets/images/map/may.png" xlink:href="assets/images/map/may.png"
     x="456"
-    y="480"
+    y="432"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible()"/>
 <rect class="city"
     data-town="Pokémon Trainer May"
     x="456"
-    y="480"
+    y="432"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 3&#39;].protectedOnclick(),
