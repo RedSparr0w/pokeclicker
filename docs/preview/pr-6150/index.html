@@ -13549,7 +13549,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="48"
     height="64"
     width="64"
-    data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(),
+    data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Kecleon 1&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Kecleon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
@@ -13665,14 +13665,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <image href="assets/images/map/may.png" xlink:href="assets/images/map/may.png"
     x="456"
-    y="480"
+    y="432"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible()"/>
 <rect class="city"
     data-town="Pokémon Trainer May"
     x="456"
-    y="480"
+    y="432"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 3&#39;].protectedOnclick(),
@@ -62845,7 +62845,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <!-- Quests -->
                     <div class="tab-pane active" id="questsModalQuestsPane">
                         <div class="container">
-                            <div class="form-row my-3">
+                            <div class="form-row mt-3 mb-2">
                                 <div class="col-3 align-self-center">
                                     <h5>
                                         <span class='' data-bind='text: "Quests (" + App.game.quests.currentQuests().length + "/" + App.game.quests.questSlots() + ")"'></span>
@@ -62863,6 +62863,9 @@ aria-labelledby="badgeCaseModalLabel">
                                 <div class="col-3 align-self-center">
                                     <span data-bind="template: { name: 'currencyTemplate', data: {'amount': App.game.wallet.currencies[GameConstants.Currency.questPoint](), 'currency': GameConstants.Currency.questPoint}}"></span>
                                 </div>
+                            </div>
+                            <div class="text-center mb-2" data-bind="visible: App.game.quests.questSlots() < GameConstants.MAX_QUEST_SLOTS">
+                                <div class="small">Unlock additional quest slots at levels 5, 10, and 15!</div>
                             </div>
                         </div>
 
