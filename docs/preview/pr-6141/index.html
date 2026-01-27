@@ -13549,7 +13549,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="48"
     height="64"
     width="64"
-    data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(),
+    data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Kecleon 1&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Kecleon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
@@ -13665,14 +13665,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <image href="assets/images/map/may.png" xlink:href="assets/images/map/may.png"
     x="456"
-    y="480"
+    y="432"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible()"/>
 <rect class="city"
     data-town="Pokémon Trainer May"
     x="456"
-    y="480"
+    y="432"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 3&#39;].protectedOnclick(),
@@ -15874,6 +15874,43 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="752" y="688">
     </rect>
 
+
+</g>
+
+
+    <!--Trophy Garden-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(231, 3); },
+        event: { mouseenter: () => GameController.showMapTooltip(Routes.getName(231, 3)), mouseleave: GameController.hideMapTooltip }">
+    <rect data-route='231'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(231, 3) }"
+        height="64"
+        width="64"
+        x="800" y="704">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="816"
+        y="746"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(231, 3)">
+        TG
+    </text>
+    <image width="48" height="48"
+        x="808"
+        y="712"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="800"
+        localy="704"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(231, 3),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
 
 </g>
 
@@ -57136,8 +57173,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         </div>
                     </div>
 
-                    <div class="small">
-                        <knockout data-bind="text: Math.min(App.game.underground.battery.charges, App.game.underground.battery.maxCharges), css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }"></knockout> / <knockout data-bind="text: App.game.underground.battery.maxCharges"></knockout>
+                    <div class="small"  data-bind="css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }">
+                        <knockout data-bind="text: (App.game.underground.battery.charges / App.game.underground.battery.maxCharges).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })"></knockout>
                     </div>
                 </div>
             </div>
@@ -60677,8 +60714,8 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             <div class="underground-tool__background-gradient conic" data-bind="style: { '--gradient-percentage': Math.min(App.game.underground.battery.charges / App.game.underground.battery.maxCharges, 1).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }) }">
                                                 <div class="bg-secondary p-1 p-xl-2">
                                                     <img alt="" width="27px" data-bind="attr:{ src: 'assets/images/oakitems/' + OakItemType[OakItemType.Cell_Battery] + '.png'}">
-                                                    <div class="small font-weight-bold">
-                                                        <knockout data-bind="text: Math.min(App.game.underground.battery.charges, App.game.underground.battery.maxCharges), css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }"></knockout> / <knockout data-bind="text: App.game.underground.battery.maxCharges"></knockout>
+                                                    <div class="small font-weight-bold"  data-bind="css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }">
+                                                        <knockout data-bind="text: (App.game.underground.battery.charges / App.game.underground.battery.maxCharges).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })"></knockout>
                                                     </div>
                                                 </div>
                                             </div>
@@ -61206,9 +61243,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                 The Battery is a system that charges up as you or your expert mines tiles.
                             </p>
                             <p>
-                                Each successful mining attempt will add 1 charge, up to a maximum of <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_MAX_CHARGES"></knockout> charges.
+                                Each successful mining attempt will add a charge, requiring <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_MAX_CHARGES"></knockout> charges to be activated.
                                 You can only gain 1 charge per <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_COOLDOWN_SECONDS"></knockout> second.
-                                Equipping your Cell Battery Oak Item will reduce the maximum charges needed to discharge.
+                                Equipping your Cell Battery Oak Item will increase the amount of energy gained per charge.
                             </p>
                             <p>
                                 When your battery is fully charged up, you can discharge it. This discharge will leave a pattern of cleared tiles behind.
@@ -62808,7 +62845,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <!-- Quests -->
                     <div class="tab-pane active" id="questsModalQuestsPane">
                         <div class="container">
-                            <div class="form-row my-3">
+                            <div class="form-row mt-3 mb-2">
                                 <div class="col-3 align-self-center">
                                     <h5>
                                         <span class='' data-bind='text: "Quests (" + App.game.quests.currentQuests().length + "/" + App.game.quests.questSlots() + ")"'></span>
@@ -62826,6 +62863,9 @@ aria-labelledby="badgeCaseModalLabel">
                                 <div class="col-3 align-self-center">
                                     <span data-bind="template: { name: 'currencyTemplate', data: {'amount': App.game.wallet.currencies[GameConstants.Currency.questPoint](), 'currency': GameConstants.Currency.questPoint}}"></span>
                                 </div>
+                            </div>
+                            <div class="text-center mb-2" data-bind="visible: App.game.quests.questSlots() < GameConstants.MAX_QUEST_SLOTS">
+                                <div class="small">Unlock additional quest slots at levels 5, 10, and 15!</div>
                             </div>
                         </div>
 
@@ -63307,7 +63347,7 @@ aria-labelledby="badgeCaseModalLabel">
                                             <tr>
                                                 <td class="text-left">Aura</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="text: AuraType[App.game.farming.berryData[$data].aura.auraType]"></code>
+                                                    <code data-bind="text: `${AuraType[App.game.farming.berryData[$data].aura.auraType]}${App.game.farming.berryData[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code>
                                                 </td>
                                             </tr>
                                             <!-- /ko -->
@@ -63765,7 +63805,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <!-- ko if: App.game.farming.berryData[$data].aura -->
                     <tr>
                       <td class="text-left">Aura</td>
-                      <td class="text-left tight"><code data-bind="text: AuraType[App.game.farming.berryData[$data].aura.auraType]"></code></td>
+                      <td class="text-left tight"><code data-bind="text: `${AuraType[App.game.farming.berryData[$data].aura.auraType]}${App.game.farming.berryData[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code></td>
                     </tr>
                     <!-- /ko -->
                     </tbody>
