@@ -57220,6 +57220,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
               </button>
             </td>
           </tr>
+          <tr data-bind="visible: VitaminController.shortcutVisible">
+            <td class="p-0">
+              <button class="btn btn-block btn-primary m-0" onclick="VitaminController.openVitaminExpandedModal()">
+                Vitamins
+                <knockout data-bind="text: `[${Settings.getSetting('hotkey.vitamins').observableValue()}]`,
+                    visible: Settings.getSetting('hotkey.vitamins').observableValue() != 'None'"></knockout>
+              </button>
+            </td>
+          </tr>
           <tr data-bind="visible: WeatherApp.shortcutVisible">
             <td class="p-0">
               <button class="btn btn-block btn-primary m-0" onclick="WeatherApp.openWeatherAppModal()">
@@ -57236,15 +57245,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <knockout data-bind="text: `(${(Math.min(1, Math.trunc((App.game.purifyChamber.currentFlow() / App.game.purifyChamber.flowNeeded()) * 10 ** 4) / 10 ** 4)).toLocaleString('en-US', { style: 'percent', maximumFractionDigits: 4 })})`"></knockout>
                 <knockout data-bind="text: `[${Settings.getSetting('hotkey.purifyChamber').observableValue()}]`,
                     visible: Settings.getSetting('hotkey.purifyChamber').observableValue() != 'None'"></knockout>
-              </button>
-            </td>
-          </tr>
-          <tr data-bind="visible: VitaminController.shortcutVisible">
-            <td class="p-0">
-              <button class="btn btn-block btn-primary m-0" onclick="VitaminController.openVitaminExpandedModal()">
-                Vitamins
-                <knockout data-bind="text: `[${Settings.getSetting('hotkey.vitamins').observableValue()}]`,
-                    visible: Settings.getSetting('hotkey.vitamins').observableValue() != 'None'"></knockout>
               </button>
             </td>
           </tr>
@@ -58193,7 +58193,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                             mapAreaStateOrder.set(mapAreaStateOrder.defaultValue);
                                         }">Reset Order</button>
                                         <button type="button" class="btn btn-primary" data-bind="click: () => {
-                                            Settings.getSetting('mapAreaStateOrder').value.map(status => 
+                                            Settings.getSetting('mapAreaStateOrder').value.map(status =>
                                                 Settings.getSetting(`--${areaStatus[status]}`)
                                             ).forEach(setting => setting.set(setting.defaultValue));
                                         }">Reset Colors</button>
@@ -58324,7 +58324,9 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <!-- ko if: Settings.getSetting('hotkey.purifyChamber').isUnlocked() -->
                                 <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.purifyChamber')}"></tr>
                                 <!-- /ko -->
+                                <!-- ko if: VitaminController.shortcutVisible -->
                                 <tr data-bind="template: { name: 'KeyChoiceSettingTemplate', data: Settings.getSetting('hotkey.vitamins')}"></tr>
+                                <!-- /ko -->
                             </tbody>
                             <thead>
                                 <tr><th colspan="2">Farm</th></tr>
