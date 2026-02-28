@@ -861,7 +861,7 @@
         html: true,
         boundary: 'scrollParent',
     }">
-        <img width="42px" data-bind="attr: { src: ItemList[$data].image }, style: { 'image-rendering': ItemList[$data].pixelated ? 'pixelated' : '' }">
+        <img width="42px" data-bind="attr: { src: ItemList[$data].image }">
         <div class="flex-grow-1 small align-self-end ml-2" style="min-width: 0;">
             <div class="text-truncate" data-bind="text: ItemList[$data].displayName"></div>
             <div data-bind="text: player.itemList[$data]().toLocaleString('en-US')"></div>
@@ -65501,7 +65501,7 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
             </div>
             <div class="modal-body p-0" style="background-color: inherit; overflow-x: hidden;">
                 <!-- ko if: HeldItem.heldItemSelected() -->
-                <img data-bind="attr: { src: HeldItem.heldItemSelected().image }, style: { 'image-rendering': HeldItem.heldItemSelected().pixelated ? 'pixelated' : '' }" width="25%"/>
+                <img data-bind="attr: { src: HeldItem.heldItemSelected().image }" width="25%"/>
                 <br/>
                 <div class="sticky-top" style="background-color: inherit;">
                   <div class="btn-group btn-block m-0" role="group" aria-label="Basic example">
@@ -66149,6 +66149,7 @@ aria-labelledby="purifyChamberModalLabel">
 
                 <div id="blendingView" class="tab-pane fade in active show">
                     <div id="blenderAndList" class="justify-content-center no-select my-2 d-flex flex-wrap">
+
                         <div class="justify-content-center no-select col-12 col-md-7">
                             <div id="blendBerryList" class="blendingColumn" style="overflow-y: auto;">
                                 <table id="berryBlendingListTable" class="table table-hover table-sm mb-0">
@@ -66294,10 +66295,11 @@ aria-labelledby="purifyChamberModalLabel">
                                 <button class="clickable btn btn-block btn-success" onclick="App.game.blending.buyBlendingSlot()" data-bind="
                                     css: {disabled: App.game.wallet.currencies[GameConstants.Currency.contestToken]() < App.game.blending.nextBlendingSlotCost().amount},
                                     ">
-                                    <span data-bind="html: App.game.blending.getBlendingSlotCostDisplay()"</span>
+                                    <span data-bind="html: App.game.blending.getBlendingSlotCostDisplay()"></span>
                                 </button>
                             <!-- /ko -->
                         </div>
+
                     </div>
                 </div>
 
@@ -66365,7 +66367,7 @@ aria-labelledby="purifyChamberModalLabel">
                                     <div class="input-group" style="display: block;">
                                         <div id="recipeCardContent" class="row no-gutters input-group-prepend">
                                             <button class="col-md-4 btn btn-secondary d-none d-md-block">
-                                                <img src="" height="48px" style="" data-bind="attr:{ src: ItemList[$data.item].image }, style:{ 'image-rendering': ItemList[$data.item].pixelated ? 'pixelated' : '' }">
+                                                <img src="" height="48px" style="image-rendering: pixelated" data-bind="attr:{ src: ItemList[$data.item].image }">
                                                 <div class="p-2">
                                                     <p data-bind="text: ItemList[$data.item].description"></p>
                                                     <p data-bind="text: `In Bag: ${player.itemList[$data.item]().toLocaleString('en-US')}`"></p>
@@ -66376,7 +66378,7 @@ aria-labelledby="purifyChamberModalLabel">
                                                     <table width="100%">
                                                         <tr>
                                                             <td class="d-md-none">
-                                                                <img src="" height="48px" style="" data-bind="attr:{ src: ItemList[$data.item].image }, style:{ 'image-rendering': ItemList[$data.item].pixelated ? 'pixelated' : '' }">
+                                                                <img src="" height="48px" style="image-rendering: pixelated" data-bind="attr:{ src: ItemList[$data.item].image }">
                                                             </td>
                                                             <td>
                                                                 <h4 class="m-0" data-bind="text: ItemList[$data.item].displayName"></h4>
@@ -66539,7 +66541,7 @@ aria-labelledby="purifyChamberModalLabel">
                     </p>
                     <p data-bind="text: `You currently have ${BlendingRecipes.getRecipeCompletion()} available recipes.`"></p>
                     <!-- ko if: BlendingRecipes.getBlendingRecipeSet(BlendingRecipeType.Event).length > 0 -->
-                        <p data-bind="text: `An extra amount of ${BlendingRecipes.getBlendingRecipeSet(BlendingRecipeType.Event).length} Special Event recipe(s) are also active.`"></p>
+                        <p data-bind="text: `A Special Event is in session! You have access to ${BlendingRecipes.getBlendingRecipeSet(BlendingRecipeType.Event).length} Special Event recipe(s)!`"></p>
                     <!-- /ko -->
 
                     <h4><u>Blending Buddies</u></h4>
@@ -66548,6 +66550,7 @@ aria-labelledby="purifyChamberModalLabel">
                         They act like a fifth Blending Slot and affect the RPM and flavor output of a machine.
                     </p>
                 </div>
+
             </div>
 
             <div class="modal-footer">
@@ -66589,7 +66592,6 @@ aria-labelledby="purifyChamberModalLabel">
 
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
-
 
         </div>
     </div>
