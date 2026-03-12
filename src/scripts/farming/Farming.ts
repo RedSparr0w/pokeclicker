@@ -2301,6 +2301,7 @@ class Farming implements Feature {
         const shinyModifier = wanderer.shiny ? GameConstants.WANDER_SHINY_FP_MODIFIER : 1;
         const amount = App.game.wallet.gainFarmPoints(farmPoints * shinyModifier);
         GameHelper.incrementObservable(App.game.statistics.farmWandererFarmPointsObtained, amount.amount);
+        player.lowerItemMultipliers(MultiplierDecreaser.Berry, berry.exp);
 
         const pokeball = App.game.pokeballs.calculatePokeballToUse(pokemonData.id, wanderer.shiny, false, EncounterType.wanderer);
         if (pokeball !== GameConstants.Pokeball.None) {
@@ -2325,7 +2326,7 @@ class Farming implements Feature {
             0, 100);
         if (Rand.chance(catchChance / 100)) { // Successfully caught
             App.game.oakItems.use(OakItemType.Magic_Ball);
-            App.game.party.gainPokemonByName(wanderer.name, wanderer.shiny);
+            App.game.party.gainPokemonByName(wanderer.name, wanderer.shiny, undefined, wanderer.gender);
 
             // EV
             const partyPokemon = App.game.party.getPokemonByName(wanderer.name);
