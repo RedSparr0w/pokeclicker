@@ -57502,8 +57502,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         </div>
                     </div>
 
-                    <div class="small">
-                        <knockout data-bind="text: Math.min(App.game.underground.battery.charges, App.game.underground.battery.maxCharges), css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }"></knockout> / <knockout data-bind="text: App.game.underground.battery.maxCharges"></knockout>
+                    <div class="small"  data-bind="css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }">
+                        <knockout data-bind="text: (App.game.underground.battery.charges / App.game.underground.battery.maxCharges).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })"></knockout>
                     </div>
                 </div>
             </div>
@@ -57587,7 +57587,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 <!-- Challenge Mode Modal -->
 <!-- imported from src/components/challengeModeModal.html -->
 <div class="modal noselect fade" id="challengeModeModal" tabindex="-1" role="dialog" aria-labelledby="challengeModeModal">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Challenge Modes</h5>
@@ -57598,18 +57598,18 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <div class="modal-body">
                 <p>
                     <strong>Activate in-game challenge modes!</strong><br/>
-                    Challenges can be disabled later, but cannot be re-enabled.
+                    Challenges can be disabled later, but <u>cannot</u> be re-enabled.
                 </p>
-                <br/>
+                <p>If this is your first time playing we highly recommend not changing these so you can get a feel for the game.</p>
+                <p>Recommended challenges are enabled by default; the game is designed and balanced around these.</p>
                 <table class="table" width="100%">
                     <tbody data-bind="foreach: Object.values(App.game.challenges.list)">
-                        <tr data-bind="tooltip: {
-                            title: $data.description,
-                            placement: 'bottom',
-                            trigger: 'hover'
-                        }">
-                            <td class="text-left font-weight-bold" data-bind="text: $data.type"></td>
-                            <td class="p-1">
+                        <tr>
+                            <td class="text-left pt-1">
+                                <div class="font-weight-bold" data-bind="text: $data.type"></div>
+                                <div class="small" data-bind="text: $data.description"></div>
+                            </td>
+                            <td class="p-1 align-middle">
                                 <!-- ko if: !$data.active() && player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.None --><button class="btn btn-warning btn-block" data-bind="click: ()=>{$data.activate();}">ACTIVATE</button><!-- /ko -->
                                 <!-- ko if: !$data.active() && player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.None --><button class="btn btn-secondary btn-block disabled">DISABLED</button><!-- /ko -->
                                 <!-- ko if: $data.active() --><button class="btn btn-success btn-block" data-bind="click: ()=>{$data.disable();}">ACTIVE</button><!-- /ko -->
@@ -57617,7 +57617,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         </tr>
                     </tbody>
                 </table>
-                <br/>
                <button class="btn btn-primary btn-block" data-dismiss="modal">Done!</button>
             </div>
        </div>
@@ -59956,20 +59955,22 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
            <div class="modal-body">
                <p>
                    <!-- ko if: App.game.challenges.list.requireCompletePokedex.active() -->
-                   <strong>Congratulations on completing the <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion()])"></span> Pokédex!</strong><br/>
+                   <strong>Congratulations on completing the <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion()])"></span> Pokédex!</strong><br />
                    <!-- /ko -->
-                   You can now travel on to <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span>!<br/>
-                   <br/>
-                   <strong>There are a few things you should know before you depart:</strong><br/>
-                   You will gain <strong data-bind="text: App.game.breeding.queueSlotsGainedFromRegion(player.highestRegion())"></strong> queue slots in the Hatchery.<br/><br/>
+                   You can now travel on to <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span>!<br />
+                   <br />
+                   <strong>There are a few things you should know before you depart:</strong><br />
+                   You will gain <strong data-bind="text: App.game.breeding.queueSlotsGainedFromRegion(player.highestRegion())"></strong> queue slots in the Hatchery.<br /><br />
                    <!-- ko if: App.game.challenges.list.regionalAttackDebuff.active() -->
-                   When Pokémon are in a Region they're not native to, they will only retain <strong data-bind="text: App.game.party.getRegionAttackMultiplier(player.highestRegion() + 1).toLocaleString('en-US',{style: 'percent'})"></strong> of their total attack.<br/><br/>
+                   When Pokémon are in a Region they're not native to, they will only retain <strong data-bind="text: App.game.party.getRegionAttackMultiplier(player.highestRegion() + 1).toLocaleString('en-US',{style: 'percent'})"></strong> of their total attack.<br /><br />
                    <!-- /ko -->
                    <!-- ko if: player.highestRegion() - 2 >= GameConstants.Region.kanto -->
-                   Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br/><br/>
+                   Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br /><br />
                    <!-- /ko -->
-                   You will also have to progress to the Dock in <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span> before you are able to travel between regions again.
+                   You will also have to progress to the Dock in <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span> before you are able to travel between regions again.<br />
+                   It is recommended to download your save in case that you get stuck in your journey.
                </p>
+               <button class="btn btn-block btn-secondary" onclick="Save.download()">Download Save</button>
                <button class="btn btn-success btn-block" onclick="MapHelper.travelToNextRegion()" data-dismiss="modal">Let's Go!</button>
            </div>
        </div>
@@ -61043,8 +61044,8 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             <div class="underground-tool__background-gradient conic" data-bind="style: { '--gradient-percentage': Math.min(App.game.underground.battery.charges / App.game.underground.battery.maxCharges, 1).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }) }">
                                                 <div class="bg-secondary p-1 p-xl-2">
                                                     <img alt="" width="27px" data-bind="attr:{ src: 'assets/images/oakitems/' + OakItemType[OakItemType.Cell_Battery] + '.png'}">
-                                                    <div class="small font-weight-bold">
-                                                        <knockout data-bind="text: Math.min(App.game.underground.battery.charges, App.game.underground.battery.maxCharges), css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }"></knockout> / <knockout data-bind="text: App.game.underground.battery.maxCharges"></knockout>
+                                                    <div class="small font-weight-bold"  data-bind="css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }">
+                                                        <knockout data-bind="text: (App.game.underground.battery.charges / App.game.underground.battery.maxCharges).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })"></knockout>
                                                     </div>
                                                 </div>
                                             </div>
@@ -61572,9 +61573,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                 The Battery is a system that charges up as you or your expert mines tiles.
                             </p>
                             <p>
-                                Each successful mining attempt will add 1 charge, up to a maximum of <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_MAX_CHARGES"></knockout> charges.
+                                Each successful mining attempt will add a charge, requiring <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_MAX_CHARGES"></knockout> charges to be activated.
                                 You can only gain 1 charge per <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_COOLDOWN_SECONDS"></knockout> second.
-                                Equipping your Cell Battery Oak Item will reduce the maximum charges needed to discharge.
+                                Equipping your Cell Battery Oak Item will increase the amount of energy gained per charge.
                             </p>
                             <p>
                                 When your battery is fully charged up, you can discharge it. This discharge will leave a pattern of cleared tiles behind.
@@ -61812,7 +61813,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
 
                     <div class="card-footer">
                         <div class="small">
-                            Discovery time: <label data-bind="text: GameConstants.formatTime(UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType)), css: { 'text-warning': UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType) > 0 }"></label>
+                            Discovery time: <label data-bind="text: GameConstants.formatTime(Math.max(UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType), 0)), css: { 'text-warning': UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType) > 0 }"></label>
                         </div>
 
                         <button class="btn btn-primary" data-bind="click: () => App.game.underground.generateMine(App.game.underground.autoSearchMineType);" data-dismiss="modal">Search for mine</button>
@@ -63676,7 +63677,7 @@ aria-labelledby="badgeCaseModalLabel">
                                             <tr>
                                                 <td class="text-left">Aura</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="text: AuraType[App.game.farming.berryData[$data].aura.auraType]"></code>
+                                                    <code data-bind="text: `${AuraType[App.game.farming.berryData[$data].aura.auraType]}${App.game.farming.berryData[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code>
                                                 </td>
                                             </tr>
                                             <!-- /ko -->
@@ -64134,7 +64135,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <!-- ko if: App.game.farming.berryData[$data].aura -->
                     <tr>
                       <td class="text-left">Aura</td>
-                      <td class="text-left tight"><code data-bind="text: AuraType[App.game.farming.berryData[$data].aura.auraType]"></code></td>
+                      <td class="text-left tight"><code data-bind="text: `${AuraType[App.game.farming.berryData[$data].aura.auraType]}${App.game.farming.berryData[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code></td>
                     </tr>
                     <!-- /ko -->
                     </tbody>
