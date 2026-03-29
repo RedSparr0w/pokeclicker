@@ -1967,7 +1967,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 foreach: $data.objectives().filter(obj => obj.isConfigured())
             ">
                 <div class="my-2 border-secondary" data-bind="css: { 'border-top pt-2': $index() }, event: { contextmenu: () => { App.game.goalTracker.selectedObjective($data); $('#goalTrackerObjectiveModal').modal('show'); } }">
-                    <div data-bind="text: name"></div>
+                    <div data-bind="text: displayName"></div>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar"
                             data-bind="attr: { style: 'width:' + (progressPercent() * 100) + '%'},
@@ -66052,10 +66052,6 @@ aria-labelledby="purifyChamberModalLabel">
                                 <div class="flex-grow-1 mr-1">
                                     <input class="form-control form-control-sm" data-bind="textInput: $data.name"></span>
                                 </div>
-                                <!--<button class="btn bg-danger btn-sm text-white deleteButton" title="Delete Goal"
-                                    data-bind="click: () => App.game.goalTracker.deleteGoal($data)">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>-->
                                 <div class="dropdown">
                                     <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" style="min-width: 25px;"></button>
                                     <div class="dropdown-menu">
@@ -66087,7 +66083,7 @@ aria-labelledby="purifyChamberModalLabel">
                                         <div class="goalObjective">
                                             <div class="border-bottom border-secondary mb-2 pb-1">
                                                 <div class="d-flex mb-1" style="gap: 4px; align-items: center;">
-                                                    <div class="flex-grow-1 text-wrap align-items-center" data-bind="text: name"></div>
+                                                    <div class="flex-grow-1 text-wrap align-items-center" data-bind="text: displayName"></div>
                                                     <button type="button" class="btn btn-primary btn-sm px-1 py-0 no-emoji-font" style="width: 25px;" title="Edit Objective" data-bind="click: () => {
                                                         App.game.goalTracker.selectedObjective($data);
                                                         $('#goalTrackerObjectiveModal').modal('show');
@@ -66149,10 +66145,6 @@ aria-labelledby="purifyChamberModalLabel">
                 </button>
             </div>
             <div class="modal-body text-left pb-0" data-bind="with: App.game.goalTracker.selectedObjective">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" data-bind="textInput: $data.name" />
-                </div>
                 <div class="form-group">
                     <label>Type</label>
                     <select class="form-control" data-bind="
@@ -66236,7 +66228,7 @@ aria-labelledby="purifyChamberModalLabel">
             </div>
             <div class="modal-footer" data-bind="with: App.game.goalTracker.selectedObjective">
                 <div class="card-body text-left small p-0">
-                    <div data-bind="text: name"></div>
+                    <div data-bind="text: displayName"></div>
                     <div class="progress">
                         <div class="progress-bar" role="progressbar"
                             data-bind="attr: { style: 'width:' + (progressPercent() * 100) + '%'},
