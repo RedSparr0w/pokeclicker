@@ -17930,6 +17930,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         event: { mouseenter: () => GameController.showMapTooltip('Flower Paradise'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
+<image width="48" height="48"
+    x="1456"
+    y="8"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Flower Paradise') && App.game.statistics.routeKills[GameConstants.Region.sinnoh][224]() &gt;= 10,
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
 </image>
 
 
