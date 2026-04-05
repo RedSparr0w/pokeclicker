@@ -1524,6 +1524,21 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 <!-- Example usage -->
 <!-- <span data-bind="template: { name: 'wanderingPokémonDisplay', data: 'Pikachu'}"></span> -->
 
+<!-- imported from src/components/templates/goalTrackerObjectiveTemplate.html -->
+<script type="text/html" id="goalTrackerObjectiveTemplate">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar"
+            data-bind="attr: { style: 'width:' + (progressPercent() * 100) + '%'},
+                css: { 'bg-primary': progressPercent() < 1, 'bg-success': progressPercent() >= 1 }"
+            aria-valuemin="0" aria-valuemax="100">
+        </div>
+    </div>
+    <div class="d-flex">
+        <div class="flex-grow-1" data-bind="text: progressText()"></div>
+        <div data-bind="text: progressPercent().toLocaleString('en-US', { style: 'percent' })"></div>
+    </div>
+</script>
+
 
 <div id="game" class="container loading" data-bind="css: {'container': Settings.getSetting('gameDisplayStyle').observableValue() === 'standard3', 'container-fluid': Settings.getSetting('gameDisplayStyle').observableValue() !== 'standard3'}">
     <div class="row justify-content-center">
@@ -1972,19 +1987,12 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 attr : {id : 'objectivecard_' + $index()},
                 foreach: $data.objectives().filter(obj => obj.isConfigured())
             ">
-                <div class="my-2 border-secondary" data-bind="css: { 'border-top pt-2': $index() }, event: { contextmenu: () => { App.game.goalTracker.selectedObjective($data); $('#goalTrackerObjectiveModal').modal('show'); } }">
+                <div class="my-2 border-secondary" data-bind="
+                    css: { 'border-top pt-2': $index() },
+                    event: { contextmenu: () => { App.game.goalTracker.selectedObjective($data); $('#goalTrackerObjectiveModal').modal('show'); } }
+                ">
                     <div data-bind="text: displayName"></div>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar"
-                            data-bind="attr: { style: 'width:' + (progressPercent() * 100) + '%'},
-                                css: { 'bg-primary': progressPercent() < 1, 'bg-success': progressPercent() >= 1 }"
-                            aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="flex-grow-1" data-bind="text: progressText()"></div>
-                        <div data-bind="text: progressPercent().toLocaleString('en-US', { style: 'percent' })"></div>
-                    </div>
+                    <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: $data }"></knockout>
                 </div>
             </div>
         </div>
@@ -66208,17 +66216,7 @@ aria-labelledby="purifyChamberModalLabel">
                                                 </div>
                                                 <div class="text-danger" data-bind="hidden: isConfigured">Not configured!</div>
                                                 <div data-bind="visible: isConfigured">
-                                                    <div class="progress mb-1">
-                                                        <div class="progress-bar" role="progressbar"
-                                                            data-bind="attr: { style: 'width:' + (progressPercent() * 100) + '%'},
-                                                                css: { 'bg-primary': progressPercent() < 1, 'bg-success': progressPercent() >= 1 }"
-                                                            aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div class="flex-grow-1" data-bind="text: progressText()"></div>
-                                                        <div data-bind="text: progressPercent().toLocaleString('en-US', { style: 'percent' })"></div>
-                                                    </div>
+                                                    <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: $data }"></knockout>
                                                 </div>
                                             </div>
                                         </div>
@@ -66335,17 +66333,7 @@ aria-labelledby="purifyChamberModalLabel">
             <div class="modal-footer">
                 <div class="card-body text-left small p-0">
                     <div data-bind="text: displayName"></div>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar"
-                            data-bind="attr: { style: 'width:' + (progressPercent() * 100) + '%'},
-                                css: { 'bg-primary': progressPercent() < 1, 'bg-success': progressPercent() >= 1 }"
-                            aria-valuemin="0" aria-valuemax="100">
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="flex-grow-1" data-bind="text: progressText()"></div>
-                        <div data-bind="text: progressPercent().toLocaleString('en-US', { style: 'percent' })"></div>
-                    </div>
+                    <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: $data }"></knockout>
                 </div>
             </div>
             <div class="modal-footer justify-content-start">
