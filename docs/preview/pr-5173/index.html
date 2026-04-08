@@ -1704,6 +1704,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                             tooltip: {
                               title: '<strong>' + ItemList[$data].displayName + '</strong>' + '<br/>' + ItemList[$data].description,
                               trigger: 'hover',
+                              animation: false,
                               placement: $(window).innerWidth() < 768 ? 'bottom' : 'left',
                               html: true
                             }">
@@ -1714,7 +1715,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <tr data-bind="foreach: $data">
                 <td class="text-light p-0">
               <!-- ko if: EffectEngineRunner.getEffect($data) > 0 -->
-                <code data-bind="text: player.effectTimer[$data](),tooltip: {title:GameConstants.formatSecondsToTime(player.effectList[$data]()),trigger:'hover',placement:'bottom',html:true}"></code>
+                <code data-bind="text: player.effectTimer[$data](),tooltip: {title:GameConstants.formatSecondsToTime(player.effectList[$data]()),trigger:'hover',animation:false,placement:'bottom',html:true}"></code>
               <!-- /ko -->
                 </td>
             </tr>
@@ -1784,6 +1785,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                           tooltip: {
                             title: ItemList[$data].getFormattedTooltip(ItemList[$data]),
                             trigger: 'hover',
+                            animation: false,
                             placement: $(window).innerWidth() < 768 ? 'bottom' : 'left',
                             sanitize: false,
                             html: true
@@ -1796,6 +1798,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 tooltip: {
                   title: FluteEffectRunner.fluteTooltip($data),
                   trigger:'hover',
+                  animation:false,
                   placement:'bottom',
                   html:true
               }">
@@ -2500,10 +2503,13 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
                     <!-- Contest Battles -->
                     <!-- imported from src/components/contestView.html -->
-<div class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.contest">
+<div id="contestView" class="row justify-content-center no-gutters" data-bind="if: App.game.gameState === GameConstants.GameState.contest">
   <div class="col no-gutters" style="height: 280px; display: block;">
-    <h2 class="pageItemTitle" style="display: block;">
-      <div data-bind="text: ContestBattle.getBattleViewTitle()"></div>
+
+    <h2 class="pageItemTitle">
+      <div class="scaled-text-container">
+        <span class="scaled-text" style="line-height: unset;" data-bind="text: ContestBattle.getBattleViewTitle()"></span>
+      </div>
       <div data-bind="visible: ContestRunner.running()" class="progress timer" style="z-index: 1;">
         <div class="progress-bar" role="progressbar" style="animation-direction: reverse;"
           data-bind="attr:{ style: 'width:' + ContestRunner.timeLeftPercentage() + '%' },
@@ -2517,15 +2523,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         </div>
       </div>
     </h2>
-        
-    <div class="" data-bind="visible: !ContestRunner.running()">
+
+    <div data-bind="visible: !ContestRunner.running()">
       <div style="margin-top: 60px;">
         <button class="btn w-25 btn-success" onclick="ContestRunner.startContest()">Start Contest</button>
         <!-- ko if: new DevelopmentRequirement().isCompleted() -->
         <button class="btn w-25 btn-warning" onclick="ContestBattle.toggleTesting(!ContestBattle.toggleTesting())" data-bind="css: { active: ContestBattle.toggleTesting() }">Toggle Testing</button>
         <!-- /ko -->
       </div>
-      <div class="">
+      <div>
           <div class="justify-content-center">
             <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
                 <table width="100%">
@@ -2547,7 +2553,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                   </tr>
                   <tr>
                     <td data-bind="text: `${ContestRunner.rank() != ContestRank.Practice ? 'Highest Score' : 'Last Practice Score'}: ${App.game.statistics.contestHighestScore[ContestRunner.rank()][ContestRunner.type()]().toLocaleString('en-US') ?? 0}`"></td>
-                    <td data-bind="text: `Total Won: ${App.game.statistics.contestHighestRound[ContestRunner.rank()][ContestRunner.type()]().toLocaleString('en-US') ?? 0}`"></td>
+                    <td data-bind="text: `Total Won: ${App.game.statistics.contestsWon[ContestRunner.rank()][ContestRunner.type()]().toLocaleString('en-US') ?? 0}`"></td>
                   </tr>
                 </table>
               </h2>
@@ -2556,60 +2562,56 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </div>
 
     <div data-bind="if: ContestRunner.running()">
-      <div class="d-flex contestTrainerLine" data-bind="foreach: ContestBattle.trainers()">
-        <div style="min-width: 96px;" data-bind="if: ContestBattle.trainers().length > $index()">
+      <div class="d-flex px-3" style="justify-content: space-evenly; overflow-x: hidden;" data-bind="foreach: ContestBattle.trainers()">
+        <div style="position: relative;" data-bind="if: ContestBattle.trainers().length > $index(),
+          css: {
+            'contest-inactive': !ContestBattle.getSpotlightStatus($index()) && !ContestBattle.prepareNextTrainerBatch(),
+            'spectacle': ContestBattle.pokemons()[$index()].status() === ContestOpponentStatus.Spectacle,
+          }">
 
-          <!-- <div class="mr-3">
-            <img class="contestTrainer" data-bind="attr:{ src: ContestBattle.trainers()[$index()].image },
-            css: { 'contest-inactive': !ContestBattle.getSpotlightStatus($index()) && !ContestBattle.prepareNextTrainerBatch() }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
-          </div> -->
-          
-          <!-- <div class="mr-5" data-bind="visible: ContestBattle.getSpotlightStatus($index())">
-            <img class="contestSpotlight" src="assets/images/contestSpotlight.png" data-bind="
+          <div class="mr-3">
+            <img class="contestTrainer" data-bind="attr:{ src: ContestBattle.trainers()[$index()].image }" onerror="this.src='assets/images/npcs/specialNPCs/Mysterious Trainer.png';"/>
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <img class="contestSpotlight" src="assets/images/contest/contestSpotlight.png" data-bind="
+              visible: ContestBattle.getSpotlightStatus($index()),
               style: {
                 'opacity': !ContestRunner.danceMode() && ($index() != ContestBattle.selectedEnemy()) ? '70%' : '',
                 'filter': ContestBattle.getSpotlightGrayscaleStatus($index()) ? 'grayscale(1)' : '',
               }"/>
-          </div> -->
+          </div>
 
           <!-- ko if: !ContestRunner.danceMode() -->
-            <knockout class="enemy-contest" data-bind="style: {
+            <knockout data-bind="style: {
               'filter': ContestBattle.getSpotlightGrayscaleStatus($index()) && ContestBattle.getSpotlightStatus($index()) ? 'grayscale(0.8)' : '',
-            }, css: {
-              'contest-inactive': !ContestBattle.getSpotlightStatus($index()) && !ContestBattle.prepareNextTrainerBatch(),
-              'spectacle': ContestBattle.pokemons()[$index()].status() === ContestOpponentStatus.Spectacle,
             }, template: { name: 'pokemonSpriteTemplate', data: { 'pokemon': ContestBattle.pokemons()[$index()] } }">Pokémon sprite</knockout>
           <!-- /ko -->
             
-            <!-- ko if: ContestRunner.danceMode() -->
-            <div class="pokemonSprite wandererSprite mx-2" style="position: relative; margin-top: 40px; top: 0; left: 0;"
-              data-bind="css: {
-                'contest-inactive': !ContestBattle.getSpotlightStatus($index()) && !ContestBattle.prepareNextTrainerBatch(),
-                'spectacle': ContestBattle.pokemons()[$index()].status() === ContestOpponentStatus.Spectacle,
-              },
-              style: {
-                'backgroundImage': `url(assets/images/dynamic-background/pokemon/${ContestBattle.pokemons()[$index()].id}.png)`,
-                'animation': ContestBattle.getSpotlightStatus($index()) ? '' : 'none',
-                'animation-duration': ContestBattle.pokemons()[$index()].danceHearts() <= 0 && ContestBattle.pokemons()[$index()].isRallied() ? '1.2s' : '',
-              },
-              class: ContestBattle.getDancingCss(ContestBattle.pokemons()[$index()])">
-            </div>
-            <!-- /ko -->
+          <!-- ko if: ContestRunner.danceMode() -->
+          <div class="pokemonSprite wandererSprite mx-2" style="position: relative; margin-top: 40px; top: 0; left: 0;"
+            data-bind="
+            style: {
+              'backgroundImage': `url(assets/images/dynamic-background/pokemon/${ContestBattle.pokemons()[$index()].id}.png)`,
+              'animation': ContestBattle.getSpotlightStatus($index()) ? '' : 'none',
+              'animation-duration': ContestBattle.pokemons()[$index()].danceHearts() <= 0 && ContestBattle.pokemons()[$index()].isRallied() ? '1.2s' : '',
+            },
+            class: ContestBattle.getDancingCss(ContestBattle.pokemons()[$index()])">
+          </div>
+          <!-- /ko -->
 
-            <div class="progress trainerhitpoints" data-bind="css: {
-              'contest-inactive': !ContestBattle.getSpotlightStatus($index()) && !ContestBattle.prepareNextTrainerBatch(),
-              'contestpoints': !ContestRunner.danceMode(),
-            }">
-              <div class="progress-bar bg-danger" role="progressbar"
-                      data-bind="attr:{ style: 'width:0%' }"
-                      aria-valuemin="0" aria-valuemax="100">
-                  <span data-bind="text: ContestBattle.contestHealth(ContestBattle.pokemons()[$index()])" style="font-size: 12px;"></span>
-              </div>
+          <div class="progress mx-1" style="bottom: 10px;">
+            <div class="progress-bar scaled-text-container" role="progressbar"
+                    data-bind="style: { 'width': ContestBattle.pokemons()[$index()].isRallied() ? '100%' : '0%' },
+                      attr: { 'contest-color': ContestType[ContestRunner.type()] }"
+                    aria-valuemin="0" aria-valuemax="100">
+                  <span class="scaled-text" style="font-size: 12px;" data-bind="text: ContestBattle.contestHealth(ContestBattle.pokemons()[$index()])"></span>
             </div>
+          </div>
         </div>
       </div>
-      
-      <div class="progress hitpoints audienceappealpoints" data-bind="attr: {'contest-type': ContestType[ContestRunner.type()]}">
+
+      <div class="progress hitpoints" style="bottom: unset;">
         <div class="progress-bar" role="progressbar"
                 data-bind="style: {
                   'width': ContestRunner.audienceAppealPercentage() + '%',
@@ -2617,69 +2619,101 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 }, css: {
                   'progress-bar-striped progress-bar-animated': ContestRunner.frenzyMode() || ContestRunner.jamTime() > 0,
                   'bg-dark': ContestRunner.jamTime() > 0,
-                }, class: Settings.getSetting('theme').observableValue()"
+                },
+                attr: { 'contest-color': ContestType[ContestRunner.type()] }"
                 aria-valuemin="0" aria-valuemax="100">
             <span data-bind="html: ContestRunner.audienceStatus()" style="font-size: 12px;"></span>
         </div>
       </div>
+
       <h2 class="pageItemFooter" style="display: block; font-size: 1rem;">
+        <btn class="btn btn-block btn-secondary p-1 crowdHypeRow d-none">
+          <span data-bind="text: `Crowd Hype: ${ContestRunner.crowdHypeComputable()}`"></span>
+        </btn>
         <table width="100%" style="font-size: small;">
-          <tr>
-            <td colspan="4" data-bind="text: ContestBattle.trainerInfo(ContestBattle.selectedEnemy())">Opponent name</td>
-            <td colspan="2" rowspan="3" class="" width="30%">
-              <button class="btn btn-block btn-secondary">
-                <span data-bind="text: 'Crowd Hype'"></span></br>
-                <span data-bind="text: ContestRunner.crowdHypeComputable()"></span>
-              </button>
-            </td>
-          </tr>
-          <tr data-bind="template: { name: ContestBattle.contestViewGimmickBar(ContestRunner.rank()) }"></tr>
-          <tr>
-            <td data-bind="text: `Encore: ×${ContestScore.encoreBonus().toLocaleString('en-US')}`">
-              Encore Round
-            </td>
-            <td data-bind="text: `Chain: &plus;${ContestScore.activeChain().toLocaleString('en-US')}`">
-              Combo Chain
-            </td>
-            <td colspan="2" data-bind="text: `Score: ${Math.round(ContestScore.totalScore()).toLocaleString('en-US')}`">
-              Score
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td data-bind="text: ContestBattle.trainerInfo(ContestBattle.selectedEnemy()),
+                attr: { colspan: ContestBattle.contestViewGimmickBar() === 'contestBeatTemplate' ? '3' : '2' }">Opponent name</td>
+              <td data-bind="text: `Score: ${Math.round(ContestScore.totalScore()).toLocaleString('en-US')}`, visible: ContestBattle.contestViewGimmickBar() === 'contestMovesTemplate'">
+                Score
+              </td>
+              <td class="crowdHypeCell" rowspan="3" width="30%">
+                <btn class="btn btn-block btn-secondary p-1">
+                    <span data-bind="text: 'Crowd Hype'"></span></br>
+                    <span data-bind="text: ContestRunner.crowdHypeComputable()"></span>
+                </btn>
+              </td>
+            </tr>
+
+            <!-- ko if: ContestBattle.contestViewGimmickBar() === 'contestBeatTemplate' -->
+              <tr>
+                <td class="tight" colspan="3" data-bind="foreach: GameHelper.enumNumbers(ContestType).filter(e => e != ContestType.Balanced)">
+                  <span class="badge text-light px-1" data-bind="
+                              style: {
+                                'border': ContestRunner.type() === $data ? 'thin solid whitesmoke' : '',
+                              },
+                              attr: { 'contest-color': ContestBattle.enemyTypes(ContestBattle.selectedEnemy()).includes($data) ? ContestType[$data] : '' }">
+                    <small>
+                      <strong data-bind="text: ContestType[$data].toUpperCase()" style="color: white;"></strong>
+                    </small>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td data-bind="text: `Round: ×${ContestScore.encoreBonus().toLocaleString('en-US')}`">
+                  Encore Round
+                </td>
+                <td data-bind="text: `Score: ${Math.round(ContestScore.totalScore()).toLocaleString('en-US')}`">
+                  Score
+                </td>
+                <td data-bind="text: `Chain: &plus;${ContestScore.activeChain().toLocaleString('en-US')}`">
+                  Combo Chain
+                </td>
+              </tr>
+            <!-- /ko -->
+
+            <!-- ko if: ContestBattle.contestViewGimmickBar() === 'contestMovesTemplate' -->
+              <tr>
+                <td data-bind="text: `Round: ×${ContestScore.encoreBonus().toLocaleString('en-US')}`">
+                  Encore Round
+                </td>
+                <!-- ko with: ContestBattle.pokemons()[ContestBattle.selectedEnemy()].usableMoves[Direction.Up] -->
+                <td class="tight" data-bind="attr: { 'contest-color': ContestType[$data.moveType] },
+                    style: {
+                      'opacity': $data.pp() ? '' : '50%',
+                }">
+                      <span class="text-light p-1">
+                        <strong data-bind="text: `${ContestHelper.getArrowEmoji(Direction.Up)} ${ContestType[$data.moveType].toUpperCase()}`" style="color: white;"></strong>
+                      </span>
+                  </td>
+                  <!-- /ko -->
+                  <td data-bind="text: `Chain: &plus;${ContestScore.activeChain().toLocaleString('en-US')}`">
+                    Combo Chain
+                  </td>
+              </tr>
+              <tr>
+                <!-- ko foreach: GameHelper.enumNumbers(Direction).filter(d => d != Direction.Up) -->
+                  <!-- ko with: ContestBattle.pokemons()[ContestBattle.selectedEnemy()].usableMoves[$data] -->
+                  <td class="tight" data-bind="attr: { 'contest-color': ContestType[$data.moveType] },
+                      style: {
+                        'opacity': $data.pp() ? '' : '50%',
+                    }">
+                      <span class="text-light p-1">
+                        <strong data-bind="text: `${ContestHelper.getArrowEmoji($parent)} ${ContestType[$data.moveType].toUpperCase()}`" style="color: white;"></strong>
+                      </span>
+                  </td>
+                  <!-- /ko -->
+                <!-- /ko -->
+              </tr>
+            <!-- /ko -->
+          </tbody>
         </table>
       </h2>
     </div>
 
   </div>
 </div>
-
-<script type="text/html" id="contestBeatTemplate">
-  <td colspan="4" data-bind="foreach: GameHelper.enumNumbers(ContestType).filter(e => e != ContestType.Balanced)">
-    <span class="badge text-light px-1" data-bind="
-                style: {
-                  'background-color': ContestHelper.getActiveContestColors($data, ContestBattle.enemyTypes(ContestBattle.selectedEnemy())),
-                  'border': ContestRunner.type() === $data ? 'thin solid whitesmoke' : '',
-                }">
-      <small>
-        <strong data-bind="text: ContestType[$data].toUpperCase()" style="color: white;"></strong>
-      </small>
-    </span>
-  </td>
-</script>
-
-<script type="text/html" id="contestMovesTemplate">
-  <!-- ko foreach: ContestBattle.pokemons()[ContestBattle.selectedEnemy()].usableMoves -->
-   <td>
-     <span class="badge text-light px-1" data-bind="
-                 style: {
-                   'background-color': ContestHelper.getActiveContestColors($data.moveType, [$data.moveType]),
-                   'border': 'thin solid whitesmoke',
-                   'opacity': $data.pp() ? '' : '50%',
-                 }">
-         <strong data-bind="text: `${ContestHelper.getArrowEmoji($index())}: ${ContestType[$data.moveType].toUpperCase()}`" style="color: white;"></strong>
-     </span>
-   </td>
-  <!-- /ko -->
-</script>
 
 
                     <!-- Battle Frontier Battles -->
@@ -3040,83 +3074,16 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 </div>
             <!-- /ko -->
 
-            <!-- Battle Frontier Information Container  -->
-            <!-- imported from src/components/battleFrontierInfo.html -->
-
-<!-- ko if: App.game.gameState === GameConstants.GameState.battleFrontier -->
-<div id="battleFrontierInformation" class="card sortable-disabled border-secondary mb-3 battle-frontier no-select">
-    <div class="card-header p-0" data-toggle="collapse" href="#battleFrontierRewards">
-        <span>Battle Frontier</span>
-    </div>
-    <!-- ko ifnot: BattleFrontierRunner.started -->
-    <div class="card-body text-center">
-        <h5>Welcome to the Battle Frontier!</h5>
-        <p>
-            Here you will be battling through many stages to earn Battle Points.<br/>
-            There is no regional attack debuff or weather effects.<br/>
-            You can leave early and return to your checkpoint later on.<br/>
-            You'll get special items if you reach special milestone stages.<br/>
-            When you are ready, click Start!<br/>
-            <i>Note: there is no click damage in the Battle Frontier.</i>
-        </p>
-        <a class="btn btn-block btn-success text-light" onclick="BattleFrontierRunner.start(false)">Start</a>
-        <!-- ko if: BattleFrontierRunner.hasCheckpoint() -->
-            <a class="btn btn-block btn-success text-light" onclick="BattleFrontierRunner.start(true)">Start at latest checkpoint (Stage <knockout data-bind="text: BattleFrontierRunner.checkpoint().toLocaleString('en-US')">0</knockout>)</a>
-        <!-- /ko -->
-        <a class="btn btn-block btn-danger text-light" onclick="App.game.battleFrontier.leave()">Leave</a>
-    </div>
-    <!-- /ko -->
-    <!-- ko if: BattleFrontierRunner.started -->
-    <div id="battleFrontierRewards" class="card-body text-center p-0 show">
-        <!-- ko let: { availableMilestones: BattleFrontierMilestones.availableMilestones().slice(0, 4) } -->
-        <table class="table table-hover table-striped table-bordered table-sm m-0">
-            <thead>
-                <tr>
-                    <th colspan="2">Upcoming Rewards</th>
-                </tr>
-                <tr>
-                    <th>Stage</th>
-                    <th class="text-left">Reward</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- ko foreach: availableMilestones -->
-                <tr>
-                    <th class="tight" data-bind="text: $data.stage.toLocaleString('en-US')"></td>
-                    <td class="text-left">
-                        <img width="28px" data-bind="attr:{ src: $data.image }" />
-                        <knockout data-bind="text: $data.displayName"></knockout>
-                    </td>
-                </tr>
-                <!-- /ko -->
-                <!-- ko ifnot: availableMilestones.length -->
-                <tr>
-                    <th class="tight">–</td>
-                    <td class="text-left">
-                        You've received every available reward. Congratulations!
-                    </td>
-                </tr>
-                <!-- /ko -->
-            </tbody>
-        </table>
-        <!-- /ko -->
-        <a class="btn btn-block btn-danger text-light" onclick="BattleFrontierRunner.battleQuit()">Quit Battle</a>
-    </div>
-    <!-- /ko -->
-</div>
-<!-- /ko -->
-
-
             <!-- Contest Information Container -->
-            <!-- imported from src/components/contestInfo.html -->
+            <!-- imported from src/components/contestControlPanel.html -->
 <!-- ko if: App.game.gameState === GameConstants.GameState.contest -->
-<div id="contestInformation" class="card sortable-disabled border-secondary mb-3 contest-hall no-select tab-content">
-    <div class="card-header p-0" data-toggle="collapse">
+<div id="contestControlPanel" class="card sortable-disabled border-secondary mb-3 no-select">
+    <div class="card-header p-0">
         <span>Contest Hall</span>
     </div>
 
-    <div class="tab-pane fade in active show modal-body text-center">
-        <div data-bind="template: {name: 'contestButtons'}"></div>
+    <div class="modal-body text-center">
+        <div data-bind="template: {name: 'contestContainerButtons'}"></div>
         <div class="p-0 modal-body">
             <div class="justify-content-center" data-bind="let: { rank: ContestRunner.rank() }, visible: !ContestRunner.running()">
                 <div class="card-header mb-1 p-1 row" data-bind="style: { 'justify-content': ContestRunner.contestRankObservable().length <= 1 ? 'center' : 'space-between' }">
@@ -3134,8 +3101,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                     style: { 'opacity': !ContestRunner.running() ? '' : '20%', 'align-content': 'center' },
                     ">&gt;</a>
                 </div>
-                <div class="card-body mb-1 p-0 show row" style="justify-content: space-evenly;"  data-bind="foreach: { data: ContestRunner.contestTypeObservable(), as: 'type' }">
-                    <button class="d-flex flex-column align-items-center p-0 btn btn-secondary"
+                <div id="contestSelectButtons" class="card-body mb-1 p-0 show d-flex" data-bind="foreach: { data: ContestRunner.contestTypeObservable(), as: 'type' }">
+                    <button class="d-flex flex-column align-items-center p-0 btn btn-secondary" style="flex-basis: 0; flex-grow: 1; margin: 2px;"
                         data-bind="click: () => {
                             ContestRunner.endContest();
                             ContestRunner.rank(rank);
@@ -3143,31 +3110,26 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         },
                         css: {
                             active: ContestRunner.type() == type && ContestRunner.rank() == rank,
-                            contestButton3: Settings.getSetting('gameDisplayStyle').observableValue() != 'fullWidth5',
-                            contestButton5: Settings.getSetting('gameDisplayStyle').observableValue() === 'fullWidth5',
                         },
-                        tooltip: {
-                            html: true,
-                            title: ContestHelper.contestButtonTooltip(rank, type),
-                            trigger: 'hover focus',
-                        },
-                        attr:{'aria-label': `${ContestRank[rank]} Rank ${ContestType[type]} Contest. ${ContestHelper.contestButtonTooltip(rank, type)}.`}
-                        ">
+                        attr: {
+                            'contest-type': ContestType[type],
+                            'aria-label': `${ContestRank[rank]} Rank ${ContestType[type]} Contest`,
+                        }">
                         <p class="m-0" style="font-weight: bolder;" data-bind="text: `${ContestType[type]}`"></p>
                         <svg class="ribbon" xmlns="http://www.w3.org/2000/svg" width="80px" viewBox="0 0 1280 1280" xmlns:v="https://vecta.io/nano"
                             data-bind="
                                 attr: {'contest-type': ContestType[type]},
-                                css: { 'pokemon-not-seen': !App.game.statistics.contestHighestRound[rank][type]() && rank != ContestRank.Practice },
+                                css: { 'pokemon-not-seen': !App.game.statistics.contestsWon[rank][type]() && rank != ContestRank.Practice },
                                 ">
                             <g data-bind="html: ContestHelper.getRibbonImage(rank, type)"></g>
                         </svg>
-                        <p class="mb-0" data-bind="html: 'Appeal' + '<br/>' + `${GameHelper.formatAmount(ContestHelper.calculatePokemonContestAppeal(rank, type, [type]))}`"></p>
+                        <p class="mb-0" data-bind="html: 'Appeal' + '<br/>' + `${GameHelper.formatAmount(ContestHelper.getActiveContestBattlePokemonAppeal())}`"></p>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div class="p-0 modal-body my-1" style="max-height:200px; overflow-x:hidden;">
+        <div class="p-0 modal-body my-1" style="max-height: 200px; overflow-x: hidden;">
             <p style="font-weight: bold; margin: 0;">Contest Reward Log</p>
             <div class="justify-content-center">
                 <table class="table table-striped table-hover table-sm mb-1 p-0 show" style="justify-content: space-evenly;">
@@ -3252,15 +3214,15 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </div>
 <!-- /ko -->
 
-<script type="text/html" id="contestButtons">
+<script type="text/html" id="contestContainerButtons">
     <div class="mb-3" data-bind="visible: !ContestRunner.running()">
         <button class="btn btn-info" data-toggle="modal" href="#contestInfoModal" style="min-width: 30%;">Info</button>
         <button class="btn btn-success" style="min-width: 30%;" onclick="ContestRunner.startContest()">Start Contest</button>
         <button class="btn btn-danger" style="min-width: 30%;" onclick="ContestHall.leave();">Leave</button>
     </div>
 
-    <div class="mb-3" data-bind="visible: ContestRunner.running()">
-        <button class="btn btn-primary m-0" onclick="ContestBattle.contestAction()" data-bind="
+    <div id="contestControlButtons" class="mb-3" data-bind="visible: ContestRunner.running()">
+        <button class="btn btn-primary m-0" style="grid-area: space;" onclick="ContestBattle.contestAction()" data-bind="
         css: { disabled: ContestBattle.disableCheerButton() },
         ">
             <span style="line-height: normal;">💖</span>
@@ -3273,6 +3235,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <button class="btn btn-primary m-0"
                 data-bind="click: () => { ContestBattle.contestMove($data); },
                 css: { disabled: ContestBattle.disableDirectionalButtons($data) },
+                style: { 'grid-area': `${Direction[$data].toLocaleLowerCase()}` },
                 ">
                 <span style="line-height: normal;" data-bind="text: ContestHelper.getArrowEmoji($data)"></span>
                 <br/>
@@ -3285,7 +3248,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
     <!-- ko if: ContestBattle.toggleTesting() -->
     <div class="modal-footer">
-        <div class="input-group m-0">
+        <div class="input-group">
             <div class="input-group-prepend">
                 <button class="btn btn-warning smallButton smallFont" data-bind="
                     tooltip: {
@@ -3303,7 +3266,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                 <button class="btn btn-warning smallButton smallFont"></button>
             </div>
         </div>
-        <div class="input-group m-0">
+        <div class="input-group">
             <div class="input-group-prepend">
                 <button class="btn btn-warning smallButton smallFont" data-bind="
                     tooltip: {
@@ -3324,6 +3287,73 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     </div>
     <!-- /ko -->
 </script>
+
+
+            <!-- Battle Frontier Information Container  -->
+            <!-- imported from src/components/battleFrontierInfo.html -->
+
+<!-- ko if: App.game.gameState === GameConstants.GameState.battleFrontier -->
+<div id="battleFrontierInformation" class="card sortable-disabled border-secondary mb-3 battle-frontier no-select">
+    <div class="card-header p-0" data-toggle="collapse" href="#battleFrontierRewards">
+        <span>Battle Frontier</span>
+    </div>
+    <!-- ko ifnot: BattleFrontierRunner.started -->
+    <div class="card-body text-center">
+        <h5>Welcome to the Battle Frontier!</h5>
+        <p>
+            Here you will be battling through many stages to earn Battle Points.<br/>
+            There is no regional attack debuff or weather effects.<br/>
+            You can leave early and return to your checkpoint later on.<br/>
+            You'll get special items if you reach special milestone stages.<br/>
+            When you are ready, click Start!<br/>
+            <i>Note: there is no click damage in the Battle Frontier.</i>
+        </p>
+        <a class="btn btn-block btn-success text-light" onclick="BattleFrontierRunner.start(false)">Start</a>
+        <!-- ko if: BattleFrontierRunner.hasCheckpoint() -->
+            <a class="btn btn-block btn-success text-light" onclick="BattleFrontierRunner.start(true)">Start at latest checkpoint (Stage <knockout data-bind="text: BattleFrontierRunner.checkpoint().toLocaleString('en-US')">0</knockout>)</a>
+        <!-- /ko -->
+        <a class="btn btn-block btn-danger text-light" onclick="App.game.battleFrontier.leave()">Leave</a>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: BattleFrontierRunner.started -->
+    <div id="battleFrontierRewards" class="card-body text-center p-0 show">
+        <!-- ko let: { availableMilestones: BattleFrontierMilestones.availableMilestones().slice(0, 4) } -->
+        <table class="table table-hover table-striped table-bordered table-sm m-0">
+            <thead>
+                <tr>
+                    <th colspan="2">Upcoming Rewards</th>
+                </tr>
+                <tr>
+                    <th>Stage</th>
+                    <th class="text-left">Reward</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ko foreach: availableMilestones -->
+                <tr>
+                    <th class="tight" data-bind="text: $data.stage.toLocaleString('en-US')"></td>
+                    <td class="text-left">
+                        <img width="28px" data-bind="attr:{ src: $data.image }" />
+                        <knockout data-bind="text: $data.displayName"></knockout>
+                    </td>
+                </tr>
+                <!-- /ko -->
+                <!-- ko ifnot: availableMilestones.length -->
+                <tr>
+                    <th class="tight">–</td>
+                    <td class="text-left">
+                        You've received every available reward. Congratulations!
+                    </td>
+                </tr>
+                <!-- /ko -->
+            </tbody>
+        </table>
+        <!-- /ko -->
+        <a class="btn btn-block btn-danger text-light" onclick="BattleFrontierRunner.battleQuit()">Quit Battle</a>
+    </div>
+    <!-- /ko -->
+</div>
+<!-- /ko -->
 
 
             <!-- Town Map  -->
@@ -13986,7 +14016,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="48"
     height="64"
     width="64"
-    data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(),
+    data-bind="visible: TemporaryBattleList[&#39;Kecleon 1&#39;] &amp;&amp; TemporaryBattleList[&#39;Kecleon 1&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Kecleon 1&#39;].protectedOnclick(), attr: { class: TemporaryBattleList[&#39;Kecleon 1&#39;].isUnlocked() ? &#39;&#39; : &#39;locked&#39; },
         event: { mouseenter: () => GameController.showMapTooltip('Kecleon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
@@ -14102,14 +14132,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <image href="assets/images/map/may.png" xlink:href="assets/images/map/may.png"
     x="456"
-    y="480"
+    y="432"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible()"/>
 <rect class="city"
     data-town="Pokémon Trainer May"
     x="456"
-    y="480"
+    y="432"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;May 3&#39;] &amp;&amp; TemporaryBattleList[&#39;May 3&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;May 3&#39;].protectedOnclick(),
@@ -16311,6 +16341,43 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         x="752" y="688">
     </rect>
 
+
+</g>
+
+
+    <!--Trophy Garden-->
+    
+
+<g
+
+    data-bind="click:function(){ MapHelper.moveToRoute(231, 3); },
+        event: { mouseenter: () => GameController.showMapTooltip(Routes.getName(231, 3)), mouseleave: GameController.hideMapTooltip }">
+    <rect data-route='231'
+        data-bind="attr: { class: MapHelper.calculateRouteCssClass(231, 3) }"
+        height="64"
+        width="64"
+        x="800" y="704">
+    </rect>
+
+    <text style="font-size: 32px"
+        x="816"
+        y="746"
+        data-bind="visible: !MapHelper.isRouteCurrentLocation(231, 3)">
+        TG
+    </text>
+    <image width="48" height="48"
+        x="808"
+        y="712"
+        class="iconLocation hide"
+        transform='rotate(0)'
+        rotate=""
+        localx="800"
+        localy="704"
+        data-bind="visible: MapHelper.isRouteCurrentLocation(231, 3),
+            attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+            playerSpriteMove">
+    </image>
+    
 
 </g>
 
@@ -57573,8 +57640,8 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         </div>
                     </div>
 
-                    <div class="small">
-                        <knockout data-bind="text: Math.min(App.game.underground.battery.charges, App.game.underground.battery.maxCharges), css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }"></knockout> / <knockout data-bind="text: App.game.underground.battery.maxCharges"></knockout>
+                    <div class="small"  data-bind="css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }">
+                        <knockout data-bind="text: (App.game.underground.battery.charges / App.game.underground.battery.maxCharges).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })"></knockout>
                     </div>
                 </div>
             </div>
@@ -57658,7 +57725,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 <!-- Challenge Mode Modal -->
 <!-- imported from src/components/challengeModeModal.html -->
 <div class="modal noselect fade" id="challengeModeModal" tabindex="-1" role="dialog" aria-labelledby="challengeModeModal">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Challenge Modes</h5>
@@ -57669,18 +57736,18 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <div class="modal-body">
                 <p>
                     <strong>Activate in-game challenge modes!</strong><br/>
-                    Challenges can be disabled later, but cannot be re-enabled.
+                    Challenges can be disabled later, but <u>cannot</u> be re-enabled.
                 </p>
-                <br/>
+                <p>If this is your first time playing we highly recommend not changing these so you can get a feel for the game.</p>
+                <p>Recommended challenges are enabled by default; the game is designed and balanced around these.</p>
                 <table class="table" width="100%">
                     <tbody data-bind="foreach: Object.values(App.game.challenges.list)">
-                        <tr data-bind="tooltip: {
-                            title: $data.description,
-                            placement: 'bottom',
-                            trigger: 'hover'
-                        }">
-                            <td class="text-left font-weight-bold" data-bind="text: $data.type"></td>
-                            <td class="p-1">
+                        <tr>
+                            <td class="text-left pt-1">
+                                <div class="font-weight-bold" data-bind="text: $data.type"></div>
+                                <div class="small" data-bind="text: $data.description"></div>
+                            </td>
+                            <td class="p-1 align-middle">
                                 <!-- ko if: !$data.active() && player.regionStarters[GameConstants.Region.kanto]() == GameConstants.Starter.None --><button class="btn btn-warning btn-block" data-bind="click: ()=>{$data.activate();}">ACTIVATE</button><!-- /ko -->
                                 <!-- ko if: !$data.active() && player.regionStarters[GameConstants.Region.kanto]() != GameConstants.Starter.None --><button class="btn btn-secondary btn-block disabled">DISABLED</button><!-- /ko -->
                                 <!-- ko if: $data.active() --><button class="btn btn-success btn-block" data-bind="click: ()=>{$data.disable();}">ACTIVE</button><!-- /ko -->
@@ -57688,7 +57755,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         </tr>
                     </tbody>
                 </table>
-                <br/>
                <button class="btn btn-primary btn-block" data-dismiss="modal">Done!</button>
             </div>
        </div>
@@ -60027,20 +60093,22 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
            <div class="modal-body">
                <p>
                    <!-- ko if: App.game.challenges.list.requireCompletePokedex.active() -->
-                   <strong>Congratulations on completing the <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion()])"></span> Pokédex!</strong><br/>
+                   <strong>Congratulations on completing the <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion()])"></span> Pokédex!</strong><br />
                    <!-- /ko -->
-                   You can now travel on to <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span>!<br/>
-                   <br/>
-                   <strong>There are a few things you should know before you depart:</strong><br/>
-                   You will gain <strong data-bind="text: App.game.breeding.queueSlotsGainedFromRegion(player.highestRegion())"></strong> queue slots in the Hatchery.<br/><br/>
+                   You can now travel on to <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span>!<br />
+                   <br />
+                   <strong>There are a few things you should know before you depart:</strong><br />
+                   You will gain <strong data-bind="text: App.game.breeding.queueSlotsGainedFromRegion(player.highestRegion())"></strong> queue slots in the Hatchery.<br /><br />
                    <!-- ko if: App.game.challenges.list.regionalAttackDebuff.active() -->
-                   When Pokémon are in a Region they're not native to, they will only retain <strong data-bind="text: App.game.party.getRegionAttackMultiplier(player.highestRegion() + 1).toLocaleString('en-US',{style: 'percent'})"></strong> of their total attack.<br/><br/>
+                   When Pokémon are in a Region they're not native to, they will only retain <strong data-bind="text: App.game.party.getRegionAttackMultiplier(player.highestRegion() + 1).toLocaleString('en-US',{style: 'percent'})"></strong> of their total attack.<br /><br />
                    <!-- /ko -->
                    <!-- ko if: player.highestRegion() - 2 >= GameConstants.Region.kanto -->
-                   Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br/><br/>
+                   Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br /><br />
                    <!-- /ko -->
-                   You will also have to progress to the Dock in <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span> before you are able to travel between regions again.
+                   You will also have to progress to the Dock in <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span> before you are able to travel between regions again.<br />
+                   It is recommended to download your save in case that you get stuck in your journey.
                </p>
+               <button class="btn btn-block btn-secondary" onclick="Save.download()">Download Save</button>
                <button class="btn btn-success btn-block" onclick="MapHelper.travelToNextRegion()" data-dismiss="modal">Let's Go!</button>
            </div>
        </div>
@@ -61114,8 +61182,8 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             <div class="underground-tool__background-gradient conic" data-bind="style: { '--gradient-percentage': Math.min(App.game.underground.battery.charges / App.game.underground.battery.maxCharges, 1).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }) }">
                                                 <div class="bg-secondary p-1 p-xl-2">
                                                     <img alt="" width="27px" data-bind="attr:{ src: 'assets/images/oakitems/' + OakItemType[OakItemType.Cell_Battery] + '.png'}">
-                                                    <div class="small font-weight-bold">
-                                                        <knockout data-bind="text: Math.min(App.game.underground.battery.charges, App.game.underground.battery.maxCharges), css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }"></knockout> / <knockout data-bind="text: App.game.underground.battery.maxCharges"></knockout>
+                                                    <div class="small font-weight-bold"  data-bind="css: { 'text-warning': App.game.underground.battery.charges < App.game.underground.battery.maxCharges }">
+                                                        <knockout data-bind="text: (App.game.underground.battery.charges / App.game.underground.battery.maxCharges).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })"></knockout>
                                                     </div>
                                                 </div>
                                             </div>
@@ -61643,9 +61711,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                 The Battery is a system that charges up as you or your expert mines tiles.
                             </p>
                             <p>
-                                Each successful mining attempt will add 1 charge, up to a maximum of <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_MAX_CHARGES"></knockout> charges.
+                                Each successful mining attempt will add a charge, requiring <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_MAX_CHARGES"></knockout> charges to be activated.
                                 You can only gain 1 charge per <knockout data-bind="text: GameConstants.UNDERGROUND_BATTERY_COOLDOWN_SECONDS"></knockout> second.
-                                Equipping your Cell Battery Oak Item will reduce the maximum charges needed to discharge.
+                                Equipping your Cell Battery Oak Item will increase the amount of energy gained per charge.
                             </p>
                             <p>
                                 When your battery is fully charged up, you can discharge it. This discharge will leave a pattern of cleared tiles behind.
@@ -61883,7 +61951,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
 
                     <div class="card-footer">
                         <div class="small">
-                            Discovery time: <label data-bind="text: GameConstants.formatTime(UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType)), css: { 'text-warning': UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType) > 0 }"></label>
+                            Discovery time: <label data-bind="text: GameConstants.formatTime(Math.max(UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType), 0)), css: { 'text-warning': UndergroundController.calculateDiscoverMineTimeout(App.game.underground.autoSearchMineType) > 0 }"></label>
                         </div>
 
                         <button class="btn btn-primary" data-bind="click: () => App.game.underground.generateMine(App.game.underground.autoSearchMineType);" data-dismiss="modal">Search for mine</button>
@@ -63255,7 +63323,7 @@ aria-labelledby="badgeCaseModalLabel">
                                         width: rank < ContestRank.Spectacular ? '80px' : '',
                                     },
                                     css: {
-                                        'badge-not-acquired': App.game.statistics.contestHighestRound[rank][$data]() == 0,
+                                        'badge-not-acquired': App.game.statistics.contestsWon[rank][$data]() == 0,
                                         'pokemon-not-seen': !ContestHelper.contestIsUnlocked(rank, $data),
                                     },
                                     attr: {'contest-type': ContestType[$data]},
@@ -63272,7 +63340,7 @@ aria-labelledby="badgeCaseModalLabel">
                             <svg class="ribbon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1280" xmlns:v="https://vecta.io/nano"
                                 data-bind="
                                     css: {
-                                        'badge-not-acquired': App.game.statistics.contestHighestRound[rank][$data]() == 0,
+                                        'badge-not-acquired': App.game.statistics.contestsWon[rank][$data]() == 0,
                                         'pokemon-not-seen': !ContestHelper.contestIsUnlocked(rank, $data),
                                     },
                                     attr: {'contest-type': ContestType[$data]},
@@ -63368,7 +63436,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <!-- Quests -->
                     <div class="tab-pane active" id="questsModalQuestsPane">
                         <div class="container">
-                            <div class="form-row my-3">
+                            <div class="form-row mt-3 mb-2">
                                 <div class="col-3 align-self-center">
                                     <h5>
                                         <span class='' data-bind='text: "Quests (" + App.game.quests.currentQuests().length + "/" + App.game.quests.questSlots() + ")"'></span>
@@ -63386,6 +63454,9 @@ aria-labelledby="badgeCaseModalLabel">
                                 <div class="col-3 align-self-center">
                                     <span data-bind="template: { name: 'currencyTemplate', data: {'amount': App.game.wallet.currencies[GameConstants.Currency.questPoint](), 'currency': GameConstants.Currency.questPoint}}"></span>
                                 </div>
+                            </div>
+                            <div class="text-center mb-2" data-bind="visible: App.game.quests.questSlots() < GameConstants.MAX_QUEST_SLOTS">
+                                <div class="small">Unlock additional quest slots at levels 5, 10, and 15!</div>
                             </div>
                         </div>
 
@@ -63867,7 +63938,7 @@ aria-labelledby="badgeCaseModalLabel">
                                             <tr>
                                                 <td class="text-left">Aura</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="text: AuraType[App.game.farming.berryData[$data].aura.auraType]"></code>
+                                                    <code data-bind="text: `${AuraType[App.game.farming.berryData[$data].aura.auraType]}${App.game.farming.berryData[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code>
                                                 </td>
                                             </tr>
                                             <!-- /ko -->
@@ -64045,62 +64116,101 @@ aria-labelledby="badgeCaseModalLabel">
                                 <img class="pixelated" src="" height="24px" data-bind="attr:{ src: `assets/images/profile/trainer-${$data.trainerSprite}.png` }">
                             </h5>
                             <div class="card-body p-0">
-                                <table class="table table-striped table-hover table-bordered table-sm m-0">
+                                <table class="table table-striped table-bordered table-sm m-0">
                                     <tbody>
-                                        <tr>
+                                        <tr data-bind="tooltip: {
+                                                title: 'Automatically paid every hour while hired.',
+                                                trigger: 'hover',
+                                                placement: 'right',
+                                                boundary: 'window',
+                                            }">
                                             <td class="text-left">Cost:</td>
-                                            <td class="text-right tight"><img alt="Farm Points" src="assets/images/currency/farmPoint.svg" style="height: 24px; width: 24px;">&nbsp;<knockout data-bind="text: `${$data.cost.amount.toLocaleString('en-US')}/hour`">0/hour</knockout></td>
+                                            <td class="text-right tight"><img alt="Farm Points" src="assets/images/currency/farmPoint.svg" style="height: 18px; width: 18px;">&nbsp;<knockout data-bind="text: `${$data.cost.amount.toLocaleString('en-US')}/hour`">0/hour</knockout></td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-left">Work Speed:</td>
+                                        <tr data-bind="tooltip: {
+                                                title: 'How often they work or recover energy.',
+                                                trigger: 'hover',
+                                                placement: 'right',
+                                                boundary: 'window',
+                                            }">
+                                            <td class="text-left">Work Cycle:</td>
                                             <td class="text-right tight" data-bind="text: GameConstants.formatTimeFullLetters($data.workTick / 1000)">01m 00s</td>
                                         </tr>
-                                        <tr>
+                                        <tr data-bind="tooltip: {
+                                                html: true,
+                                                title: 'Number of actions performed each cycle.',
+                                                trigger: 'hover',
+                                                placement: 'right',
+                                                boundary: 'window',
+                                            }">
                                             <td class="text-left">Efficiency:</td>
-                                            <td class="text-right tight">
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-primary" role="progressbar" data-bind="attr:{ style: 'width:' + Math.floor(($data.efficiency / $data.maxEfficiency) * 100) + '%' }" aria-valuemin="0" aria-valuemax="50" style="width:0%">
-                                                        <span data-bind="text: $data.efficiency.toLocaleString('en-US')">0</span>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td class="text-right tight" data-bind="text: `${$data.efficiency.toLocaleString('en-US')} ${GameConstants.pluralizeString('action', $data.efficiency)}/cycle`"></td>
                                         </tr>
-                                        <tr>
-                                            <td class="text-left">Max Energy:</td>
-                                            <td class="text-right tight">
+                                        <tr data-bind="tooltip: {
+                                                html: true,
+                                                title: 'Consumed when they work and recovers after cycles without work.',
+                                                trigger: 'hover',
+                                                placement: 'right',
+                                                boundary: 'window',
+                                            }">
+                                            <td class="text-left">Energy:</td>
+                                            <td class="text-right tight align-middle">
                                                 <div class="progress">
-                                                    <div class="progress-bar bg-primary" role="progressbar" data-bind="attr:{ style: 'width:' + $data.maxEnergy + '%' }" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                                                        <span data-bind="text: $data.maxEnergy.toLocaleString('en-US')">0</span>
+                                                    <div class="progress-bar bg-primary" role="progressbar" data-bind="style: { width: `${$data.energy()/$data.maxEnergy*100}%` }" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                                        <span data-bind="text: `${$data.energy().toLocaleString('en-US')}/${$data.maxEnergy.toLocaleString('en-US')}`">0</span>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-left">Should Harvest:</td>
-                                            <td class="text-center tight align-middle">
-                                                <input class="clickable" type="checkbox" data-bind="checked: $data.shouldHarvest"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-left">Manage Wanderers: <span class="ml-1" style="position: absolute; float: right; line-height: 100%;" data-bind="tooltip: {
-                                                title: 'They will use your Poké Balls Filters and consume your Poké Balls !',
+                                        <tr data-bind="tooltip: {
+                                                title: 'Allow Farm Hand to plant berries.',
                                                 trigger: 'hover',
-                                                placement: 'left',
-                                            }">ⓘ</span></td>
-                                            <td class="text-center tight align-middle">
-                                                <input class="clickable" type="checkbox" data-bind="checked: $data.shouldCatch"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
+                                                placement: 'right',
+                                                boundary: 'window',
+                                            }">
                                             <td class="text-left align-middle">Berry Planting:</td>
                                             <td class="text-right tight">
                                                 <select autocomplete="off" class="custom-select custom-select-sm" data-bind="options: App.game.farming.farmHands.availableBerries, optionsText: i => FarmHandBerryTypes[i], value: $data.focus"></select>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="2" class="clickable" data-toggle="collapse" data-bind="attr: { href: `#allowedPlots${$data.name}`}" >Allowed Plots:</td>
+                                        <tr data-bind="tooltip: {
+                                                title: 'Allow Farm Hand to harvest ripe berries.',
+                                                trigger: 'hover',
+                                                placement: 'right',
+                                                boundary: 'window',
+                                            }">
+                                            <td class="text-left">Berry Harvesting:</td>
+                                            <td class="text-center tight align-middle">
+                                                <input class="clickable" type="checkbox" data-bind="checked: $data.shouldHarvest"/>
+                                            </td>
+                                        </tr>
+                                        <tr data-bind="tooltip: {
+                                                title: 'Allow Farm Hand to catch wanderers, using your catch filters and consuming your Poké Balls.',
+                                                trigger: 'hover',
+                                                placement: 'right',
+                                                boundary: 'window',
+                                            }">
+                                            <td class="text-left">Manage Wanderers:</td>
+                                            <td class="text-center tight align-middle">
+                                                <input class="clickable" type="checkbox" data-bind="checked: $data.shouldCatch"/>
+                                            </td>
+                                        </tr>
+                                        <tr data-bind="tooltip: {
+                                                title: 'Select plots where the Farm Hand can perform actions (Green plots are Allowed).',
+                                                trigger: 'hover',
+                                                placement: 'right',
+                                                boundary: 'window',
+                                            }">
+                                            <td colspan="2">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="align-self-center">Allowed Plots</div>
+                                                    <button class="btn btn-primary btn-sm col-4" data-toggle="collapse" data-bind="attr: { href: `#allowedPlots${$data.name}`}" >
+                                                        Edit
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="p-0" colspan="2">
@@ -64152,25 +64262,19 @@ aria-labelledby="badgeCaseModalLabel">
                                                 <td class="text-right tight"><img alt="Farm Points" src="assets/images/currency/farmPoint.svg" style="height: 24px; width: 24px;">&nbsp;<knockout data-bind="text: `${$data.cost.amount.toLocaleString('en-US')}/hour`">0/hour</knockout></td>
                                             </tr>
                                             <tr>
-                                                <td class="text-left">Work Speed:</td>
+                                                <td class="text-left">Work Cycle:</td>
                                                 <td class="text-right tight" data-bind="text: GameConstants.formatTimeFullLetters($data.workTick / 1000)">01m 00s</td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">Efficiency:</td>
-                                                <td class="text-right tight">
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-primary" role="progressbar" data-bind="attr:{ style: 'width:' + Math.floor(($data.efficiency / $data.maxEfficiency) * 100) + '%' }" aria-valuemin="0" aria-valuemax="50" style="width:0%">
-                                                            <span data-bind="text: $data.efficiency.toLocaleString('en-US')">0</span>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                                <td class="text-right tight" data-bind="text: `${$data.efficiency.toLocaleString('en-US')} ${GameConstants.pluralizeString('action', $data.efficiency)}/cycle`"></td>
                                             </tr>
                                             <tr>
-                                                <td class="text-left">Max Energy:</td>
-                                                <td class="text-right tight">
+                                                <td class="text-left">Energy:</td>
+                                                <td class="text-right tight align-middle">
                                                     <div class="progress">
-                                                        <div class="progress-bar bg-primary" role="progressbar" data-bind="attr:{ style: 'width:' + $data.maxEnergy + '%' }" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                                                            <span data-bind="text: $data.maxEnergy.toLocaleString('en-US')">0</span>
+                                                        <div class="progress-bar bg-primary" role="progressbar" data-bind="style: { width: `${$data.energy()/$data.maxEnergy*100}%` }" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                                            <span data-bind="text: `${$data.energy().toLocaleString('en-US')}/${$data.maxEnergy.toLocaleString('en-US')}`">0</span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -64292,7 +64396,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <!-- ko if: App.game.farming.berryData[$data].aura -->
                     <tr>
                       <td class="text-left">Aura</td>
-                      <td class="text-left tight"><code data-bind="text: AuraType[App.game.farming.berryData[$data].aura.auraType]"></code></td>
+                      <td class="text-left tight"><code data-bind="text: `${AuraType[App.game.farming.berryData[$data].aura.auraType]}${App.game.farming.berryData[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code></td>
                     </tr>
                     <!-- /ko -->
                     </tbody>
@@ -66047,21 +66151,17 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                             <!-- /ko -->
                         </div>
                     </div>
-                    <!-- Hide/Show checkboxes -->
-                    <div class="form-row mt-2">
-                        <div class="col-12 col-sm-6 text-center">
-                            <div class="form-check align-middle">
-                                <input type="checkbox" id="hide-holding-item-pokemon" class="form-check-input"
-                                    data-bind="checked: Settings.getSetting('heldItemHideHoldingPokemon').observableValue" />
-                                <label for="hide-holding-item-pokemon" class="form-check-label">Hide Pokémon holding an item</label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 text-center">
-                            <div class="form-check align-middle">
-                                <input type="checkbox" id="show-this-item-pokemon" class="form-check-input"
-                                    data-bind="checked: Settings.getSetting('heldItemHideHoldingThisItem').observableValue" />
-                                <label for="show-this-item-pokemon" class="form-check-label">Hide Pokémon holding <u>this</u> item</label>
-                            </div>
+                    <!-- Filter mode based on Held Item -->
+                    <div class="form-row px-1 mt-1">
+                        <div class="col-12 p-0 px-1">
+                            <!-- ko let: { heldItemCurrentItemFilter: Settings.getSetting('heldItemCurrentItemFilter') } -->
+                            <select id="held-item-current-item-filter" name="heldItemCurrentItemFilter" autocomplete="off" class="custom-select custom-select-sm"
+                                data-bind="options: heldItemCurrentItemFilter.options,
+                                    optionsValue: 'value',
+                                    optionsText: 'text',
+                                    value: heldItemCurrentItemFilter.observableValue">
+                            </select>
+                            <!-- /ko -->
                         </div>
                     </div>
                   </div>
@@ -66724,218 +66824,216 @@ style="cursor:default">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 data-bind="text: 'Contest Info - ' +  ContestHelper.getRankInfo(ContestRunner.contestRankObservable()[0]) +
-                `${ContestRunner.contestRankObservable()[0] < ContestRank.Spectacular ?  ' Ranks' :  ' Rank'}`">Contest Info</h4>
+                <h4 data-bind="text: 'Contest Info - ' +  ContestHelper.getRankInfo(ContestRunner.contestRankObservable()[0]) + ' Hall'">Contest Info</h4>
                 <button type="button" class="btn btn-danger" data-dismiss="modal" style="right:0; top:0; font-size: 18px; font-weight: 700;">×</button>
             </div>
 
-    <div class="modal-header p-0" style='justify-content: space-around;'>
-        <ul class="nav nav-tabs nav-fill w-100">
-            <li class="nav-item"><a data-toggle='tab' class='nav-link active' href="#contestInfo">Gameplay</a></li>
-            <li class="nav-item"><a data-toggle='tab' class='nav-link' href="#contestTrainersAndRewards">Trainers & Rewards</a></li>
-        </ul>
-    </div>
-
-    <div id="contestInformation" class="modal-body sortable-disabled border-secondary mb-3 contest-hall no-select tab-content p-0">
-
-    <div id="contestTrainersAndRewards" class="modal-body tab-pane fade">
-
-        <div class="mb-3" data-bind="foreach: { data: ContestRunner.contestTypeObservable(), as: 'type' }">
-            <button class="btn btn-info"
-                data-bind="click: () => {
-                    if (!ContestRunner.running()) {
-                    ContestRunner.type(type);
-                    } else {
-                    Notifier.notify({
-                        title: 'Pokémon Contest',
-                        message: 'You can\'t change the contest type while you are competing!',
-                        type: NotificationConstants.NotificationOption.warning,
-                    })
-                    };
-                },
-                text: ContestType[type],
-                css: {
-                    active: ContestRunner.type() == type,
-                },
-                attr:{'aria-label': `${ContestType[type]}`}
-                ">
-            </button>
-        </div>
-        <div class="mb-3" data-bind="visible: ContestRunner.contestRankObservable().length > 1,
-            foreach: { data: ContestRunner.contestRankObservable().filter(r => r != ContestRank.Practice), as: 'rank' }">
-            <button class="btn btn-info"
-                data-bind="click: () => {
-                    if (!ContestRunner.running()) {
-                    ContestRunner.rank(rank);
-                    } else {
-                    Notifier.notify({
-                        title: 'Pokémon Contest',
-                        message: 'You can\'t change the contest rank while you are competing!',
-                        type: NotificationConstants.NotificationOption.warning,
-                    })
-                    };
-                },
-                text: ContestRank[rank],
-                css: {
-                    active: ContestRunner.rank() == rank,
-                },
-                attr:{'aria-label': `${ContestRank[rank]}`}
-                ">
-            </button>
-        </div>
-
-        <div class="p-0 modal-body">
-            <div class="justify-content-center" style="overflow-x:hidden; height:500px">
-        <table class="table table-striped table-hover table-sm show" style="justify-content: space-evenly;">
-            <thead class="sticky-top bg-secondary">
-                <tr>
-                    <th colspan="100%" class="p-0"><h4 class="my-1" data-bind="text: `${ContestRank[ContestRunner.rank()]} Rank Frenzy Rewards`">Rewards</h4></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="m-0">
-                    <td>Weight</td>
-                    <td>Berry</td>
-                </tr>
-                <!-- ko let: { berryRank: ContestRunner.rank() < ContestRank.Spectacular ? Math.max(0, ContestRunner.rank() - 1) % 4 + 1 : ContestRunner.rank() } -->
-                <!-- ko foreach: Array.from(new Set([...Object.entries(ContestRewards.berryRewards).filter(r => r[0] <= berryRank).flatMap(b => b[1]).flatMap(b => b.weight)].sort().reverse())) -->
-                <tr class="m-0">
-                    <td data-bind="text: $data"></td>
-                    <td data-bind="foreach: Object.entries(ContestRewards.berryRewards).filter(r => r[0] <= berryRank).flatMap(b=>b[1]).filter(b => b.weight === $data)">
-                        <img style="max-width: 24px;" data-bind="attr: {src: FarmController.getBerryImage($data.berry)},
-                        css: {
-                            'contest-inactive': ($data.requirement && !$data.requirement?.isCompleted()),
-                            'pokemon-not-seen': !(new BerryUnlockedRequirement($data.berry).isCompleted()),
-                        }">
-                    </td>
-                </tr>
-                <!-- /ko -->
-                <!-- /ko -->
-            </tbody>
-            <!-- ko let: { itemReward: ContestRewards.itemRewards().filter(i => i.displayRequirement?.isCompleted() ?? i.requirement?.isCompleted() ?? true) } -->
-            <!-- ko if: itemReward.length > 0 -->
-            <tbody>
-                <tr>
-                    <td>Chance</td>
-                    <td>Item</td>
-                </tr>
-                <!-- ko foreach: Array.from(new Set([...ContestRewards.itemRewards().filter(i => i.displayRequirement?.isCompleted() ?? i.requirement?.isCompleted() ?? true).flatMap(b => b.chance)].sort())) -->
-                <tr class="m-0">
-                    <td>
-                        <!-- ko if: $data -->
-                        <span data-bind="text: `1 / ${$data}`"></span>
-                        <!-- /ko -->
-                        <!-- ko if: $data === undefined -->
-                        <span>Guaranteed</span>
-                        <!-- /ko -->
-                    </td>
-                    <td>
-                        <!-- ko foreach: itemReward.filter(i => i.chance === $data) -->
-                        <img style="max-width: 24px;" data-bind="attr: {src: ItemList[$data.item].image}, css: {'contest-inactive': $data.requirement && !$data.requirement?.isCompleted()}">
-                        <!-- /ko -->
-                    </td>
-                </tr>
-                <!-- /ko -->
-            </tbody>
-            <!-- /ko -->
-            <!-- /ko -->
-        </table>
-            <div data-bind="foreach: { data: [ContestRunner.rank()], as: 'rank' }">
-                <div data-bind="template: {name: 'trainerInfoTable', data: ContestTrainerList.ContestOpponents[rank]}"></div>
+            <div class="modal-header p-0" style='justify-content: space-around;'>
+                <ul class="nav nav-tabs nav-fill w-100">
+                    <li class="nav-item"><a data-toggle='tab' class='nav-link active' href="#contestInfo">Gameplay</a></li>
+                    <li class="nav-item"><a data-toggle='tab' class='nav-link' href="#contestTrainersAndRewards">Trainers & Rewards</a></li>
+                </ul>
             </div>
-            <!-- ko if: ContestTrainerList.SpecialEventContestOpponents.some(trainer => trainer.options.requirement.isCompleted()) -->
-            <div class="justify-content-center mt-2">
-                <div data-bind="template: {name: 'trainerInfoTable', data: ContestTrainerList.SpecialEventContestOpponents.filter(trainer => trainer.options.requirement.isCompleted())}"></div>
-            </div>
-            <!-- /ko -->
-        </div>
-        </div>
-    </div>
 
-    <div id="contestInfo" class="tab-content tab-pane fade in active show modal-body text-center p-0">
-        <div class="modal-header p-0" style='justify-content: space-around;'>
-            <ul class="nav nav-tabs nav-fill w-100">
-                <li class="nav-item"><a data-toggle='tab' class='nav-link active' href="#contestInfoGen">General</a></li>
-                <li class="nav-item"><a data-toggle='tab' class='nav-link' href="#contestInfoRank">Rank Gameplay</a></li>
-                <li class="nav-item"><a data-toggle='tab' class="nav-link" href="#contestInfoType">Contest Types</a></li>
-            </ul>
-        </div>
-        <div id="contestInfoGen" class="modal-body tab-pane fade in active show">
-            <h4><u>Audience Bar</u>></h4>
+            <div id="contestInformation" class="modal-body sortable-disabled border-secondary mb-3 no-select tab-content p-0">
 
-            <p>Successfully perform actions to increase the large bottom bar. The rate it increases by
-                will be calculated from the sum of your party's Appeal, but for testing purposes you can change it at will.
-                Max it out at least one time to win a contest and be awarded with a ribbon and contest tokens.
-            </p>
+                <div id="contestInfo" class="tab-content tab-pane fade in active show modal-body text-center p-0">
+                    <div class="modal-header p-0" style='justify-content: space-around;'>
+                        <ul class="nav nav-tabs nav-fill w-100">
+                            <li class="nav-item"><a data-toggle='tab' class='nav-link active' href="#contestInfoGen">General</a></li>
+                            <li class="nav-item"><a data-toggle='tab' class='nav-link' href="#contestInfoRank"
+                                data-bind="text: ContestHelper.getRankInfo(ContestRunner.contestRankObservable()[0]) + ' Rank Gameplay'">Rank Gameplay</a>
+                            </li>
+                            <li class="nav-item"><a data-toggle='tab' class="nav-link" href="#contestInfoType">Contest Types</a></li>
+                        </ul>
+                    </div>
+                    <div id="contestInfoGen" class="modal-body tab-pane fade in active show">
+                        <h4><u>Audience Bar</u>></h4>
 
-            <p>The audience will call for an encore when you max out the bar. This slightly increases the audience bar. Encores act as point multipliers.</p>
+                        <p>Successfully perform actions to increase the large bottom bar. The rate it increases by
+                            will be calculated from the sum of your party's Appeal, but for testing purposes you can change it at will.
+                            Max it out at least one time to win a contest and be awarded with a ribbon and contest tokens.
+                        </p>
 
-            <h4><u>Gameplay gimmicks</u>></h4>
-            <p>The bars underneath the individual pokemon change depending on their status. Successfully performing an action makes the pokemon appeal to the audience (💖). If the action results in a failure, the pokemon is jammed (🖤).
-                There are three gameplay styles. Click on the "Rank Gameplay" tab for more information on this Hall's game style.</p>
+                        <p>The audience will call for an encore when you max out the bar. This slightly increases the audience bar. Encores act as point multipliers.</p>
 
-            <h4><u>Crowd Hype and Frenzy Mode</u>></h4>
-            <p>When all pokemon on stage have performed, their statuses are evaluated to generate Crowd Hype. A fully hyped crowd will induce Frenzy Mode. Hype will not go up if a Pokemon is jammed.</p>
-            <p>In Hoenn, jamming prevents Crowd Hype from being generated and reduces the amount of audience Appeal that is produced for a short while.</p>
-            <p>In Sinnoh, jammed Pokemon decrease the hype bar by 1 with no extra effects.</p>
+                        <h4><u>Gameplay gimmicks</u>></h4>
+                        <p>The bars underneath the individual pokemon change depending on their status. Successfully performing an action makes the pokemon appeal to the audience (💖). If the action results in a failure, the pokemon is jammed (🖤).
+                            There are three gameplay styles. Click on the "Rank Gameplay" tab for more information on this Hall's game style.</p>
 
-            <p>Gameplay is slightly altered during Frenzy Mode and chains cannot be broken for its duration. Your audience appeal dealt will also be buffed based on how many contests you've won.</p>
-            <p>Extra points and rewards can be rewarded during Frenzy Mode.</p>
+                        <h4><u>Crowd Hype and Frenzy Mode</u>></h4>
+                        <p>When all pokemon on stage have performed, their statuses are evaluated to generate Crowd Hype. A fully hyped crowd will induce Frenzy Mode. Hype will not go up if a Pokemon is jammed.</p>
+                        <p>In Hoenn, jamming prevents Crowd Hype from being generated and reduces the amount of audience Appeal that is produced for a short while.</p>
+                        <p>In Sinnoh, jammed Pokemon decrease the hype bar by 1 with no extra effects.</p>
 
-            <h4><u>Scoring</u>></h4>
-            <p>Successful actions increase the chain, add to your score, and can give a small bonus dealt audience appeal. Chains are broken when a poor action is performed.</p>
-            <p>The higher your score the more tokens you get upon completion.</p>
+                        <p>Gameplay is slightly altered during Frenzy Mode and chains cannot be broken for its duration. Your audience appeal dealt will also be buffed based on how many contests you've won.</p>
+                        <p>Extra points and rewards can be rewarded during Frenzy Mode.</p>
 
-        </div>
-        <div id="contestInfoType" class="modal-body tab-pane fade">
-            <h4>Contest types and matchups</h4>
-            <p>Different Contest Types (also known as Contest Conditions) make up the different contests.
-                <!-- The Audience Appeal of each Pokemon is affected by its types and what contest you partake in. -->
-                Gameplay mechanics within contests use these matchups as a basis for their effects, which are explained in further detail in the "Rank Gameplay" tab.
-            </p>
-            <!-- <p>Contest matchups are additive and cap at ×1, meaning a Pokemon with a Cool and Cute Contest type has the same effectiveness in a Beautiful contest as a Pokemon that has a Beautiful type.</p> -->
-            <table class="table table-bordered table-striped" data-bind="with: GameHelper.enumNumbers(ContestType)">
-                <thead><tr><th colspan="8">Contest Type Effectiveness</th></tr></thead>
-                <tr>
-                    <td></td>
-                    <td colspan="7">Defending Type</td>
-                </tr>
-                <tr>
-                    <td rowspan="8" class="text-center" style="width: 1px; vertical-align: middle;">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <span style="writing-mode: sideways-lr;">Attacking Type</span>
+                        <h4><u>Scoring</u>></h4>
+                        <p>Successful actions increase the chain, add to your score, and can give a small bonus dealt audience appeal. Chains are broken when a poor action is performed.</p>
+                        <p>The higher your score the more tokens you get upon completion.</p>
+                    </div>
+                    <div id="contestInfoType" class="modal-body tab-pane fade">
+                        <h4>Contest matchups</h4>
+                        <p>Contests use 6 different Contest Conditions (Types) instead of the regular Pokémon Types. Contest matchups are additive and only deal zero, half, or full effectiveness.</p>
+                        <table class="table table-bordered table-striped" data-bind="with: GameHelper.enumNumbers(ContestType)">
+                            <thead><tr><th colspan="8">Contest Type Effectiveness</th></tr></thead>
+                            <tr>
+                                <td></td>
+                                <td colspan="7">Defending Type</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="8" class="text-center" style="width: 1px; vertical-align: middle;">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <span style="writing-mode: sideways-lr;">Attacking Type</span>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <!-- ko foreach: $data -->
+                                <td data-bind="text: ContestType[$data]"></td>
+                                <!-- /ko -->
+                            </tr>
+                            <!-- ko foreach: $data -->
+                            <tr>
+                                <td data-bind="text: ContestType[$data]"></td>
+                                <!-- ko foreach: ContestTypeHelper.contestTypeMatrix[$data] -->
+                                <td data-bind="text: $data"></td>
+                                <!-- /ko -->
+                            </tr>
+                            <!-- /ko -->
+                        </table>
+                    </div>
+                    <div id="contestInfoRank" class="modal-body tab-pane fade tab-content">
+                        <div data-bind="template: {name: 'rankInfo' + ContestHelper.getRankInfo(ContestRunner.contestRankObservable()[0])}"></div>
+                    </div>
+                </div>
+
+                <div id="contestTrainersAndRewards" class="modal-body tab-pane fade">
+
+                    <div class="mb-3" data-bind="foreach: { data: ContestRunner.contestTypeObservable(), as: 'type' }">
+                        <button class="btn btn-info"
+                            data-bind="click: () => {
+                                if (!ContestRunner.running()) {
+                                ContestRunner.type(type);
+                                } else {
+                                Notifier.notify({
+                                    title: 'Pokémon Contest',
+                                    message: 'You can\'t change the contest type while you are competing!',
+                                    type: NotificationConstants.NotificationOption.warning,
+                                })
+                                };
+                            },
+                            text: ContestType[type],
+                            css: {
+                                active: ContestRunner.type() == type,
+                            },
+                            attr:{'aria-label': `${ContestType[type]}`}
+                            ">
+                        </button>
+                    </div>
+                    <div class="mb-3" data-bind="visible: ContestRunner.contestRankObservable().length > 1,
+                        foreach: { data: ContestRunner.contestRankObservable().filter(r => r != ContestRank.Practice), as: 'rank' }">
+                        <button class="btn btn-info"
+                            data-bind="click: () => {
+                                if (!ContestRunner.running()) {
+                                ContestRunner.rank(rank);
+                                } else {
+                                Notifier.notify({
+                                    title: 'Pokémon Contest',
+                                    message: 'You can\'t change the contest rank while you are competing!',
+                                    type: NotificationConstants.NotificationOption.warning,
+                                })
+                                };
+                            },
+                            text: ContestRank[rank],
+                            css: {
+                                active: ContestRunner.rank() == rank,
+                            },
+                            attr:{'aria-label': `${ContestRank[rank]}`}
+                            ">
+                        </button>
+                    </div>
+
+                    <div class="p-0 modal-body">
+                        <div class="justify-content-center" style="overflow-x: hidden; height: 500px;">
+                            <table class="table table-striped table-hover table-sm show" style="justify-content: space-evenly;">
+                                <thead class="sticky-top bg-secondary">
+                                    <tr>
+                                        <th colspan="100%" class="p-0"><h4 class="my-1" data-bind="text: `${ContestRank[ContestRunner.rank()]} Rank Frenzy Rewards`">Rewards</h4></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="m-0">
+                                        <td>Weight</td>
+                                        <td>Berry</td>
+                                    </tr>
+                                    <!-- ko let: { berryRank: ContestRunner.rank() < ContestRank.Spectacular ? Math.max(0, ContestRunner.rank() - 1) % 4 + 1 : ContestRunner.rank() } -->
+                                    <!-- ko foreach: Array.from(new Set([...Object.entries(ContestRewards.berryRewards).filter(r => r[0] <= berryRank).flatMap(b => b[1]).flatMap(b => b.weight)].sort().reverse())) -->
+                                    <tr class="m-0">
+                                        <td data-bind="text: $data"></td>
+                                        <td data-bind="foreach: Object.entries(ContestRewards.berryRewards).filter(r => r[0] <= berryRank).flatMap(b=>b[1]).filter(b => b.weight === $data)">
+                                            <img style="max-width: 24px;" data-bind="attr: {src: FarmController.getBerryImage($data.berry)},
+                                            css: {
+                                                'contest-inactive': ($data.requirement && !$data.requirement?.isCompleted()),
+                                                'pokemon-not-seen': !(new BerryUnlockedRequirement($data.berry).isCompleted()),
+                                            }">
+                                        </td>
+                                    </tr>
+                                    <!-- /ko -->
+                                    <!-- /ko -->
+                                </tbody>
+                                <!-- ko let: { itemReward: ContestRewards.itemRewards().filter(i => i.displayRequirement?.isCompleted() ?? i.requirement?.isCompleted() ?? true) } -->
+                                <!-- ko if: itemReward.length > 0 -->
+                                <tbody>
+                                    <tr>
+                                        <td>Chance</td>
+                                        <td>Item</td>
+                                    </tr>
+                                    <!-- ko foreach: Array.from(new Set([...ContestRewards.itemRewards().filter(i => i.displayRequirement?.isCompleted() ?? i.requirement?.isCompleted() ?? true).flatMap(b => b.chance)].sort())) -->
+                                    <tr class="m-0">
+                                        <td>
+                                            <!-- ko if: $data -->
+                                            <span data-bind="text: `1 / ${$data}`"></span>
+                                            <!-- /ko -->
+                                            <!-- ko if: $data === undefined -->
+                                            <span>Guaranteed</span>
+                                            <!-- /ko -->
+                                        </td>
+                                        <td>
+                                            <!-- ko foreach: itemReward.filter(i => i.chance === $data) -->
+                                            <img style="max-width: 24px;" data-bind="attr: {src: ItemList[$data.item].image}, css: {'contest-inactive': $data.requirement && !$data.requirement?.isCompleted()}">
+                                            <!-- /ko -->
+                                        </td>
+                                    </tr>
+                                    <!-- /ko -->
+                                </tbody>
+                                <!-- /ko -->
+                                <!-- /ko -->
+                            </table>
+                            <div data-bind="foreach: { data: [ContestRunner.rank()], as: 'rank' }">
+                                <div data-bind="template: {name: 'trainerInfoTable', data: ContestTrainerList.ContestOpponents[rank]}"></div>
+                            </div>
+                            <!-- ko if: ContestTrainerList.SpecialEventContestOpponents.some(trainer => trainer.options.requirement.isCompleted()) -->
+                            <div class="justify-content-center mt-2">
+                                <div data-bind="template: {name: 'trainerInfoTable', data: ContestTrainerList.SpecialEventContestOpponents.filter(trainer => trainer.options.requirement.isCompleted())}"></div>
+                            </div>
+                            <!-- /ko -->
                         </div>
-                    </td>
-                    <td></td>
-                    <!-- ko foreach: $data -->
-                    <td data-bind="text: ContestType[$data]"></td>
-                    <!-- /ko -->
-                </tr>
-                <!-- ko foreach: $data -->
-                <tr>
-                    <td data-bind="text: ContestType[$data]"></td>
-                    <!-- ko foreach: ContestTypeHelper.contestTypeMatrix[$data] -->
-                    <td data-bind="text: $data"></td>
-                    <!-- /ko -->
-                </tr>
-                <!-- /ko -->
-            </table>
-        </div>
-        <div id="contestInfoRank" class="modal-body tab-pane fade tab-content">
-            <div data-bind="template: {name: 'rankInfo' + ContestHelper.getRankInfo(ContestRunner.contestRankObservable()[0])}"></div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
-
-</div>
-</div>
-</div>
 </div>
 
 <script type="text/html" id="trainerInfoTable">
-    <table class="table table-striped table-hover table-sm mb-1 p-0 show" style="justify-content: space-evenly;"">
+    <table class="table table-striped table-hover table-sm mb-1 p-0 show" style="justify-content: space-evenly;">
         <thead class="sticky-top bg-secondary">
             <tr>
-                <th colspan="100%" class="p-0"><h4 class="mt-1 p-0 mb-0" data-bind="text: `${ContestRank[$parent] != undefined ? `${ContestRank[$parent]} Rank` : 'Special Event'} Trainers`"></h4></th>
+                <th colspan="100%" class="p-0">
+                    <h4 class="mt-1 p-0 mb-0" data-bind="text: `${ContestRank[$parent] != undefined ? `${ContestRank[$parent]} Rank` : 'Special Event'} Trainers`"></h4>
+                </th>
             </tr>
             <tr>
                 <th colspan="2" class="pt-0">Trainer</th>
@@ -66954,7 +67052,7 @@ style="cursor:default">
                     <span data-bind="text: trainer.name"></span>
                 </td>
                 <td class="text-left" style="vertical-align: middle;">
-                    <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center;">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
                     <!-- ko foreach: trainer.getTeam() -->
                         <img class="smallImage m-0" data-bind="attr: { src: PokemonHelper.getImage(pokemonMap[$data.name].id, $data.shiny ?? 0, $data.gender, 0) }, css: { 'pokemon-not-seen': trainer.options?.requirement && !trainer.options?.requirement?.isCompleted()}">
                         <span class="align-middle" data-bind="text: $data.nickname"></span>
