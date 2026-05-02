@@ -43955,7 +43955,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="672"
     height="32"
     width="32"
-    data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: player.highestRegion() &gt;= 7 ? &#39;completed&#39; : &#39;locked&#39;},
+    data-bind="click: function(){ MapHelper.openShipModal() },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Dock'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -43968,14 +43968,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="704"
     height="48"
     width="128"
-    data-bind="visible: player.highestRegion() &gt;= 7"/>
+    data-bind="visible: "/>
 <rect class="city"
     data-town="S. S. Anne"
     x="992"
     y="704"
     height="48"
     width="128"
-    data-bind="visible: player.highestRegion() &gt;= 7, click:function(){MapHelper.openShipModal()}, attr: { class: player.highestRegion() &gt;= 7 ? &#39;completed&#39; : &#39;locked&#39;},
+    data-bind="visible: , click: function(){ MapHelper.openShipModal() },
         event: { mouseenter: () => GameController.showMapTooltip('S. S. Anne'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
