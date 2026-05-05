@@ -5119,7 +5119,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
         
 
-<image href="assets/images/ship.png" xlink:href="assets/images/ship.png"
+<image href="assets/images/shipwest.png" xlink:href="assets/images/shipwest.png"
     x="928"
     y="560"
     height="48"
@@ -43955,7 +43955,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="672"
     height="32"
     width="32"
-    data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Master Dojo&#39;) },
+    data-bind="click: function(){ MapHelper.openShipModal() },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Dock'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -43963,16 +43963,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
         
 
-<rect class="city"
-    data-town="S. S. Anne" 
+<image href="assets/images/shipeast.png" xlink:href="assets/images/shipeast.png"
     x="992"
     y="704"
     height="48"
     width="128"
-    data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Master Dojo&#39;) },
-		playerSpriteMove,
+    data-bind="visible: "/>
+<rect class="city"
+    data-town="S. S. Anne"
+    x="992"
+    y="704"
+    height="48"
+    width="128"
+    data-bind="visible: , click: function(){ MapHelper.openShipModal() },
         event: { mouseenter: () => GameController.showMapTooltip('S. S. Anne'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
+</image>
 
 
         
@@ -64495,7 +64502,7 @@ aria-labelledby="badgeCaseModalLabel">
                 </button>
             </div>
             <div class="modal-body bg-ocean">
-                <img class="my-5" src='assets/images/ship.png' style='width: 100%;'>
+                <img class="my-5" src='assets/images/shipwest.png' style='width: 100%;'>
                 <div style='margin-top:20px'>
                     <!-- ko foreach: GameHelper.enumStrings(GameConstants.Region) -->
                         <!-- ko if: $data !== 'none' && GameConstants.Region[$data] <= GameConstants.MAX_AVAILABLE_REGION -->
