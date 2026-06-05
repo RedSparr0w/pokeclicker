@@ -27381,6 +27381,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         event: { mouseenter: () => GameController.showMapTooltip('Tsareena Sloop'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
+<image width="48" height="48"
+    x="1112"
+    y="256"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Tsareena Sloop') && TownList[&#39;Tsareena Sloop&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
 </image>
 
 
