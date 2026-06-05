@@ -5542,6 +5542,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         event: { mouseenter: () => GameController.showMapTooltip('Gyarados Galleon'), mouseleave: GameController.hideMapTooltip }">
 </rect>
 
+<image width="48" height="48"
+    x="1528"
+    y="688"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Gyarados Galleon') && TownList[&#39;Gyarados Galleon&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
 </image>
 
 
