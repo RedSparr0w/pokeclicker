@@ -620,14 +620,14 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
 
                     <div id="itemBag" class="tab-pane p-3">
 
-                        <!-- ko if: Object.values(ItemList).some((i) => i instanceof QuestItem && i.isActive() && player.itemList[i.name]()) -->
-                        <div class="bg-primary text-left rounded-0 px-3 py-2 mb-1" data-toggle="collapse" data-target="#itemBag-questItems">
-                            <h5 class="m-0 text-light">Quest Items</h5>
+                        <!-- ko if: Object.values(ItemList).some((i) => i instanceof CollectibleItem && i.isActive() && player.itemList[i.name]()) -->
+                        <div class="bg-primary text-left rounded-0 px-3 py-2 mb-1" data-toggle="collapse" data-target="#itemBag-collectibleItems">
+                            <h5 class="m-0 text-light">Collectible Items</h5>
                         </div>
-                        <div id="itemBag-questItems" class="collapse show">
+                        <div id="itemBag-collectibleItems" class="collapse show">
                             <div class="card-body pt-2 p-1">
                                 <div class="row justify-content-center">
-                                    <!-- ko foreach: Object.values(ItemList).filter((i) => i instanceof QuestItem && i.isActive() && player.itemList[i.name]()) -->
+                                    <!-- ko foreach: Object.values(ItemList).filter((i) => i instanceof CollectibleItem && i.isActive() && player.itemList[i.name]()).sort(ItemHandler.collectibleSort) -->
                                     <div class="col-6 col-lg-3 mb-2">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name }">
@@ -1117,7 +1117,7 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
 <!-- imported from src/components/routeInfoModal.html -->
 <div class="modal fade noselect" id="routeInfoModal" tabindex="-1" role="dialog" aria-labelledby="routeInfoModalLabel">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content" data-bind="if: DisplayObservables.modalState.routeInfoModal !== 'hidden'">
             <div class="modal-header" style='justify-content: space-around;'>
                 <h4 class="modal-title" data-bind="text: RouteInfo.getFullName()">name</h4>
                 <button type="button" class="btn btn-danger position-absolute" data-dismiss="modal" style="right:0; top:0; font-size: 18px; font-weight: 700;">×</button>
@@ -1125,7 +1125,23 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
             <div class="modal-body pt-0" style="background-color: inherit;">
                 <!-- ko foreach: { data: Object.entries(RouteInfo.pokemonList()), as: 'pokemons' } -->
                 <div class="bg-primary text-left rounded px-3 py-2 mt-1 d-flex align-items-center" data-toggle="collapse" data-bind="attr: { 'data-target': `#route-${pokemons[0]}` }">
-                    <h5 class="my-0 mx-1 text-light d-inline-block" data-bind="text: (pokemons[0] == 'roamers' ? 'Roamers' : 'Encounters')">Roamer Status</h5>
+                    <h5 class="my-0 mx-1 text-light d-inline-block flex-grow-1" data-bind="text: (pokemons[0] == 'roamers' ? 'Roaming' : 'Encounters')">Roamer Status</h5>
+                    <!-- ko if: pokemons[0] == 'roamers' -->
+                    <div class="text-light" onclick="event.stopPropagation()" style="cursor: default;" data-bind="let: {
+                        chance: Math.floor(PokemonFactory.roamingRate(Routes.getRoute(player.region, player.route))),
+                        isBoosted: RouteInfo.isBoosted()
+                    }">
+                        <div data-bind="tooltip: {
+                            html: true,
+                            title: `Chance of finding a Roaming Pokémon on this route.${(isBoosted ? '<br/><br/>⇈ This route is currently boosted! Roaming Pokémon are 3× more likely to appear.' : '')}`,
+                            trigger: 'hover',
+                            placement: 'top',
+                        }">
+                            <span class="small" data-bind="text: `1 / ${chance.toLocaleString('en-US')} (${(1 / chance).toLocaleString('en-US', { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 3 })})`"></span>
+                            <span data-bind="visible: isBoosted">⇈</span>
+                        </div>
+                    </div>
+                    <!-- /ko -->
                 </div>
                 <div class="collapse show" data-bind="attr: { 'id': `route-${pokemons[0]}` }">
                     <ul class="row justify-content-center w-100 p-0 m-0" data-bind="foreach: pokemons[1]">
@@ -1360,7 +1376,7 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
 <!-- imported from src/components/templates/pokemonSpriteTemplate.html -->
 <script type="text/html" id="pokemonSpriteTemplate">
     <img class="enemy"
-        data-bind="attr:{ src: PokemonHelper.getImage($data.pokemon.id, $data.pokemon.shiny, $data.pokemon.gender, $data.pokemon.shadow) }"
+        data-bind="attr:{ src: $data.pokemon.getImage() }"
         src=""/>
 </script>
 
@@ -5125,7 +5141,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
         
 
-<image href="assets/images/ship.png" xlink:href="assets/images/ship.png"
+<image href="assets/images/shipwest.png" xlink:href="assets/images/shipwest.png"
     x="928"
     y="560"
     height="48"
@@ -10262,14 +10278,14 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 <image href="assets/images/map/silver.png" xlink:href="assets/images/map/silver.png"
     x="1480"
-    y="224"
+    y="192"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;Silver 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Silver 5&#39;].isVisible()"/>
 <rect class="city"
     data-town="Rival Silver"
     x="1480"
-    y="224"
+    y="192"
     height="64"
     width="64"
     data-bind="visible: TemporaryBattleList[&#39;Silver 5&#39;] &amp;&amp; TemporaryBattleList[&#39;Silver 5&#39;].isVisible(), click: () =&gt; TemporaryBattleList[&#39;Silver 5&#39;].protectedOnclick(),
@@ -43961,7 +43977,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     y="672"
     height="32"
     width="32"
-    data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Master Dojo&#39;) },
+    data-bind="click: function(){ MapHelper.openShipModal() },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Dock'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -43969,16 +43985,23 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
         
 
-<rect class="city"
-    data-town="S. S. Anne" 
+<image href="assets/images/shipeast.png" xlink:href="assets/images/shipeast.png"
     x="992"
     y="704"
     height="48"
     width="128"
-    data-bind="click:function(){MapHelper.openShipModal()}, attr: { class: MapHelper.calculateTownCssClass(&#39;Master Dojo&#39;) },
-		playerSpriteMove,
+    data-bind="visible: "/>
+<rect class="city"
+    data-town="S. S. Anne"
+    x="992"
+    y="704"
+    height="48"
+    width="128"
+    data-bind="visible: , click: function(){ MapHelper.openShipModal() },
         event: { mouseenter: () => GameController.showMapTooltip('S. S. Anne'), mouseleave: GameController.hideMapTooltip }">
 </rect>
+
+</image>
 
 
         
@@ -56851,9 +56874,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
             <button class="dropdown-item d-flex small px-3" type="button"
                 data-bind="click: () => FarmController.selectedBerry($data), css: { 'active': FarmController.selectedBerry() === $data }">
                 <knockout class="flex-grow-1" data-bind="text: BerryType[$data]"></knockout>
-                <knockout data-bind="text: App.game.farming.berryList[$data]() >= 1e6
-                    ? GameConstants.formatNumber(App.game.farming.berryList[$data]())
-                    : App.game.farming.berryList[$data]().toLocaleString('en-US')"></knockout>
+                <knockout data-bind="text: App.game.farming.berryInventory[$data]() >= 1e6
+                    ? GameConstants.formatNumber(App.game.farming.berryInventory[$data]())
+                    : App.game.farming.berryInventory[$data]().toLocaleString('en-US')"></knockout>
             </button>
         </div>
     </div>
@@ -56876,9 +56899,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
                         data-bind="click: () => { FarmController.selectedBerry($data); FarmController.selectedFarmModuleTool(FarmingTool.Berry) },
                             css: { active: FarmController.selectedBerry() === $data }">
                         <knockout class="flex-grow-1" data-bind="text: BerryType[$data]"></knockout>
-                        <knockout data-bind="text: App.game.farming.berryList[$data]() >= 1e6
-                            ? GameConstants.formatNumber(App.game.farming.berryList[$data]())
-                            : App.game.farming.berryList[$data]().toLocaleString('en-US')"></knockout>
+                        <knockout data-bind="text: App.game.farming.berryInventory[$data]() >= 1e6
+                            ? GameConstants.formatNumber(App.game.farming.berryInventory[$data]())
+                            : App.game.farming.berryInventory[$data]().toLocaleString('en-US')"></knockout>
                     </button>
                 </div>
             </div>
@@ -58117,6 +58140,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('breedingDisplay')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('eggAnimation')}"></tr>
                                 <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('hideHatchery')}"></tr>
+                                <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showHatcheryModalQueue')}"></tr>
                             </tbody>
                             <thead>
                                 <tr><th colspan="2">Farm</th></tr>
@@ -59868,7 +59892,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                 <div class="pokedex-border-bottom pt-2">
                                     <h4>Filters and Settings</h4>
                                 </div>
-                                <div class="scrolling-div-breeding-filters">
+                                <div class="scrolling-div-breeding-filters" data-bind="class: App.game.breeding.queueList().length && Settings.getSetting('showHatcheryModalQueue').observableValue() ? 'scrolling-div-breeding-filters-queue' : ''"">
                                     <div class="container-fluid py-3">
                                         <div class="form-row text-left">
                                             <div class="form-group col-lg-12 col-12">
@@ -60128,7 +60152,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
 
                             <!-- Pokemon List -->
                             <div class="col-lg-9 col-12 pokemon-list" id="breeding-pokemon-list-container">
-                                <div class="scrolling-div-breeding-list">
+                                <div class="scrolling-div-breeding-list" data-bind="class: App.game.breeding.queueList().length && Settings.getSetting('showHatcheryModalQueue').observableValue() ? 'scrolling-div-breeding-list-queue' : ''">
                                     <!-- Check if the player has any level 100 Pokémon or if they have any eggs -->
                                     <button type="button" class="btn btn-danger hatchery-warnings w-100" style="pointer-events: none;" data-bind="visible: DisplayObservables.modalState.breedingModal !== 'hidden' && !App.game.party.hasMaxLevelPokemon()">
                                         Unfortunately, you don't have any Pokémon of level 100 to breed.
@@ -60215,6 +60239,31 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                         <!-- /ko -->
                                     </knockout>
                                 </div>
+                            </div>
+                            <div class="col-12 p-1">
+                                <!-- ko if: App.game.breeding.queueList().length && Settings.getSetting('showHatcheryModalQueue').observableValue() -->
+                                <div id="hatcheryQueue" class="card-footer p-1" data-bind="foreach: App.game.breeding.queueList()">
+                                    <div class="queuePokemon clickable bg-primary" data-bind="click: function(){ App.game.breeding.removeFromQueue($index()) }" style="width: 55px">
+                                        <img src="" data-bind="attr: { src: BreedingController.getQueueImage($data) }">
+                                    </div>
+                                </div>
+                                <!-- /ko -->
+                            </div>
+                            <div class="col-12 p-0">
+                                <!-- ko if: App.game.breeding.queueList().length && Settings.getSetting('showHatcheryModalQueue').observableValue() -->
+                                <div id="hatcheryQueueInfo" class="card-footer p-0 small">
+                                    <span style="line-height: 30px"
+                                        data-bind="
+                                            text: App.game.breeding.queueList().length + ' / ' + App.game.breeding.usableQueueSlots(),
+                                            tooltip: { title: Settings.getSetting('breedingQueueSizeSetting').observableValue() > -1 ? 'Queue is currently limited by your Queue Size setting.' : '', trigger: 'hover' }
+                                        "></span>
+                                    <button class="btn btn-sm btn-danger" style="position: absolute; right: 10px; width: auto;" data-bind="
+                                        click: () => App.game.breeding.clearQueue(Settings.getSetting('breedingQueueClearConfirmation').observableValue()),
+                                        tooltip: { title: 'Remove all Pokémon from the queue.', trigger: 'hover' }">
+                                        Clear Queue
+                                    </button>
+                                </div>
+                                <!-- /ko -->
                             </div>
                         </div>
                     </div>
@@ -62413,6 +62462,20 @@ aria-labelledby="pokedexModalLabel">
                   <td class="text-left tight text-wrap"><code
                       data-bind="text: App.game.party.getPokemon($data).heldItem()?.displayName || '-'"></code></td>
                 </tr>
+                <!-- ko if: !App.game.challenges.list.disableVitamins.active() -->
+                <tr data-bind="tooltip: {
+                    html: true,
+                    title: Object.entries(App.game.party.getPokemon($data).vitaminsUsed)
+                        .map(([v, amt]) => `<u>${GameConstants.VitaminType[v]}</u>: ${amt()}`).join('<br/>'),
+                    placement: 'top',
+                    trigger: 'hover',
+                }">
+                  <td class="text-left">Vitamins Applied</td>
+                  <td class="text-left tight">
+                    <code data-bind="text: `${App.game.party.getPokemon($data).totalVitaminsUsed().toLocaleString('en-US')}/${PartyPokemon.maxVitaminUsesAllowed().toLocaleString('en-US')}`">-</code>
+                  </td>
+                </tr>
+                <!-- /ko -->
                 <tr>
                   <td colspan="2" class="text-left tight">
                     <input type="text" class="form-control" placeholder="Nickname"
@@ -62533,32 +62596,6 @@ aria-labelledby="pokedexModalLabel">
                 </tr>
               </tbody>
             </table>
-
-            <!-- ko if: !App.game.challenges.list.disableVitamins.active() && App.game.party.alreadyCaughtPokemon($data) -->
-            <table class="table table-striped table-hover table-bordered table-sm m-0 mb-2">
-              <thead>
-                <tr class="bg-secondary">
-                  <th colspan="2">Vitamins</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="text-left">Vitamins Used</td>
-                  <td class="text-left tight"><code
-                      data-bind="text: (App.game.party.getPokemon($data) ? App.game.party.getPokemon($data).totalVitaminsUsed() : 0).toLocaleString('en-US')">-</code>
-                  </td>
-                </tr>
-                <!-- ko foreach: GameHelper.enumNumbers(GameConstants.VitaminType) -->
-                <tr>
-                  <td class="text-left" data-bind="text: `${GameConstants.VitaminType[$data]}`">X Used</td>
-                  <td class="text-left tight"><code
-                      data-bind="text: (App.game.party.getPokemon($parent) ? App.game.party.getPokemon($parent).vitaminsUsed[$data]() : 0).toLocaleString('en-US')">-</code>
-                  </td>
-                </tr>
-                <!-- /ko -->
-              </tbody>
-            </table>
-            <!-- /ko -->
           </div>
         </div>
       </div>
@@ -63079,9 +63116,9 @@ aria-labelledby="badgeCaseModalLabel">
                                             }, css: { 'active': FarmController.selectedBerry() === $data && FarmController.selectedFarmTool() == FarmingTool.Berry },
                                             tooltip: App.game.farming.unlockedBerries[$data]() ? {
                                                 html: true,
-                                                title: `<u>Growth Duration</u>: ${GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[3])}<br/>
-                                                    ${App.game.farming.berryData[$data].harvestAmount.toLocaleString('en-US')} <img width='12px' alt='${BerryType[$data]}' src='${FarmController.getBerryImage($data)}' /> per harvest<br/>
-                                                    ${App.game.farming.berryData[$data].farmValue.toLocaleString('en-US')} <img width='12px' alt='Farm Points' src='assets/images/currency/farmPoint.svg' /> per harvest`,
+                                                title: `<u>Growth Duration</u>: ${GameConstants.formatSecondsToTime(BerryList[$data].growthTime[3])}<br/>
+                                                    ${BerryList[$data].harvestAmount.toLocaleString('en-US')} <img width='12px' alt='${BerryType[$data]}' src='${FarmController.getBerryImage($data)}' /> per harvest<br/>
+                                                    ${BerryList[$data].farmValue.toLocaleString('en-US')} <img width='12px' alt='Farm Points' src='assets/images/currency/farmPoint.svg' /> per harvest`,
                                                 placement: 'right',
                                                 trigger: 'hover',
                                                 animation: false,
@@ -63090,7 +63127,7 @@ aria-labelledby="badgeCaseModalLabel">
                                                 data-bind="attr:{ src: FarmController.getBerryImage($data) },
                                                 css: {'berryLocked': !App.game.farming.unlockedBerries[$data]() }">
                                             <span data-bind="text: App.game.farming.unlockedBerries[$data]() ? BerryType[$data] : '???'"></span>
-                                            <span class="flex-grow-1 text-right" data-bind="text: App.game.farming.berryList[$data]().toLocaleString('en-US')"></span>
+                                            <span class="flex-grow-1 text-right" data-bind="text: App.game.farming.berryInventory[$data]().toLocaleString('en-US')"></span>
                                         </li>
                                         <!-- /ko -->
                                     </ul>
@@ -63323,38 +63360,38 @@ aria-labelledby="badgeCaseModalLabel">
                                             <tr>
                                                 <td class="text-left">Berry Color</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="text: BerryColor[App.game.farming.berryData[$data].color]">-</code>
+                                                    <code data-bind="text: BerryColor[BerryList[$data].color]">-</code>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">Growth Duration</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="html: GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[3])">-</code>
+                                                    <code data-bind="html: GameConstants.formatSecondsToTime(BerryList[$data].growthTime[3])">-</code>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">Farm Points per Harvest</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="text: App.game.farming.berryData[$data].farmValue.toLocaleString('en-US')">-</code>
+                                                    <code data-bind="text: BerryList[$data].farmValue.toLocaleString('en-US')">-</code>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">Harvest Amount</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="text: App.game.farming.berryData[$data].harvestAmount.toLocaleString('en-US')">-</code>
+                                                    <code data-bind="text: BerryList[$data].harvestAmount.toLocaleString('en-US')">-</code>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">Current Amount</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="text: App.game.farming.berryList[$data]().toLocaleString('en-US')">-</code>
+                                                    <code data-bind="text: App.game.farming.berryInventory[$data]().toLocaleString('en-US')">-</code>
                                                 </td>
                                             </tr>
-                                            <!-- ko if: App.game.farming.berryData[$data].aura -->
+                                            <!-- ko if: BerryList[$data].aura -->
                                             <tr>
                                                 <td class="text-left">Aura</td>
                                                 <td class="text-left tight">
-                                                    <code data-bind="text: `${AuraType[App.game.farming.berryData[$data].aura.auraType]}${App.game.farming.berryData[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code>
+                                                    <code data-bind="text: `${AuraType[BerryList[$data].aura.auraType]}${BerryList[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code>
                                                 </td>
                                             </tr>
                                             <!-- /ko -->
@@ -63374,13 +63411,13 @@ aria-labelledby="badgeCaseModalLabel">
                                                 <td class="px-0 align-middle">Bitter</td>
                                                 <td class="px-0 align-middle">Sour</td>
                                             </tr>
-                                            <tr data-bind="foreach: App.game.farming.berryData[$data].flavors">
+                                            <tr data-bind="foreach: BerryList[$data].flavors">
                                                 <td class="px-0 align-middle" data-bind="text: $data.value"></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <!-- ko let: {
-                                        berrySpecificWanderers: App.game.farming.berryData[$data].wander.filter((w) => ![...Berry.baseWander, ...Berry.colorWander[App.game.farming.berryData[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION)
+                                        berrySpecificWanderers: BerryList[$data].wander.filter((w) => ![...Berry.baseWander, ...Berry.colorWander[BerryList[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION)
                                     } -->
                                         <!-- ko if: berrySpecificWanderers.length -->
                                         <table class="table table-striped table-hover table-bordered table-sm m-0">
@@ -63789,7 +63826,7 @@ aria-labelledby="badgeCaseModalLabel">
                     </tr>
                   </thead>
                   <tbody>
-                      <td colspan="2"><span data-bind="html: App.game.farming.berryData[$data].descriptionHTML"></span></td>
+                      <td colspan="2"><span data-bind="html: BerryList[$data].descriptionHTML"></span></td>
                   </tbody>
                   <thead>
                     <tr class="text-light">
@@ -63799,20 +63836,20 @@ aria-labelledby="badgeCaseModalLabel">
                     <tbody>
                     <tr>
                       <td class="text-left">Berry Color</td>
-                      <td class="text-left tight"><code data-bind="text: BerryColor[App.game.farming.berryData[$data].color]">-</code></td>
+                      <td class="text-left tight"><code data-bind="text: BerryColor[BerryList[$data].color]">-</code></td>
                     </tr>
                     <tr>
                       <td class="text-left">Size</td>
-                      <td class="text-left tight"><code data-bind="text: Farming.sizeUnitConverter[SizeUnits[Settings.getSetting('sizeUnits').observableValue()]](App.game.farming.berryData[$data].size)">-</code></td>
+                      <td class="text-left tight"><code data-bind="text: Farming.sizeUnitConverter[SizeUnits[Settings.getSetting('sizeUnits').observableValue()]](BerryList[$data].size)">-</code></td>
                     </tr>
                     <tr>
                       <td class="text-left">Firmness</td>
-                      <td class="text-left tight"><code data-bind="html: GameConstants.humanifyString(BerryFirmness[App.game.farming.berryData[$data].firmness])">-</code></td>
+                      <td class="text-left tight"><code data-bind="html: GameConstants.humanifyString(BerryFirmness[BerryList[$data].firmness])">-</code></td>
                     </tr>
-                    <!-- ko if: App.game.farming.berryData[$data].aura -->
+                    <!-- ko if: BerryList[$data].aura -->
                     <tr>
                       <td class="text-left">Aura</td>
-                      <td class="text-left tight"><code data-bind="text: `${AuraType[App.game.farming.berryData[$data].aura.auraType]}${App.game.farming.berryData[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code></td>
+                      <td class="text-left tight"><code data-bind="text: `${AuraType[BerryList[$data].aura.auraType]}${BerryList[$data].aura.auraMultipliers[0] > 1 ? '+' : '-'}`"></code></td>
                     </tr>
                     <!-- /ko -->
                     </tbody>
@@ -63825,15 +63862,15 @@ aria-labelledby="badgeCaseModalLabel">
                   <tbody>
                     <tr>
                       <td class="text-left">Growth Duration</td>
-                      <td class="text-left tight"><code data-bind="html: GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[3])">-</code></td>
+                      <td class="text-left tight"><code data-bind="html: GameConstants.formatSecondsToTime(BerryList[$data].growthTime[3])">-</code></td>
                     </tr>
                     <tr>
                       <td class="text-left">Berry Stage Duration</td>
-                      <td class="text-left tight"><code data-bind="html: GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[4]-App.game.farming.berryData[$data].growthTime[3])">-</code></td>
+                      <td class="text-left tight"><code data-bind="html: GameConstants.formatSecondsToTime(BerryList[$data].growthTime[4]-BerryList[$data].growthTime[3])">-</code></td>
                     </tr>
                     <tr>
                       <td class="text-left">Total Life Span</td>
-                      <td class="text-left tight"><code data-bind="html: GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[4])">-</code></td>
+                      <td class="text-left tight"><code data-bind="html: GameConstants.formatSecondsToTime(BerryList[$data].growthTime[4])">-</code></td>
                     </tr>
                     </tbody>
                     <thead>
@@ -63845,15 +63882,15 @@ aria-labelledby="badgeCaseModalLabel">
                     <tbody>
                       <tr>
                         <td class="text-left">Harvest Amount</td>
-                        <td class="text-left tight"><code data-bind="text: App.game.farming.berryData[$data].harvestAmount.toLocaleString('en-US')">-</code></td>
+                        <td class="text-left tight"><code data-bind="text: BerryList[$data].harvestAmount.toLocaleString('en-US')">-</code></td>
                       </tr>
                       <tr>
                         <td class="text-left">Replant Rate</td>
-                        <td class="text-left tight"><code data-bind="text: App.game.farming.berryData[$data].replantRate.toLocaleString('en-US', { style: 'percent' })">-</code></td>
+                        <td class="text-left tight"><code data-bind="text: BerryList[$data].replantRate.toLocaleString('en-US', { style: 'percent' })">-</code></td>
                       </tr>
                       <tr>
                         <td class="text-left">Farm Points per Harvest</td>
-                        <td class="text-left tight"><code data-bind="text: App.game.farming.berryData[$data].farmValue.toLocaleString('en-US')">-</code></td>
+                        <td class="text-left tight"><code data-bind="text: BerryList[$data].farmValue.toLocaleString('en-US')">-</code></td>
                       </tr>
                     </tbody>
                     <thead>
@@ -63865,7 +63902,7 @@ aria-labelledby="badgeCaseModalLabel">
                     <tbody>
                       <tr>
                         <td class="text-left">Current Amount</td>
-                        <td class="text-left tight"><code data-bind="text: App.game.farming.berryList[$data]().toLocaleString('en-US')"></span></td></code></td>
+                        <td class="text-left tight"><code data-bind="text: App.game.farming.berryInventory[$data]().toLocaleString('en-US')"></span></td></code></td>
                       </tr>
                       <tr>
                         <td class="text-left">Total Harvested</td>
@@ -63889,11 +63926,11 @@ aria-labelledby="badgeCaseModalLabel">
                                   <td>Sour</td>
                               </tr>
                               <tr>
-                                <td data-bind="text: App.game.farming.berryData[$data].flavors[0].value">Spicy</td>
-                                <td data-bind="text: App.game.farming.berryData[$data].flavors[1].value">Dry</td>
-                                <td data-bind="text: App.game.farming.berryData[$data].flavors[2].value">Sweet</td>
-                                <td data-bind="text: App.game.farming.berryData[$data].flavors[3].value">Bitter</td>
-                                <td data-bind="text: App.game.farming.berryData[$data].flavors[4].value">Sour</td>
+                                <td data-bind="text: BerryList[$data].flavors[0].value">Spicy</td>
+                                <td data-bind="text: BerryList[$data].flavors[1].value">Dry</td>
+                                <td data-bind="text: BerryList[$data].flavors[2].value">Sweet</td>
+                                <td data-bind="text: BerryList[$data].flavors[3].value">Bitter</td>
+                                <td data-bind="text: BerryList[$data].flavors[4].value">Sour</td>
                             </tr>
                           </table>
                       </td>
@@ -63920,12 +63957,12 @@ aria-labelledby="badgeCaseModalLabel">
                             <th colspan="4">Total Time until Stage</th>
                           </tr>
                           <tr>
-                            <td><code data-bind="html: GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[0])">-</code></td>
-                            <td><code data-bind="html: GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[1])">-</code></td>
-                            <td><code data-bind="html: GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[2])">-</code></td>
-                            <td><code data-bind="html: GameConstants.formatSecondsToTime(App.game.farming.berryData[$data].growthTime[3])">-</code></td>
+                            <td><code data-bind="html: GameConstants.formatSecondsToTime(BerryList[$data].growthTime[0])">-</code></td>
+                            <td><code data-bind="html: GameConstants.formatSecondsToTime(BerryList[$data].growthTime[1])">-</code></td>
+                            <td><code data-bind="html: GameConstants.formatSecondsToTime(BerryList[$data].growthTime[2])">-</code></td>
+                            <td><code data-bind="html: GameConstants.formatSecondsToTime(BerryList[$data].growthTime[3])">-</code></td>
                           </tr>
-                          <!-- ko if: App.game.farming.berryData[$data].aura -->
+                          <!-- ko if: BerryList[$data].aura -->
                           <tr>
                             <th colspan="4">Aura Effect at Stage</th>
                           </tr>
@@ -63961,25 +63998,25 @@ aria-labelledby="badgeCaseModalLabel">
                               </td>
                             </tr>
                             <tr>
-                              <th colspan="2" data-bind="text: `Attracted to ${BerryColor[App.game.farming.berryData[$data].color]}-Colored Berries`">Color Wanderers</th>
+                              <th colspan="2" data-bind="text: `Attracted to ${BerryColor[BerryList[$data].color]}-Colored Berries`">Color Wanderers</th>
                             </tr>
                             <tr>
                               <td>
                                 <ul class="list-inline">
-                                <!-- ko foreach: Berry.colorWander[App.game.farming.berryData[$data].color].filter(w => pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
+                                <!-- ko foreach: Berry.colorWander[BerryList[$data].color].filter(w => pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
                                 <li class="list-inline-item" data-bind="template: { name: 'wanderingPokémonDisplay', data: $data}"></li>
                                 <!-- /ko -->
                                 </ul>
                               </td>
                             </tr>
-                            <!-- ko if: App.game.farming.berryData[$data].wander.some((w) => ![...Berry.baseWander, ...Berry.colorWander[App.game.farming.berryData[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
+                            <!-- ko if: BerryList[$data].wander.some((w) => ![...Berry.baseWander, ...Berry.colorWander[BerryList[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
                             <tr>
                               <th colspan="2" data-bind="text: `Attracted to ${BerryType[$data]} Berry`">Specific Wanderers</th>
                             </tr>
                             <tr>
                               <td>
                                 <ul class="list-inline">
-                                <!-- ko foreach: App.game.farming.berryData[$data].wander.filter((w) => ![...Berry.baseWander, ...Berry.colorWander[App.game.farming.berryData[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
+                                <!-- ko foreach: BerryList[$data].wander.filter((w) => ![...Berry.baseWander, ...Berry.colorWander[BerryList[$data].color]].includes(w) && pokemonMap[w].nativeRegion <= GameConstants.MAX_AVAILABLE_REGION) -->
                                   <li class="list-inline-item" data-bind="template: { name: 'wanderingPokémonDisplay', data: $data}"></li>
                                 <!-- /ko -->
                                 </ul>
@@ -64047,11 +64084,11 @@ aria-labelledby="badgeCaseModalLabel">
                             <tbody data-bind="let: { tradeAmount: ko.observable(1) }">
                                 <!-- ko foreach: berries -->
                                 <tr>
-                                    <td class="align-middle" data-bind="text: App.game.farming.berryList[$data.berryType]().toLocaleString('en-US')"></td>
+                                    <td class="align-middle" data-bind="text: App.game.farming.berryInventory[$data.berryType]().toLocaleString('en-US')"></td>
                                     <td class="align-middle"><img height="28px" data-bind="attr: {src: FarmController.getBerryImage($data.berryType) }, css: {'berryLocked': !App.game.farming.unlockedBerries[$data.berryType]() }"></img></td>
                                     <td class="align-middle">
                                         <span data-bind="text: amount.toLocaleString('en-US') + ' '"></span>
-                                        <span data-bind="text: '(' + (amount * tradeAmount()).toLocaleString('en-US') + ')', css: { 'text-danger': amount * tradeAmount() > App.game.farming.berryList[$data.berryType]() }"></span>
+                                        <span data-bind="text: '(' + (amount * tradeAmount()).toLocaleString('en-US') + ')', css: { 'text-danger': amount * tradeAmount() > App.game.farming.berryInventory[$data.berryType]() }"></span>
                                         <span data-bind="text: ' x ' + (App.game.farming.unlockedBerries[$data.berryType]() ? BerryType[$data.berryType] : '???')"></span>
                                     </td>
                                     <!-- ko if: $index() === 0 -->
@@ -64443,12 +64480,30 @@ aria-labelledby="badgeCaseModalLabel">
 
     <!-- ko if: model.type === 'Berry' -->
     <div><img height="24px" data-bind="attr: {src: FarmController.getBerryImage(model.berryType) }, css: {'berryLocked': !App.game.farming.unlockedBerries[model.berryType]() }"/></div>
-    <div class="text-left" data-bind="text: `${(tradeAmount * model.amount).toLocaleString('en-US')} × ${App.game.farming.unlockedBerries[model.berryType]() ? BerryType[model.berryType] : '???'}`, css: { 'not-enough': tradeAmount * model.amount > App.game.farming.berryList[model.berryType]() }"></div>
+    <div class="text-left" data-bind="text: `${(tradeAmount * model.amount).toLocaleString('en-US')} × ${App.game.farming.unlockedBerries[model.berryType]() ? BerryType[model.berryType] : '???'}`, css: { 'not-enough': tradeAmount * model.amount > App.game.farming.berryInventory[model.berryType]() }"></div>
     <!-- /ko -->
 
     <!-- ko if: model.type === 'Item' -->
-    <div><img height="24px" data-bind="attr: {src: model.item.image }"/></div>
-    <div class="text-left" data-bind="text: `${(tradeAmount * model.amount).toLocaleString('en-US')} × ${model.item.displayName}`, css: { 'not-enough': tradeAmount * model.amount > player.itemList[model.item.name]() }"></div>
+    <div class="d-flex w-100 align-items-center" style="gap: 8px;">
+        <div><img height="24px" data-bind="attr: {src: model.item.image }"/></div>
+        <div class="flex-grow-1 d-flex w-100 align-items-center" style="gap: 4px;" data-bind="
+            css: { 'not-enough': tradeAmount * model.amount > player.itemList[model.item.name]() }">
+            <div data-bind="text: (tradeAmount * model.amount).toLocaleString('en-US')"></div>
+            <div>×</div>
+            <div class="text-left" style="text-wrap: wrap; line-height: 1;" data-bind="text: model.item.displayName"></div>
+        </div>
+        <div class="d-flex flex-column" style="gap: 3px;">
+            <div data-bind="if: model.item instanceof CaughtIndicatingItem" style="line-height: 0;">
+                <div style="width: 32px;" data-bind="template: { name: 'caughtStatusTemplate', data: {'status': $parent.item.getCaughtStatus()}}"></div>
+            </div>
+            <div data-bind="if: model.item instanceof PokemonItem" style="line-height: 0;">
+                <span data-bind="template: { name: 'pokerusStatusTemplate', data: {
+                    'pokerus': model.item.getPokerusStatus(), 'width': '32px',
+                    'evs': App.game.party.getPokemonByName(model.item.type)?.evs() }}">
+                </span>
+            </div>
+        </div>
+    </div>
     <!-- /ko -->
 
     <!-- ko if: model.type === 'Amount' -->
@@ -64501,7 +64556,7 @@ aria-labelledby="badgeCaseModalLabel">
                 </button>
             </div>
             <div class="modal-body bg-ocean">
-                <img class="my-5" src='assets/images/ship.png' style='width: 100%;'>
+                <img class="my-5" src='assets/images/shipwest.png' style='width: 100%;'>
                 <div style='margin-top:20px'>
                     <!-- ko foreach: GameHelper.enumStrings(GameConstants.Region) -->
                         <!-- ko if: $data !== 'none' && GameConstants.Region[$data] <= GameConstants.MAX_AVAILABLE_REGION -->
@@ -64662,7 +64717,7 @@ aria-labelledby="badgeCaseModalLabel">
                                         </tr>
                                         <tr>
                                             <td class="align-middle"><b>Bait</b></td>
-                                            <td>Throwing any kind of Bait will make the Pokémon eat, and less likely to flee, but harder to catch. Berry Baits change the base rates of the Pokémon, with Razz lowering flee rate, and Nanab increasing catch rate. Only one Berry effect can be present at a time. Provides 5 Safari XP.</td>
+                                            <td>Throwing any kind of Bait will make the Pokémon eat, and less likely to flee, but harder to catch. Berry Baits change the base rates of the Pokémon, with Razz increasing catch rate, Pinap increasing the chance an Item is dropped and Nanab lowering flee rate. Only one Berry effect can be present at a time. Provides 5 Safari XP.</td>
                                         </tr>
                                         <tr>
                                             <td class="align-middle"><b>Run</b></td>
@@ -65676,8 +65731,8 @@ aria-labelledby="bulletinBoardModalLabel" aria-hidden="true">
                                                 <img style="width: 30px;" data-bind="attr: { src: FarmController.getBerryImage($data.berry) }">
                                                 <span data-bind="text: `${BerryType[$data.berry]} × ${$data.amount.toLocaleString('en-US')}`"></span>
                                             </td>
-                                            <td class="align-middle border-top-0 p-0" data-bind="text: App.game.farming.berryList[$data.berry]().toLocaleString('en-US'),
-                                                css: { 'text-danger': $data.amount > App.game.farming.berryList[$data.berry]() }"></td>
+                                            <td class="align-middle border-top-0 p-0" data-bind="text: App.game.farming.berryInventory[$data.berry]().toLocaleString('en-US'),
+                                                css: { 'text-danger': $data.amount > App.game.farming.berryInventory[$data.berry]() }"></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
