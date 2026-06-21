@@ -60026,6 +60026,12 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 <!-- /ko -->
                                             </div>
 
+                                            <div class="col-12 mt-1">
+                                                <button class="btn btn-primary btn-block btn-sm" data-bind="click: () => BreedingController.resetFilters()">
+                                                    Reset All Filters
+                                                </button>
+                                            </div>
+
                                             <div class="col-12">
                                                 <hr style="border-color:grey;">
                                             </div>
@@ -60054,7 +60060,7 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                 <!-- /ko -->
                                             </div>
                                             <!-- /ko -->
-                                            <div class="form-group col-lg-12 col-12" style="max-width: 100%; flex-grow: 1">
+                                            <div class="form-group col-lg-12 col-12 mb-0" style="max-width: 100%; flex-grow: 1">
                                                 <!-- ko let: { hatcherySort: Settings.getSetting('hatcherySort') } -->
                                                 <label for="hatchery-setting-sort" data-bind="text: hatcherySort.displayName">Sort</label>
                                                 <div class="input-group">
@@ -62026,7 +62032,7 @@ aria-labelledby="pokedexModalLabel">
 
                                     <!--Rare Hold Item-->
                                     <div class="col-12">
-                                        <div class="form-group my-2">
+                                        <div class="form-group">
                                             <!-- ko let: { pokedexHeldItemFilter: Settings.getSetting('pokedexHeldItemFilter') } -->
                                             <label for="pokedex-filter-held-item" data-bind="text: pokedexHeldItemFilter.displayName">Rare Held Item</label>
                                             <span class="mx-1"
@@ -62048,7 +62054,7 @@ aria-labelledby="pokedexModalLabel">
 
                                     <!--Hide alternate forms-->
                                     <div class="col-12">
-                                        <div class="form-group my-2">
+                                        <div class="form-group mb-0">
                                             <!-- ko let: { pokedexHideAltFilter: Settings.getSetting('pokedexHideAltFilter') } -->
                                             <label for="pokedex-filter-hide-alternate" data-bind="text: pokedexHideAltFilter.displayName">Hide alternate forms</label>
                                             <label class="form-check-label toggler-wrapper style-1 float-right">
@@ -62060,6 +62066,12 @@ aria-labelledby="pokedexModalLabel">
                                             </label>
                                             <!-- /ko -->
                                         </div>
+                                    </div>
+
+                                    <div class="col-12 mt-1">
+                                        <button class="btn btn-primary btn-block btn-sm" data-bind="click: () => PokedexHelper.resetFilters()">
+                                            Reset All Filters
+                                        </button>
                                     </div>
 
                                     <div class="col-12">
