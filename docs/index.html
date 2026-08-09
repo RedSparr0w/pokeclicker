@@ -624,7 +624,7 @@
                                     <!-- ko foreach: Object.values(ItemList).filter((i) => i instanceof CollectibleItem && i.isActive() && player.itemList[i.name]()).sort(ItemHandler.collectibleSort) -->
                                     <div class="col-6 col-lg-3 mb-2">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
-                                            data-bind="template: { name: 'otherItemTemplate', data: $data.name }">
+                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -642,8 +642,9 @@
                                     <!-- ko foreach: GameHelper.enumNumbers(GameConstants.VitaminType) -->
                                     <div class="col-6 col-lg-3 mb-2">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
-                                            data-bind="template: { name: 'otherItemTemplate', data: GameConstants.VitaminType[$data]},
-                                                click: () => { VitaminController.currentlySelected($data); $('#pokemonVitaminExpandedModal').modal('show'); }">
+                                             data-bind="template: { name: 'otherItemTemplate', data: GameConstants.VitaminType[$data]},
+                                             click: ()=>
+                                            { VitaminController.currentlySelected($data); $('#pokemonVitaminExpandedModal').modal('show'); }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -661,8 +662,9 @@
                                     <!-- ko foreach: GameHelper.enumStrings(GameConstants.ConsumableType).filter(type => player.itemList[type]()).map(type => ItemList[type]) -->
                                     <div class="col-6 col-lg-3 mb-2">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
-                                            data-bind="template: { name: 'otherItemTemplate', data: $data.name },
-                                            click: () => { ConsumableController.currentlySelected($data.type); $('#consumableModal').modal('show'); }">
+                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name },
+                                             click: ()=>
+                                            { ConsumableController.currentlySelected($data.type); $('#consumableModal').modal('show'); }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -677,13 +679,14 @@
                         <div id="itemBag-heldItems" class="collapse show mt-1">
                             <div class="card-body pt-2 p-1">
                                 <div class="row justify-content-center">
-                                    <!-- ko foreach: Object.values(HeldItem.getSortedHeldItems()) -->
+                                    <!-- ko foreach: Object.values(BagHandler.getSortedHeldItems()) -->
                                     <h5 class="card-title col-12 mb-2" data-bind="text: $data.title, visible: $data.items.some(i => i.isUnlocked())"></h5>
                                     <!-- ko foreach: $data.items -->
                                     <div class="col-6 col-lg-3 mb-2" data-bind="visible: $data.isUnlocked()">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
-                                            data-bind="template: { name: 'otherItemTemplate', data: $data.name },
-                                                click: () => { HeldItem.heldItemSelected($data); $('#heldItemModal').modal('show'); }">
+                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name },
+                                             click: ()=>
+                                            { HeldItem.heldItemSelected($data); $('#heldItemModal').modal('show'); }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -2992,7 +2995,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ------ -->
         <!-- ROUTES -->
         <!-- ------ -->
-
         <!--Route 1-->
         
 
@@ -4079,7 +4081,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ------------------ -->
         <!-- PLACES OF INTEREST -->
         <!-- ------------------ -->
-
         <!--Route 26-->
         
 
@@ -4090,9 +4091,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     height="240"
     width="48"
     data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
-                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Johto Route 26'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -4108,9 +4109,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     height="48"
     width="112"
     data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
-                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Johto Route 27'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -4126,9 +4127,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     height="48"
     width="112"
     data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
-                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Johto Route 28'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -4144,9 +4145,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     height="64"
     width="32"
     data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
-                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Johto Route 28'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -4155,7 +4156,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ----- -->
         <!-- TOWNS -->
         <!-- ----- -->
-
         <!--Pallet Town-->
         
 
@@ -4647,7 +4647,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- -------- -->
         <!-- DUNGEONS -->
         <!-- -------- -->
-
         <!--Viridian Forest-->
         
 
@@ -5069,7 +5068,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ------------------ -->
         <!-- PLACES OF INTEREST -->
         <!-- ------------------ -->
-
         
 
 <rect class="city"
@@ -5292,7 +5290,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-      
+        
 
 <image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
     x="288"
@@ -5512,7 +5510,37 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-    
+        <!--Gyarados Galleon-->
+        
+
+<image href="assets/images/map/plasmafrigate_ship.png" xlink:href="assets/images/map/plasmafrigate_ship.png"
+    x="1520"
+    y="640"
+    height="144"
+    width="64"
+    data-bind="visible: TownList[&#39;Gyarados Galleon&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Gyarados Galleon"
+    x="1520"
+    y="640"
+    height="144"
+    width="64"
+    data-bind="visible: TownList[&#39;Gyarados Galleon&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Gyarados Galleon&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Gyarados Galleon&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Gyarados Galleon'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+<image width="48" height="48"
+    x="1528"
+    y="688"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Gyarados Galleon') && TownList[&#39;Gyarados Galleon&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
+</image>
+
+
+        
     </g>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Sevii Islands 123').id">
@@ -21609,7 +21637,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <!-- ------ -->
     <!-- ROUTES -->
     <!-- ------ -->
-
     <!--Route 1-->
     
 
@@ -22868,7 +22895,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <!-- ----- -->
     <!-- TOWNS -->
     <!-- ----- -->
-
     <!--Vaniville Town-->
     
 
@@ -23207,7 +23233,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
     <!--Laverre City-->
-        
+    
 
 <rect class="city"
     data-town="Laverre City"
@@ -23474,10 +23500,123 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+    <!--Pirate Island-->
+    
+
+<image href="assets/images/map/client_island.png" xlink:href="assets/images/map/client_island.png"
+    x="0"
+    y="656"
+    height="256"
+    width="256"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="0"
+    y="656"
+    height="256"
+    width="256"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), style: {&#39;pointer-events&#39;: &#39;none&#39;},
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+    <!--Pirate Island extension-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="64"
+    y="752"
+    height="64"
+    width="112"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="64"
+    y="752"
+    height="64"
+    width="112"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Pirate Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pirate Island&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+<image width="48" height="48"
+    x="96"
+    y="760"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Pirate Island') && TownList[&#39;Pirate Island&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
+</image>
+
+    <!--Pirate Island extension-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="80"
+    y="816"
+    height="16"
+    width="80"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="80"
+    y="816"
+    height="16"
+    width="80"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Pirate Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pirate Island&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+    <!--Pirate Island extension-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="80"
+    y="736"
+    height="16"
+    width="96"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="80"
+    y="736"
+    height="16"
+    width="96"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Pirate Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pirate Island&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+    <!--Pirate Island extension-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="96"
+    y="720"
+    height="16"
+    width="48"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="96"
+    y="720"
+    height="16"
+    width="48"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Pirate Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pirate Island&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
     <!-- ----- -->
     <!--DUNGEONS-->
     <!-- ----- -->
-
     
 
 
@@ -23819,7 +23958,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     <!-- ------------------ -->
     <!-- PLACES OF INTEREST -->
     <!-- ------------------ -->
-
     
 
 <rect class="city"
@@ -23862,7 +24000,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
+    
 
 <rect class="city"
     data-town="Farm" 
@@ -23876,7 +24014,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
+    
 
 <rect class="city"
     data-town="Pokémon Day Care" 
@@ -23909,7 +24047,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </rect>
 
 
-     
+    
 
 <image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
     x="896"
@@ -23930,7 +24068,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/tierno.png" xlink:href="assets/images/map/tierno.png"
     x="608"
@@ -23951,7 +24089,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/trevortierno.png" xlink:href="assets/images/map/trevortierno.png"
     x="448"
@@ -23972,7 +24110,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="224"
@@ -23993,7 +24131,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="512"
@@ -24014,7 +24152,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="824"
@@ -24035,7 +24173,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="1200"
@@ -24056,7 +24194,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
     x="1248"
@@ -24077,7 +24215,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/tierno.png" xlink:href="assets/images/map/tierno.png"
     x="1248"
@@ -24098,7 +24236,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/trevor.png" xlink:href="assets/images/map/trevor.png"
     x="1248"
@@ -24119,7 +24257,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="1016"
@@ -24140,7 +24278,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
     x="1232"
@@ -24161,7 +24299,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-	 
+    
 
 <image href="assets/images/map/megamanectricoverworld.png" xlink:href="assets/images/map/megamanectricoverworld.png"
     x="928"
@@ -24182,7 +24320,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 </image>
 
 
-	 
+    
 
 <image href="assets/images/map/megahoundoomoverworld.png" xlink:href="assets/images/map/megahoundoomoverworld.png"
     x="928"
@@ -24202,7 +24340,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/rampagingyveltal.png" xlink:href="assets/images/map/rampagingyveltal.png"
     x="192"
@@ -24222,7 +24360,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="1088"
@@ -24242,7 +24380,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="128"
@@ -24262,7 +24400,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="736"
@@ -24282,7 +24420,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="1296"
@@ -24302,7 +24440,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="736"
@@ -24322,7 +24460,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="1088"
@@ -24357,7 +24495,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ------ -->
         <!-- ROUTES -->
         <!-- ------ -->
-
         <!--Route 1-->
         
 
@@ -26602,7 +26739,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ----- -->
         <!-- TOWNS -->
         <!-- ----- -->
-
         <!--Iki Town Outskirts-->
         
 
@@ -27221,10 +27357,39 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 
 
+        <!--Tsareena Sloop-->
+        
+
+<image href="assets/images/map/plasmafrigate_ship.png" xlink:href="assets/images/map/plasmafrigate_ship.png"
+    x="1104"
+    y="208"
+    height="144"
+    width="64"
+    data-bind="visible: TownList[&#39;Tsareena Sloop&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Tsareena Sloop"
+    x="1104"
+    y="208"
+    height="144"
+    width="64"
+    data-bind="visible: TownList[&#39;Tsareena Sloop&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Tsareena Sloop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Tsareena Sloop&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Tsareena Sloop'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+<image width="48" height="48"
+    x="1112"
+    y="256"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Tsareena Sloop') && TownList[&#39;Tsareena Sloop&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
+</image>
+
+
         <!-- -------- -->
         <!-- DUNGEONS -->
         <!-- -------- -->
-
         <!--Trainers School-->
         
 
@@ -27754,7 +27919,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ------------------ -->
         <!-- PLACES OF INTEREST -->
         <!-- ------------------ -->
-
         <!--Dock-->
         
 
@@ -27895,7 +28059,7 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
 
 </image>
 
-        
+
         
 
 <image href="assets/images/map/skullgrunts.png" xlink:href="assets/images/map/skullgrunts.png"
@@ -27948,7 +28112,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ------ -->
         <!-- ROUTES -->
         <!-- ------ -->
-
         <!--Route 4-->
         
 
@@ -29129,7 +29292,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ----- -->
         <!-- TOWNS -->
         <!-- ----- -->
-
         <!--Heahea City-->
         
 
@@ -29592,7 +29754,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- -------- -->
         <!-- DUNGEONS -->
         <!-- -------- -->
-
         <!--Pikachu Valley-->
         
 
@@ -30095,7 +30256,6 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
         <!-- ------------------ -->
         <!-- PLACES OF INTEREST -->
         <!-- ------------------ -->
-
         <!--Rainbow Rocket Grunts-->
         
 
@@ -30149,9 +30309,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     height="48"
     width="48"
     data-bind="attr: { class: MapHelper.accessToRoute(8, GameConstants.Region.alola) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-                click: () =&gt; {
-                    Notifier.notify({message: &#39;That sure is a tunnel.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;That sure is a tunnel.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Dividing Peak Tunnel'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -30167,9 +30327,9 @@ selectAllClick - (Optional) Function called when the Select All button is clicke
     height="128"
     width="48"
     data-bind="attr: { class: MapHelper.accessToRoute(8, GameConstants.Region.alola) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-                click: () =&gt; {
-                    Notifier.notify({message: &#39;That sure is a tunnel.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;That sure is a tunnel.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Dividing Peak Tunnel'), mouseleave: GameController.hideMapTooltip }">
 </rect>
