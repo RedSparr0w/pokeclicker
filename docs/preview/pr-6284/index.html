@@ -630,7 +630,7 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
                                     <!-- ko foreach: Object.values(ItemList).filter((i) => i instanceof CollectibleItem && i.isActive() && player.itemList[i.name]()).sort(ItemHandler.collectibleSort) -->
                                     <div class="col-6 col-lg-3 mb-2">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
-                                            data-bind="template: { name: 'otherItemTemplate', data: $data.name }">
+                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -648,8 +648,9 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
                                     <!-- ko foreach: GameHelper.enumNumbers(GameConstants.VitaminType) -->
                                     <div class="col-6 col-lg-3 mb-2">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
-                                            data-bind="template: { name: 'otherItemTemplate', data: GameConstants.VitaminType[$data]},
-                                                click: () => { VitaminController.currentlySelected($data); $('#pokemonVitaminExpandedModal').modal('show'); }">
+                                             data-bind="template: { name: 'otherItemTemplate', data: GameConstants.VitaminType[$data]},
+                                             click: ()=>
+                                            { VitaminController.currentlySelected($data); $('#pokemonVitaminExpandedModal').modal('show'); }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -667,8 +668,9 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
                                     <!-- ko foreach: GameHelper.enumStrings(GameConstants.ConsumableType).filter(type => player.itemList[type]()).map(type => ItemList[type]) -->
                                     <div class="col-6 col-lg-3 mb-2">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
-                                            data-bind="template: { name: 'otherItemTemplate', data: $data.name },
-                                            click: () => { ConsumableController.currentlySelected($data.type); $('#consumableModal').modal('show'); }">
+                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name },
+                                             click: ()=>
+                                            { ConsumableController.currentlySelected($data.type); $('#consumableModal').modal('show'); }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -683,13 +685,14 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
                         <div id="itemBag-heldItems" class="collapse show mt-1">
                             <div class="card-body pt-2 p-1">
                                 <div class="row justify-content-center">
-                                    <!-- ko foreach: Object.values(HeldItem.getSortedHeldItems()) -->
+                                    <!-- ko foreach: Object.values(BagHandler.getSortedHeldItems()) -->
                                     <h5 class="card-title col-12 mb-2" data-bind="text: $data.title, visible: $data.items.some(i => i.isUnlocked())"></h5>
                                     <!-- ko foreach: $data.items -->
                                     <div class="col-6 col-lg-3 mb-2" data-bind="visible: $data.isUnlocked()">
                                         <div class="btn btn-secondary text-left w-100 px-1" style="padding-top: 1px; padding-bottom: 2px;"
-                                            data-bind="template: { name: 'otherItemTemplate', data: $data.name },
-                                                click: () => { HeldItem.heldItemSelected($data); $('#heldItemModal').modal('show'); }">
+                                             data-bind="template: { name: 'otherItemTemplate', data: $data.name },
+                                             click: ()=>
+                                            { HeldItem.heldItemSelected($data); $('#heldItemModal').modal('show'); }">
                                         </div>
                                     </div>
                                     <!-- /ko -->
@@ -1928,64 +1931,57 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <span>Pokémon List</span>
     </div>
     <div id="pokemonListBody" class="card-body p-0 show">
-        <div class="table-responsive d-flex flex-column"  data-bind="resizable: { setting: 'pokemonList' }">
-            <div class="flex-grow-1 flex-shrink-1" style="overflow: auto;">
+        <div class="table-responsive d-flex flex-column" data-bind="resizable: { setting: 'pokemonList' }">
+            <div class="flex-grow-1 flex-shrink-1 text-left" style="overflow: auto;">
                 <div data-bind="template: { name: 'PartySortSettingTemplate', data: Settings.getSetting('partySort')}"></div>
-                <table id="pokemonList" class="table table-striped table-hover table-sm m-0">
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <div>
-                                    <div class="pokemonName">
-                                        <span>Name</span>
-                                    </div>
-                                    <div class="pokemonAttack">Attack</div>
-                                    <div class="pokemonLevel">Level</div>
-                                </div>
-                            </td>
-                        </tr>
-                    </thead>
-
-                    <tbody data-bind="let: { lazyPokemonList: lazyLoad('lazyPokemonList', $element, PartyController.getSortedList, { pageSize: 20, reset: () => (DisplayObservables.collapseState.pokemonListBody === 'hidden'), pause: () => DisplayObservables.collapseState.pokemonListBody !== 'show' }) }">
+                <div data-bind="let: {
+                    lazyPokemonList: lazyLoad('lazyPokemonList', $element, PartyController.getSortedList, { pageSize: 20, reset: () => (DisplayObservables.collapseState.pokemonListBody === 'hidden'), pause: () => DisplayObservables.collapseState.pokemonListBody !== 'show' }),
+                    showAtkLabel: player.highestRegion() == GameConstants.Region.kanto,
+                }">
                     <!-- ko if: DisplayObservables.collapseState.pokemonListBody !== 'hidden' -->
                         <!-- ko foreach: lazyPokemonList, childrenComplete: () => { lazyLoadCallback('lazyPokemonList'); } -->
-                        <tr data-toggle="modal" class="clickable" href="#pokemonStatisticsModal" data-bind="hidden: $data.breeding, click: () => { App.game.statistics.selectedPokemonID($data.id) }">
-                            <td>
-                                <img
-                                    class="smallImage"
-                                    data-bind="attr: { src: PokemonHelper.getImage($data.id) }"
-                                    src=""
-                                    alt=""
-                                />
-                            </td>
-                            <td>
-                                <div>
-                                    <div class="pokemonName">
-                                        <span data-bind="text: displayName">Name</span>
-                                        <sup data-bind="visible: App.game.party.alreadyCaughtPokemon($data.id, true)">✨</sup>
-                                        <img class="shadow-icon" src="assets/images/status/shadow.svg" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Shadow"/>
-                                        <img class="shadow-icon" src="assets/images/status/purified.svg" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Purified"/>
-                                        <!-- ko foreach: PokemonHelper.getMegaStones($data.name).filter(s => player.hasMegaStone(s.megaStone)) -->
-                                        <img width="20px" data-bind="attr: { src: $data.image },
-                                            tooltip: {
-                                                title: pokemonMap[$parent.name].evolutions.flatMap(e => e.restrictions)
-                                                    .find(r => r instanceof MegaEvolveRequirement && r.megaStone == $data.megaStone)?.hint() ?? '',
-                                                trigger: 'hover',
-                                                placement: 'bottom'
-                                        }"/>
-                                        <!-- /ko -->
+                            <div class="d-flex align-items-center small px-1 border-bottom pokemon-row clickable" href="#pokemonStatisticsModal" data-toggle="modal"
+                                data-bind="hidden: $data.breeding, click: () => { App.game.statistics.selectedPokemonID($data.id) }">
+                                <img data-bind="attr: { src: PokemonHelper.getImage($data.id) }" style="max-height: 52px;" src="" alt="" />
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <knockout data-bind="text: displayName"></knockout>
+                                            <sup data-bind="visible: $data.shiny">✨</sup>
+                                        </div>
+
+                                        <div class="ml-auto text-right text-nowrap">
+                                            <knockout class="text-muted small">Lv</knockout>
+                                            <knockout data-bind="text: level"></knockout>
+                                        </div>
                                     </div>
-                                    <div class="pokemonAttack" data-bind="text: attack.toLocaleString('en-US')"></div>
-                                    <div class="pokemonLevel" data-bind="text: level"></div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="text-muted">
+                                            <small class="attack-label" data-bind="visible: showAtkLabel">Atk</small>
+                                            <knockout title="Attack Power" data-bind="text: attack.toLocaleString('en-US')"></knockout>
+                                        </div>
+                                        <div class="ml-auto text-right d-flex align-items-center">
+                                            <!-- ko foreach: PokemonHelper.getMegaStones($data.name).filter(s => player.hasMegaStone(s.megaStone)) -->
+                                            <img width="18" data-bind="attr: { src: $data.image },
+                                                tooltip: {
+                                                    title: pokemonMap[$parent.name].evolutions.flatMap(e => e.restrictions)
+                                                        .find(r => r instanceof MegaEvolveRequirement && r.megaStone == $data.megaStone)?.hint() ?? '',
+                                                    trigger: 'hover',
+                                                    placement: 'bottom'
+                                            }"/>
+                                            <!-- /ko -->
+                                            <img class="shadow-icon" src="assets/images/status/shadow.svg" title="Shadow" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Shadow"/>
+                                            <img class="shadow-icon" src="assets/images/status/purified.svg" title="Purified" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Purified"/>
+                                            <img class="ml-1" width="28" data-bind="visible: $data.pokerus, attr: { src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[$data.pokerus]}.png`}" />
+                                        </div>
+                                    </div>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
                         <!-- /ko -->
                     <!-- /ko -->
-                    </tbody>
-                </table>
+                </div>
             </div>
+
             <!-- Reserved space for resize drag handle -->
             <div class="card-footer py-2"></div>
         </div>
@@ -3030,7 +3026,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ------ -->
         <!-- ROUTES -->
         <!-- ------ -->
-
         <!--Route 1-->
         
 
@@ -4117,7 +4112,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ------------------ -->
         <!-- PLACES OF INTEREST -->
         <!-- ------------------ -->
-
         <!--Route 26-->
         
 
@@ -4128,9 +4122,9 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     height="240"
     width="48"
     data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
-                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Johto Route 26'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -4146,9 +4140,9 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     height="48"
     width="112"
     data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
-                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Johto Route 27'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -4164,9 +4158,9 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     height="48"
     width="112"
     data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
-                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Johto Route 28'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -4182,9 +4176,9 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     height="64"
     width="32"
     data-bind="attr: { class: MapHelper.accessToRoute(2, GameConstants.Region.kanto) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-            click: () =&gt; {
-                Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;Seems like this path leads to another region. You can travel there using the dock in Vermilion City.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Johto Route 28'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -4193,7 +4187,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ----- -->
         <!-- TOWNS -->
         <!-- ----- -->
-
         <!--Pallet Town-->
         
 
@@ -4685,7 +4678,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- -------- -->
         <!-- DUNGEONS -->
         <!-- -------- -->
-
         <!--Viridian Forest-->
         
 
@@ -5107,7 +5099,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ------------------ -->
         <!-- PLACES OF INTEREST -->
         <!-- ------------------ -->
-
         
 
 <rect class="city"
@@ -5330,7 +5321,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-      
+        
 
 <image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
     x="288"
@@ -5550,7 +5541,37 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-    
+        <!--Gyarados Galleon-->
+        
+
+<image href="assets/images/map/plasmafrigate_ship.png" xlink:href="assets/images/map/plasmafrigate_ship.png"
+    x="1520"
+    y="640"
+    height="144"
+    width="64"
+    data-bind="visible: TownList[&#39;Gyarados Galleon&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Gyarados Galleon"
+    x="1520"
+    y="640"
+    height="144"
+    width="64"
+    data-bind="visible: TownList[&#39;Gyarados Galleon&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Gyarados Galleon&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Gyarados Galleon&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Gyarados Galleon'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+<image width="48" height="48"
+    x="1528"
+    y="688"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Gyarados Galleon') && TownList[&#39;Gyarados Galleon&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
+</image>
+
+
+        
     </g>
 
     <g data-bind="visible: player.subregion == SubRegions.getSubRegion(GameConstants.Region.kanto, 'Sevii Islands 123').id">
@@ -21647,7 +21668,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     <!-- ------ -->
     <!-- ROUTES -->
     <!-- ------ -->
-
     <!--Route 1-->
     
 
@@ -22906,7 +22926,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     <!-- ----- -->
     <!-- TOWNS -->
     <!-- ----- -->
-
     <!--Vaniville Town-->
     
 
@@ -23245,7 +23264,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 
     <!--Laverre City-->
-        
+    
 
 <rect class="city"
     data-town="Laverre City"
@@ -23512,10 +23531,123 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 
 
+    <!--Pirate Island-->
+    
+
+<image href="assets/images/map/client_island.png" xlink:href="assets/images/map/client_island.png"
+    x="0"
+    y="656"
+    height="256"
+    width="256"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="0"
+    y="656"
+    height="256"
+    width="256"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), style: {&#39;pointer-events&#39;: &#39;none&#39;},
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+    <!--Pirate Island extension-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="64"
+    y="752"
+    height="64"
+    width="112"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="64"
+    y="752"
+    height="64"
+    width="112"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Pirate Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pirate Island&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+<image width="48" height="48"
+    x="96"
+    y="760"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Pirate Island') && TownList[&#39;Pirate Island&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
+</image>
+
+    <!--Pirate Island extension-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="80"
+    y="816"
+    height="16"
+    width="80"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="80"
+    y="816"
+    height="16"
+    width="80"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Pirate Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pirate Island&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+    <!--Pirate Island extension-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="80"
+    y="736"
+    height="16"
+    width="96"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="80"
+    y="736"
+    height="16"
+    width="96"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Pirate Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pirate Island&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+    <!--Pirate Island extension-->
+    
+
+<image href="assets/images/map/transparent.png" xlink:href="assets/images/map/transparent.png"
+    x="96"
+    y="720"
+    height="16"
+    width="48"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Pirate Island"
+    x="96"
+    y="720"
+    height="16"
+    width="48"
+    data-bind="visible: TownList[&#39;Pirate Island&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Pirate Island&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Pirate Island&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Pirate Island'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+</image>
+
+
     <!-- ----- -->
     <!--DUNGEONS-->
     <!-- ----- -->
-
     
 
 
@@ -23857,7 +23989,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     <!-- ------------------ -->
     <!-- PLACES OF INTEREST -->
     <!-- ------------------ -->
-
     
 
 <rect class="city"
@@ -23900,7 +24031,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </rect>
 
 
-     
+    
 
 <rect class="city"
     data-town="Farm" 
@@ -23914,7 +24045,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </rect>
 
 
-     
+    
 
 <rect class="city"
     data-town="Pokémon Day Care" 
@@ -23947,7 +24078,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </rect>
 
 
-     
+    
 
 <image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
     x="896"
@@ -23968,7 +24099,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/tierno.png" xlink:href="assets/images/map/tierno.png"
     x="608"
@@ -23989,7 +24120,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/trevortierno.png" xlink:href="assets/images/map/trevortierno.png"
     x="448"
@@ -24010,7 +24141,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="224"
@@ -24031,7 +24162,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="512"
@@ -24052,7 +24183,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="824"
@@ -24073,7 +24204,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="1200"
@@ -24094,7 +24225,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/shauna.png" xlink:href="assets/images/map/shauna.png"
     x="1248"
@@ -24115,7 +24246,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/tierno.png" xlink:href="assets/images/map/tierno.png"
     x="1248"
@@ -24136,7 +24267,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/trevor.png" xlink:href="assets/images/map/trevor.png"
     x="1248"
@@ -24157,7 +24288,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/calem.png" xlink:href="assets/images/map/calem.png"
     x="1016"
@@ -24178,7 +24309,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-     
+    
 
 <image href="assets/images/map/ashketchumoverworld.png" xlink:href="assets/images/map/ashketchumoverworld.png"
     x="1232"
@@ -24199,7 +24330,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-	 
+    
 
 <image href="assets/images/map/megamanectricoverworld.png" xlink:href="assets/images/map/megamanectricoverworld.png"
     x="928"
@@ -24220,7 +24351,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 </image>
 
 
-	 
+    
 
 <image href="assets/images/map/megahoundoomoverworld.png" xlink:href="assets/images/map/megahoundoomoverworld.png"
     x="928"
@@ -24240,7 +24371,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/rampagingyveltal.png" xlink:href="assets/images/map/rampagingyveltal.png"
     x="192"
@@ -24260,7 +24391,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="1088"
@@ -24280,7 +24411,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="128"
@@ -24300,7 +24431,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="736"
@@ -24320,7 +24451,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="1296"
@@ -24340,7 +24471,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="736"
@@ -24360,7 +24491,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 </image>
 
-     
+    
 
 <image href="assets/images/map/Ring.png" xlink:href="assets/images/map/Ring.png"
     x="1088"
@@ -24395,7 +24526,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ------ -->
         <!-- ROUTES -->
         <!-- ------ -->
-
         <!--Route 1-->
         
 
@@ -26640,7 +26770,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ----- -->
         <!-- TOWNS -->
         <!-- ----- -->
-
         <!--Iki Town Outskirts-->
         
 
@@ -27259,10 +27388,39 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 
 
+        <!--Tsareena Sloop-->
+        
+
+<image href="assets/images/map/plasmafrigate_ship.png" xlink:href="assets/images/map/plasmafrigate_ship.png"
+    x="1104"
+    y="208"
+    height="144"
+    width="64"
+    data-bind="visible: TownList[&#39;Tsareena Sloop&#39;].isUnlocked()"/>
+<rect class="city"
+    data-town="Tsareena Sloop"
+    x="1104"
+    y="208"
+    height="144"
+    width="64"
+    data-bind="visible: TownList[&#39;Tsareena Sloop&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Tsareena Sloop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Tsareena Sloop&#39;) },
+        event: { mouseenter: () => GameController.showMapTooltip('Tsareena Sloop'), mouseleave: GameController.hideMapTooltip }">
+</rect>
+
+<image width="48" height="48"
+    x="1112"
+    y="256"
+    class="iconLocation hide"
+    data-bind="visible: MapHelper.isTownCurrentLocation('Tsareena Sloop') && TownList[&#39;Tsareena Sloop&#39;].isUnlocked(),
+        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
+        playerSpriteMove">
+
+</image>
+
+
         <!-- -------- -->
         <!-- DUNGEONS -->
         <!-- -------- -->
-
         <!--Trainers School-->
         
 
@@ -27792,7 +27950,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ------------------ -->
         <!-- PLACES OF INTEREST -->
         <!-- ------------------ -->
-
         <!--Dock-->
         
 
@@ -27933,7 +28090,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 </image>
 
-        
+
         
 
 <image href="assets/images/map/skullgrunts.png" xlink:href="assets/images/map/skullgrunts.png"
@@ -27986,7 +28143,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ------ -->
         <!-- ROUTES -->
         <!-- ------ -->
-
         <!--Route 4-->
         
 
@@ -29167,7 +29323,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ----- -->
         <!-- TOWNS -->
         <!-- ----- -->
-
         <!--Heahea City-->
         
 
@@ -29630,7 +29785,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- -------- -->
         <!-- DUNGEONS -->
         <!-- -------- -->
-
         <!--Pikachu Valley-->
         
 
@@ -30133,7 +30287,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
         <!-- ------------------ -->
         <!-- PLACES OF INTEREST -->
         <!-- ------------------ -->
-
         <!--Rainbow Rocket Grunts-->
         
 
@@ -30187,9 +30340,9 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     height="48"
     width="48"
     data-bind="attr: { class: MapHelper.accessToRoute(8, GameConstants.Region.alola) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-                click: () =&gt; {
-                    Notifier.notify({message: &#39;That sure is a tunnel.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;That sure is a tunnel.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Dividing Peak Tunnel'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -30205,9 +30358,9 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
     height="128"
     width="48"
     data-bind="attr: { class: MapHelper.accessToRoute(8, GameConstants.Region.alola) ? &#39;unlockedRoute&#39; : &#39;lockedRoute&#39; },
-                click: () =&gt; {
-                    Notifier.notify({message: &#39;That sure is a tunnel.&#39;});
-                },
+        click: () =&gt; {
+        Notifier.notify({message: &#39;That sure is a tunnel.&#39;});
+        },
 		playerSpriteMove,
         event: { mouseenter: () => GameController.showMapTooltip('Dividing Peak Tunnel'), mouseleave: GameController.hideMapTooltip }">
 </rect>
@@ -58191,6 +58344,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                                 <tr data-bind="visible: Object.values(App.game.challenges.list).filter(c => c.active()).length > 0, template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('hideChallengeRelatedModules')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showGymGoAnimation')}"></tr>
                                 <tr data-bind="template: { name: 'BooleanSettingTemplate', data: Settings.getSetting('showMuteButton')}"></tr>
+                                <tr data-bind="template: { name: 'MultipleChoiceSettingTemplate', data: Settings.getSetting('playerSafariSprite')}"></tr>
                                 <tr>
                                     <td colspan="2">
                                         <button type="button" class="btn btn-primary" data-bind="click: () => {
@@ -60568,7 +60722,15 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                         <tfoot>
                                             <tr>
                                                 <td colspan="2">
-                                                    <button class="btn btn-block" data-bind="attr: { disabled: !$data.hired() && !App.game.breeding.hatcheryHelpers.canHire() }, css: { 'btn-success': !$data.hired(), 'btn-danger': $data.hired() }, click: () => !$data.hired() ? $data.hire() : $data.fire(), text: !$data.hired() ? 'Hire!' : 'Fire!'">Hire!</button>
+                                                    <div class="d-flex" style="gap: 4px;">
+                                                        <button class="btn btn-primary no-emoji-font p-1" data-bind="tooltip: {
+                                                            html: true,
+                                                            title: $data.nextPokemonTooltip(),
+                                                            trigger: 'hover',
+                                                        }">🥚</button>
+                                                        <button class="btn btn-block" data-bind="attr: { disabled: !$data.hired() && !App.game.breeding.hatcheryHelpers.canHire() }, css: { 'btn-success': !$data.hired(), 'btn-danger': $data.hired() }, click: () => !$data.hired() ? $data.hire() : $data.fire(), text: !$data.hired() ? 'Hire!' : 'Fire!'">Hire!</button>
+                                                    </div>
+
                                                 </td>
                                             </tr>
                                         </tfoot>
@@ -62278,6 +62440,39 @@ aria-labelledby="pokedexModalLabel">
                                             </label>
                                             <!-- /ko -->
                                         </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <hr style="border-color:grey;">
+                                    </div>
+
+                                    <div class="form-group col-lg-12 col-12 mb-0" style="max-width: 100%; flex-grow: 1">
+                                        <!-- ko let: { pokedexSort: Settings.getSetting('pokedexSort') } -->
+                                        <label for="pokedex-setting-sort" data-bind="text: pokedexSort.displayName">Sort</label>
+                                        <div class="input-group">
+                                            <select id="pokedex-setting-sort" autocomplete="off" class="custom-select"
+                                                data-bind="options: pokedexSort.options,
+                                                    optionsValue: 'value',
+                                                    optionsText: 'text',
+                                                    value: pokedexSort.observableValue">
+                                            </select>
+                                            <div class="input-group-append bg-primary text-light">
+                                                <!-- ko let: { pokedexSortDirection: Settings.getSetting('pokedexSortDirection') } -->
+                                                <label for="pokedex-setting-sort-direction" class="clickable m-0 pl-2 pr-2" style="font-size: 22px;"
+                                                    data-bind="text: pokedexSortDirection.observableValue() ? '⥄' : '⥂',
+                                                        tooltip: {
+                                                            title: pokedexSortDirection.observableValue() ? 'Descending (highest value first)' : 'Ascending (lowest value first)',
+                                                            trigger: 'hover',
+                                                            placement:'top'
+                                                        }">
+                                                    ⥂
+                                                </label>
+                                                <input id="pokedex-setting-sort-direction" style="vertical-align: middle" class="hidden" type='checkbox'
+                                                    data-bind="checked: pokedexSortDirection.observableValue"/>
+                                                <!-- /ko -->
+                                            </div>
+                                        </div>
+                                        <!-- /ko -->
                                     </div>
 
                                     <div class="col-12">
