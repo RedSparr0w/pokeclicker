@@ -1639,7 +1639,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                                         attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.ball()] + '.svg'},
                                         css: { 'pokeball-selected': $data.enabled() },
                                         tooltip: {
-                                            title: $data.ball() === GameConstants.Pokeball.None ? 'None' : ItemList[GameConstants.Pokeball[$data.ball()]].displayName,
+                                            title: $data.ball() === GameConstants.Pokeball.None ? 'Do not catch' : ItemList[GameConstants.Pokeball[$data.ball()]].displayName,
                                             trigger: 'hover', animation: false,
                                             placement: 'right'
                                         },
@@ -1956,7 +1956,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                                         </div>
                                         <div class="ml-auto text-right d-flex align-items-center">
                                             <!-- ko foreach: PokemonHelper.getMegaStones($data.name).filter(s => player.hasMegaStone(s.megaStone)) -->
-                                            <img width="18" data-bind="attr: { src: $data.image },
+                                            <img width="20" data-bind="attr: { src: $data.image },
                                                 tooltip: {
                                                     title: pokemonMap[$parent.name].evolutions.flatMap(e => e.restrictions)
                                                         .find(r => r instanceof MegaEvolveRequirement && r.megaStone == $data.megaStone)?.hint() ?? '',
@@ -1964,9 +1964,14 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                                                     placement: 'bottom'
                                             }"/>
                                             <!-- /ko -->
-                                            <img class="shadow-icon" src="assets/images/status/shadow.svg" title="Shadow" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Shadow"/>
-                                            <img class="shadow-icon" src="assets/images/status/purified.svg" title="Purified" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Purified"/>
-                                            <img class="ml-1" width="28" data-bind="visible: $data.pokerus, attr: { src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[$data.pokerus]}.png`}" />
+                                            <img class="shadow-icon ml-1" src="assets/images/status/shadow.svg" title="Shadow" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Shadow"/>
+                                            <img class="shadow-icon ml-1" src="assets/images/status/purified.svg" title="Purified" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Purified"/>
+                                            <img class="ml-1" data-bind="visible: $data.pokerus, attr: { src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[$data.pokerus]}.png`},
+                                                tooltip: {
+                                                    title:  `EVs: ${$data.evs().toLocaleString('en-US')}`,
+                                                    trigger: 'hover',
+                                                    placement: 'bottom',
+                                            }"/>
                                         </div>
                                     </div>
                                 </div>
@@ -57712,7 +57717,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 data-bind="tooltip: { title: 'As you earn achievements, you gain up to: 150% (global), 100% (per region), and from 25% to 75% (per special subregion). Earning bonuses to Click Attack, Flute Effects, Pokédollar / Dungeon Token gains, and Experience earned from all sources.', trigger: 'hover', placement:'right' }">Achievements Bonus: <u class="text-primary" data-bind="text: AchievementHandler.achievementBonusPercent()"></u></h5>
+                <h5 data-bind="tooltip: { title: 'As you earn achievements, you gain up to: 150%&nbsp;(global), 100%&nbsp;(per region), 25%&nbsp;(events), and from 25% to 75% (per special subregion). Earning bonuses to Click Attack, Flute Effects, Pokédollar / Dungeon Token gains, and Experience earned from all sources.', trigger: 'hover', placement:'right' }">Achievements Bonus: <u class="text-primary" data-bind="text: AchievementHandler.achievementBonusPercent()"></u></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -59193,19 +59198,19 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                         <td class="text-center">1.5x Damage</td>
                     </tr>
                     <tr>
-                        <td class="text-center">802 EVs</td>
+                        <td class="text-center">803 EVs</td>
                         <td class="text-center">2x Damage</td>
                     </tr>
                     <tr>
-                        <td class="text-center">40,121 EVs</td>
+                        <td class="text-center">40,122 EVs</td>
                         <td class="text-center">3x Damage</td>
                     </tr>
                     <tr>
-                        <td class="text-center">643,300 EVs</td>
+                        <td class="text-center">643,898 EVs</td>
                         <td class="text-center">4x Damage</td>
                     </tr>
                     <tr>
-                        <td class="text-center">5,540,000 EVs</td>
+                        <td class="text-center">5,540,055 EVs</td>
                         <td class="text-center">5x Damage</td>
                     </tr>
                     <tr>
@@ -60254,9 +60259,11 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             </div>
 
                                             <div class="col-12 mt-1">
-                                                <button class="btn btn-primary btn-block btn-sm" data-bind="click: () => BreedingController.resetFilters()">
-                                                    Reset All Filters
-                                                </button>
+                                                <button class="btn btn-block btn-sm" data-bind="
+                                                    click: () => BreedingController.resetFilters(),
+                                                    css: BreedingController.filtersActive() ? 'btn-primary' : 'btn-secondary disabled',
+                                                    enable: BreedingController.filtersActive
+                                                ">Reset All Filters</button>
                                             </div>
 
                                             <div class="col-12">
@@ -62379,9 +62386,11 @@ aria-labelledby="pokedexModalLabel">
                                     </div>
 
                                     <div class="col-12 mt-1">
-                                        <button class="btn btn-primary btn-block btn-sm" data-bind="click: () => PokedexHelper.resetFilters()">
-                                            Reset All Filters
-                                        </button>
+                                        <button class="btn btn-block btn-sm" data-bind="
+                                            click: () => PokedexHelper.resetFilters(),
+                                            css: PokedexHelper.filtersActive() ? 'btn-primary' : 'btn-secondary disabled',
+                                            enable: PokedexHelper.filtersActive
+                                        ">Reset All Filters</button>
                                     </div>
 
                                     <div class="col-12">
@@ -65164,7 +65173,12 @@ aria-labelledby="badgeCaseModalLabel">
                         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split active" data-bind="text: '&nbsp;'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" data-bind="foreach: GameHelper.enumStrings(BaitType)">
-                            <button class="dropdown-item" type="button" data-bind="click: function(){SafariBattle.selectedBait(BaitList[$data])}, text: BaitList[$data].btnName"></button>
+                            <button class="dropdown-item" type="button" data-bind="click: function(){SafariBattle.selectedBait(BaitList[$data])}, text: BaitList[$data].btnName,
+                                tooltip: {
+                                    title: BaitList[$data].description,
+                                    trigger: 'hover',
+                                    placement: 'left',
+                                }"></button>
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary btn-block col-6 m-0" onclick="this.blur();SafariBattle.throwRock()" data-bind="disable: SafariBattle.busy()">
@@ -65259,7 +65273,7 @@ aria-labelledby="badgeCaseModalLabel">
 <script type="text/html" id="pokeballSelectionTemplate">
   <td class="text-center">
     <img class="pokeball-small"
-      data-bind="attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.type] + '.svg'}, css: {'pokeball-selected': App.game.pokeballs.selectedSelection()?.() === $data.type}, tooltip: {title: $data.type === -1 ? 'None' : ItemList[GameConstants.Pokeball[$data.type]].displayName, trigger: 'hover', animation: false, placement: 'bottom'}"/>
+      data-bind="attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.type] + '.svg'}, css: {'pokeball-selected': App.game.pokeballs.selectedSelection()?.() === $data.type}, tooltip: {title: $data.type === -1 ? 'Do not catch' : ItemList[GameConstants.Pokeball[$data.type]].displayName, trigger: 'hover', animation: false, placement: 'bottom'}"/>
   </td>
   <td class="align-middle">
     <span data-bind="text: $data.description"></span>
@@ -65359,7 +65373,7 @@ aria-labelledby="badgeCaseModalLabel">
                                         attr: {
                                             src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.ball()] + '.svg'},
                                             tooltip: {
-                                                title: $data.ball() === -1 ? 'None' : ItemList[GameConstants.Pokeball[$data.ball()]].displayName,
+                                                title: $data.ball() === -1 ? 'Do not catch' : ItemList[GameConstants.Pokeball[$data.ball()]].displayName,
                                                 trigger: 'hover',
                                                 animation: false,
                                                 placement: 'bottom'
@@ -65461,7 +65475,7 @@ aria-labelledby="badgeCaseModalLabel">
                                     attr: {
                                         src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data?.ball()] + '.svg'},
                                         tooltip: {
-                                            title: $data?.ball() === -1 ? 'None' : ItemList[GameConstants.Pokeball[$data?.ball()]].displayName,
+                                            title: $data?.ball() === -1 ? 'Do not catch' : ItemList[GameConstants.Pokeball[$data?.ball()]].displayName,
                                             trigger: 'hover',
                                             animation: false,
                                             placement: 'bottom'
