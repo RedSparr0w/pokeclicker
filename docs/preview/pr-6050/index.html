@@ -1581,15 +1581,38 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
 
 <!-- imported from src/components/templates/goalTrackerObjectiveTemplate.html -->
 <script type="text/html" id="goalTrackerObjectiveTemplate">
-    <!-- ko ifnot: hasGoal -->
-    <div class="d-flex align-items-center" style="min-height: 1.25rem;">
-        <div class="flex-grow-1" data-bind="text: displayName"></div>
-        <div class="pl-2 text-nowrap" data-bind="text: progressText()"></div>
+    <!-- ko with: $data.objective -->
+    <div class="d-flex align-items-center" style="gap: 4px; min-height: 1.25rem;">
+        <div class="flex-grow-1 text-wrap" data-bind="text: displayName"></div>
+        <!-- ko if: isConfigured() && !hasGoal -->
+        <div class="text-nowrap" data-bind="text: progressText()"></div>
+        <!-- /ko -->
+        <!-- ko if: $parent.showControls -->
+        <button type="button" class="btn btn-primary btn-sm px-1 py-0 ml-2 mb-1 no-emoji-font" style="width: 25px;" title="Edit Objective" data-bind="click: () => {
+            App.game.goalTracker.selectedObjective($data);
+            $('#goalTrackerObjectiveModal').modal('show');
+        }">✎</button>
+        <div class="dropdown mb-1">
+            <button class="btn btn-primary btn-sm dropdown-toggle px-1 py-0" type="button" data-toggle="dropdown" style="width: 25px;"></button>
+            <div class="dropdown-menu">
+                <button type="button" class="dropdown-item small" data-bind="click: () => $parent.goal.duplicateObjective($data), visible: isConfigured">
+                    Clone Objective
+                </button>
+                <button type="button" class="dropdown-item small" data-bind="click: () => $parent.goal.exportObjective($data)">
+                    Export Objective
+                </button>
+                <button type="button" class="dropdown-item small" data-bind="click: () => $parent.goal.deleteObjective($data)">
+                    Delete Objective
+                </button>
+            </div>
+        </div>
+        <!-- /ko -->
     </div>
+    <!-- ko ifnot: isConfigured -->
+    <div class="text-danger">Not configured!</div>
     <!-- /ko -->
-    <!-- ko if: hasGoal -->
-    <div data-bind="text: displayName"></div>
-    <div class="progress" style="height: 1.25rem;">
+    <!-- ko if: isConfigured() && hasGoal -->
+    <div class="progress mt-1" style="height: 1.25rem;">
         <div class="progress-bar text-left" role="progressbar"
             data-bind="attr: { style: 'width:' + (Math.min(progressPercent(), 1) * 100) + '%'},
                 css: { 'bg-primary': progressPercent() < 1, 'bg-success': progressPercent() >= 1 }"
@@ -1602,6 +1625,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
             </div>
         </div>
     </div>
+    <!-- /ko -->
     <!-- /ko -->
 </script>
 
@@ -2058,7 +2082,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                     css: { 'border-top pt-2': $index() },
                     event: { contextmenu: () => { App.game.goalTracker.selectedObjective($data); $('#goalTrackerObjectiveModal').modal('show'); } }
                 ">
-                    <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: $data }"></knockout>
+                    <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: { objective: $data, showControls: false } }"></knockout>
                 </div>
             </div>
         </div>
@@ -66567,7 +66591,7 @@ aria-labelledby="purifyChamberModalLabel">
                     Import Goal
                 </button>
 
-                <div id="pokeballFilterConfigs" class="px-3"
+                <div id="goalTrackerGoalList" class="px-3"
                     data-bind="sortable: {
                         foreach: App.game.goalTracker.goals,
                         getDataId: (goal) => goal.uuid,
@@ -66615,31 +66639,7 @@ aria-labelledby="purifyChamberModalLabel">
                                     <div class="goalObjectiveWrapper" style="cursor: move;">
                                         <div class="goalObjective">
                                             <div class="border-bottom border-secondary mb-2 pb-1">
-                                                <div class="d-flex mb-1" style="gap: 4px; align-items: center;">
-                                                    <div class="flex-grow-1 text-wrap align-items-center" data-bind="text: displayName"></div>
-                                                    <button type="button" class="btn btn-primary btn-sm px-1 py-0 no-emoji-font" style="width: 25px;" title="Edit Objective" data-bind="click: () => {
-                                                        App.game.goalTracker.selectedObjective($data);
-                                                        $('#goalTrackerObjectiveModal').modal('show');
-                                                    }">✎</button>
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-primary btn-sm dropdown-toggle px-1 py-0" type="button" data-toggle="dropdown" style="width: 25px;"></button>
-                                                        <div class="dropdown-menu">
-                                                            <button type="button" class="dropdown-item small" data-bind="click: () => $parent.duplicateObjective($data), visible: $data.isConfigured">
-                                                                Clone Objective
-                                                            </button>
-                                                            <button type="button" class="dropdown-item small" data-bind="click: () => $parent.exportObjective($data)">
-                                                                Export Objective
-                                                            </button>
-                                                            <button type="button" class="dropdown-item small" data-bind="click: () => $parent.deleteObjective($data)">
-                                                                Delete Objective
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="text-danger" data-bind="hidden: isConfigured">Not configured!</div>
-                                                <div data-bind="visible: isConfigured">
-                                                    <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: $data }"></knockout>
-                                                </div>
+                                                <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: { objective: $data, goal: $parent, showControls: true } }"></knockout>
                                             </div>
                                         </div>
                                     </div>
@@ -66726,10 +66726,6 @@ aria-labelledby="purifyChamberModalLabel">
                 <div class="form-group" data-bind="visible: $parent.hasGoal">
                     <label>Goal Amount</label>
                     <input type="number" class="form-control" data-bind="value: $parent.targetAmount" />
-                    <!--<small class="form-text text-muted">
-                        Current Amount:
-                        <span data-bind="text: $parent.isConfigured() ? $parent.getProgress().toLocaleString('en-US') : 'N/A'"></span>
-                    </small>-->
                 </div>
                 <div class="form-group">
                     <label>Tracking Mode</label>
@@ -66750,7 +66746,7 @@ aria-labelledby="purifyChamberModalLabel">
             </div>
             <div class="modal-footer">
                 <div class="card-body text-left small p-0">
-                    <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: $data }"></knockout>
+                    <knockout data-bind="template: { name: 'goalTrackerObjectiveTemplate', data: { objective: $data, showControls: false } }"></knockout>
                 </div>
             </div>
             <div class="modal-footer justify-content-start">
