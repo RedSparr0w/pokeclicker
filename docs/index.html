@@ -57165,7 +57165,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                         <img width="100%" height="100%" src=""
                             style="width: 68.75%; max-height: 100%; image-rendering: pixelated;"
                             data-bind="attr: { src: FarmController.getImage($index()) },
-                                css: { 'wither-warning': $data.stage() == PlotStage.Berry && $data.calcTimeLeft() <= GameConstants.WITHER_WARNING_TIME }">
+                                css: { 'wither-warning': !$data.isAffectedByPetaya() && $data.stage() == PlotStage.Berry && $data.calcTimeLeft() <= GameConstants.WITHER_WARNING_TIME }">
                         </div>
                     <!-- /ko -->
                     <!-- ko if: $data.isSafeLocked -->
@@ -63448,15 +63448,17 @@ aria-labelledby="badgeCaseModalLabel">
                                                 FarmController.selectedBerry($data);
                                                 FarmController.selectedFarmTool(FarmingTool.Berry);
                                             }, css: { 'active': FarmController.selectedBerry() === $data && FarmController.selectedFarmTool() == FarmingTool.Berry },
-                                            tooltip: App.game.farming.unlockedBerries[$data]() ? {
+                                            tooltip: {
                                                 html: true,
-                                                title: `<u>Growth Duration</u>: ${GameConstants.formatSecondsToTime(BerryList[$data].growthTime[3])}<br/>
+                                                title: App.game.farming.unlockedBerries[$data]() ?
+                                                    `<u>Growth Duration</u>: ${GameConstants.formatSecondsToTime(BerryList[$data].growthTime[3])}<br/>
                                                     ${BerryList[$data].harvestAmount.toLocaleString('en-US')} <img width='12px' alt='${BerryType[$data]}' src='${FarmController.getBerryImage($data)}' /> per harvest<br/>
-                                                    ${BerryList[$data].farmValue.toLocaleString('en-US')} <img width='12px' alt='Farm Points' src='assets/images/currency/farmPoint.svg' /> per harvest`,
+                                                    ${BerryList[$data].farmValue.toLocaleString('en-US')} <img width='12px' alt='Farm Points' src='assets/images/currency/farmPoint.svg' /> per harvest`
+                                                    : '',
                                                 placement: 'right',
                                                 trigger: 'hover',
                                                 animation: false,
-                                            } : {}">
+                                            }">
                                             <img src="" height="28px"
                                                 data-bind="attr:{ src: FarmController.getBerryImage($data) },
                                                 css: {'berryLocked': !App.game.farming.unlockedBerries[$data]() }">
@@ -63615,7 +63617,7 @@ aria-labelledby="badgeCaseModalLabel">
                                                 <img width="100%" height="100%" src=""
                                                     style="width: 68.75%; max-height: 100%; image-rendering: pixelated;"
                                                     data-bind="attr: { src: FarmController.getImage($index()) },
-                                                        css: { 'wither-warning': $data.stage() == PlotStage.Berry && $data.calcTimeLeft() <= GameConstants.WITHER_WARNING_TIME }">
+                                                        css: { 'wither-warning': !$data.isAffectedByPetaya() && $data.stage() == PlotStage.Berry && $data.calcTimeLeft() <= GameConstants.WITHER_WARNING_TIME }">
                                             </div>
                                             <!-- ko if: $data.isSafeLocked -->
                                             <img class ="plotSafeLockIcon" src= "assets/images/farm/plotSafeLock.svg" >
@@ -65148,12 +65150,16 @@ aria-labelledby="badgeCaseModalLabel">
                         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split active" data-bind="text: '&nbsp;'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" data-bind="foreach: GameHelper.enumStrings(BaitType)">
-                            <button class="dropdown-item" type="button" data-bind="click: function(){SafariBattle.selectedBait(BaitList[$data])}, text: BaitList[$data].btnName,
-                                tooltip: {
-                                    title: BaitList[$data].description,
-                                    trigger: 'hover',
-                                    placement: 'left',
-                                }"></button>
+                            <div class="dropdown-item d-flex justify-content-between align-items-center">
+                                <button class="dropdown-item p-0" type="button" data-bind="click: function(){SafariBattle.selectedBait(BaitList[$data])}, text: BaitList[$data].btnName"></button>
+                                <span class="p-0 pl-2"
+                                    data-bind="click: function(bait, event){ event.stopPropagation(); },
+                                    tooltip: {
+                                        title: BaitList[$data].description,
+                                        trigger: 'hover',
+                                        placement: 'top',
+                                    }">ⓘ</span>
+                            </div>
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary btn-block col-6 m-0" onclick="this.blur();SafariBattle.throwRock()" data-bind="disable: SafariBattle.busy()">
