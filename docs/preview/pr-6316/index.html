@@ -1218,8 +1218,13 @@ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(window._relo
                             <div class="col-6 col-lg-4 mb-2">
                                 <div class="btn btn-secondary p-1 d-flex align-items-center text-left" style="cursor: default;">
                                     <img width="42px" data-bind="attr: { src: DungeonInfo.getLootImage(item.loot) }">
-                                    <div class="flex-grow-1 d-flex flex-column ml-2 small text-truncate">
-                                        <div class="text-truncate" data-bind="text: DungeonInfo.getLootName(item.loot)"></div>
+                                    <div class="flex-grow-1 d-flex flex-column ml-2 small text-truncate loot-details">
+                                        <div class="loot-title">
+                                            <span class="text-truncate" data-bind="text: DungeonInfo.getLootName(item.loot)"></span>
+                                            <!-- ko if: (item.amount ?? 1) > 1 -->
+                                            <span class="loot-amount" data-bind="text: `×${item.amount}`"></span>
+                                            <!-- /ko -->
+                                        </div>
                                         <!-- ko if: item.requirement?.isCompleted() ?? true -->
                                         <div class="small" data-bind="text: DungeonInfo.getLootChanceFormatted(item, lootEntries[0])"></div>
                                         <!-- /ko -->
@@ -1645,7 +1650,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                                         attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.ball()] + '.svg'},
                                         css: { 'pokeball-selected': $data.enabled() },
                                         tooltip: {
-                                            title: $data.ball() === GameConstants.Pokeball.None ? 'None' : ItemList[GameConstants.Pokeball[$data.ball()]].displayName,
+                                            title: $data.ball() === GameConstants.Pokeball.None ? 'Do not catch' : ItemList[GameConstants.Pokeball[$data.ball()]].displayName,
                                             trigger: 'hover', animation: false,
                                             placement: 'right'
                                         },
@@ -1962,7 +1967,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                                         </div>
                                         <div class="ml-auto text-right d-flex align-items-center">
                                             <!-- ko foreach: PokemonHelper.getMegaStones($data.name).filter(s => player.hasMegaStone(s.megaStone)) -->
-                                            <img width="18" data-bind="attr: { src: $data.image },
+                                            <img width="20" data-bind="attr: { src: $data.image },
                                                 tooltip: {
                                                     title: pokemonMap[$parent.name].evolutions.flatMap(e => e.restrictions)
                                                         .find(r => r instanceof MegaEvolveRequirement && r.megaStone == $data.megaStone)?.hint() ?? '',
@@ -1970,9 +1975,14 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                                                     placement: 'bottom'
                                             }"/>
                                             <!-- /ko -->
-                                            <img class="shadow-icon" src="assets/images/status/shadow.svg" title="Shadow" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Shadow"/>
-                                            <img class="shadow-icon" src="assets/images/status/purified.svg" title="Purified" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Purified"/>
-                                            <img class="ml-1" width="28" data-bind="visible: $data.pokerus, attr: { src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[$data.pokerus]}.png`}" />
+                                            <img class="shadow-icon ml-1" src="assets/images/status/shadow.svg" title="Shadow" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Shadow"/>
+                                            <img class="shadow-icon ml-1" src="assets/images/status/purified.svg" title="Purified" data-bind="visible: $data.shadow == GameConstants.ShadowStatus.Purified"/>
+                                            <img class="ml-1" data-bind="visible: $data.pokerus, attr: { src: `assets/images/breeding/pokerus/${GameConstants.Pokerus[$data.pokerus]}.png`},
+                                                tooltip: {
+                                                    title:  `EVs: ${$data.evs().toLocaleString('en-US')}`,
+                                                    trigger: 'hover',
+                                                    placement: 'bottom',
+                                            }"/>
                                         </div>
                                     </div>
                                 </div>
@@ -27386,36 +27396,6 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
             playerSpriteMove">
     </image>
 
-
-
-        <!--Tsareena Sloop-->
-        
-
-<image href="assets/images/map/plasmafrigate_ship.png" xlink:href="assets/images/map/plasmafrigate_ship.png"
-    x="1104"
-    y="208"
-    height="144"
-    width="64"
-    data-bind="visible: TownList[&#39;Tsareena Sloop&#39;].isUnlocked()"/>
-<rect class="city"
-    data-town="Tsareena Sloop"
-    x="1104"
-    y="208"
-    height="144"
-    width="64"
-    data-bind="visible: TownList[&#39;Tsareena Sloop&#39;].isUnlocked(), click:function(){MapHelper.moveToTown(&#39;Tsareena Sloop&#39;)}, attr:{ class: MapHelper.calculateTownCssClass(&#39;Tsareena Sloop&#39;) },
-        event: { mouseenter: () => GameController.showMapTooltip('Tsareena Sloop'), mouseleave: GameController.hideMapTooltip }">
-</rect>
-
-<image width="48" height="48"
-    x="1112"
-    y="256"
-    class="iconLocation hide"
-    data-bind="visible: MapHelper.isTownCurrentLocation('Tsareena Sloop') && TownList[&#39;Tsareena Sloop&#39;].isUnlocked(),
-        attr: {href:`assets/images/profile/trainer-${App.game.profile.trainer() || 0}.png`},
-        playerSpriteMove">
-
-</image>
 
 
         <!-- -------- -->
@@ -57191,7 +57171,7 @@ bottomButtons - (Optional) Adds one or more buttons to the bottom of the dropdow
                         <img width="100%" height="100%" src=""
                             style="width: 68.75%; max-height: 100%; image-rendering: pixelated;"
                             data-bind="attr: { src: FarmController.getImage($index()) },
-                                css: { 'wither-warning': $data.stage() == PlotStage.Berry && $data.calcTimeLeft() <= GameConstants.WITHER_WARNING_TIME }">
+                                css: { 'wither-warning': !$data.isAffectedByPetaya() && $data.stage() == PlotStage.Berry && $data.calcTimeLeft() <= GameConstants.WITHER_WARNING_TIME }">
                         </div>
                     <!-- /ko -->
                     <!-- ko if: $data.isSafeLocked -->
@@ -57718,7 +57698,7 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 data-bind="tooltip: { title: 'As you earn achievements, you gain up to: 150% (global), 100% (per region), and from 25% to 75% (per special subregion). Earning bonuses to Click Attack, Flute Effects, Pokédollar / Dungeon Token gains, and Experience earned from all sources.', trigger: 'hover', placement:'right' }">Achievements Bonus: <u class="text-primary" data-bind="text: AchievementHandler.achievementBonusPercent()"></u></h5>
+                <h5 data-bind="tooltip: { title: 'As you earn achievements, you gain up to: 150%&nbsp;(global), 100%&nbsp;(per region), 25%&nbsp;(events), and from 25% to 75% (per special subregion). Earning bonuses to Click Attack, Flute Effects, Pokédollar / Dungeon Token gains, and Experience earned from all sources.', trigger: 'hover', placement:'right' }">Achievements Bonus: <u class="text-primary" data-bind="text: AchievementHandler.achievementBonusPercent()"></u></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -59199,19 +59179,19 @@ aria-labelledby="AchievementsModalLabel" aria-hidden="true">
                         <td class="text-center">1.5x Damage</td>
                     </tr>
                     <tr>
-                        <td class="text-center">802 EVs</td>
+                        <td class="text-center">803 EVs</td>
                         <td class="text-center">2x Damage</td>
                     </tr>
                     <tr>
-                        <td class="text-center">40,121 EVs</td>
+                        <td class="text-center">40,122 EVs</td>
                         <td class="text-center">3x Damage</td>
                     </tr>
                     <tr>
-                        <td class="text-center">643,300 EVs</td>
+                        <td class="text-center">643,898 EVs</td>
                         <td class="text-center">4x Damage</td>
                     </tr>
                     <tr>
-                        <td class="text-center">5,540,000 EVs</td>
+                        <td class="text-center">5,540,055 EVs</td>
                         <td class="text-center">5x Damage</td>
                     </tr>
                     <tr>
@@ -59838,7 +59818,7 @@ aria-labelledby="hallOfFameModalLabel" aria-hidden="true">
                    Dungeons in the <strong data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() - 2])"></strong> Region will be significantly less likely to drop Epic, Legendary, and Mythic loot.<br /><br />
                    <!-- /ko -->
                    You will also have to progress to the Dock in <span data-bind="text: GameConstants.camelCaseToString(GameConstants.Region[player.highestRegion() + 1])"></span> before you are able to travel between regions again.<br />
-                   It is recommended to download your save in case that you get stuck in your journey.
+                   It is recommended to download your save in case that you get stuck on your journey.
                </p>
                <button class="btn btn-block btn-secondary" onclick="Save.download()">Download Save</button>
                <button class="btn btn-success btn-block" onclick="MapHelper.travelToNextRegion()" data-dismiss="modal">Let's Go!</button>
@@ -60197,6 +60177,11 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                                 class: 'btn-primary btn-sm',
                                                                 onClick: () => breedingCategoryFilter.set([]),
                                                             },
+                                                            {
+                                                                label: 'Categorized',
+                                                                class: 'btn-primary btn-sm',
+                                                                onClick: () => breedingCategoryFilter.set(PokemonCategories.categories().filter(c => c.id > 0).map(c => c.id)),
+                                                            },
                                                         ],
                                                         bottomButtons: [
                                                             {
@@ -60260,9 +60245,11 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                             </div>
 
                                             <div class="col-12 mt-1">
-                                                <button class="btn btn-primary btn-block btn-sm" data-bind="click: () => BreedingController.resetFilters()">
-                                                    Reset All Filters
-                                                </button>
+                                                <button class="btn btn-block btn-sm" data-bind="
+                                                    click: () => BreedingController.resetFilters(),
+                                                    css: BreedingController.filtersActive() ? 'btn-primary' : 'btn-secondary disabled',
+                                                    enable: BreedingController.filtersActive
+                                                ">Reset All Filters</button>
                                             </div>
 
                                             <div class="col-12">
@@ -60460,9 +60447,9 @@ aria-labelledby="breedingModalLabel" aria-hidden="true">
                                                         </div>
                                                         <!-- /ko -->
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item dropdown-text" href="#categoryModal" data-toggle="modal">
-                                                            <i>Edit categories</i>
-                                                        </a>
+                                                        <button class="btn btn-primary btn-sm btn-block font-weight-bold" data-toggle="modal" data-target="#categoryModal">
+                                                            Edit Categories
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </li>
@@ -62295,6 +62282,11 @@ aria-labelledby="pokedexModalLabel">
                                                         class: 'btn-primary btn-sm',
                                                         onClick: () => pokedexCategoryFilter.set([]),
                                                     },
+                                                    {
+                                                        label: 'Categorized',
+                                                        class: 'btn-primary btn-sm',
+                                                        onClick: () => pokedexCategoryFilter.set(PokemonCategories.categories().filter(c => c.id > 0).map(c => c.id)),
+                                                    },
                                                 ],
                                                 bottomButtons: [
                                                     {
@@ -62385,9 +62377,11 @@ aria-labelledby="pokedexModalLabel">
                                     </div>
 
                                     <div class="col-12 mt-1">
-                                        <button class="btn btn-primary btn-block btn-sm" data-bind="click: () => PokedexHelper.resetFilters()">
-                                            Reset All Filters
-                                        </button>
+                                        <button class="btn btn-block btn-sm" data-bind="
+                                            click: () => PokedexHelper.resetFilters(),
+                                            css: PokedexHelper.filtersActive() ? 'btn-primary' : 'btn-secondary disabled',
+                                            enable: PokedexHelper.filtersActive
+                                        ">Reset All Filters</button>
                                     </div>
 
                                     <div class="col-12">
@@ -62642,9 +62636,9 @@ aria-labelledby="pokedexModalLabel">
                                                     </div>
                                                     <!-- /ko -->
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item dropdown-text" href="#categoryModal" data-toggle="modal">
-                                                        <i>Edit categories</i>
-                                                    </a>
+                                                    <button class="btn btn-primary btn-sm btn-block font-weight-bold" data-toggle="modal" data-target="#categoryModal">
+                                                        Edit Categories
+                                                    </button>
                                                 </div>
                                             </div>
                                             <!-- /ko -->
@@ -62776,7 +62770,7 @@ aria-labelledby="pokedexModalLabel">
                   </td>
                 </tr>
                 <!-- /ko -->
-                <!-- ko if: BagHandler.displayName(pokemonMap[$data].heldItem) -->
+                <!-- ko with: pokemonMap[$data].heldItem -->
                 <tr>
                   <td class="text-left align-middle" data-bind="tooltip: {
                     title: 'Item this Pokémon has a chance to drop upon being defeated.',
@@ -62784,10 +62778,10 @@ aria-labelledby="pokedexModalLabel">
                     trigger: 'hover'
                   }">Rare Hold Item</td>
                   <td class="text-left tight text-wrap">
-                    <code data-bind="text: BagHandler.displayName(pokemonMap[$data].heldItem)"></code>
-                    <!-- ko ifnot: pokemonMap[$data].heldItem.requirement?.isCompleted() ?? true -->
+                    <code data-bind="text: BagHandler.displayName($data) + (($data.amount ?? 1) > 1 ? ' ×' + $data.amount : '')"></code>
+                    <!-- ko ifnot: $data.requirement?.isCompleted() ?? true -->
                     <span class="small" data-bind="tooltip: {
-                        title: pokemonMap[$data].heldItem.requirement.hint(),
+                        title: $data.requirement.hint(),
                         placement: 'bottom',
                         trigger: 'hover'
                     }">🔒</span>
@@ -63470,15 +63464,17 @@ aria-labelledby="badgeCaseModalLabel">
                                                 FarmController.selectedBerry($data);
                                                 FarmController.selectedFarmTool(FarmingTool.Berry);
                                             }, css: { 'active': FarmController.selectedBerry() === $data && FarmController.selectedFarmTool() == FarmingTool.Berry },
-                                            tooltip: App.game.farming.unlockedBerries[$data]() ? {
+                                            tooltip: {
                                                 html: true,
-                                                title: `<u>Growth Duration</u>: ${GameConstants.formatSecondsToTime(BerryList[$data].growthTime[3])}<br/>
+                                                title: App.game.farming.unlockedBerries[$data]() ?
+                                                    `<u>Growth Duration</u>: ${GameConstants.formatSecondsToTime(BerryList[$data].growthTime[3])}<br/>
                                                     ${BerryList[$data].harvestAmount.toLocaleString('en-US')} <img width='12px' alt='${BerryType[$data]}' src='${FarmController.getBerryImage($data)}' /> per harvest<br/>
-                                                    ${BerryList[$data].farmValue.toLocaleString('en-US')} <img width='12px' alt='Farm Points' src='assets/images/currency/farmPoint.svg' /> per harvest`,
+                                                    ${BerryList[$data].farmValue.toLocaleString('en-US')} <img width='12px' alt='Farm Points' src='assets/images/currency/farmPoint.svg' /> per harvest`
+                                                    : '',
                                                 placement: 'right',
                                                 trigger: 'hover',
                                                 animation: false,
-                                            } : {}">
+                                            }">
                                             <img src="" height="28px"
                                                 data-bind="attr:{ src: FarmController.getBerryImage($data) },
                                                 css: {'berryLocked': !App.game.farming.unlockedBerries[$data]() }">
@@ -63637,7 +63633,7 @@ aria-labelledby="badgeCaseModalLabel">
                                                 <img width="100%" height="100%" src=""
                                                     style="width: 68.75%; max-height: 100%; image-rendering: pixelated;"
                                                     data-bind="attr: { src: FarmController.getImage($index()) },
-                                                        css: { 'wither-warning': $data.stage() == PlotStage.Berry && $data.calcTimeLeft() <= GameConstants.WITHER_WARNING_TIME }">
+                                                        css: { 'wither-warning': !$data.isAffectedByPetaya() && $data.stage() == PlotStage.Berry && $data.calcTimeLeft() <= GameConstants.WITHER_WARNING_TIME }">
                                             </div>
                                             <!-- ko if: $data.isSafeLocked -->
                                             <img class ="plotSafeLockIcon" src= "assets/images/farm/plotSafeLock.svg" >
@@ -65074,7 +65070,7 @@ aria-labelledby="badgeCaseModalLabel">
                                         </tr>
                                         <tr>
                                             <td class="align-middle"><b>Bait</b></td>
-                                            <td>Throwing any kind of Bait will make the Pokémon eat, and less likely to flee, but harder to catch. Berry Baits change the base rates of the Pokémon, with Razz increasing catch rate, Pinap increasing the chance an Item is dropped and Nanab lowering flee rate. Only one Berry effect can be present at a time. Provides 5 Safari XP.</td>
+                                            <td>Throwing any kind of Bait will make the Pokémon eat, and less likely to flee, but harder to catch. Berry Baits change the base rates of the Pokémon, with Razz increasing catch rate, Pinap increasing the chance an Item is dropped, and Nanab lowering flee rate. Only one Berry effect can be present at a time. Provides 5 Safari XP.</td>
                                         </tr>
                                         <tr>
                                             <td class="align-middle"><b>Run</b></td>
@@ -65170,7 +65166,16 @@ aria-labelledby="badgeCaseModalLabel">
                         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split active" data-bind="text: '&nbsp;'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" data-bind="foreach: GameHelper.enumStrings(BaitType)">
-                            <button class="dropdown-item" type="button" data-bind="click: function(){SafariBattle.selectedBait(BaitList[$data])}, text: BaitList[$data].btnName"></button>
+                            <div class="dropdown-item d-flex justify-content-between align-items-center">
+                                <button class="dropdown-item p-0" type="button" data-bind="click: function(){SafariBattle.selectedBait(BaitList[$data])}, text: BaitList[$data].btnName"></button>
+                                <span class="p-0 pl-2"
+                                    data-bind="click: function(bait, event){ event.stopPropagation(); },
+                                    tooltip: {
+                                        title: BaitList[$data].description,
+                                        trigger: 'hover',
+                                        placement: 'top',
+                                    }">ⓘ</span>
+                            </div>
                         </div>
                     </div>
                     <button type="button" class="btn btn-primary btn-block col-6 m-0" onclick="this.blur();SafariBattle.throwRock()" data-bind="disable: SafariBattle.busy()">
@@ -65265,7 +65270,7 @@ aria-labelledby="badgeCaseModalLabel">
 <script type="text/html" id="pokeballSelectionTemplate">
   <td class="text-center">
     <img class="pokeball-small"
-      data-bind="attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.type] + '.svg'}, css: {'pokeball-selected': App.game.pokeballs.selectedSelection()?.() === $data.type}, tooltip: {title: $data.type === -1 ? 'None' : ItemList[GameConstants.Pokeball[$data.type]].displayName, trigger: 'hover', animation: false, placement: 'bottom'}"/>
+      data-bind="attr: {src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.type] + '.svg'}, css: {'pokeball-selected': App.game.pokeballs.selectedSelection()?.() === $data.type}, tooltip: {title: $data.type === -1 ? 'Do not catch' : ItemList[GameConstants.Pokeball[$data.type]].displayName, trigger: 'hover', animation: false, placement: 'bottom'}"/>
   </td>
   <td class="align-middle">
     <span data-bind="text: $data.description"></span>
@@ -65365,7 +65370,7 @@ aria-labelledby="badgeCaseModalLabel">
                                         attr: {
                                             src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data.ball()] + '.svg'},
                                             tooltip: {
-                                                title: $data.ball() === -1 ? 'None' : ItemList[GameConstants.Pokeball[$data.ball()]].displayName,
+                                                title: $data.ball() === -1 ? 'Do not catch' : ItemList[GameConstants.Pokeball[$data.ball()]].displayName,
                                                 trigger: 'hover',
                                                 animation: false,
                                                 placement: 'bottom'
@@ -65467,7 +65472,7 @@ aria-labelledby="badgeCaseModalLabel">
                                     attr: {
                                         src: 'assets/images/pokeball/' + GameConstants.Pokeball[$data?.ball()] + '.svg'},
                                         tooltip: {
-                                            title: $data?.ball() === -1 ? 'None' : ItemList[GameConstants.Pokeball[$data?.ball()]].displayName,
+                                            title: $data?.ball() === -1 ? 'Do not catch' : ItemList[GameConstants.Pokeball[$data?.ball()]].displayName,
                                             trigger: 'hover',
                                             animation: false,
                                             placement: 'bottom'
